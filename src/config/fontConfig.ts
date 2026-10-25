@@ -50,28 +50,23 @@ export const fontConfig: FontConfig = withUserConfig("font", {
 	 */
 	fontFamilies: [
 		// ---------------------------------------------------------------------
-		// 1. 正文字体（现代几何圆润西文字体 Outfit，与 M3E 大圆角及悠哉圆体绝配）
+		// 1. 正文字体（Inter: универсальный гротеск, поддержка Latin Extended + Cyrillic）
 		// ---------------------------------------------------------------------
 		{
-			id: "outfit-body",
-			family: "Outfit",
+			id: "inter-body",
+			family: "Inter",
 			role: "body",
 			source: "fontsource",
 			variants: [
 				{
-					file: "@fontsource/outfit/400.css",
-					weight: 400,
+					file: "@fontsource-variable/inter/index.css",
+					weight: "100 900",
 					style: "normal",
 				},
 				{
-					file: "@fontsource/outfit/500.css",
-					weight: 500,
-					style: "normal",
-				},
-				{
-					file: "@fontsource/outfit/700.css",
-					weight: 700,
-					style: "normal",
+					file: "@fontsource-variable/inter/wght-italic.css",
+					weight: "100 900",
+					style: "italic",
 				},
 			],
 			fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
@@ -80,27 +75,27 @@ export const fontConfig: FontConfig = withUserConfig("font", {
 		},
 
 		// ---------------------------------------------------------------------
-		// 2. 中文 / 日文 CJK 字体（悠哉圆体 Yozai Medium，全量简繁中日韩 100% 覆盖）
+		// 2. 中文 / 日文 CJK 字体 (Отключено для ускорения сборки, файл сохранен в src/assets/fonts/)
 		// ---------------------------------------------------------------------
-		{
-			id: "yozai-cjk",
-			family: "Yozai Medium",
-			role: "cjk",
-			source: "local",
-			variants: [
-				{
-					file: "src/assets/fonts/Yozai-Medium.ttf",
-					weight: 500,
-					style: "normal",
-				},
-			],
-			fallback: ["system-ui", "sans-serif"],
-			display: "swap",
-			preload: false,
-		},
+		// {
+		// 	id: "yozai-cjk",
+		// 	family: "Yozai Medium",
+		// 	role: "cjk",
+		// 	source: "local",
+		// 	variants: [
+		// 		{
+		// 			file: "src/assets/fonts/Yozai-Medium.ttf",
+		// 			weight: 500,
+		// 			style: "normal",
+		// 		},
+		// 	],
+		// 	fallback: ["system-ui", "sans-serif"],
+		// 	display: "swap",
+		// 	preload: false,
+		// },
 
 		// ---------------------------------------------------------------------
-		// 3. 代码等宽字体（渲染代码块与终端文本，对应 CSS 变量 --font-mono）
+		// 3. 代码等宽字体（JetBrains Mono: отличная читаемость, лигатуры, кириллица）
 		// ---------------------------------------------------------------------
 		{
 			id: "jetbrains-mono",
@@ -138,12 +133,12 @@ export const fontConfig: FontConfig = withUserConfig("font", {
 	 * - Build 生产构建：自动执行子集裁剪，将几十兆大字体压缩为几百 KB 的专属子集，秒开加载。
 	 */
 	subsetting: {
-		enable: true, // 启用自动化子集裁剪
+		enable: false, // Отключено (CJK шрифт отключен, Inter и JetBrains Mono поставляются готовыми woff2)
 		includeContent: true, // 扫描 src/content/ 下所有文章
 		includeI18n: true, // 扫描全部 10 种语言词典
 		includeConfig: true, // 扫描站点配置与导航
 		includeCommon: true, // 包含常用标点与基础字符
-		allowRemoteText: true, // 允许抓取 Meting 云端歌单曲目文本参与字形提取
+		allowRemoteText: false, // Не тратить время на парсинг удаленных песен Meting
 	},
 
 	/**

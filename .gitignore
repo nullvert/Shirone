@@ -48,6 +48,7 @@ src/assets/fonts/.subset/
 
 # generated local icon collection
 src/generated/local-icon-collections.ts
+src/generated/*.tmp
 *.iml
 
 # anime snapshot data & downloaded covers
@@ -77,3 +78,9 @@ artifacts/lighthouse/*
 
 # generated AI skills plugin packages
 artifacts/shirone-ai-*
+
+# local files
+FORK_RULES.md
+arch-audit.md
+todo.md
+.transfers/

@@ -6,3 +6,5 @@ export const friendsConfig: FriendsConfig = withUserConfig("friends", {
 	title: "$t:friends",
 	description: "$t:friendsBanner",
 });
+
+// todo

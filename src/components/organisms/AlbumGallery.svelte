@@ -51,11 +51,14 @@ function rememberNaturalRatio(photo: AlbumPhoto, event: Event) {
 	measuredRatios[photo.id] = image.naturalWidth / image.naturalHeight;
 }
 
-function openPhoto(event: MouseEvent, photo: AlbumPhoto) {
+function openPhoto(event: MouseEvent, index: number) {
 	event.preventDefault();
 	event.stopPropagation();
-	const fullSrc = photo.src ? url(photo.src) : "";
-	void openFancyboxGallery([{ src: fullSrc }]);
+	const galleryItems = visiblePhotos.map((p) => ({
+		src: p.src ? url(p.src) : "",
+		caption: p.alt || p.title || "",
+	}));
+	void openFancyboxGallery(galleryItems, index);
 }
 
 function ratio(photo: AlbumPhoto): string {
@@ -77,7 +80,7 @@ function ratio(photo: AlbumPhoto): string {
 					class="album-gallery__item"
 					style={`--album-photo-ratio: ${ratio(photo)}`}
 					aria-label={`${i18n(I18nKey.openImage)} ${index + 1}: ${photo.alt}`}
-						onclick={(event) => openPhoto(event, photo)}
+						onclick={(event) => openPhoto(event, index)}
 				>
 					<img
 					src={url(photo.thumbnail || photo.src)}

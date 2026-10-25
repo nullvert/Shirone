@@ -19,9 +19,9 @@ import { withUserConfig } from "../utils/config-overlay.ts";
  * 内容后会暂时回退 ListUI，但保留 grid 偏好，空间恢复后自动切回。
  */
 export const postListConfig: PostListConfig = withUserConfig("postList", {
-	pageSize: 8,
+	pageSize: 7,
 	layout: {
-		mode: "list",
+		mode: "grid",
 		cover: "right",
 		cardWidth: "regular",
 	},
