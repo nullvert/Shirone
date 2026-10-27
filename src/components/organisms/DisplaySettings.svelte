@@ -271,13 +271,12 @@ function selectStyle(newStyle: McStyle) {
 
 /** 4 разрешенных стиля: Vibrant, Expressive, Neutral, Fidelity (2×2 сетка) */
 const stylePreviews = $derived(
-<<<<<<< HEAD
 	ALLOWED_STYLES.map((s) => {
 		const targetHue = siteConfig.themeColor.optimalHues?.[s] ?? hue;
 		return {
 			style: s,
 			label: i18n(styleKey(s)),
-			colors: styleColors(s, targetHue, dark, spec),
+			colors: panelOpened ? styleColors(s, targetHue, dark, spec) : { primary: "#888", secondary: "#888", tertiary: "#888" },
 		};
 	}),
 );
@@ -293,83 +292,6 @@ const stylePreviews = $derived(
         <div class="ds-color-info">
             <span class="ds-color-title">{i18n(I18nKey.themeColor)}</span>
             <span class="ds-color-sub">{hue}° · {style.charAt(0).toUpperCase() + style.slice(1)}</span>
-=======
-	MC_STYLES.map((s) => ({
-		style: s,
-		label: i18n(styleKey(s)),
-		colors: panelOpened ? styleColors(s, hue, dark, spec) : null,
-	})),
-);
-</script>
-
-<div id="display-setting" class="float-panel float-panel-closed absolute transition-all w-80 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain m3-scroll-contain {className}">
-    <PanelStack>
-        <!-- 段一：主题配色（色相 + 风格九宫格 + Color Spec） -->
-        <div class="p-4 flex flex-col gap-3">
-            <div class="flex flex-row gap-2 items-center justify-between">
-                <div class="flex gap-2 font-bold text-lg text-[var(--on-surface)] transition relative ml-3">
-                    <AccentBar size="small" class="absolute -left-3 top-[0.33rem]" />
-                    {i18n(I18nKey.themeColor)}
-                    <button aria-label="Reset to Default" class="float-control w-7 h-7 rounded-md active:scale-90 will-change-transform flex items-center justify-center"
-                            class:opacity-0={!isDirty} class:pointer-events-none={!isDirty} onclick={confirmReset}>
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </button>
-                </div>
-                <div class="flex gap-1 items-center">
-                    <!-- 当前色相值展示（段内用低一级容器色保持对比） -->
-                    <div title={i18n(I18nKey.themeColor)}
-                         class="h-7 min-w-16 px-1 rounded-(--shape-corner-m) flex items-center justify-center
-                                bg-(--surface-container) text-sm font-bold text-(--on-surface)">
-                        {hue}
-                    </div>
-                    <!-- 当前主色实时预览 -->
-                    <div class="h-7 w-7 rounded-full" title={i18n(I18nKey.themeColor)}
-                         style={`background: ${currentColor}; box-shadow: inset 0 0 0 1px var(--outline-variant)`}></div>
-                </div>
-            </div>
-            <Slider bind:value={hue} min={0} max={360} step={5} label={i18n(I18nKey.themeColor)} />
-
-            {#if displayConfig.colorStyle}
-                <div class="flex flex-col gap-2 pt-1">
-                    <span class="text-sm font-bold text-[var(--on-surface-variant)] ml-1">{i18n(I18nKey.colorStyle)}</span>
-                    <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label={i18n(I18nKey.colorStyle)}>
-                        {#each stylePreviews as p (p.style)}
-                            <button
-                                type="button"
-                                role="radio"
-                                aria-checked={style === p.style}
-                                title={p.label}
-                                aria-label={p.label}
-                                class="m3-style-cell"
-                                class:selected={style === p.style}
-                                onclick={() => (style = p.style)}
-                            >
-                                <span class="m3-style-cell__dots">
-                                    <span class="m3-style-cell__dot" style={p.colors && `background: ${p.colors.primary}`}></span>
-                                    <span class="m3-style-cell__dot" style={p.colors && `background: ${p.colors.secondary}`}></span>
-                                    <span class="m3-style-cell__dot" style={p.colors && `background: ${p.colors.tertiary}`}></span>
-                                </span>
-                                <span class="m3-style-cell__name">{p.label}</span>
-                            </button>
-                        {/each}
-                    </div>
-                </div>
-            {/if}
-
-            {#if displayConfig.colorSpec}
-                <div class="flex flex-col gap-1.5 pt-1">
-                    <span class="display-settings__section-label">{i18n(I18nKey.colorSpec)}</span>
-                    <SegmentedButton
-                        options={MC_SPECS.map((s) => ({
-                            value: s,
-                            label: s === "2021" ? i18n(I18nKey.spec2021) : i18n(I18nKey.spec2025),
-                        }))}
-                        bind:value={spec}
-                        label={i18n(I18nKey.colorSpec)}
-                    />
-                </div>
-            {/if}
->>>>>>> 35976a5 (perf(theme): ship the default color scheme as static CSS (#147))
         </div>
         <button
             type="button"
