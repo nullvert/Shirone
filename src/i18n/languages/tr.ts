@@ -106,6 +106,33 @@ export const tr: Translation = {
 	[Key.gamesHours]: "sa",
 	[Key.gamesRating]: "Puan",
 
+	[Key.cinema]: "Sinema",
+	[Key.cinemaBanner]:
+		"Filmler ve diziler — puanlar, izleme durumu ve kısa incelemeler.",
+	[Key.cinemaNoResults]: "Filtrelerinizle eşleşen film veya dizi bulunamadı",
+
+	[Key.mediaFilter]: "Filtre",
+	[Key.mediaFilterMediaType]: "Medya Türü",
+	[Key.mediaFilterStatus]: "Durum",
+	[Key.mediaFilterGenres]: "Türler",
+	[Key.mediaFilterAll]: "Tümü",
+	[Key.mediaFilterMovies]: "Filmler",
+	[Key.mediaFilterTvShows]: "Diziler",
+	[Key.mediaFilterReset]: "Sıfırla",
+	[Key.mediaFilterTitle]: "Başlık",
+	[Key.mediaFilterPriority]: "Öncelik",
+	[Key.mediaFilterPrice]: "Fiyat",
+	[Key.mediaFilterRating]: "Puan",
+	[Key.mediaFilterShowMore]: "Daha fazla göster ({count})",
+	[Key.mediaFilterShowLess]: "Daha az göster",
+	[Key.mediaFilterSort]: "Sırala",
+	[Key.mediaFilterPriceAsc]: "Fiyat: Düşükten Yükseğe",
+	[Key.mediaFilterPriceDesc]: "Fiyat: Yüksekten Düşüğe",
+	[Key.mediaFilterYear]: "Çıkış Yılı",
+	[Key.mediaFilterPlaytime]: "Oynama Süresi",
+	[Key.mediaFilterDiscount]: "İndirim",
+	[Key.mediaFilterApply]: "Uygula",
+
 	[Key.timeline]: "Zaman Çizelgesi",
 	[Key.timelineBanner]:
 		"Büyüme yolculuğu, kilometre taşları ve unutulmaz anlar.",

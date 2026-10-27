@@ -109,6 +109,33 @@ export const id: Translation = {
 	[Key.gamesHours]: "jam",
 	[Key.gamesRating]: "Rating",
 
+	[Key.cinema]: "Sinema",
+	[Key.cinemaBanner]:
+		"Film dan serial TV — rating, status tontonan, dan ulasan singkat.",
+	[Key.cinemaNoResults]: "Tidak ada film atau serial yang cocok dengan filter",
+
+	[Key.mediaFilter]: "Filter",
+	[Key.mediaFilterMediaType]: "Tipe Media",
+	[Key.mediaFilterStatus]: "Status",
+	[Key.mediaFilterGenres]: "Genre",
+	[Key.mediaFilterAll]: "Semua",
+	[Key.mediaFilterMovies]: "Film",
+	[Key.mediaFilterTvShows]: "Serial TV",
+	[Key.mediaFilterReset]: "Atur Ulang",
+	[Key.mediaFilterTitle]: "Judul",
+	[Key.mediaFilterPriority]: "Prioritas",
+	[Key.mediaFilterPrice]: "Harga",
+	[Key.mediaFilterRating]: "Peringkat",
+	[Key.mediaFilterShowMore]: "Tampilkan lebih banyak ({count})",
+	[Key.mediaFilterShowLess]: "Tampilkan lebih sedikit",
+	[Key.mediaFilterSort]: "Urutkan",
+	[Key.mediaFilterPriceAsc]: "Harga: Terendah ke tertinggi",
+	[Key.mediaFilterPriceDesc]: "Harga: Tertinggi ke terendah",
+	[Key.mediaFilterYear]: "Tahun Rilis",
+	[Key.mediaFilterPlaytime]: "Waktu Bermain",
+	[Key.mediaFilterDiscount]: "Diskon",
+	[Key.mediaFilterApply]: "Terapkan",
+
 	[Key.timeline]: "Linimasa",
 	[Key.timelineBanner]:
 		"Jejak pertumbuhan, tonggak pencapaian, dan momen berharga.",

@@ -1,41 +1,27 @@
 /**
- * 站点罗盘数据（本地数据源）。
- * 用途：src/pages/compass.astro → organisms/CompassSection → molecules/CompassTile。
- * 添加站点：往对应 Shelf.entries 追加一项；数组顺序即展示顺序。
- * - icon：Iconify 名（material-symbols:xxx）或图片 URL（http(s)/绝对路径）；
- *   省略时瓷砖显示 label 首字母 tonal 块（不自动抓取 favicon）。
- * - image：用户自定义图片 URL（http(s)/绝对路径），优先于 icon 渲染；
- *   加载失败自动降级为首字母块。
+ * 站点书签数据源（Bookmarks）。
+ * 读取 Raindrop.io 同步快照：src/data/snapshots/bookmarks.json。
  */
 
-/** 单条站点记录 */
+/** 单条书签记录 */
 export interface CompassEntry {
-	/** 站点名（瓷砖标题） */
 	label: string;
-	/** 外链地址 */
 	href: string;
-	/** 一句话说明（瓷砖副行；省略则显示域名） */
 	note?: string;
-	/** 图标：Iconify 名或图片 URL；省略 = 首字母兜底 */
 	icon?: string;
-	/** 用户自定义图片（http(s)/绝对路径）：优先于 icon 渲染；省略则走 icon/首字母 */
 	image?: string;
 }
 
-/** 分组（Shelf = 罗盘上的收纳格） */
+/** 分组/文件夹 */
 export interface CompassShelf {
-	/** 锚点 id（字母数字，作分组定位与跳转） */
 	key: string;
-	/** 分组名 */
 	name: string;
-	/** 分组图标（Iconify 名，SectionTitle 行首） */
 	icon?: string;
-	/** 分组副文案（标题下弱文本，可选） */
 	blurb?: string;
 	entries: CompassEntry[];
 }
 
-export const compassData: CompassShelf[] = [
+export const defaultCompassData: CompassShelf[] = [
 	{
 		key: "dev",
 		name: "Development",
@@ -117,3 +103,24 @@ export const compassData: CompassShelf[] = [
 		],
 	},
 ];
+
+import bookmarkSnapshot from "./snapshots/bookmarks.json";
+
+function resolveShelfIcon(key: string, name: string, icon?: string): string {
+	if (icon) return icon;
+	const text = `${name} ${key}`.toLowerCase();
+	if (text.includes("игр") || text.includes("game")) return "material-symbols:sports-esports-outline-rounded";
+	if (text.includes("разработ") || text.includes("веб") || text.includes("dev") || text.includes("code") || text.includes("web")) return "material-symbols:code-rounded";
+	if (text.includes("софт") || text.includes("утилит") || text.includes("tool") || text.includes("soft")) return "material-symbols:build-outline-rounded";
+	if (text.includes("дизайн") || text.includes("design") || text.includes("art")) return "material-symbols:palette-outline-rounded";
+	if (text.includes("читат") || text.includes("read") || text.includes("book")) return "material-symbols:auto-stories-outline-rounded";
+	return "material-symbols:folder-outline-rounded";
+}
+
+export const compassData: CompassShelf[] =
+	Array.isArray(bookmarkSnapshot?.items) && bookmarkSnapshot.items.length > 0
+		? (bookmarkSnapshot.items as CompassShelf[]).map((shelf) => ({
+				...shelf,
+				icon: resolveShelfIcon(shelf.key, shelf.name, shelf.icon),
+			}))
+		: defaultCompassData;

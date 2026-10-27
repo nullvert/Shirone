@@ -7,9 +7,9 @@
  */
 import Chip from "@components/atoms/action/Chip.astro";
 import Card from "@components/atoms/display/Card.svelte";
+import Icon from "@components/atoms/display/Icon.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
-import Icon from "@iconify/svelte";
 import { getCategoryList } from "@utils/content-utils";
 import { pathsEqual, url } from "@utils/url-utils";
 
@@ -42,7 +42,14 @@ const softCategory = !isHome && !isArchive && postCategory ? postCategory : "";
 <nav
 	id="category-bar-region"
 	aria-label={i18n(I18nKey.categories)}
-	class:list={{ hidden: Astro.url.pathname.startsWith("/categories") || Astro.url.pathname.startsWith("/tags") }}
+	class:list={{
+		hidden:
+			Astro.url.pathname.startsWith("/categories") ||
+			Astro.url.pathname.startsWith("/tags") ||
+			Astro.url.pathname.startsWith("/anime") ||
+			Astro.url.pathname.startsWith("/cinema") ||
+			Astro.url.pathname.startsWith("/games"),
+	}}
 >
 	<Card color="var(--card-bg)" radius="l" class="category-bar onload-animation mb-4 p-2" id="category-bar">
 		<div class="category-bar-inner flex gap-2 items-center">
@@ -112,9 +119,18 @@ const softCategory = !isHome && !isArchive && postCategory ? postCategory : "";
 
 		const swupContainer = document.getElementById("swup-container");
 		const currentPage = swupContainer?.dataset.currentPage;
+		const isMediaPage =
+			currentPage === "anime" ||
+			currentPage === "cinema" ||
+			currentPage === "games";
 		document
 			.getElementById("category-bar-region")
-			?.classList.toggle("hidden", currentPage === "categories" || currentPage === "tags");
+			?.classList.toggle(
+				"hidden",
+				currentPage === "categories" ||
+					currentPage === "tags" ||
+					isMediaPage,
+			);
 		const postCategory = (swupContainer?.dataset.currentPostCategory || "").trim();
 
 		const pathname = window.location.pathname.replace(/\/+$/, "") || "/";

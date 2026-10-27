@@ -13,7 +13,6 @@ import { siteConfig } from "@/config";
 import { navBarConfig } from "@/config/navBarConfig";
 import DisplaySettings from "./DisplaySettings.svelte";
 import LightDarkSwitch from "./LightDarkSwitch.svelte";
-import Search from "./Search.svelte";
 
 const className = Astro.props.class;
 const links = resolveNavBarLinks(navBarConfig.links);
@@ -85,7 +84,9 @@ function isActive(link: (typeof links)[number]): boolean {
 			})}
 		</nav>
 		<div class="flex-1"></div>
-		<Search client:only="svelte"></Search>
+		<IconButton id="search-switch" label="Search" class="shrink-0">
+			<Icon icon="material-symbols:search-rounded" class="text-[1.25rem]"></Icon>
+		</IconButton>
 		{!siteConfig.themeColor.fixed && (
 			<IconButton id="display-settings-switch" label="Display Settings" class="shrink-0">
 				<Icon icon="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
@@ -141,6 +142,13 @@ function isActive(link: (typeof links)[number]): boolean {
 				if (settingPanel) {
 					settingPanel.classList.toggle("float-panel-closed");
 				}
+			};
+		}
+
+		const searchBtn = document.getElementById("search-switch");
+		if (searchBtn) {
+			searchBtn.onclick = () => {
+				document.dispatchEvent(new CustomEvent("search:open"));
 			};
 		}
 
@@ -209,7 +217,8 @@ window.__loadPagefind = function() {
 function bindSearchTriggers() {
 	const triggers = [
 		document.getElementById('search-input-desktop'),
-		document.getElementById('search-switch')
+		document.getElementById('search-switch'),
+		document.getElementById('bottom-bar-search-btn')
 	];
 	for (const el of triggers) {
 		if (!el) continue;

@@ -11,7 +11,7 @@ import { getPostUrlBySlug, getSeriesUrl } from "@utils/url-utils";
  * （DESIGN.md 禁止卡片套卡片 / 把卡片当通用分节外壳），用「图标 + 标题 + 横线」
  * 的 lane 标题建立分节，条目是「标题 + 元信息」的整行状态层链接。
  * 上一/下一篇沿用文章末尾全局 post-nav 的方向语言（箭头在外侧、hover 位移）；
- * 状态 pill 使用 M3 tonal 配对（与 GameCard 的状态语言一致）。
+ * 状态 pill 使用 M3 tonal 配对（与 MediaPosterCard 的状态语言一致）。
  */
 interface Props {
 	context: SeriesPostContext;
@@ -185,7 +185,7 @@ const directionLabel = {
 		height: 1px
 		background: var(--outline-variant)
 
-	/* 状态 pill：M3 tonal 配对（bg/fg 成对，对比度达标；与 GameCard 状态语言一致） */
+	/* 状态 pill：M3 tonal 配对（bg/fg 成对，对比度达标；与 MediaPosterCard 状态语言一致） */
 	&__status
 		display: inline-flex
 		align-items: center

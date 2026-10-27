@@ -1,8 +1,7 @@
 ---
 /**
  * M3E 博客原子 — TocList 目录列表（静态 SSR 版）。
- * 数据驱动：headings 为 { depth, text, slug }[]；按相对层级缩进，
- * 顶级编号徽标、子级小圆点。激活态由调用方叠加类（配合滚动高亮脚本）。
+ * Линейный иерархический список с надежным скролл-трекингом.
  */
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
@@ -35,6 +34,7 @@ let counter = 0;
 	{visible.map((h) => {
 		const rel = h.depth - base;
 		const top = rel === 0;
+		const cleanText = h.text.replace(/^(\d+(\.\d+)*\.?)\s+/, "");
 		return (
 			<a
 				class:list={["m3-blog-toc__item", { "m3-blog-toc__item--sub": !top }]}
@@ -49,7 +49,7 @@ let counter = 0;
 						<span class="m3-blog-toc__dot" />
 					)}
 				</span>
-				<span class="m3-blog-toc__text">{h.text}</span>
+				<span class="m3-blog-toc__text">{cleanText}</span>
 			</a>
 		);
 	})}

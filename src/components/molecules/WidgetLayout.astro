@@ -2,9 +2,9 @@
 import Button from "@components/atoms/action/Button.svelte";
 import AccentBar from "@components/atoms/display/AccentBar.svelte";
 import Card from "@components/atoms/display/Card.svelte";
+import Icon from "@components/atoms/display/Icon.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
-import Icon from "@iconify/svelte";
 
 interface Props {
 	id: string;
@@ -31,11 +31,18 @@ const className = Astro.props.class;
 ---
 <widget-layout data-id={id} data-is-collapsed={String(isCollapsed)} class={className} style={style}>
     <Card color="var(--card-bg)" radius="l" class="pb-4">
+    {(name || Astro.slots.has("header-action")) && (
     <div class="widget-layout__header">
-        <AccentBar size="small" />
-        <span>{name}</span>
+        {name && (
+            <div class="flex items-center gap-[var(--m3e-space-2)] flex-1 min-w-0">
+                <AccentBar size="small" />
+                <span class="truncate">{name}</span>
+            </div>
+        )}
+        <slot name="header-action" />
     </div>
-    <div id={id} class:list={["collapse-wrapper px-4 overflow-hidden", {"collapsed": isCollapsed, "widget-layout__scroll-content": scrollContent, "widget-layout__flex-scroll": flexScroll}]}>
+    )}
+    <div id={id} class:list={["collapse-wrapper px-4 overflow-hidden", {"collapsed": isCollapsed, "widget-layout__scroll-content": scrollContent, "widget-layout__flex-scroll": flexScroll, "pt-4": !name && !Astro.slots.has("header-action")}]}>
         <slot></slot>
     </div>
     {isCollapsed && <div class="expand-btn px-4 mt-2">

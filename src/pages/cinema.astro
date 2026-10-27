@@ -1,0 +1,31 @@
+---
+/**
+ * Кино и сериалы: данные из Simkl (src/data/snapshots/simkl.json)
+ * Отображение через единый медиа-организм MediaSection.
+ */
+import MediaSection from "@components/organisms/MediaSection.svelte";
+import I18nKey from "@i18n/i18nKey";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { resolveI18nText } from "@utils/i18n-utils";
+import { getCinemaList } from "@utils/media/adapters";
+import { cinemaConfig } from "@/config/cinemaConfig";
+
+if (!cinemaConfig.enable) {
+	return Astro.redirect("/404/");
+}
+
+const pageTitle = resolveI18nText(cinemaConfig.title, I18nKey.cinema);
+const pageDescription = resolveI18nText(
+	cinemaConfig.description,
+	I18nKey.cinemaBanner,
+);
+
+const items = getCinemaList();
+---
+
+<MainGridLayout title={pageTitle} description={pageDescription} page="cinema">
+	<MediaSection
+		items={items}
+		client:visible
+	/>
+</MainGridLayout>

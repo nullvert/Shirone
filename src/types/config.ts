@@ -87,6 +87,22 @@ export type SiteConfig = {
 		contentAlign: TopAppBarContentAlign;
 	};
 
+	/**
+	 * 移动端/平板端底部导航栏尺寸与外观配置。
+	 */
+	bottomAppBar?: {
+		/** Высота панели на телефоне (по умолчанию "3.5rem" = 56px) */
+		mobileHeight?: string;
+		/** Высота панели на планшете (по умолчанию "4.25rem" = 68px) */
+		tabletHeight?: string;
+		/** Размер кнопок на телефоне (по умолчанию "2.5rem" = 40px) */
+		mobileButtonSize?: string;
+		/** Размер кнопок на планшете (по умолчанию "3rem" = 48px) */
+		tabletButtonSize?: string;
+		/** Максимальная ширина контента на планшетах (по умолчанию "56rem") */
+		maxWidth?: string;
+	};
+
 	/** 显示设置浮层各切换项的前端可见性控制 */
 	displaySettings?: DisplaySettingsConfig;
 
@@ -110,6 +126,8 @@ export type SiteConfig = {
 		fixed: boolean;
 		style: string;
 		spec: string;
+		/** Оптимальные HUE по умолчанию для стилей палитры (применяются при переключении стиля) */
+		optimalHues?: Record<string, number>;
 	};
 	wallpaperMode: {
 		defaultMode: WallpaperMode;

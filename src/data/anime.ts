@@ -1,17 +1,13 @@
 /**
- * 番剧收藏数据（本地数据源）。
- * 用于番剧页：src/pages/anime.astro → organisms/AnimeSection → molecules/AnimeCard。
+ * 番剧收藏数据（本地数据源 / AniList 快照）。
+ * 用于番剧页：src/pages/anime.astro → organisms/MediaSection → molecules/MediaPosterCard。
  *
- * 添加条目：在 animeData 中追加一项即可，状态筛选 chips 与计数自动生成。
- * - cover 省略时卡片显示主题色渐变占位（补图前不破版）；
- * - link 省略时封面不可点；rating 为 0-10 个人评分；
- * - progress 是结构化追番进度，watching 状态在卡片上渲染进度条。
- * JSON 数据源（外部收藏服务拉取）见 utils/anime-data.ts 的 AnimeSource 分发。
+ * 优先读取 AniList 同步生成的本地快照：src/data/snapshots/anilist.json。
+ * 零运行时请求，构建期打包，封面存放在 public/assets/media/anime/。
  */
-
 import type { AnimeIdentity } from "../types/animeConfig.ts";
 
-/** 收藏状态（Bangumi 领域通行五态） */
+/** 收藏状态（标准五态） */
 export type AnimeStatus =
 	| "watching"
 	| "completed"
@@ -23,28 +19,36 @@ export interface AnimeItem {
 	title: string;
 	/** 封面图地址（相对 /public 或绝对 URL）；省略 = 渐变占位 */
 	cover?: string;
-	/** 条目外链（Bangumi/官方站等）；省略则封面不可点 */
+	/** 条目外链（AniList/Bangumi 等） */
 	link?: string;
 	status: AnimeStatus;
 	/** 个人评分 0-10 */
 	rating: number;
-	/** 追番进度：已看 / 总集数（未知时可选省略） */
+	/** 追番进度：已看 / 总集数 */
 	progress?: { watched: number; total: number };
-	/** 一句话感想 */
+	/** 一句话感想 / 简介 */
 	description?: string;
 	/** 放送年份（展示用） */
 	year: string;
-	/** 制作公司 */
+	/** 制作公司 / 动画工房 */
 	studio?: string;
 	/** 题材标签 */
 	genres: string[];
+	/** 社区平均评分 (0-100) */
+	communityRating?: number;
+	/** 播放格式 (TV, Movie, OVA, etc.) */
+	format?: string;
+	/** 播放季度 (WINTER, SPRING, SUMMER, FALL) */
+	season?: string;
+	/** 重温次数 */
+	repeat?: number;
 	/** 观看时间段（年-月） */
 	period?: { start: string; end: string };
-	/** 条目来源身份标识（可选，用于跨源去重与归档） */
+	/** 条目来源身份标识（用于跨源去重与归档） */
 	identity?: AnimeIdentity;
 }
 
-export const animeData: AnimeItem[] = [
+export const defaultAnimeData: AnimeItem[] = [
 	{
 		title: "Lycoris Recoil",
 		cover: "/assets/anime/lkls.webp",
@@ -111,3 +115,5 @@ export const animeData: AnimeItem[] = [
 		period: { start: "2025-07", end: "2025-10" },
 	},
 ];
+
+export const animeData: AnimeItem[] = defaultAnimeData;

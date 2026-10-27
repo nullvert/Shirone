@@ -5,7 +5,9 @@
  *   一级导航（navBarConfig）+ 可折叠「分类」分组（多级扩展点）。
  * 链接由 Swup 自动接管，点击后收起抽屉；高亮与当前路由/分类筛选同步。
  */
-import Icon from "@iconify/svelte";
+import Icon from "@components/atoms/display/Icon.svelte";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
 import { resolveNavBarLinks, resolvePageKey } from "@utils/nav-utils";
 import { url } from "@utils/url-utils";
 import { onMount, tick } from "svelte";
@@ -61,9 +63,63 @@ function syncFromRoute() {
 	}
 }
 
+let drawerEl: HTMLElement | undefined = $state();
+
+// Swipe left to close gesture
+let startX = 0;
+let startY = 0;
+let currentX = 0;
+let isSwiping = false;
+
+function handleTouchStart(e: TouchEvent) {
+	if (!open) return;
+	const touch = e.touches[0];
+	startX = touch.clientX;
+	startY = touch.clientY;
+	currentX = startX;
+	isSwiping = false;
+}
+
+function handleTouchMove(e: TouchEvent) {
+	if (!open || !drawerEl) return;
+	const touch = e.touches[0];
+	const deltaX = touch.clientX - startX;
+	const deltaY = Math.abs(touch.clientY - startY);
+
+	// Если свайп идет влево (к закрытию) и горизонтальное движение преобладает над вертикальным
+	if (deltaX < -8 && -deltaX > deltaY) {
+		isSwiping = true;
+		drawerEl.style.transform = `translateX(${Math.min(0, deltaX)}px)`;
+		drawerEl.style.transition = "none";
+	}
+}
+
+function handleTouchEnd(e: TouchEvent) {
+	if (!open || !drawerEl) return;
+	if (isSwiping) {
+		const deltaX = (e.changedTouches[0]?.clientX ?? currentX) - startX;
+		drawerEl.style.transition = "";
+		drawerEl.style.transform = "";
+		// Порог закрытия свайпом влево 50px
+		if (deltaX < -50) {
+			closeDrawer();
+		}
+		isSwiping = false;
+	}
+}
+
+function closeDrawer() {
+	open = false;
+	document.body.style.overflow = "";
+	if (drawerEl) {
+		drawerEl.style.transform = "";
+		drawerEl.style.transition = "";
+	}
+}
+
 // 点击链接后收起抽屉；外部链接不改变路由，高亮已由路由同步维护
 function handleNavClick() {
-	open = false;
+	closeDrawer();
 }
 
 function toggleGroup(group: string) {
@@ -73,44 +129,71 @@ function toggleGroup(group: string) {
 onMount(() => {
 	syncFromRoute();
 	const onToggle = () => {
-		open = !open;
 		if (open) {
+			closeDrawer();
+		} else {
+			open = true;
+			document.body.style.overflow = "hidden";
 			tick().then(() => {
 				drawerEl?.querySelector<HTMLElement>("a, button")?.focus();
 			});
 		}
 	};
 	const onKey = (e: KeyboardEvent) => {
-		if (e.key === "Escape") open = false;
+		if (e.key === "Escape" && open) {
+			closeDrawer();
+		}
 	};
 	document.addEventListener("site-drawer:toggle", onToggle);
-	document.addEventListener("swup:content:replace", syncFromRoute);
+	document.addEventListener("swup:content:replace", () => {
+		syncFromRoute();
+		closeDrawer();
+	});
 	window.addEventListener("keydown", onKey);
 	return () => {
+		document.body.style.overflow = "";
 		document.removeEventListener("site-drawer:toggle", onToggle);
 		document.removeEventListener("swup:content:replace", syncFromRoute);
 		window.removeEventListener("keydown", onKey);
 	};
 });
-
-let drawerEl: HTMLElement | undefined = $state();
 </script>
 
 <div
 	class="site-drawer"
 	class:site-drawer--open={open}
 >
-	<div class="site-drawer__scrim" aria-hidden="true" onclick={() => (open = false)}></div>
+	<div
+		class="site-drawer__scrim"
+		aria-hidden="true"
+		onclick={closeDrawer}
+		ontouchstart={handleTouchStart}
+		ontouchmove={handleTouchMove}
+		ontouchend={handleTouchEnd}
+	></div>
 	<aside
 		bind:this={drawerEl}
 		class="site-drawer__panel"
 		role="dialog"
 		aria-modal="true"
 		aria-label={siteConfig.title}
+		ontouchstart={handleTouchStart}
+		ontouchmove={handleTouchMove}
+		ontouchend={handleTouchEnd}
 	>
 		<div class="site-drawer__brand">
-			<div class="site-drawer__title">{siteConfig.title}</div>
-			<div class="site-drawer__subtitle">{siteConfig.subtitle}</div>
+			<div class="site-drawer__brand-text">
+				<div class="site-drawer__title">{siteConfig.title}</div>
+				<div class="site-drawer__subtitle">{siteConfig.subtitle}</div>
+			</div>
+			<button
+				type="button"
+				class="site-drawer__header-close-btn"
+				aria-label={i18n(I18nKey.close)}
+				onclick={closeDrawer}
+			>
+				<Icon icon="material-symbols:close-rounded" />
+			</button>
 		</div>
 
 		<nav class="site-drawer__nav" aria-label="Navigation drawer">
@@ -140,8 +223,18 @@ let drawerEl: HTMLElement | undefined = $state();
 					</a>
 				{/if}
 			{/each}
-
 		</nav>
+
+		<div class="site-drawer__footer">
+			<button
+				type="button"
+				class="site-drawer__close-btn m3-state-layer"
+				aria-label={i18n(I18nKey.close)}
+				onclick={closeDrawer}
+			>
+				{i18n(I18nKey.close)}
+			</button>
+		</div>
 	</aside>
 </div>
 
@@ -180,16 +273,47 @@ let drawerEl: HTMLElement | undefined = $state();
 		box-sizing: border-box
 		background: var(--surface-container-low)
 		color: var(--on-surface)
-		border-radius: 0 var(--shape-corner-l) var(--shape-corner-l) 0
+		border-radius: 0
 		transform: translateX(-100%)
 		transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate)
+		overflow: hidden
+		touch-action: pan-y
 
 	&--open &__panel
 		transform: translateX(0)
 
 	&__brand
-		padding: var(--m3e-space-5) var(--shape-corner-xl) var(--m3e-space-3)
+		display: flex
+		align-items: center
+		justify-content: space-between
+		padding: var(--m3e-space-4) var(--shape-corner-xl) var(--m3e-space-3)
 		flex: none
+
+	&__brand-text
+		display: flex
+		flex-direction: column
+
+	&__header-close-btn
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		width: 2.25rem
+		height: 2.25rem
+		padding: 0
+		border: none
+		border-radius: var(--shape-corner-full)
+		background: transparent
+		color: var(--on-surface-variant)
+		cursor: pointer
+		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
+		&:hover
+			background: var(--surface-container-high)
+			color: var(--on-surface)
+		&:active
+			transform: scale(0.92)
+		> :global(svg)
+			width: 1.25rem
+			height: 1.25rem
 
 	&__title
 		font: var(--m3e-type-title-large)
@@ -203,7 +327,27 @@ let drawerEl: HTMLElement | undefined = $state();
 	&__nav
 		flex: 1
 		overflow-y: auto
+		overscroll-behavior: contain
+		-webkit-overflow-scrolling: touch
 		padding: var(--m3e-space-2) var(--m3e-space-3) var(--m3e-space-4)
+		scrollbar-width: thin
+		scrollbar-color: var(--scrollbar-bg) transparent
+
+		&::-webkit-scrollbar
+			width: 6px
+
+		&::-webkit-scrollbar-track
+			background: transparent
+
+		&::-webkit-scrollbar-thumb
+			background: var(--scrollbar-bg)
+			border-radius: var(--shape-corner-full)
+
+			&:hover
+				background: var(--scrollbar-bg-hover)
+
+			&:active
+				background: var(--scrollbar-bg-active)
 
 	/* 一级/子项：全宽 56dp，选中整项 secondary-container 全圆 pill */
 	&__item
@@ -311,4 +455,51 @@ let drawerEl: HTMLElement | undefined = $state();
 
 	&__group-body
 		padding: 4px 0 8px
+
+	/* Нижний футер: чистый полноразмерный Text Button на всю ширину блока (как в правом ящике) */
+	&__footer
+		display: flex
+		align-items: center
+		height: var(--bar-h-mobile, 3.75rem)
+		box-sizing: border-box
+		padding: 0
+		padding-bottom: env(safe-area-inset-bottom, 0px)
+		border-top: 1px solid unquote("color-mix(in oklab, var(--outline-variant) 40%, transparent)")
+		background: var(--surface-container)
+		flex: none
+
+		@media (min-width: 600px)
+			height: var(--bar-h-tablet, 4.5rem)
+
+	&__close-btn
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		width: 100%
+		height: 100%
+		padding: 0 var(--m3e-space-4)
+		box-sizing: border-box
+		border: none
+		border-radius: 0
+		background: transparent
+		color: var(--on-surface)
+		font: var(--m3e-type-label-large)
+		font-weight: 600
+		letter-spacing: 0.04em
+		cursor: pointer
+		user-select: none
+		touch-action: manipulation
+		transition:
+			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
+			color var(--m3e-duration-short) var(--m3e-easing-standard)
+
+		@media (min-width: 600px)
+			font-size: 1rem
+
+		&:hover
+			background: var(--surface-container-high)
+			color: var(--primary)
+
+		&:active
+			background: unquote("color-mix(in oklab, var(--on-surface) 8%, var(--surface-container-high))")
 </style>

@@ -40,9 +40,26 @@ const fakeResult: SearchResult[] = [
 	},
 ];
 
+const openPanel = () => {
+	const panel = document.getElementById("search-panel");
+	if (panel) {
+		panel.classList.remove("float-panel-closed");
+		setTimeout(() => {
+			panel.querySelector<HTMLInputElement>("input")?.focus();
+		}, 50);
+	}
+};
+
 const togglePanel = () => {
 	const panel = document.getElementById("search-panel");
-	panel?.classList.toggle("float-panel-closed");
+	if (panel) {
+		const isClosed = panel.classList.contains("float-panel-closed");
+		if (isClosed) {
+			openPanel();
+		} else {
+			panel.classList.add("float-panel-closed");
+		}
+	}
 };
 
 const setPanelVisibility = (show: boolean, isDesktop: boolean): void => {
@@ -130,14 +147,19 @@ onMount(() => {
 			console.log("Pagefind ready event received.");
 			initializeSearch();
 		});
-		document.addEventListener("pagefindloaderror", () => {
-			console.warn(
-				"Pagefind load error event received. Search functionality will be limited.",
-			);
-			initializeSearch();
-		});
 		initializeSearch();
 	}
+
+	const handleToggleEvent = () => togglePanel();
+	const handleOpenEvent = () => openPanel();
+
+	document.addEventListener("search:toggle", handleToggleEvent);
+	document.addEventListener("search:open", handleOpenEvent);
+
+	return () => {
+		document.removeEventListener("search:toggle", handleToggleEvent);
+		document.removeEventListener("search:open", handleOpenEvent);
+	};
 });
 
 $: if (initialized) {
@@ -177,9 +199,8 @@ $: if (initialized) {
 <!-- search panel（blog/SearchPanel 原子；开合由调用方 classList 控制，与 DisplaySettings 同款） -->
 <SearchPanel
     id="search-panel"
-    class="float-panel float-panel-closed absolute md:w-[30rem] top-20 left-4 md:left-[unset] right-4"
+    class="float-panel float-panel-closed fixed top-16 inset-x-4 max-w-[36rem] mx-auto md:absolute md:top-20 md:inset-x-auto md:right-4 md:w-[30rem] z-[100]"
     bind:query={keywordMobile}
     results={panelResults}
     placeholder={i18n(I18nKey.search)}
-    hideInputOnDesktop
 />

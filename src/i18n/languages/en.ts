@@ -47,11 +47,11 @@ export const en: Translation = {
 	[Key.animeConfigMissingBilibili]: "Bilibili UID not configured",
 	[Key.animeSyncEmpty]: "No anime items found in this source",
 
-	[Key.compass]: "Compass",
+	[Key.compass]: "Bookmarks",
 	[Key.compassBanner]:
-		"Handy sites I keep coming back to — dev tools, docs and rabbit holes.",
-	[Key.compassNoResults]: "No sites matched your search",
-	[Key.compassCounts]: "sites",
+		"Useful tools, documentation, services, and favorite places on the web.",
+	[Key.compassNoResults]: "No bookmarks matched your search",
+	[Key.compassCounts]: "bookmarks",
 
 	[Key.skills]: "Skills",
 	[Key.skillsBanner]:
@@ -106,6 +106,33 @@ export const en: Translation = {
 	[Key.gamesFeatured]: "Featured",
 	[Key.gamesHours]: "hrs",
 	[Key.gamesRating]: "Rating",
+
+	[Key.cinema]: "Cinema",
+	[Key.cinemaBanner]:
+		"Movies and TV shows — ratings, watch status, and personal reviews.",
+	[Key.cinemaNoResults]: "No movies or shows matched your filters",
+
+	[Key.mediaFilter]: "Filter",
+	[Key.mediaFilterMediaType]: "Media Type",
+	[Key.mediaFilterStatus]: "Status",
+	[Key.mediaFilterGenres]: "Genres",
+	[Key.mediaFilterAll]: "All",
+	[Key.mediaFilterMovies]: "Movies",
+	[Key.mediaFilterTvShows]: "TV Shows",
+	[Key.mediaFilterReset]: "Reset",
+	[Key.mediaFilterTitle]: "Title",
+	[Key.mediaFilterPriority]: "Priority",
+	[Key.mediaFilterPrice]: "Price",
+	[Key.mediaFilterRating]: "Rating",
+	[Key.mediaFilterShowMore]: "Show more ({count})",
+	[Key.mediaFilterShowLess]: "Show less",
+	[Key.mediaFilterSort]: "Sort",
+	[Key.mediaFilterPriceAsc]: "Price: Low to High",
+	[Key.mediaFilterPriceDesc]: "Price: High to Low",
+	[Key.mediaFilterYear]: "Release Year",
+	[Key.mediaFilterPlaytime]: "Playtime",
+	[Key.mediaFilterDiscount]: "Discount",
+	[Key.mediaFilterApply]: "Apply",
 
 	[Key.timeline]: "Timeline",
 	[Key.timelineBanner]: "Growth trajectory, milestones, and memorable moments.",

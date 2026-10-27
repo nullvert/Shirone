@@ -1,0 +1,232 @@
+---
+/**
+ * BottomAppBar.astro
+ * Нижняя панель навигации (M3 Bottom App Bar) для мобильных устройств (< 1024px).
+ * Полностью отзеркаливает премиальный дизайн оригинальной шапки (TopAppBar):
+ * 
+ * - Слева:
+ *   1. Кнопка меню ≡ (IconButton 40x40 с m3-state-layer, открывает SiteNavigationDrawer)
+ *   2. Брендинг/Логотип: вертикальная акцентная линия + название сайта (ссылка на главную)
+ * - Справа:
+ *   1. Поиск 🔍 (IconButton 40x40, открывает search-panel)
+ *   2. Палитра темы 🎨 (IconButton 40x40, открывает настройки цвета в Drawer)
+ *   3. Переключатель день/ночь 🌙 (LightDarkSwitch atom)
+ *   4. Контекстная кнопка Drawer (Фильтры на медиа-страницах, TOC в статьях, Виджеты на остальных)
+ *   5. Кнопка "Наверх" (быстрый скролл вверх страницы)
+ */
+import IconButton from "@components/atoms/action/IconButton.svelte";
+import Icon from "@components/atoms/display/Icon.svelte";
+import { url } from "@utils/url-utils";
+import { siteConfig } from "@/config";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import type { SidebarPage } from "@/types/sidebarConfig";
+import LightDarkSwitch from "./LightDarkSwitch.svelte";
+
+interface Props {
+	currentPage?: SidebarPage;
+}
+
+const { currentPage } = Astro.props as Props;
+
+const isMedia = currentPage === "anime" || currentPage === "cinema" || currentPage === "games";
+const isPost = currentPage === "post";
+
+const bottomBarConfig = siteConfig.bottomAppBar;
+const mobileHeight = bottomBarConfig?.mobileHeight ?? "3.75rem";
+const tabletHeight = bottomBarConfig?.tabletHeight ?? "4.5rem";
+const mobileBtnSize = bottomBarConfig?.mobileButtonSize ?? "2.5rem";
+const tabletBtnSize = bottomBarConfig?.tabletButtonSize ?? "3.25rem";
+const maxWidth = bottomBarConfig?.maxWidth ?? "56rem";
+---
+
+<nav
+	id="bottom-app-bar"
+	class="bottom-app-bar lg:hidden fixed bottom-0 inset-x-0 z-50 transition-transform duration-300"
+	aria-label="Mobile Navigation Bar"
+	style={`--bar-h-mobile: ${mobileHeight}; --bar-h-tablet: ${tabletHeight}; --btn-sz-mobile: ${mobileBtnSize}; --btn-sz-tablet: ${tabletBtnSize}; --bar-max-w: ${maxWidth};`}
+>
+	<div class="bottom-app-bar__container relative w-full px-3 sm:px-6 mx-auto flex items-center justify-between">
+		<!-- Левая секция: Меню ≡ + Логотип/Заголовок (зеркало левой части TopAppBar) -->
+		<div class="flex items-center gap-1.5 shrink-0">
+			<IconButton id="bottom-bar-menu-btn" label={i18n(I18nKey.more)} class="shrink-0 text-[var(--on-surface)] bottom-bar-btn">
+				<Icon icon="material-symbols:menu-rounded" class="bottom-bar-icon" />
+			</IconButton>
+
+			<a
+				href={url("/")}
+				class="group flex items-center gap-2 px-1 text-[var(--on-surface)] transition whitespace-nowrap select-none bottom-bar-logo"
+				aria-label={siteConfig.title}
+			>
+				<span class="h-4 w-1 rounded-full bg-[var(--primary)] transition-all group-hover:h-6"></span>
+				<span class="text-base sm:text-lg font-bold tracking-tight group-hover:text-[var(--primary)]">{siteConfig.title}</span>
+			</a>
+		</div>
+
+		<!-- Правая секция: Контролы в стиле TopAppBar + Контекстный Drawer + Наверх -->
+		<div class="flex items-center gap-0.5 sm:gap-1 shrink-0">
+			<!-- 1. Поиск -->
+			<IconButton id="bottom-bar-search-btn" label={i18n(I18nKey.search)} class="shrink-0 text-[var(--on-surface)] bottom-bar-btn">
+				<Icon icon="material-symbols:search-rounded" class="bottom-bar-icon" />
+			</IconButton>
+
+			<!-- 2. Палитра темы -->
+			{!siteConfig.themeColor.fixed && (
+				<IconButton id="bottom-bar-theme-btn" label={i18n(I18nKey.themeColor)} class="shrink-0 text-[var(--on-surface)] bottom-bar-btn">
+					<Icon icon="material-symbols:palette-outline" class="bottom-bar-icon" />
+				</IconButton>
+			)}
+
+			<!-- 3. Переключатель день/ночь -->
+			<div class="shrink-0 bottom-bar-switch flex items-center justify-center">
+				<LightDarkSwitch client:only="svelte" />
+			</div>
+
+			<!-- 4. Контекстная кнопка страницы (Фильтр / TOC / Сайдбар) -->
+			<IconButton
+				id="bottom-bar-drawer-btn"
+				label={isMedia ? i18n(I18nKey.mediaFilterTitle) : isPost ? i18n(I18nKey.tableOfContents) : i18n(I18nKey.sidebar)}
+				class="shrink-0 text-[var(--primary)] bottom-bar-btn"
+			>
+				<span class:list={["bottom-bar-drawer-icon bottom-bar-drawer-icon--media", { hidden: !isMedia }]}>
+					<Icon icon="material-symbols:tune-rounded" class="bottom-bar-icon" />
+				</span>
+				<span class:list={["bottom-bar-drawer-icon bottom-bar-drawer-icon--post", { hidden: !isPost }]}>
+					<Icon icon="material-symbols:format-list-bulleted-rounded" class="bottom-bar-icon" />
+				</span>
+				<span class:list={["bottom-bar-drawer-icon bottom-bar-drawer-icon--sidebar", { hidden: isMedia || isPost }]}>
+					<Icon icon="material-symbols:space-dashboard-outline-rounded" class="bottom-bar-icon" />
+				</span>
+			</IconButton>
+
+			<!-- 5. Кнопка "Наверх" -->
+			<IconButton id="bottom-bar-top-btn" label={i18n(I18nKey.backToTop)} class="shrink-0 text-[var(--on-surface-variant)] bottom-bar-btn">
+				<Icon icon="material-symbols:keyboard-arrow-up-rounded" class="bottom-bar-icon text-[1.05em]" />
+			</IconButton>
+		</div>
+	</div>
+</nav>
+
+<style lang="stylus">
+.bottom-app-bar
+	background: unquote("color-mix(in oklab, var(--surface) 92%, transparent)")
+	backdrop-filter: blur(16px)
+	-webkit-backdrop-filter: blur(16px)
+	border-top: 1px solid var(--outline-variant)
+	padding-bottom: env(safe-area-inset-bottom, 0px)
+	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05)
+	transition:
+		background-color var(--m3e-duration-medium) var(--m3e-easing-standard),
+		box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard),
+		transform var(--m3e-duration-medium) var(--m3e-easing-standard)
+
+.bottom-app-bar__container
+	box-sizing: border-box
+	max-width: var(--bar-max-w, 56rem)
+	height: var(--bar-h-mobile)
+
+	@media (min-width: 600px)
+		height: var(--bar-h-tablet)
+
+:global(.bottom-bar-btn)
+	width: var(--btn-sz-mobile) !important
+	height: var(--btn-sz-mobile) !important
+
+	@media (min-width: 600px)
+		width: var(--btn-sz-tablet) !important
+		height: var(--btn-sz-tablet) !important
+
+/* Иконки автоматически занимают идеальные 54% от размера кнопки */
+:global(.bottom-bar-icon)
+	font-size: calc(var(--btn-sz-mobile) * 0.54) !important
+	width: calc(var(--btn-sz-mobile) * 0.54) !important
+	height: calc(var(--btn-sz-mobile) * 0.54) !important
+
+	@media (min-width: 600px)
+		font-size: calc(var(--btn-sz-tablet) * 0.54) !important
+		width: calc(var(--btn-sz-tablet) * 0.54) !important
+		height: calc(var(--btn-sz-tablet) * 0.54) !important
+
+.bottom-bar-switch
+	width: var(--btn-sz-mobile)
+	height: var(--btn-sz-mobile)
+
+	@media (min-width: 600px)
+		width: var(--btn-sz-tablet)
+		height: var(--btn-sz-tablet)
+
+	:global(button#scheme-switch)
+		width: 100% !important
+		height: 100% !important
+
+	:global(button#scheme-switch svg)
+		width: calc(var(--btn-sz-mobile) * 0.54) !important
+		height: calc(var(--btn-sz-mobile) * 0.54) !important
+
+		@media (min-width: 600px)
+			width: calc(var(--btn-sz-tablet) * 0.54) !important
+			height: calc(var(--btn-sz-tablet) * 0.54) !important
+
+.bottom-bar-logo
+	height: var(--btn-sz-mobile)
+
+	@media (min-width: 600px)
+		height: var(--btn-sz-tablet)
+</style>
+
+<script>
+	function syncBottomAppBarState() {
+		const container = document.getElementById("swup-container");
+		const page = container?.dataset.currentPage;
+		const drawerBtn = document.getElementById("bottom-bar-drawer-btn");
+		if (drawerBtn) {
+			const isMedia = page === "anime" || page === "cinema" || page === "games";
+			const isPost = page === "post";
+			drawerBtn.dataset.pageType = isMedia ? "media" : isPost ? "post" : "sidebar";
+
+			const mediaIcon = drawerBtn.querySelector(".bottom-bar-drawer-icon--media");
+			const postIcon = drawerBtn.querySelector(".bottom-bar-drawer-icon--post");
+			const sidebarIcon = drawerBtn.querySelector(".bottom-bar-drawer-icon--sidebar");
+
+			mediaIcon?.classList.toggle("hidden", !isMedia);
+			postIcon?.classList.toggle("hidden", !isPost);
+			sidebarIcon?.classList.toggle("hidden", isMedia || isPost);
+		}
+	}
+
+	function initBottomAppBar() {
+		const bar = document.getElementById("bottom-app-bar");
+		if (!bar || (bar as HTMLElement).dataset.bound === "true") return;
+		(bar as HTMLElement).dataset.bound = "true";
+
+		bar.addEventListener("click", (e) => {
+			const target = (e.target as HTMLElement)?.closest("button, a");
+			if (!target) return;
+
+			if (target.id === "bottom-bar-menu-btn") {
+				e.preventDefault();
+				document.dispatchEvent(new CustomEvent("site-drawer:toggle"));
+			} else if (target.id === "bottom-bar-drawer-btn") {
+				e.preventDefault();
+				document.dispatchEvent(new CustomEvent("sidebar-drawer:toggle", { detail: { tab: "content" } }));
+			} else if (target.id === "bottom-bar-search-btn") {
+				e.preventDefault();
+				e.stopPropagation();
+				if (typeof (window as unknown as { __loadPagefind?: () => Promise<unknown> }).__loadPagefind === "function") {
+					void (window as unknown as { __loadPagefind: () => Promise<unknown> }).__loadPagefind();
+				}
+				document.dispatchEvent(new CustomEvent("search:toggle"));
+			} else if (target.id === "bottom-bar-theme-btn") {
+				e.preventDefault();
+				document.dispatchEvent(new CustomEvent("sidebar-drawer:toggle", { detail: { tab: "theme" } }));
+			} else if (target.id === "bottom-bar-top-btn") {
+				e.preventDefault();
+				window.scrollTo({ top: 0, behavior: "smooth" });
+			}
+		});
+	}
+
+	initBottomAppBar();
+	syncBottomAppBarState();
+	document.addEventListener("swup:content:replace", syncBottomAppBarState);
+</script>

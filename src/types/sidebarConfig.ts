@@ -38,6 +38,7 @@ export type SidebarPage =
 	| "projects" // 项目
 	| "devices" // 设备展示
 	| "games" // 游戏展示
+	| "cinema" // 影视
 	| "timeline" // 时间线
 	| "albums" // 相册
 	| "about" // 关于
@@ -145,6 +146,34 @@ export interface MusicWidget {
 	pages?: SidebarPage[];
 }
 
+/** 媒体库过滤与搜索侧栏（适用于 anime, cinema, games） */
+export interface MediaFilterWidget {
+	type: "mediaFilter";
+	enable: boolean;
+	slot: SidebarWidgetSlot;
+	column?: SidebarColumn;
+	pages?: SidebarPage[];
+
+	/** Показывать ли строку поиска (по умолчанию true) */
+	showSearch?: boolean;
+	/** Показывать ли переключатель вкладок Movie/TV/All (по умолчанию true) */
+	showTabs?: boolean;
+	/** Показывать ли список статусов (по умолчанию true) */
+	showStatus?: boolean;
+	/** Показывать ли блок сортировки (по умолчанию true) */
+	showSort?: boolean;
+	/** Показывать ли блок жанров (по умолчанию true) */
+	showGenres?: boolean;
+	/** Показывать ли счётчик количества у статусов (по умолчанию true) */
+	showStatusCounts?: boolean;
+	/** Показывать ли счётчик количества у жанров (по умолчанию true) */
+	showGenreCounts?: boolean;
+	/** Порог сворачивания списка жанров до кнопки «Ещё» (по умолчанию 10) */
+	genresCollapseAfter?: number;
+	/** Высота элементов фильтра (по умолчанию "2.25rem" / 36px) */
+	itemHeight?: string;
+}
+
 export type SidebarWidget =
 	| ProfileWidget
 	| CategoriesWidget
@@ -154,7 +183,8 @@ export type SidebarWidget =
 	| StatsWidget
 	| CalendarWidget
 	| TocWidget
-	| MusicWidget;
+	| MusicWidget
+	| MediaFilterWidget;
 
 /**
  * 侧栏整体配置。components 渲染顺序 = 数组顺序，top 恒排在 sticky 之前。

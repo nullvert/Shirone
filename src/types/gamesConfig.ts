@@ -70,6 +70,12 @@ export interface GamesConfig extends PageMeta {
 	disabledIds?: string[];
 	/** 兼容通用 disabledKeys 别名。 */
 	disabledKeys?: string[];
+	/** Ссылка или идентификаторы внешних платформ */
+	account?: {
+		infinitebacklogUsername?: string;
+		steamId64?: string;
+		steamWishlistUrl?: string;
+	};
 	/** 可选自定义数据（向后兼容；默认读取 src/data/games.ts）。 */
 	items?: GameItem[];
 }

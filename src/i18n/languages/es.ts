@@ -107,6 +107,33 @@ export const es: Translation = {
 	[Key.gamesHours]: "h",
 	[Key.gamesRating]: "Valoración",
 
+	[Key.cinema]: "Cine",
+	[Key.cinemaBanner]:
+		"Películas y series — calificaciones, estado de visualización y reseñas breves.",
+	[Key.cinemaNoResults]: "Ninguna película o serie coincide con tus filtros",
+
+	[Key.mediaFilter]: "Filtro",
+	[Key.mediaFilterMediaType]: "Tipo de medio",
+	[Key.mediaFilterStatus]: "Estado",
+	[Key.mediaFilterGenres]: "Géneros",
+	[Key.mediaFilterAll]: "Todos",
+	[Key.mediaFilterMovies]: "Películas",
+	[Key.mediaFilterTvShows]: "Series",
+	[Key.mediaFilterReset]: "Restablecer",
+	[Key.mediaFilterTitle]: "Título",
+	[Key.mediaFilterPriority]: "Prioridad",
+	[Key.mediaFilterPrice]: "Precio",
+	[Key.mediaFilterRating]: "Puntuación",
+	[Key.mediaFilterShowMore]: "Mostrar más ({count})",
+	[Key.mediaFilterShowLess]: "Mostrar menos",
+	[Key.mediaFilterSort]: "Ordenar",
+	[Key.mediaFilterPriceAsc]: "Precio: Menor a mayor",
+	[Key.mediaFilterPriceDesc]: "Precio: Mayor a menor",
+	[Key.mediaFilterYear]: "Año de estreno",
+	[Key.mediaFilterPlaytime]: "Tiempo jugado",
+	[Key.mediaFilterDiscount]: "Descuento",
+	[Key.mediaFilterApply]: "Aplicar",
+
 	[Key.timeline]: "Línea de tiempo",
 	[Key.timelineBanner]:
 		"Trayectoria de crecimiento, hitos y momentos memorables.",

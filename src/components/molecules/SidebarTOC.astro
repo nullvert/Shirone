@@ -1,7 +1,5 @@
 ---
 import TocList from "@components/atoms/blog/TocList.astro";
-import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
 import type { MarkdownHeading } from "astro";
 import { siteConfig } from "@/config/siteConfig";
 import WidgetLayout from "./WidgetLayout.astro";
@@ -11,9 +9,15 @@ interface Props {
 	class?: string;
 	style?: string;
 	widget?: unknown;
+	isDrawer?: boolean;
 }
 
-const { headings = [], class: className, style } = Astro.props;
+const {
+	headings = [],
+	class: className,
+	style,
+	isDrawer = false,
+} = Astro.props;
 
 const removeTailingHash = (text: string) => {
 	const lastIndexOfHash = text.lastIndexOf("#");
@@ -30,15 +34,17 @@ const tocHeadings = headings.map((heading) => ({
 	text: removeTailingHash(heading.text),
 	slug: heading.slug,
 }));
+
+const tocId = isDrawer ? "drawer-toc" : "toc";
+const wrapperId = isDrawer ? "drawer-toc-inner-wrapper" : "toc-inner-wrapper";
 ---
 
 <WidgetLayout
-	id="toc-inner-wrapper"
-	name={i18n(I18nKey.tableOfContents)}
-	class:list={["sidebar-toc", className]}
+	id={wrapperId}
+	class:list={[isDrawer ? "drawer-toc-widget" : "sidebar-toc", className]}
 	{style}
 >
-	<div id="toc" class="sidebar-toc__content">
+	<div id={tocId} class="sidebar-toc__content" data-toc-max-depth={maxLevel}>
 		<table-of-contents>
 			<TocList headings={tocHeadings} maxDepth={maxLevel} />
 		</table-of-contents>
@@ -46,32 +52,49 @@ const tocHeadings = headings.map((heading) => ({
 </WidgetLayout>
 
 <style lang="stylus">
+:global(.sidebar-toc .m3-card)
+	background: transparent !important
+	box-shadow: none !important
+	padding: 0 !important
+
+:global(.sidebar-toc .collapse-wrapper)
+	padding: 0 !important
+
 .sidebar-toc__content
 	max-height: calc(100dvh - 15rem)
 	overflow-y: auto
 	overflow-x: hidden
 	overscroll-behavior: contain
 	padding-block: 0.25rem
-	padding-right: 0.125rem
+	padding-right: 0.25rem
 	scroll-padding-block: 0.25rem
 	scrollbar-width: thin
-	scrollbar-color: var(--scrollbar-bg) transparent
+	scrollbar-color: transparent transparent
+	transition: scrollbar-color var(--m3e-duration-short) var(--m3e-easing-standard)
+
+	&:hover
+		scrollbar-color: var(--scrollbar-bg) transparent
 
 	&::-webkit-scrollbar
-		width: var(--m3e-space-2)
+		width: 4px
 
 	&::-webkit-scrollbar-track
 		background: transparent
 
 	&::-webkit-scrollbar-thumb
-		background: var(--scrollbar-bg)
+		background: transparent
 		border-radius: var(--shape-corner-full)
+		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
 
-		&:hover
-			background: var(--scrollbar-bg-hover)
+	&:hover::-webkit-scrollbar-thumb
+		background: var(--scrollbar-bg)
 
-		&:active
-			background: var(--scrollbar-bg-active)
+	&:hover::-webkit-scrollbar-thumb:hover
+		background: var(--scrollbar-bg-hover)
+
+	&:hover::-webkit-scrollbar-thumb:active
+		background: var(--scrollbar-bg-active)
+
 </style>
 
 <script>
@@ -82,7 +105,6 @@ class TableOfContents extends HTMLElement {
 	anchorNavTarget: HTMLElement | null = null;
 	headingIdxMap = new Map<string, number>();
 	headings: HTMLElement[] = [];
-	sections: HTMLElement[] = [];
 	tocEntries: HTMLAnchorElement[] = [];
 	active: boolean[] = [];
 	lastActiveIdx = -1;
@@ -92,79 +114,67 @@ class TableOfContents extends HTMLElement {
 
 	constructor() {
 		super();
-		this.observer = new IntersectionObserver(this.markVisibleSection, {
+		this.observer = new IntersectionObserver(this.markVisibleHeading, {
+			rootMargin: "-80px 0px -60% 0px",
 			threshold: 0,
 		});
 	}
 
-	markVisibleSection = (entries: IntersectionObserverEntry[]) => {
+	markVisibleHeading = (entries: IntersectionObserverEntry[]) => {
 		entries.forEach((entry) => {
-			const id = entry.target.children[0]?.getAttribute("id");
+			const id = entry.target.id;
 			const idx = id ? this.headingIdxMap.get(id) : undefined;
-			if (idx != undefined) this.active[idx] = entry.isIntersecting;
+			if (idx !== undefined) {
+				this.active[idx] = entry.isIntersecting;
+			}
 		});
 
-		if (!this.active.includes(true)) this.fallback();
 		this.update();
 	};
 
-	toggleActiveHeading = () => {
-		let i = this.active.length - 1;
-		let min = this.active.length - 1;
-		let max = -1;
-		while (i >= 0 && !this.active[i]) {
-			this.tocEntries[i]?.classList.remove(this.visibleClass);
-			i--;
-		}
-		while (i >= 0 && this.active[i]) {
-			this.tocEntries[i]?.classList.add(this.visibleClass);
-			min = Math.min(min, i);
-			max = Math.max(max, i);
-			i--;
-		}
-		while (i >= 0) {
-			this.tocEntries[i]?.classList.remove(this.visibleClass);
-			i--;
-		}
-	};
-
 	updateActiveHighlight = () => {
-		const threshold = window.innerHeight * 0.35;
-		const atPageBottom =
-			window.scrollY + window.innerHeight >=
-			document.documentElement.scrollHeight - 1;
-		let best = this.anchorNavIdx ?? 0;
+		if (this.headings.length === 0) return;
 
-		if (this.anchorNavIdx === null) {
+		// If user clicked an anchor, keep that anchor active until scroll completes or user scrolls
+		let best = this.anchorNavIdx;
+
+		if (best === null) {
+			const scrollY = window.scrollY;
+			const atPageBottom =
+				scrollY + window.innerHeight >=
+				document.documentElement.scrollHeight - 20;
+
 			if (atPageBottom) {
 				best = this.headings.length - 1;
 			} else {
+				// Offset by top appbar height + buffer (~90px)
+				const targetTop = 90;
+				// Find the last heading whose top position is <= targetTop
+				best = 0;
 				for (let j = 0; j < this.headings.length; j++) {
-					if (this.headings[j]?.getBoundingClientRect().top <= threshold) {
-						best = j;
+					const el = this.headings[j];
+					if (el) {
+						const rect = el.getBoundingClientRect();
+						if (rect.top <= targetTop) {
+							best = j;
+						} else {
+							break;
+						}
 					}
 				}
 			}
 		}
 
-		if (best === this.lastActiveIdx) {
-			if (this.anchorNavIdx !== null) {
-				this.tocEntries.forEach((entry) =>
-					entry.classList.toggle(
-						"m3-blog-toc__item--active",
-						this.tocEntries.indexOf(entry) === best,
-					),
-				);
-				this.scrollToActiveHeading(this.tocEntries[best], true);
-			}
-			return;
-		}
+		if (best === this.lastActiveIdx) return;
 		this.lastActiveIdx = best;
-		this.tocEntries.forEach((entry) =>
-			entry.classList.remove("m3-blog-toc__item--active"),
-		);
-		this.tocEntries[best]?.classList.add("m3-blog-toc__item--active");
-		this.scrollToActiveHeading(this.tocEntries[best], this.anchorNavIdx !== null);
+
+		this.tocEntries.forEach((entry, i) => {
+			entry.classList.toggle("m3-blog-toc__item--active", i === best);
+		});
+
+		if (this.tocEntries[best]) {
+			this.scrollToActiveHeading(this.tocEntries[best], this.anchorNavIdx !== null);
+		}
 	};
 
 	scrollToActiveHeading = (activeHeading?: HTMLAnchorElement, force = false) => {
@@ -173,7 +183,7 @@ class TableOfContents extends HTMLElement {
 
 		const containerRect = this.tocEl.getBoundingClientRect();
 		const itemRect = activeHeading.getBoundingClientRect();
-		const edgePadding = 4;
+		const edgePadding = 8;
 		const visibleTop = containerRect.top + edgePadding;
 		const visibleBottom = containerRect.bottom - edgePadding;
 
@@ -204,32 +214,8 @@ class TableOfContents extends HTMLElement {
 		this.updateScheduled = true;
 		requestAnimationFrame(() => {
 			this.updateScheduled = false;
-			this.toggleActiveHeading();
 			this.updateActiveHighlight();
 		});
-	};
-
-	fallback = () => {
-		if (!this.sections.length) return;
-
-		for (let i = 0; i < this.sections.length; i++) {
-			const section = this.sections[i];
-			if (!section) continue;
-			const offsetTop = section.getBoundingClientRect().top;
-			const offsetBottom = section.getBoundingClientRect().bottom;
-
-			if (
-				this.isInRange(offsetTop, 0, window.innerHeight) ||
-				this.isInRange(offsetBottom, 0, window.innerHeight) ||
-				(offsetTop < 0 && offsetBottom > window.innerHeight)
-			) {
-				this.markActiveHeading(i);
-			} else if (offsetTop > window.innerHeight) break;
-		}
-	};
-
-	markActiveHeading = (idx: number) => {
-		this.active[idx] = true;
 	};
 
 	releaseAnchorNavigation = () => {
@@ -269,10 +255,6 @@ class TableOfContents extends HTMLElement {
 		}
 	};
 
-	isInRange(value: number, min: number, max: number) {
-		return min < value && value < max;
-	}
-
 	connectedCallback() {
 		const element = document.querySelector(".prose");
 		let initialized = false;
@@ -292,6 +274,7 @@ class TableOfContents extends HTMLElement {
 
 	init() {
 		this.tocEl =
+			this.closest(".sidebar-toc__content") ??
 			document.getElementById("toc") ??
 			document.getElementById("toc-inner-wrapper");
 
@@ -302,33 +285,29 @@ class TableOfContents extends HTMLElement {
 		});
 
 		this.tocEntries = Array.from(
-			document.querySelectorAll<HTMLAnchorElement>("#toc a[href^='#']"),
+			this.querySelectorAll<HTMLAnchorElement>("a[href^='#']"),
 		);
 
 		if (this.tocEntries.length === 0) return;
 
-		this.sections = new Array(this.tocEntries.length);
-		this.headings = new Array(this.tocEntries.length);
+		this.headings = [];
 		this.headingIdxMap.clear();
 
 		for (let i = 0; i < this.tocEntries.length; i++) {
 			const hash = this.tocEntries[i]?.hash;
 			const id = hash ? decodeURIComponent(hash.substring(1)) : "";
 			const heading = id ? document.getElementById(id) : null;
-			const section = heading?.parentElement;
-			if (heading instanceof HTMLElement && section instanceof HTMLElement) {
-				this.headings[i] = heading;
-				this.sections[i] = section;
-				this.headingIdxMap.set(id, i);
+			if (heading instanceof HTMLElement) {
+				this.headings.push(heading);
+				const idx = this.headings.length - 1;
+				this.headingIdxMap.set(id, idx);
+				this.observer.observe(heading);
 			}
 		}
-		this.active = new Array(this.tocEntries.length).fill(false);
-
-		this.sections.forEach((section) => {
-			if (section) this.observer.observe(section);
-		});
+		this.active = new Array(this.headings.length).fill(false);
 
 		window.addEventListener("scroll", this.update, { passive: true });
+		window.addEventListener("resize", this.update, { passive: true });
 		window.addEventListener("wheel", this.releaseAnchorNavigation, {
 			passive: true,
 		});
@@ -340,25 +319,129 @@ class TableOfContents extends HTMLElement {
 		});
 		window.addEventListener("keydown", this.releaseAnchorNavigation);
 
-		this.fallback();
 		this.update();
 	}
 
 	disconnectedCallback() {
-		this.sections.forEach((section) => {
-			if (section) this.observer.unobserve(section);
+		this.headings.forEach((heading) => {
+			if (heading) this.observer.unobserve(heading);
 		});
 		this.observer.disconnect();
 		window.removeEventListener("scroll", this.update);
+		window.removeEventListener("resize", this.update);
 		this.tocEl?.removeEventListener("click", this.handleAnchorClick);
 		window.removeEventListener("wheel", this.releaseAnchorNavigation);
 		window.removeEventListener("touchstart", this.releaseAnchorNavigation);
 		window.removeEventListener("pointerdown", this.releaseAnchorNavigation);
 		window.removeEventListener("keydown", this.releaseAnchorNavigation);
 	}
+
+	/** Re-initialize after the nav content has been rebuilt (e.g. after Swup navigation). */
+	reinit() {
+		this.disconnectedCallback();
+		// Reset state.
+		this.tocEl = null;
+		this.tocEntries = [];
+		this.headings = [];
+		this.headingIdxMap.clear();
+		this.active = [];
+		this.lastActiveIdx = -1;
+		this.anchorNavIdx = null;
+		this.anchorNavTarget = null;
+		this.observer = new IntersectionObserver(this.markVisibleHeading, {
+			rootMargin: "-80px 0px -60% 0px",
+			threshold: 0,
+		});
+		this.init();
+	}
 }
 
 if (!customElements.get("table-of-contents")) {
 	customElements.define("table-of-contents", TableOfContents);
 }
+
+// ---------------------------------------------------------------------------
+// Swup navigation: rebuild the sidebar TOC nav from the new page's headings.
+// The sidebar lives outside #swup-container so it is not re-rendered by Swup.
+// We mirror the same algorithm used in post-decryption.ts::syncTableOfContents.
+// ---------------------------------------------------------------------------
+(function bindTocSwupSync() {
+	function getMaxDepth(): number {
+		const el = document.querySelector<HTMLElement>("[data-toc-max-depth]");
+		const parsed = Number.parseInt(el?.dataset.tocMaxDepth ?? "", 10);
+		return Number.isFinite(parsed) && parsed > 0 ? parsed : 3;
+	}
+
+	function buildTocFromHeadings(
+		headings: Array<{ depth: number; text: string; slug: string }>,
+		nav: HTMLElement,
+	) {
+		nav.replaceChildren();
+		if (!headings.length) return;
+		const base = headings.reduce(
+			(m, h) => Math.min(m, h.depth),
+			Number.POSITIVE_INFINITY,
+		);
+		let counter = 0;
+		const maxDepth = getMaxDepth();
+		for (const h of headings) {
+			const rel = h.depth - base;
+			if (rel >= maxDepth) continue;
+			const top = rel === 0;
+			const a = document.createElement("a");
+			a.className = `m3-blog-toc__item${top ? "" : " m3-blog-toc__item--sub"}`;
+			a.href = `#${encodeURIComponent(h.slug)}`;
+			a.title = h.text;
+			a.dataset.tocDepth = String(h.depth);
+			const mark = document.createElement("span");
+			mark.className = "m3-blog-toc__mark";
+			mark.setAttribute("aria-hidden", "true");
+			if (top) {
+				counter += 1;
+				mark.textContent = String(counter);
+			} else {
+				const dot = document.createElement("span");
+				dot.className = "m3-blog-toc__dot";
+				mark.append(dot);
+			}
+			const text = document.createElement("span");
+			text.className = "m3-blog-toc__text";
+			text.textContent = h.text;
+			a.append(mark, text);
+			nav.append(a);
+		}
+	}
+
+	function syncTocAfterNavigation() {
+		// Collect all sidebar+drawer table-of-contents custom elements.
+		const tocs = document.querySelectorAll<HTMLElement & { reinit?: () => void }>("table-of-contents");
+		if (!tocs.length) return;
+
+		const container = document.getElementById("swup-container");
+		const isPost = container?.dataset.currentPage === "post";
+
+		let headings: Array<{ depth: number; text: string; slug: string }> = [];
+		if (isPost) {
+			headings = Array.from(
+				document.querySelectorAll<HTMLElement>(".prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6"),
+			).flatMap((el) => {
+				if (!el.id) return [];
+				const raw = (el.textContent ?? "").trim().replace(/#$/, "").trim();
+				return [{ depth: Number(el.tagName[1]), text: raw, slug: el.id }];
+			});
+		}
+
+		tocs.forEach((toc) => {
+			const nav = toc.querySelector<HTMLElement>(".m3-blog-toc");
+			if (!nav) return;
+			buildTocFromHeadings(headings, nav);
+			toc.reinit?.();
+		});
+
+		// Notify fab-controller so the floating TOC panel also refreshes.
+		document.dispatchEvent(new CustomEvent("shirone:toc-synced"));
+	}
+
+	document.addEventListener("swup:content:replace", syncTocAfterNavigation);
+})();
 </script>

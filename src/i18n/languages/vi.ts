@@ -107,6 +107,33 @@ export const vi: Translation = {
 	[Key.gamesHours]: "giờ",
 	[Key.gamesRating]: "Đánh giá",
 
+	[Key.cinema]: "Phim ảnh",
+	[Key.cinemaBanner]:
+		"Phim điện ảnh và truyền hình — đánh giá, tiến độ xem và cảm nhận.",
+	[Key.cinemaNoResults]: "Không có phim nào phù hợp với bộ lọc",
+
+	[Key.mediaFilter]: "Bộ lọc",
+	[Key.mediaFilterMediaType]: "Loại phương tiện",
+	[Key.mediaFilterStatus]: "Trạng thái",
+	[Key.mediaFilterGenres]: "Thể loại",
+	[Key.mediaFilterAll]: "Tất cả",
+	[Key.mediaFilterMovies]: "Phim lẻ",
+	[Key.mediaFilterTvShows]: "Phim bộ",
+	[Key.mediaFilterReset]: "Đặt lại",
+	[Key.mediaFilterTitle]: "Tiêu đề",
+	[Key.mediaFilterPriority]: "Ưu tiên",
+	[Key.mediaFilterPrice]: "Giá",
+	[Key.mediaFilterRating]: "Đánh giá",
+	[Key.mediaFilterShowMore]: "Xem thêm ({count})",
+	[Key.mediaFilterShowLess]: "Thu gọn",
+	[Key.mediaFilterSort]: "Sắp xếp",
+	[Key.mediaFilterPriceAsc]: "Giá: Thấp đến cao",
+	[Key.mediaFilterPriceDesc]: "Giá: Cao đến thấp",
+	[Key.mediaFilterYear]: "Năm phát hành",
+	[Key.mediaFilterPlaytime]: "Thời gian chơi",
+	[Key.mediaFilterDiscount]: "Giảm giá",
+	[Key.mediaFilterApply]: "Áp dụng",
+
 	[Key.timeline]: "Dòng thời gian",
 	[Key.timelineBanner]:
 		"Hành trình phát triển, các cột mốc và khoảnh khắc đáng nhớ.",

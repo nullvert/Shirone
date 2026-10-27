@@ -136,6 +136,10 @@ export interface AnimeConfig extends PageMeta {
 	providers: {
 		bangumi: BangumiProviderConfig;
 		bilibili: BilibiliProviderConfig;
+		anilist?: {
+			enable?: boolean;
+			username?: string;
+		};
 	};
 	/** 快照策略 */
 	snapshot: AnimeSnapshotConfig;

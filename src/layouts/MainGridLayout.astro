@@ -1,12 +1,15 @@
 ---
 import BannerStage from "@components/organisms/BannerStage.astro";
+import BottomAppBar from "@components/organisms/BottomAppBar.astro";
 import CategoryBar from "@components/organisms/CategoryBar.astro";
 import ContextMenu from "@components/organisms/ContextMenu.svelte";
 import FloatingControls from "@components/organisms/FloatingControls.astro";
 import Footer from "@components/organisms/Footer.astro";
 import RouteProgress from "@components/organisms/RouteProgress.svelte";
 import SideBar from "@components/organisms/SideBar.astro";
+import SidebarDrawer from "@components/organisms/SidebarDrawer.svelte";
 import SiteNavigationDrawer from "@components/organisms/SiteNavigationDrawer.svelte";
+import SearchModal from "@components/organisms/SearchModal.svelte";
 import TopAppBar from "@components/organisms/TopAppBar.astro";
 import {
 	generateGridClasses,
@@ -65,9 +68,9 @@ const mainContentClasses = generateMainContentClasses(sidebarResponsive);
 
 <Layout title={title} banner={banner} ogImage={ogImage} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle} page={page}>
 
-<!-- Navbar -->
+<!-- Navbar (Desktop only, on mobile replaced by BottomAppBar) -->
 <slot slot="head" name="head"></slot>
-<header id="top-row" class="z-50 pointer-events-none relative transition-all duration-700 max-w-[var(--page-width)] px-0 md:px-4 mx-auto" class:list={[""]}>
+<header id="top-row" class="z-50 pointer-events-none relative transition-all duration-700 max-w-[var(--page-width)] px-0 md:px-4 mx-auto hidden lg:block">
     <div id="navbar-wrapper" class="pointer-events-auto sticky top-0 transition-all">
         <TopAppBar></TopAppBar>
     </div>
@@ -122,6 +125,11 @@ const mainContentClasses = generateMainContentClasses(sidebarResponsive);
 </div>
 
 <SiteNavigationDrawer client:load />
+<SidebarDrawer client:load title={page === "anime" || page === "cinema" || page === "games" ? "Filter" : page === "post" ? "Table of Contents" : "Sidebar"}>
+	<SideBar id="sidebar-drawer-content" currentPage={page} headings={headings} isDrawer={true} />
+</SidebarDrawer>
+<BottomAppBar currentPage={page} />
+<SearchModal client:load />
 {contextMenuConfig.enable && (
 	<ContextMenu
 		actions={contextMenuConfig.actions}

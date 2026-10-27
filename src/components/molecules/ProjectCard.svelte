@@ -1,7 +1,7 @@
 <script lang="ts">
 /**
  * 项目卡片（分子）：统一卡片壳 + 单一骨架，无断点分叉。
- * - 卡片壳对齐站点卡片语言（FriendCard/AnimeCard/SkillCard）：
+ * - 卡片壳对齐站点卡片语言（FriendCard/MediaPosterCard/SkillCard）：
  *   --card-bg + outline-variant 描边 + corner-l，hover 升级描边与 elevation-2；
  * - 代表项目（featured）：高亮边框渐变 + Featured 徽章；
  * - 有封面：通栏 16/9 媒体区（aspect-ratio 锁高 + object-fit: cover），

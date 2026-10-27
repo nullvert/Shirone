@@ -7,6 +7,9 @@ settings:
 overrides:
   serialize-javascript: 7.0.5
 
+patchedDependencies:
+  '@material/material-color-utilities': b1ce5dea9a31733ac3ddd4b236a80185e050df5f98e48bb7fd93f8ccf3f58378
+
 importers:
 
   .:
@@ -70,7 +73,7 @@ importers:
         version: 5.2.2(svelte@5.57.2)
       '@material/material-color-utilities':
         specifier: ^0.4.0
-        version: 0.4.0
+        version: 0.4.0(patch_hash=b1ce5dea9a31733ac3ddd4b236a80185e050df5f98e48bb7fd93f8ccf3f58378)
       '@panzoom/panzoom':
         specifier: 4.6.2
         version: 4.6.2
@@ -8372,7 +8375,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@material/material-color-utilities@0.4.0': {}
+  '@material/material-color-utilities@0.4.0(patch_hash=b1ce5dea9a31733ac3ddd4b236a80185e050df5f98e48bb7fd93f8ccf3f58378)': {}
 
   '@mdx-js/mdx@3.1.1(supports-color@7.2.0)':
     dependencies:

@@ -86,7 +86,7 @@ export const swupOptions: NonNullable<Parameters<typeof swup>[0]> = {
 	theme: false as const,
 	ignore: ['a[href="#"]'],
 	animationClass: "transition-swup-",
-	containers: ["main", "#toc"],
+	containers: ["main"],
 	smoothScrolling: true,
 	cache: true,
 	preload: true,

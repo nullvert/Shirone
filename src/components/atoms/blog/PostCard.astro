@@ -84,28 +84,23 @@ const titleLabel =
 			<AccentBar size="medium" />
 			{pinned && (
 				<span
-					class:list={[
-						"m3-blog-postcard__pin",
-						{ "m3-blog-postcard__pin--locked": encrypted },
-					]}
+					class="m3-blog-postcard__pin"
 					aria-hidden="true"
-					title={encrypted ? `${pinnedLabel}, ${encryptedLabel}` : pinnedLabel}
+					title={pinnedLabel}
 				>
 					<Icon icon="material-symbols:keep-rounded" />
-					{encrypted && (
-						<span class="m3-blog-postcard__pin-lock">
-							<Icon icon="material-symbols:lock-rounded" />
-						</span>
-					)}
 				</span>
 			)}
-			{encrypted && !pinned && (
-				<span class="m3-blog-postcard__encrypted" aria-hidden="true" title={encryptedLabel}>
+			{encrypted && (
+				<span
+					class="m3-blog-postcard__encrypted"
+					aria-hidden="true"
+					title={encryptedLabel}
+				>
 					<Icon icon="material-symbols:lock-rounded" />
 				</span>
 			)}
-			{title}
-			<Icon class="m3-blog-postcard__arrow" icon="material-symbols:chevron-right-rounded" />
+			<span class="m3-blog-postcard__title-text">{title}</span>
 		</a>
 		{published && (
 			<PostMeta
@@ -196,14 +191,9 @@ const titleLabel =
 		.m3-blog-postcard:hover &
 			color: var(--primary)
 
-	&__arrow
-		flex-shrink: 0
-		width: 1.5rem
-		height: 1.5rem
-		color: var(--primary)
-		transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-		.m3-blog-postcard:hover &
-			transform: translateX(0.25rem)
+	&__title-text
+		flex: 1
+		min-width: 0
 
 	&__pin
 		position: relative
@@ -231,25 +221,6 @@ const titleLabel =
 		> :global(svg)
 			width: 1.125rem
 			height: 1.125rem
-
-	/* 置顶 + 加密角标：tertiary 小锁圆点叠加在 pin 徽标右上角（BadgedBox 语言），
-	   带卡片色描边与背景分离，整体宽度与单 pin 徽标一致 */
-	&__pin-lock
-		position: absolute
-		top: -0.375rem
-		right: -0.375rem
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 1rem
-		height: 1rem
-		border-radius: var(--shape-corner-full)
-		background: var(--tertiary-container)
-		color: var(--on-tertiary-container)
-		box-shadow: 0 0 0 2px var(--card-bg)
-		> :global(svg)
-			width: 0.625rem
-			height: 0.625rem
 
 	/* PostMeta 是 Astro 子组件，需用 global 命中其根节点 */
 	:global(.m3-blog-postcard__meta)
@@ -405,11 +376,6 @@ const titleLabel =
 		&__body
 			padding: 1rem
 
-		/* 原始设计：标题尾部箭头 2rem */
-		&__arrow
-			width: 2rem
-			height: 2rem
-
 /* ============================================================
    容器模式联动（PostPage 的命名容器 + #post-list 类钩子）
    同一卡片按所在容器切换 token 形态，而非两套皮肤：
@@ -444,10 +410,6 @@ const titleLabel =
 		/* 无封面卡继续为右上 enter 区块让位。 */
 		:global({shell-selector} .m3e-post-list--grid .m3-blog-postcard:not(.m3-blog-postcard--cover)) &__body
 			padding-right: 4.75rem
-
-		/* 右侧 enter 大箭头区块已在，隐藏冗余的标题内联箭头。 */
-		:global({shell-selector} .m3e-post-list--grid) &__arrow
-			display: none
 
 		/* grid 密度缩放：元信息徽标 32 → 24px、图标 20 → 16px。 */
 		:global({shell-selector} .m3e-post-list--grid) & :global(.m3-meta-icon)

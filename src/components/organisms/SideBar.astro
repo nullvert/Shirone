@@ -13,6 +13,7 @@
 import Announcement from "@components/molecules/Announcement.astro";
 import Calendar from "@components/molecules/Calendar.astro";
 import Categories from "@components/molecules/Categories.astro";
+import MediaFilter from "@components/molecules/MediaFilter.astro";
 import Series from "@components/molecules/Series.astro";
 import SidebarTOC from "@components/molecules/SidebarTOC.astro";
 import SiteStats from "@components/molecules/SiteStats.astro";
@@ -38,6 +39,8 @@ interface Props {
 	/** 当前页面标识符，用于 widget 的 pages 过滤 */
 	currentPage?: SidebarPage;
 	headings?: import("astro").MarkdownHeading[];
+	/** 是否作为移动端抽屉内部渲染（抽屉模式下不加 sticky 限制，按普通列表自适应） */
+	isDrawer?: boolean;
 }
 
 const {
@@ -46,12 +49,14 @@ const {
 	id = "sidebar",
 	currentPage,
 	headings = [],
+	isDrawer = false,
 } = Astro.props;
 
 // 双栏时页面存在两个 complementary landmark，axe landmark-unique
 // 要求每个 aside 有区分性名称
-const ariaLabel =
-	column === "secondary"
+const ariaLabel = isDrawer
+	? `${i18n(I18nKey.sidebar)} (Drawer)`
+	: column === "secondary"
 		? i18n(I18nKey.sidebarSecondary)
 		: i18n(I18nKey.sidebar);
 
@@ -77,17 +82,20 @@ const componentMap = {
 	calendar: Calendar,
 	toc: SidebarTOC,
 	music: MusicSidebar,
+	mediaFilter: MediaFilter,
 } satisfies Record<SidebarWidget["type"], unknown>;
 
 type WidgetRenderer = (props: Record<string, unknown>) => unknown;
 
 // 按列取整：SSR 不做页面过滤（全量渲染，swup 导航后客户端才能恢复
-// 被隐藏的 widget），页面可见性仅体现在包装层的 hidden 标记上
+// 被隐藏的 widget），页面可见性仅体现在包装层的 hidden 标记上。
+// arrangement: "single" 或 isDrawer 模式下，所有 widget 都归入 primary。
+const isSingle = sidebarConfig.arrangement === "single" || isDrawer;
 const widgets = sidebarConfig.enable
 	? sidebarConfig.components.filter(
 			(widget) =>
 				widget.enable &&
-				(widget.column ?? "primary") === column &&
+				(isSingle ? column === "primary" : (widget.column ?? "primary") === column) &&
 				(widget.type !== "music" || MusicSidebar !== null),
 		)
 	: [];
@@ -107,7 +115,7 @@ const hasVisibleTop = topWidgets.some(isVisible);
 const hasVisibleSticky = stickyWidgets.some(isVisible);
 ---
 
-<aside id={id} aria-label={ariaLabel} class:list={[className, "w-full lg:h-full"]}>
+<aside id={id} aria-label={ariaLabel} class:list={[className, "w-full lg:h-full", isDrawer ? "block" : "hidden lg:block"]}>
 	{topWidgets.length > 0 && (
 		<div
 			data-sidebar-group
@@ -124,6 +132,7 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 							widget={widget}
 							headings={widget.type === "toc" ? headings : undefined}
 							priority={widget.type === "profile" && currentPage === "about"}
+							isDrawer={isDrawer}
 						/>
 					</div>
 				);
@@ -135,9 +144,10 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 			id={`${id}-sticky`}
 			data-sidebar-group
 			class:list={[
-				"flex flex-col w-full gap-4 lg:sticky lg:top-20",
+				"flex flex-col w-full gap-4",
+				isDrawer ? "" : "lg:sticky lg:top-20",
 				{ hidden: !hasVisibleSticky },
-				{ "lg:min-h-0 lg:flex-1": column === "secondary" },
+				{ "lg:min-h-0 lg:flex-1": column === "secondary" && !isDrawer },
 			]}
 		>
 			{stickyWidgets.map((widget, index) => {
@@ -151,6 +161,7 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 							widget={widget}
 							headings={widget.type === "toc" ? headings : undefined}
 							priority={widget.type === "profile" && currentPage === "about"}
+							isDrawer={isDrawer}
 							class="onload-animation"
 							style={`animation-delay: ${animationDelay(index)}`}
 						/>
@@ -271,7 +282,7 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 			widget.getAnimations().forEach((animation) => animation.cancel());
 		});
 		document
-			.querySelectorAll<HTMLElement>("#sidebar-sticky, #sidebar-secondary-sticky")
+			.querySelectorAll<HTMLElement>("#sidebar-sticky, #sidebar-secondary-sticky, #sidebar-drawer-content-sticky")
 			.forEach((group) => {
 				group.scrollTop = 0;
 			});

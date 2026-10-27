@@ -214,6 +214,11 @@ const configuredFontRoles = getConfiguredFontRoles(resolvedFontOptions);
 		<style define:vars={{
 			configHue,
 			'page-width': resolvePageWidth(),
+			'bar-h-mobile': siteConfig.bottomAppBar?.mobileHeight ?? '3.75rem',
+			'bar-h-tablet': siteConfig.bottomAppBar?.tabletHeight ?? '4.5rem',
+			'btn-sz-mobile': siteConfig.bottomAppBar?.mobileButtonSize ?? '2.5rem',
+			'btn-sz-tablet': siteConfig.bottomAppBar?.tabletButtonSize ?? '3.25rem',
+			'bar-max-w': siteConfig.bottomAppBar?.maxWidth ?? '56rem',
 		}}></style>
 
 		<slot name="head"></slot>
@@ -275,6 +280,10 @@ const configuredFontRoles = getConfiguredFontRoles(resolvedFontOptions);
 		:root { --banner-stage-height: max(70vh, 28rem); }
 		@media (max-width: 479.98px) { :root { --banner-panel-overlap: var(--m3e-space-2); } }
 		@media (min-width: 480px) and (max-width: 767.98px) { :root { --banner-panel-overlap: var(--m3e-space-2); } }
+		#main-layout {
+			top: 1rem;
+			padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+		}
 		html[data-wallpaper-mode="banner"] body[data-current-page="home"][data-banner-has-mobile="true"] #main-layout { top: var(--banner-content-top); }
 		html[data-wallpaper-mode="banner"] body[data-current-page="home"][data-banner-has-mobile="true"] #top-row { height: calc(var(--banner-stage-height) - 4.5rem); }
 		body[data-banner-layout="compact"] #top-row { height: auto; }
@@ -293,16 +302,15 @@ function setClickOutsideToClose(panel: string, ignores: string[]) {
 	document.addEventListener('click', event => {
 		const panelDom = document.getElementById(panel);
 		const target = event.target;
-		if (!(target instanceof Node)) return;
+		if (!(target instanceof Element)) return;
 		for (const ignore of ignores) {
-			const element = document.getElementById(ignore);
-			if (element === target || element?.contains(target)) return;
+			if (target.closest(`#${ignore}`)) return;
 		}
 		if (panelDom) panelDom.classList.add('float-panel-closed');
 	});
 }
 setClickOutsideToClose('display-setting', ['display-setting', 'display-settings-switch']);
-setClickOutsideToClose('search-panel', ['search-panel', 'search-bar', 'search-switch']);
+setClickOutsideToClose('search-panel', ['search-panel', 'search-input-desktop', 'search-switch', 'bottom-bar-search-btn']);
 
 function loadTheme() { setTheme(getStoredTheme()); }
 function loadHue() { setHue(getHue()); }

@@ -49,15 +49,25 @@ onMount(() => {
 	z-index: 65
 	opacity: 0
 	pointer-events: none
+	overflow: hidden
 	transition:
 		top var(--m3e-duration-short) var(--m3e-easing-standard),
 		opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-	overflow: hidden
+
+	/* Отображается только на десктопе с шапкой (>= 1024px), на мобильных скрыт */
+	display: none
+
+	@media (min-width: 1024px)
+		display: block
 
 	&--visible
 		opacity: 1
 
-:global(body[data-banner-visible="true"][data-banner-scrolled="false"]) .route-progress
-	top: 0
+/* Когда баннер открыт и не проскроллен, TopAppBar прозрачный у самого верха */
+@media (min-width: 1024px)
+	:global(body[data-banner-visible="true"][data-banner-scrolled="false"]) .route-progress
+		top: 0
 
 </style>
+
+

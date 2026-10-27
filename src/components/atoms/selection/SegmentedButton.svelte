@@ -85,11 +85,12 @@ let {
         display: flex
         align-items: center
         justify-content: center
-        gap: 0.25rem
-        height: 2rem
-        padding: 0 0.75rem
-        border-radius: var(--shape-corner-s)
+        gap: 0.375rem
+        height: 2.75rem
+        padding: 0 0.875rem
+        border-radius: var(--shape-corner-m)
         font: var(--m3e-type-label-medium)
+        font-weight: 500
         color: var(--on-surface-variant)
         cursor: pointer
         user-select: none

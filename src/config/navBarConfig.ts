@@ -3,6 +3,7 @@ import { i18n } from "@i18n/translation";
 import { aboutConfig } from "@/config/aboutConfig";
 import { albumsConfig } from "@/config/albumsConfig";
 import { animeConfig } from "@/config/animeConfig";
+import { cinemaConfig } from "@/config/cinemaConfig";
 import { compassConfig } from "@/config/compassConfig";
 import { devicesConfig } from "@/config/devicesConfig";
 import { friendsConfig } from "@/config/friendsConfig";
@@ -65,7 +66,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 	Compass: {
 		name: i18n(I18nKey.compass),
 		url: "/compass/",
-		icon: "material-symbols:explore-rounded",
+		icon: "material-symbols:bookmarks-outline-rounded",
 		pageKey: "compass",
 	},
 	Skills: {
@@ -85,6 +86,12 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		url: "/devices/",
 		icon: "material-symbols:devices-rounded",
 		pageKey: "devices",
+	},
+	Cinema: {
+		name: i18n(I18nKey.cinema),
+		url: "/cinema/",
+		icon: "material-symbols:movie-outline-rounded",
+		pageKey: "cinema",
 	},
 	Games: {
 		name: i18n(I18nKey.games),
@@ -153,6 +160,7 @@ const defaultNavBarConfig: NavBarConfig = {
 				LinkPresets.Timeline,
 				LinkPresets.Projects,
 				LinkPresets.Devices,
+				LinkPresets.Cinema,
 				LinkPresets.Games,
 				LinkPresets.Skills,
 				// 分类/标签入口不进导航菜单（避免菜单项过多），预设已登记指向独立页面，
@@ -186,6 +194,7 @@ const unavailableFeatureRoutes: ReadonlySet<string> = new Set([
 	...(friendsConfig.enable ? [] : ["/friends"]),
 	...(momentsConfig.enable ? [] : ["/moments"]),
 	...(animeConfig.enable ? [] : ["/anime"]),
+	...(cinemaConfig.enable ? [] : ["/cinema"]),
 	...(compassConfig.enable ? [] : ["/compass"]),
 	...(albumsConfig.enable ? [] : ["/albums"]),
 	...(skillsConfig.enable ? [] : ["/skills"]),

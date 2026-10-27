@@ -82,6 +82,10 @@ export const animeConfig: AnimeConfig = withUserConfig("anime", {
 				minDelayMs: 300,
 			},
 		},
+		anilist: {
+			enable: true,
+			username: "nullvert",
+		},
 	},
 
 	/** 快照存储管理 */

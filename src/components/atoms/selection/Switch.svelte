@@ -71,45 +71,38 @@ let {
 
     &__track
         position: relative
-        width: 3.25rem
-        height: 2rem
+        width: 3rem
+        height: 1.75rem
         border-radius: var(--shape-corner-full)
-        border: 2px solid var(--outline)
+        border: none
         box-sizing: border-box
         background: var(--surface-container-highest)
-        transition: background-color var(--m3e-duration-medium) var(--m3e-easing-standard), border-color var(--m3e-duration-medium) var(--m3e-easing-standard)
+        transition: background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
 
     &__thumb
         position: absolute
         top: 50%
-        left: 0.5rem
-        width: 1rem
-        height: 1rem
+        left: 0.25rem
+        width: 1.25rem
+        height: 1.25rem
         border-radius: var(--shape-corner-full)
         background: var(--outline)
-        box-shadow: var(--m3e-elevation-1)
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25)
         transform: translateY(-50%)
         transition:
             left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-            width var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-            height var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
             background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
 
     &__input:checked ~ &__track
         background: var(--primary)
-        border-color: var(--primary)
 
     &__input:checked ~ &__track &__thumb
         left: 1.5rem
-        width: 1.5rem
-        height: 1.5rem
         background: var(--on-primary)
 
-    /* M3E 图标变体：thumb 恒 24px，未选中略贴左（保留呼吸感，不撞 border） */
+    /* M3E 图标变体：thumb 恒定尺寸，选中时优雅 check */
     &.m3-switch--icons &__thumb
-        left: 0.125rem
-        width: 1.5rem
-        height: 1.5rem
+        left: 0.25rem
 
     &.m3-switch--icons &__input:checked ~ &__track &__thumb
         left: 1.5rem
@@ -118,22 +111,18 @@ let {
         position: absolute
         top: 50%
         left: 50%
-        width: 1rem
-        height: 1rem
+        width: 0.875rem
+        height: 0.875rem
         transform: translate(-50%, -50%)
-        transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
+        transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard)
 
     &__icon--check
         fill: var(--primary)
         opacity: 0
 
     &__icon--close
-        fill: var(--surface)
-        opacity: 1
+        display: none
 
     &__input:checked ~ &__track &__icon--check
         opacity: 1
-
-    &__input:checked ~ &__track &__icon--close
-        opacity: 0
 </style>

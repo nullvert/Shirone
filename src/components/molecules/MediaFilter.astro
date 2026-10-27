@@ -1,0 +1,109 @@
+---
+import {
+	getAnimeMediaList,
+	getCinemaList,
+	getGamesList,
+} from "@utils/media/adapters";
+import MediaSidebarFilter from "./MediaSidebarFilter.svelte";
+import WidgetLayout from "./WidgetLayout.astro";
+
+import type { MediaFilterWidget } from "@/types/sidebarConfig";
+
+interface Props {
+	class?: string;
+	style?: string;
+	widget?: MediaFilterWidget;
+}
+
+const { class: className, style, widget } = Astro.props;
+
+// Элементы коллекций для сайдбара
+const cinemaItems = getCinemaList();
+const animeItems = getAnimeMediaList();
+const gamesItems = getGamesList();
+
+const allItemsMap = {
+	cinema: cinemaItems.map((i) => ({
+		kind: i.kind,
+		status: i.status,
+		genres: i.genres,
+	})),
+	anime: animeItems.map((i) => ({
+		kind: i.kind,
+		format: i.format,
+		status: i.status,
+		genres: i.genres,
+	})),
+	games: gamesItems.map((i) => ({
+		kind: i.kind,
+		status: i.status,
+		genres: i.genres,
+	})),
+};
+---
+
+<WidgetLayout
+	id="media-filter"
+	class={className}
+	style={style}
+>
+	<MediaSidebarFilter
+		client:load
+		{allItemsMap}
+		showSearch={widget?.showSearch ?? true}
+		showTabs={widget?.showTabs ?? true}
+		showStatus={widget?.showStatus ?? true}
+		showSort={widget?.showSort ?? true}
+		showGenres={widget?.showGenres ?? true}
+		showStatusCounts={widget?.showStatusCounts ?? true}
+		showGenreCounts={widget?.showGenreCounts ?? true}
+		genresCollapseAfter={widget?.genresCollapseAfter ?? 10}
+		itemHeight={widget?.itemHeight ?? "2.25rem"}
+	/>
+</WidgetLayout>
+
+<style lang="stylus">
+.media-widget-header-reset
+	display: inline-flex
+	align-items: center
+	justify-content: center
+	width: 1.75rem
+	height: 1.75rem
+	padding: 0
+	color: var(--on-surface-variant)
+	background: transparent
+	border: none
+	border-radius: var(--shape-corner-full)
+	cursor: pointer
+	transition: all var(--m3e-duration-short) var(--m3e-easing-standard)
+
+	&:hover
+		background: unquote('color-mix(in srgb, var(--primary) 15%, transparent)')
+		color: var(--primary)
+
+	&.hidden
+		display: none
+
+/* На мобильных экранах (< 1024px) виджет фильтра сворачивается ТОЛЬКО когда он активен
+   (:not(.hidden)), не затрагивая сайдбар на других страницах сайта */
+:global(.sidebar-widget:not(.hidden) > widget-layout[data-id="media-filter"])
+	@media (max-width: 1023px)
+		display: contents
+		> :global(.m3-card)
+			display: contents
+			background: transparent
+			border: none
+			box-shadow: none
+			padding: 0
+			margin: 0
+		> :global(.m3-card) > :global(.widget-layout__header)
+			display: none
+		> :global(.m3-card) > :global(.collapse-wrapper)
+			display: contents
+			padding: 0
+			margin: 0
+
+:global(.sidebar-widget:not(.hidden):has(widget-layout[data-id="media-filter"]))
+	@media (max-width: 1023px)
+		display: contents
+</style>

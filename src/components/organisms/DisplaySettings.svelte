@@ -48,7 +48,15 @@ import type { WallpaperMode } from "@/types/config";
 import type { PostListMode } from "@/types/postListConfig";
 import type { TexturePreset } from "@/types/textureConfig";
 
-let { class: className = "" }: { class?: string } = $props();
+let {
+	class: className = "",
+	embedded = false,
+	id = "display-setting",
+}: {
+	class?: string;
+	embedded?: boolean;
+	id?: string;
+} = $props();
 
 const displayConfig = resolveDisplaySettings();
 
@@ -80,6 +88,10 @@ let texturePreset = $state<TexturePreset>(getStoredTexturePreset());
 let lastAppliedTexturePreset = texturePreset;
 let textureOpacity = $state<number>(getStoredTextureOpacity());
 
+// Разрешенные стили оформления (ровно 4 варианта: Vibrant, Expressive, Neutral, Fidelity)
+const ALLOWED_STYLES: McStyle[] = ["vibrant", "expressive", "neutral", "fidelity"];
+
+// Текстуры фона: ровно 3 опции (None по умолчанию, Starlight статичный/микро, Sakura анимированный)
 const textureOptions: {
 	value: TexturePreset;
 	labelKey: I18nKey;
@@ -96,29 +108,23 @@ const textureOptions: {
 		icon: "material-symbols:auto-awesome-outline-rounded",
 	},
 	{
-		value: "cyber-dots",
-		labelKey: I18nKey.texturePresetCyberDots,
-		icon: "material-symbols:grid-view-rounded",
-	},
-	{
-		value: "topography",
-		labelKey: I18nKey.texturePresetTopography,
-		icon: "material-symbols:waves-rounded",
-	},
-	{
-		value: "geometric",
-		labelKey: I18nKey.texturePresetGeometric,
-		icon: "material-symbols:category-outline-rounded",
-	},
-	{
 		value: "sakura",
 		labelKey: I18nKey.texturePresetSakura,
 		icon: "material-symbols:local-florist-outline-rounded",
 	},
 ];
 
+let isHomePage = $state(false);
+
+function checkHomePage() {
+	if (typeof window === "undefined") return;
+	const path = window.location.pathname.replace(/\/+$/, "") || "/";
+	isHomePage = path === "/" || path === "" || path === "/page" || path.startsWith("/page/");
+}
+
 // 明暗切换时重算色卡（LightDarkSwitch 改 <html> 的 class）
 onMount(() => {
+	checkHomePage();
 	const observer = new MutationObserver(() => {
 		dark = document.documentElement.classList.contains("dark");
 	});
@@ -127,7 +133,16 @@ onMount(() => {
 		attributeFilter: ["class"],
 	});
 	motionReduced = getMotionPreference();
-	return () => observer.disconnect();
+
+	const onRouteChanged = () => {
+		checkHomePage();
+	};
+	document.addEventListener("swup:content:replace", onRouteChanged);
+
+	return () => {
+		observer.disconnect();
+		document.removeEventListener("swup:content:replace", onRouteChanged);
+	};
 });
 
 /** 完整重置：色相 / 配色风格 / Color Spec / 列表布局 / 背景纹理 全部还原为站点默认（点击即生效，无确认弹窗） */
@@ -228,202 +243,469 @@ function styleColors(s: McStyle, h: number, d: boolean, sp: McSpec) {
 /** 当前主色（标题右侧预览圆点） */
 const currentColor = $derived(styleColors(style, hue, dark, spec).primary);
 
-/** 9 个风格的色卡预览（3×3 网格） */
+function selectStyle(newStyle: McStyle) {
+	style = newStyle;
+	const optimalHues = siteConfig.themeColor.optimalHues;
+	if (optimalHues && optimalHues[newStyle] !== undefined) {
+		hue = optimalHues[newStyle];
+	}
+}
+
+/** 4 разрешенных стиля: Vibrant, Expressive, Neutral, Fidelity (2×2 сетка) */
 const stylePreviews = $derived(
-	MC_STYLES.map((s) => ({
-		style: s,
-		label: i18n(styleKey(s)),
-		colors: styleColors(s, hue, dark, spec),
-	})),
+	ALLOWED_STYLES.map((s) => {
+		const targetHue = siteConfig.themeColor.optimalHues?.[s] ?? hue;
+		return {
+			style: s,
+			label: i18n(styleKey(s)),
+			colors: styleColors(s, targetHue, dark, spec),
+		};
+	}),
 );
 </script>
 
-<div id="display-setting" class="float-panel float-panel-closed absolute transition-all w-80 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain m3-scroll-contain {className}">
-    <PanelStack>
-        <!-- 段一：主题配色（色相 + 风格九宫格 + Color Spec） -->
-        <div class="p-4 flex flex-col gap-3">
-            <div class="flex flex-row gap-2 items-center justify-between">
-                <div class="flex gap-2 font-bold text-lg text-[var(--on-surface)] transition relative ml-3">
-                    <AccentBar size="small" class="absolute -left-3 top-[0.33rem]" />
-                    {i18n(I18nKey.themeColor)}
-                    <button aria-label="Reset to Default" class="float-control w-7 h-7 rounded-md active:scale-90 will-change-transform flex items-center justify-center"
-                            class:opacity-0={!isDirty} class:pointer-events-none={!isDirty} onclick={confirmReset}>
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </button>
-                </div>
-                <div class="flex gap-1 items-center">
-                    <!-- 当前色相值展示（段内用低一级容器色保持对比） -->
-                    <div title={i18n(I18nKey.themeColor)}
-                         class="h-7 min-w-16 px-1 rounded-(--shape-corner-m) flex items-center justify-center
-                                bg-(--surface-container) text-sm font-bold text-(--on-surface)">
-                        {hue}
-                    </div>
-                    <!-- 当前主色实时预览 -->
-                    <div class="h-7 w-7 rounded-full" title={i18n(I18nKey.themeColor)}
-                         style={`background: ${currentColor}; box-shadow: inset 0 0 0 1px var(--outline-variant)`}></div>
-                </div>
-            </div>
-            <Slider bind:value={hue} min={0} max={360} step={5} label={i18n(I18nKey.themeColor)} />
-
-            {#if displayConfig.colorStyle}
-                <div class="flex flex-col gap-2 pt-1">
-                    <span class="text-sm font-bold text-[var(--on-surface-variant)] ml-1">{i18n(I18nKey.colorStyle)}</span>
-                    <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label={i18n(I18nKey.colorStyle)}>
-                        {#each stylePreviews as p (p.style)}
-                            <button
-                                type="button"
-                                role="radio"
-                                aria-checked={style === p.style}
-                                title={p.label}
-                                aria-label={p.label}
-                                class="m3-style-cell"
-                                class:selected={style === p.style}
-                                onclick={() => (style = p.style)}
-                            >
-                                <span class="m3-style-cell__dots">
-                                    <span class="m3-style-cell__dot" style={`background: ${p.colors.primary}`}></span>
-                                    <span class="m3-style-cell__dot" style={`background: ${p.colors.secondary}`}></span>
-                                    <span class="m3-style-cell__dot" style={`background: ${p.colors.tertiary}`}></span>
-                                </span>
-                                <span class="m3-style-cell__name">{p.label}</span>
-                            </button>
-                        {/each}
-                    </div>
-                </div>
-            {/if}
-
-            {#if displayConfig.colorSpec}
-                <div class="flex flex-col gap-1.5 pt-1">
-                    <span class="display-settings__section-label">{i18n(I18nKey.colorSpec)}</span>
-                    <SegmentedButton
-                        options={MC_SPECS.map((s) => ({
-                            value: s,
-                            label: s === "2021" ? i18n(I18nKey.spec2021) : i18n(I18nKey.spec2025),
-                        }))}
-                        bind:value={spec}
-                        label={i18n(I18nKey.colorSpec)}
-                    />
-                </div>
-            {/if}
+<div
+    {id}
+    class="{className} {embedded ? 'ds-embedded' : 'float-panel float-panel-closed absolute transition-all w-88 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain m3-scroll-contain'}"
+>
+    <!-- Theme color header row -->
+    <div class="ds-color-header">
+        <div class="ds-color-swatch" style={`background: ${currentColor}`}></div>
+        <div class="ds-color-info">
+            <span class="ds-color-title">{i18n(I18nKey.themeColor)}</span>
+            <span class="ds-color-sub">{hue}° · {style.charAt(0).toUpperCase() + style.slice(1)}</span>
         </div>
+        <button
+            type="button"
+            aria-label={i18n(I18nKey.reset)}
+            class="ds-reset-btn"
+            class:is-active={isDirty}
+            disabled={!isDirty}
+            onclick={confirmReset}
+        >
+            <Icon icon="fa7-solid:arrow-rotate-left" class="text-xs"></Icon>
+            <span>{i18n(I18nKey.reset)}</span>
+        </button>
+    </div>
 
-        <!-- 段二：界面布局（页面背景 + 列表布局 + 背景纹理） -->
-        {#if displayConfig.wallpaperMode || displayConfig.layoutMode || displayConfig.texture}
-            <div class="p-4 flex flex-col gap-3">
-                {#if displayConfig.wallpaperMode}
-                    <div class="flex flex-col gap-1.5">
-                        <span class="display-settings__section-label">{i18n(I18nKey.wallpaperMode)}</span>
-                        <SegmentedButton
-                            options={[
-                                { value: "none", label: i18n(I18nKey.wallpaperModeNone) },
-                                { value: "banner", label: i18n(I18nKey.wallpaperModeBanner) },
-                            ]}
-                            bind:value={wallpaperMode}
-                            label={i18n(I18nKey.wallpaperMode)}
-                        />
-                    </div>
-                {/if}
+    <!-- Hue slider -->
+    <div class="ds-row-pad">
+        <Slider bind:value={hue} min={0} max={360} step={5} label={i18n(I18nKey.themeColor)} />
+    </div>
 
-                {#if displayConfig.layoutMode}
-                    <div class="flex flex-col gap-1.5">
-                        <span class="display-settings__section-label">{i18n(I18nKey.layoutMode)}</span>
-                        <SegmentedButton
-                            options={[
-                                { value: "list", label: i18n(I18nKey.layoutList) },
-                                { value: "grid", label: i18n(I18nKey.layoutGrid) },
-                            ]}
-                            bind:value={postListMode}
-                            label={i18n(I18nKey.layoutMode)}
-                        />
-                    </div>
-                {/if}
-
-                {#if displayConfig.texture}
-                    <div class="flex flex-col gap-2 pt-1">
-                        <span class="display-settings__section-label">{i18n(I18nKey.texturePreset)}</span>
-                        <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label={i18n(I18nKey.texturePreset)}>
-                            {#each textureOptions as opt (opt.value)}
-                                <button
-                                    type="button"
-                                    role="radio"
-                                    aria-checked={texturePreset === opt.value}
-                                    title={i18n(opt.labelKey)}
-                                    aria-label={i18n(opt.labelKey)}
-                                    class="m3-style-cell"
-                                    class:selected={texturePreset === opt.value}
-                                    onclick={() => (texturePreset = opt.value)}
-                                >
-                                    <Icon icon={opt.icon} class="text-lg" />
-                                    <span class="m3-style-cell__name">{i18n(opt.labelKey)}</span>
-                                </button>
-                            {/each}
-                        </div>
-                    </div>
-                {/if}
+    <!-- Color style options (2x2 grid) -->
+    {#if displayConfig.colorStyle}
+        <div class="ds-inline-group" role="radiogroup" aria-label={i18n(I18nKey.colorStyle)}>
+            <div class="ds-group-title">{i18n(I18nKey.colorStyle)}</div>
+            <div class="ds-inline-grid">
+                {#each stylePreviews as p (p.style)}
+                    <button
+                        type="button"
+                        role="radio"
+                        aria-checked={style === p.style}
+                        title={p.label}
+                        aria-label={p.label}
+                        class="ds-grid-item"
+                        class:ds-grid-item--active={style === p.style}
+                        onclick={() => selectStyle(p.style)}
+                    >
+                        <span class="ds-dot" style={`background: ${p.colors.primary}`}></span>
+                        <span class="ds-dot" style={`background: ${p.colors.secondary}`}></span>
+                        <span>{p.label}</span>
+                        {#if style === p.style}
+                            <Icon icon="material-symbols:check-rounded" class="ds-grid-check" />
+                        {/if}
+                    </button>
+                {/each}
             </div>
-        {/if}
+        </div>
+    {/if}
 
-        <!-- 段三：动效与体验 -->
-        {#if displayConfig.reduceMotion}
-            <div class="p-4 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <Icon icon="material-symbols:motion-photos-off" class="text-lg text-[var(--primary)]" />
-                    <span class="text-sm font-bold text-[var(--on-surface)]">{i18n(I18nKey.reduceMotion)}</span>
-                </div>
-                <Switch bind:checked={motionReduced} label={i18n(I18nKey.reduceMotion)} icons />
+    <!-- Page Background -->
+    {#if displayConfig.wallpaperMode}
+        <div class="ds-inline-group" role="radiogroup" aria-label={i18n(I18nKey.wallpaperMode)}>
+            <div class="ds-group-title">{i18n(I18nKey.wallpaperMode)}</div>
+            <div class="ds-inline-grid">
+                <button
+                    type="button"
+                    role="radio"
+                    aria-checked={wallpaperMode === "none"}
+                    title={i18n(I18nKey.wallpaperModeNone)}
+                    aria-label={i18n(I18nKey.wallpaperModeNone)}
+                    class="ds-grid-item"
+                    class:ds-grid-item--active={wallpaperMode === "none"}
+                    onclick={() => (wallpaperMode = "none")}
+                >
+                    <Icon icon="material-symbols:crop-square-rounded" class="ds-grid-icon" />
+                    <span>{i18n(I18nKey.wallpaperModeNone)}</span>
+                    {#if wallpaperMode === "none"}
+                        <Icon icon="material-symbols:check-rounded" class="ds-grid-check" />
+                    {/if}
+                </button>
+                <button
+                    type="button"
+                    role="radio"
+                    aria-checked={wallpaperMode === "banner"}
+                    title={i18n(I18nKey.wallpaperModeBanner)}
+                    aria-label={i18n(I18nKey.wallpaperModeBanner)}
+                    class="ds-grid-item"
+                    class:ds-grid-item--active={wallpaperMode === "banner"}
+                    onclick={() => (wallpaperMode = "banner")}
+                >
+                    <Icon icon="material-symbols:panorama-outline-rounded" class="ds-grid-icon" />
+                    <span>{i18n(I18nKey.wallpaperModeBanner)}</span>
+                    {#if wallpaperMode === "banner"}
+                        <Icon icon="material-symbols:check-rounded" class="ds-grid-check" />
+                    {/if}
+                </button>
             </div>
-        {/if}
-    </PanelStack>
+        </div>
+    {/if}
+
+    <!-- Layout (home only) -->
+    {#if displayConfig.layoutMode && isHomePage}
+        <div class="ds-inline-group" role="radiogroup" aria-label={i18n(I18nKey.layoutMode)}>
+            <div class="ds-group-title">{i18n(I18nKey.layoutMode)}</div>
+            <div class="ds-inline-grid">
+                <button
+                    type="button"
+                    role="radio"
+                    aria-checked={postListMode === "list"}
+                    title={i18n(I18nKey.layoutList)}
+                    aria-label={i18n(I18nKey.layoutList)}
+                    class="ds-grid-item"
+                    class:ds-grid-item--active={postListMode === "list"}
+                    onclick={() => (postListMode = "list")}
+                >
+                    <Icon icon="material-symbols:view-list-rounded" class="ds-grid-icon" />
+                    <span>{i18n(I18nKey.layoutList)}</span>
+                    {#if postListMode === "list"}
+                        <Icon icon="material-symbols:check-rounded" class="ds-grid-check" />
+                    {/if}
+                </button>
+                <button
+                    type="button"
+                    role="radio"
+                    aria-checked={postListMode === "grid"}
+                    title={i18n(I18nKey.layoutGrid)}
+                    aria-label={i18n(I18nKey.layoutGrid)}
+                    class="ds-grid-item"
+                    class:ds-grid-item--active={postListMode === "grid"}
+                    onclick={() => (postListMode = "grid")}
+                >
+                    <Icon icon="material-symbols:grid-view-rounded" class="ds-grid-icon" />
+                    <span>{i18n(I18nKey.layoutGrid)}</span>
+                    {#if postListMode === "grid"}
+                        <Icon icon="material-symbols:check-rounded" class="ds-grid-check" />
+                    {/if}
+                </button>
+            </div>
+        </div>
+    {/if}
+
+    <!-- Color Spec -->
+    {#if displayConfig.colorSpec}
+        <div class="ds-inline-group" role="radiogroup" aria-label={i18n(I18nKey.colorSpec)}>
+            <div class="ds-group-title">{i18n(I18nKey.colorSpec)}</div>
+            <div class="ds-inline-grid">
+                {#each MC_SPECS as s (s)}
+                    <button
+                        type="button"
+                        role="radio"
+                        aria-checked={spec === s}
+                        title={s === "2021" ? i18n(I18nKey.spec2021) : i18n(I18nKey.spec2025)}
+                        aria-label={s === "2021" ? i18n(I18nKey.spec2021) : i18n(I18nKey.spec2025)}
+                        class="ds-grid-item"
+                        class:ds-grid-item--active={spec === s}
+                        onclick={() => (spec = s)}
+                    >
+                        <Icon icon="material-symbols:palette-outline" class="ds-grid-icon" />
+                        <span>{s === "2021" ? i18n(I18nKey.spec2021) : i18n(I18nKey.spec2025)}</span>
+                        {#if spec === s}
+                            <Icon icon="material-symbols:check-rounded" class="ds-grid-check" />
+                        {/if}
+                    </button>
+                {/each}
+            </div>
+        </div>
+    {/if}
+
+    <!-- Background texture list options -->
+    {#if displayConfig.texture}
+        <div class="ds-list-group" role="radiogroup" aria-label={i18n(I18nKey.texturePreset)}>
+            <div class="ds-group-title">{i18n(I18nKey.texturePreset)}</div>
+            {#each textureOptions as opt (opt.value)}
+                <button
+                    type="button"
+                    role="radio"
+                    aria-checked={texturePreset === opt.value}
+                    title={i18n(opt.labelKey)}
+                    aria-label={i18n(opt.labelKey)}
+                    class="ds-list-item"
+                    class:ds-list-item--active={texturePreset === opt.value}
+                    onclick={() => (texturePreset = opt.value)}
+                >
+                    <span class="ds-list-leading">
+                        <Icon icon={opt.icon} class="ds-texture-icon" />
+                    </span>
+                    <span class="ds-list-label">{i18n(opt.labelKey)}</span>
+                    <span class="ds-list-trailing" aria-hidden="true">
+                        {#if texturePreset === opt.value}
+                            <Icon icon="material-symbols:check-rounded" class="ds-check-icon" />
+                        {/if}
+                    </span>
+                </button>
+            {/each}
+        </div>
+    {/if}
+
+    <!-- Reduce motion -->
+    {#if displayConfig.reduceMotion}
+        <div class="ds-row">
+            <span class="ds-row-label">{i18n(I18nKey.reduceMotion)}</span>
+            <Switch bind:checked={motionReduced} label={i18n(I18nKey.reduceMotion)} icons />
+        </div>
+    {/if}
 </div>
 
-
 <style lang="stylus">
-    .display-settings__section-label
-        font: var(--m3e-type-label-large)
-        font-weight: 700
-        color: var(--on-surface-variant)
-        margin-left: var(--m3e-space-1)
-
-    .m3-style-cell
+    /* ── Embedded wrapper ─────────────────────────── */
+    .ds-embedded
         display: flex
         flex-direction: column
+        gap: 0.875rem
+        width: 100%
+        padding-top: 0.5rem
+        padding-bottom: 0.5rem
+
+    /* ── Color header row ─────────────────────────── */
+    .ds-color-header
+        display: flex
         align-items: center
-        justify-content: center
-        gap: var(--m3e-space-1)
-        padding: var(--m3e-space-2) var(--m3e-space-1)
-        border: none
+        gap: 0.75rem
+        padding: 0.25rem var(--m3e-space-4)
+        min-height: 2.75rem
+
+    .ds-color-swatch
+        width: 2rem
+        height: 2rem
         border-radius: var(--shape-corner-m)
-        background: transparent
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.15)
+        flex-shrink: 0
+
+    .ds-color-info
+        display: flex
+        flex-direction: column
+        flex: 1
+        min-width: 0
+
+    .ds-color-title
+        font: var(--m3e-type-label-large)
+        font-weight: 600
+        color: var(--on-surface)
+        line-height: 1.25
+
+    .ds-color-sub
+        font: var(--m3e-type-body-small)
+        color: var(--on-surface-variant)
+        line-height: 1.25
+
+    /* ── Reset button ─────────────────────────────── */
+    .ds-reset-btn
+        display: inline-flex
+        align-items: center
+        gap: 0.35rem
+        height: 2rem
+        padding: 0 0.75rem
+        border-radius: var(--shape-corner-s)
+        border: none
+        background: var(--surface-container-high)
         color: var(--on-surface-variant)
         font: var(--m3e-type-label-small)
+        font-weight: 600
         cursor: pointer
         user-select: none
-        --m3e-state-color: var(--on-surface)
+        opacity: 0.25
+        pointer-events: none
+        flex-shrink: 0
+        transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), background var(--m3e-duration-short) var(--m3e-easing-standard)
+
+        &.is-active
+            opacity: 1
+            pointer-events: auto
+            &:hover
+                background: var(--surface-container-highest)
+                color: var(--on-surface)
+            &:active
+                transform: scale(0.96)
+
+    /* ── Slider wrapper with matching padding ────────── */
+    .ds-row-pad
+        padding: 0 var(--m3e-space-4)
+
+    /* ── List groups and full-width list items (No capsules) ── */
+    .ds-list-group
+        display: flex
+        flex-direction: column
+        gap: 0.375rem
+        padding: 0 var(--m3e-space-4)
+
+    .ds-inline-group
+        display: flex
+        flex-direction: column
+        gap: 0.375rem
+        padding: 0 var(--m3e-space-4)
+
+    .ds-inline-grid
+        display: grid
+        grid-template-columns: 1fr 1fr
+        gap: 0.5rem
+        width: 100%
+
+        &--3
+            grid-template-columns: 1fr 1fr 1fr
+            gap: 0.375rem
+
+    .ds-grid-item
+        display: inline-flex
+        align-items: center
+        justify-content: center
+        gap: 0.4rem
+        height: 2.625rem
+        padding: 0 0.75rem
+        box-sizing: border-box
+        border-radius: var(--shape-corner-m)
+        border: none
+        background: var(--surface-container)
+        color: var(--on-surface-variant)
+        font: var(--m3e-type-label-medium)
+        font-weight: 500
+        cursor: pointer
+        user-select: none
         transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
+
         &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-        &.selected
+            background: unquote("color-mix(in oklab, var(--on-surface) 8%, var(--surface-container))")
+
+        &:active
+            transform: scale(0.98)
+
+        &--active
             background: var(--secondary-container)
             color: var(--on-secondary-container)
             font-weight: 600
+
+    .ds-grid-icon
+        font-size: 1.125rem
+        color: inherit
+        flex-shrink: 0
+
+    .ds-grid-check
+        font-size: 1.125rem
+        color: inherit
+        flex-shrink: 0
+
+    .ds-group-title
+        font: var(--m3e-type-label-small)
+        font-weight: 600
+        text-transform: uppercase
+        letter-spacing: 0.05em
+        color: var(--on-surface-variant)
+        padding: 0.25rem 0.125rem 0.25rem
+        user-select: none
+
+    .ds-list-item
+        display: flex
+        align-items: center
+        width: 100%
+        height: 2.625rem
+        padding: 0 0.875rem
+        box-sizing: border-box
+        border-radius: var(--shape-corner-m)
+        border: none
+        background: var(--surface-container)
+        color: var(--on-surface-variant)
+        cursor: pointer
+        user-select: none
+        text-align: left
+        transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
+
+        &:hover
+            background: unquote("color-mix(in oklab, var(--on-surface) 8%, var(--surface-container))")
+
+        &:active
+            transform: scale(0.99)
+
+        &--active
+            background: var(--secondary-container)
             color: var(--on-secondary-container)
+            font-weight: 600
 
-        &__dots
-            display: flex
-            gap: 0.25rem
+    .ds-list-leading
+        display: inline-flex
+        align-items: center
+        justify-content: center
+        width: 1.5rem
+        flex-shrink: 0
+        margin-right: 0.75rem
 
-        &__dot
-            width: 0.625rem
-            height: 0.625rem
-            border-radius: var(--shape-corner-full)
-            box-shadow: unquote("inset 0 0 0 1px color-mix(in oklab, var(--on-surface) 20%, transparent)")
+    .ds-dot
+        display: inline-block
+        width: 0.5rem
+        height: 0.5rem
+        border-radius: var(--shape-corner-full)
+        margin-right: 0.2rem
 
-        &__name
-            max-width: 100%
-            overflow: hidden
-            text-overflow: ellipsis
-            white-space: nowrap
+        &:last-child
+            margin-right: 0
 
+    .ds-texture-icon
+        font-size: 1.25rem
+        color: inherit
+
+    .ds-list-label
+        flex: 1
+        min-width: 0
+        font: var(--m3e-type-label-large)
+        color: inherit
+
+    .ds-list-trailing
+        display: inline-flex
+        align-items: center
+        justify-content: flex-end
+        width: 1.5rem
+        flex-shrink: 0
+
+    .ds-check-icon
+        font-size: 1.25rem
+        color: inherit
+
+    /* ── Setting row (label left, control right) ──── */
+    .ds-row
+        display: flex
+        align-items: center
+        justify-content: space-between
+        gap: 0.75rem
+        padding: 0.25rem var(--m3e-space-4)
+        min-height: 3.25rem
+
+    .ds-row-label
+        font: var(--m3e-type-label-medium)
+        font-weight: 500
+        color: var(--on-surface)
+        flex-shrink: 0
+
+    /* ── Non-embedded float panel (desktop dropdown) ────────── */
+    :global(.float-panel#display-setting)
+        display: flex
+        flex-direction: column
+        gap: 0.875rem
+        padding: 0.75rem 0
+        background: var(--surface-container-high)
+        box-shadow: var(--m3e-elevation-3)
+        border-radius: var(--shape-corner-l)
+
+    /* ── Scrollbar (non-embedded) ─────────────────── */
     :global(#display-setting.m3-scroll-contain)
         scrollbar-width: thin
         scrollbar-color: var(--scrollbar-bg) transparent

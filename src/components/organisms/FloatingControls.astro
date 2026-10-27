@@ -47,7 +47,7 @@ const isHomeItemVisible = homeItem
 	id="floating-controls"
 	aria-label={i18n(I18nKey.more)}
 	class:list={[
-		"m3-floating-controls-container",
+		"m3-floating-controls-container hidden lg:flex",
 		{ "m3-floating-controls-container--start": fabConfig.align === "start" },
 	]}
 	data-banner-height={BANNER_HEIGHT}
@@ -140,12 +140,15 @@ const isHomeItemVisible = homeItem
 	right: unquote("max(var(--fab-inline-offset), calc((100vw - var(--page-width)) / 2 - 4rem))")
 	bottom: var(--fab-bottom)
 	z-index: 45
-	display: flex
+	display: none
 	flex-direction: column
 	align-items: flex-end
 	gap: var(--m3e-space-2)
 	pointer-events: none
 	transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-standard)
+
+	@media (min-width: 1024px)
+		display: flex
 
 	&.fab-scroll-hidden
 		opacity: 0

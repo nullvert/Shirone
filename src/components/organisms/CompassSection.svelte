@@ -17,11 +17,11 @@ import TextField from "@components/atoms/input/TextField.svelte";
 import CompassTile from "@components/molecules/CompassTile.svelte";
 import PageHeader from "@components/molecules/PageHeader.svelte";
 import SectionTitle from "@components/molecules/SectionTitle.svelte";
+import Icon from "@components/atoms/display/Icon.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
-import Icon from "@iconify/svelte";
 import { onMount } from "svelte";
-import type { CompassShelf } from "../../data/compass";
+import type { CompassShelf } from "@/data/compass";
 
 let {
 	shelves = [] as CompassShelf[],
@@ -120,7 +120,7 @@ onMount(() => {
 
 <Card color="var(--card-bg)" radius="l" class="compass-section px-8 py-6">
 	<PageHeader
-		icon="material-symbols:explore-rounded"
+		icon="material-symbols:bookmarks-outline-rounded"
 		{title}
 		{subtitle}
 	/>

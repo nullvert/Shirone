@@ -23,11 +23,13 @@
  */
 
 import {
+	copyFileSync,
 	existsSync,
 	mkdirSync,
 	readdirSync,
 	readFileSync,
 	renameSync,
+	unlinkSync,
 	writeFileSync,
 } from "node:fs";
 import type { Dirent } from "node:fs";
@@ -340,10 +342,26 @@ export function generateIconCollections({
 		"",
 	].join("\n");
 	// Write-then-rename so a dev server reading mid-write never sees a partial file.
+	// On Windows, target files locked by Vite/IDE can throw EPERM/EBUSY during renameSync.
 	const temporaryPath = `${outputPath}.tmp`;
 	mkdirSync(dirname(outputPath), { recursive: true });
 	writeFileSync(temporaryPath, output, "utf8");
-	renameSync(temporaryPath, outputPath);
+	try {
+		renameSync(temporaryPath, outputPath);
+	} catch (error) {
+		const code = (error as { code?: string })?.code;
+		if (code === "EPERM" || code === "EBUSY") {
+			// Fallback: copy directly and remove tmp
+			copyFileSync(temporaryPath, outputPath);
+			try {
+				unlinkSync(temporaryPath);
+			} catch {
+				// Ignore temp file cleanup errors
+			}
+		} else {
+			throw error;
+		}
+	}
 
 	return collections.reduce(
 		(total, collection) =>

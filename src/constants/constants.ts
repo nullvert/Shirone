@@ -33,5 +33,5 @@ export const MAIN_PANEL_OVERLAPS_BANNER_HEIGHT = 1;
 
 // Page width: rem. Single sidebar uses PAGE_WIDTH; dual-column
 // arrangement widens the frame one tier (resolved in responsive-utils).
-export const PAGE_WIDTH = 85;
-export const PAGE_WIDTH_DUAL = 96;
+export const PAGE_WIDTH = 90; // 85
+export const PAGE_WIDTH_DUAL = 96; // 96
