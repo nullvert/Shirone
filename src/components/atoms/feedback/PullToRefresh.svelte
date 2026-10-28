@@ -98,54 +98,79 @@ async function onPointerUp() {
 	</div>
 </div>
 
-<style lang="stylus">
-.m3-pull-refresh
-	position: relative
-	height: 100%
-	overflow-y: auto
-	overscroll-behavior-y: contain
-	touch-action: pan-x pan-down
-	box-sizing: border-box
-
-	.m3-pull-refresh__indicator
-		position: absolute
-		top: calc(var(--m3-pull-progress, 0px) - 2.5rem)
-		left: 50%
-		transform: translateX(-50%) scale(var(--m3-pull-active, 0))
-		width: 2.5rem
-		height: 2.5rem
-		display: flex
-		align-items: center
-		justify-content: center
-		border-radius: var(--shape-corner-full)
-		opacity: var(--m3-pull-active, 0)
-		pointer-events: none
-		transition:
-			opacity var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	.m3-pull-refresh__spinner
-		width: 1.5rem
-		height: 1.5rem
-		border-radius: var(--shape-corner-full)
-		border: 2px solid unquote("color-mix(in oklab, var(--primary) 30%, transparent)")
-		border-top-color: var(--primary)
-		box-sizing: border-box
-
-	&--refreshing .m3-pull-refresh__indicator
-		--m3-pull-active: 1
-		top: 0.75rem
-
-	&--refreshing .m3-pull-refresh__spinner
-		animation: m3-pull-spin 0.8s linear infinite
-
-	.m3-pull-refresh__content
-		min-height: 100%
-		box-sizing: border-box
-
-@keyframes m3-pull-spin
-	from
-		transform: rotate(0deg)
-	to
-		transform: rotate(360deg)
+<style>
+.m3-pull-refresh {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  touch-action: pan-x pan-down;
+  box-sizing: border-box;
+}
+.m3-pull-refresh .m3-pull-refresh__indicator {
+  position: absolute;
+  top: calc(var(--m3-pull-progress, 0px) - 2.5rem);
+  left: 50%;
+  transform: translateX(-50%) scale(var(--m3-pull-active, 0));
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--shape-corner-full);
+  opacity: var(--m3-pull-active, 0);
+  pointer-events: none;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-pull-refresh .m3-pull-refresh__spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--shape-corner-full);
+  border: 2px solid color-mix(in oklab, var(--primary) 30%, transparent);
+  border-top-color: var(--primary);
+  box-sizing: border-box;
+}
+.m3-pull-refresh--refreshing .m3-pull-refresh__indicator {
+  --m3-pull-active: 1;
+  top: 0.75rem;
+}
+.m3-pull-refresh--refreshing .m3-pull-refresh__spinner {
+  animation: m3-pull-spin 0.8s linear infinite;
+}
+.m3-pull-refresh .m3-pull-refresh__content {
+  min-height: 100%;
+  box-sizing: border-box;
+}
+@-moz-keyframes m3-pull-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes m3-pull-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes m3-pull-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes m3-pull-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>

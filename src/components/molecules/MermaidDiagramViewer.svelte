@@ -186,98 +186,98 @@ $effect(() => {
 	</div>
 </Dialog>
 
-<style lang="stylus">
-.mermaid-viewer
-	&__toolbar-row
-		display: flex
-		justify-content: flex-end
-		min-height: 2.5rem
-
-	&__controls-icon
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		pointer-events: none
-
-		:global(svg)
-			width: 1.25rem
-			height: 1.25rem
-
-	&__fullscreen-shell
-		display: grid
-		grid-template-columns: minmax(0, 1fr)
-		grid-template-rows: minmax(0, 1fr) auto
-		gap: var(--m3e-space-3)
-		width: 100%
-		height: 100%
-		min-width: 0
-		min-height: 0
-
-	&__fullscreen-viewport
-		width: 100%
-		min-width: 0
-		min-height: 0
-		overflow: hidden
-		border: 1px solid var(--outline-variant)
-		border-radius: var(--shape-corner-l)
-		background: var(--surface-container-lowest)
-		outline: none
-
-		&:focus-visible
-			outline: 2px solid var(--primary)
-			outline-offset: 2px
-
-	&__fullscreen-toolbar
-		display: flex
-		justify-content: center
-		width: 100%
-		min-width: 0
-
-:global(.mermaid-viewer__toolbar.m3-toolbar--expanded)
-	gap: 0
-	padding: 4px
-
-	:global(.m3-toolbar__leading)
-		display: none
-
-:global(.mermaid-viewer__toolbar .m3-toolbar__content)
-	gap: 0
-
-:global(.mermaid-viewer__toolbar .m3-toolbar__toggle)
-	width: 2rem
-	height: 2rem
-
-:global(.mermaid-viewer__dialog.m3-dialog)
-	display: grid
-	grid-template-columns: minmax(0, 1fr)
-	grid-template-rows: auto minmax(0, 1fr)
-	gap: var(--m3e-space-3)
-	box-sizing: border-box
-	width: calc(100vw - (2 * var(--m3e-space-4)))
-	height: calc(100dvh - (2 * var(--m3e-space-4)))
-	max-width: none
-	max-height: none
-	overflow: hidden
-	padding: var(--m3e-space-4)
-
-	:global(.m3-dialog__header)
-		min-width: 0
-		margin-bottom: 0
-
-	:global(.m3-dialog__title)
-		min-width: 0
-		overflow: hidden
-		margin: 0
-		font: var(--m3e-type-title-large)
-		text-overflow: ellipsis
-		white-space: nowrap
-
-	:global(.m3-dialog__content)
-		min-width: 0
-		height: auto
-		min-height: 0
-		overflow: hidden
-
-	:global(.m3-dialog__actions)
-		display: none
+<style>
+.mermaid-viewer__toolbar-row {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 2.5rem;
+}
+.mermaid-viewer__controls-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.mermaid-viewer__controls-icon :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.mermaid-viewer__fullscreen-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--m3e-space-3);
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+.mermaid-viewer__fullscreen-viewport {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-corner-l);
+  background: var(--surface-container-lowest);
+  outline: none;
+}
+.mermaid-viewer__fullscreen-viewport:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.mermaid-viewer__fullscreen-toolbar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+}
+:global(.mermaid-viewer__toolbar.m3-toolbar--expanded) {
+  gap: 0;
+  padding: 4px;
+}
+:global(.mermaid-viewer__toolbar.m3-toolbar--expanded) :global(.m3-toolbar__leading) {
+  display: none;
+}
+:global(.mermaid-viewer__toolbar .m3-toolbar__content) {
+  gap: 0;
+}
+:global(.mermaid-viewer__toolbar .m3-toolbar__toggle) {
+  width: 2rem;
+  height: 2rem;
+}
+:global(.mermaid-viewer__dialog.m3-dialog) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: var(--m3e-space-3);
+  box-sizing: border-box;
+  width: calc(100vw - (2 * var(--m3e-space-4)));
+  height: calc(100dvh - (2 * var(--m3e-space-4)));
+  max-width: none;
+  max-height: none;
+  overflow: hidden;
+  padding: var(--m3e-space-4);
+}
+:global(.mermaid-viewer__dialog.m3-dialog) :global(.m3-dialog__header) {
+  min-width: 0;
+  margin-bottom: 0;
+}
+:global(.mermaid-viewer__dialog.m3-dialog) :global(.m3-dialog__title) {
+  min-width: 0;
+  overflow: hidden;
+  margin: 0;
+  font: var(--m3e-type-title-large);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+:global(.mermaid-viewer__dialog.m3-dialog) :global(.m3-dialog__content) {
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+}
+:global(.mermaid-viewer__dialog.m3-dialog) :global(.m3-dialog__actions) {
+  display: none;
+}
 </style>

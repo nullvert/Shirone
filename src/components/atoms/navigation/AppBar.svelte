@@ -54,93 +54,96 @@ let {
     {/if}
 </header>
 
-<style lang="stylus">
-.m3-appbar
-    position: relative
-    display: flex
-    box-sizing: border-box
-    width: 100%
-    background: var(--surface)
-    color: var(--on-surface)
-    overflow: hidden
-
-    /* 单行 small / center：64dp 高，水平 padding 4dp（官方 TopAppBarHorizontalPadding） */
-    &--small, &--center
-        height: 64px
-        align-items: center
-        padding: 0 4px
-
-    /* center：标题相对整条栏居中（官方按整栏宽度居中，碰撞时再让位） */
-    &--center
-        justify-content: space-between
-        & .m3-appbar__title
-            position: absolute
-            inset: 0
-            display: flex
-            align-items: center
-            justify-content: center
-            max-width: calc(100% - 104px)
-            margin: 0 auto
-            padding: 0 16px
-            text-align: center
-            pointer-events: none
-
-    /* medium / large：两行布局，官方 112dp / 152dp */
-    &--medium
-        height: 112px
-        flex-direction: column
-
-    &--large
-        height: 152px
-        flex-direction: column
-
-    &__top
-        display: flex
-        align-items: center
-        flex: none
-        height: 64px
-        padding: 0 4px
-
-    &__nav
-        display: flex
-        align-items: center
-        flex: none
-        color: var(--on-surface-variant)
-
-    &__title
-        flex: 1
-        min-width: 0
-        font: var(--m3e-type-title-large)
-        color: var(--on-surface)
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
-        padding: 0 4px
-
-    /* 单行 small：无导航图标时标题 16dp inset；有导航图标时紧跟 48dp 图标 */
-    &--small &__title
-        padding-left: 12px
-
-    &--small.m3-appbar--with-nav &__title
-        padding-left: 4px
-
-    /* medium / large：大字标题靠下（基线距底 24dp / 28dp，官方 token） */
-    &--medium &__title
-        font: var(--m3e-type-headline-small)
-        display: flex
-        align-items: flex-end
-        padding: 0 16px 16px
-
-    &--large &__title
-        font: var(--m3e-type-headline-medium)
-        display: flex
-        align-items: flex-end
-        padding: 0 16px 20px
-
-    &__actions
-        display: flex
-        align-items: center
-        flex: none
-        margin-left: auto
-        color: var(--on-surface-variant)
+<style>
+.m3-appbar {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--surface);
+  color: var(--on-surface);
+  overflow: hidden;
+/* 单行 small / center：64dp 高，水平 padding 4dp（官方 TopAppBarHorizontalPadding） */
+/* center：标题相对整条栏居中（官方按整栏宽度居中，碰撞时再让位） */
+/* medium / large：两行布局，官方 112dp / 152dp */
+/* 单行 small：无导航图标时标题 16dp inset；有导航图标时紧跟 48dp 图标 */
+/* medium / large：大字标题靠下（基线距底 24dp / 28dp，官方 token） */
+}
+.m3-appbar--small,
+.m3-appbar--center {
+  height: 64px;
+  align-items: center;
+  padding: 0 4px;
+}
+.m3-appbar--center {
+  justify-content: space-between;
+}
+.m3-appbar--center .m3-appbar__title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: calc(100% - 104px);
+  margin: 0 auto;
+  padding: 0 16px;
+  text-align: center;
+  pointer-events: none;
+}
+.m3-appbar--medium {
+  height: 112px;
+  flex-direction: column;
+}
+.m3-appbar--large {
+  height: 152px;
+  flex-direction: column;
+}
+.m3-appbar__top {
+  display: flex;
+  align-items: center;
+  flex: none;
+  height: 64px;
+  padding: 0 4px;
+}
+.m3-appbar__nav {
+  display: flex;
+  align-items: center;
+  flex: none;
+  color: var(--on-surface-variant);
+}
+.m3-appbar__title {
+  flex: 1;
+  min-width: 0;
+  font: var(--m3e-type-title-large);
+  color: var(--on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+.m3-appbar--small .m3-appbar__title {
+  padding-left: 12px;
+}
+.m3-appbar--small.m3-appbar--with-nav .m3-appbar__title {
+  padding-left: 4px;
+}
+.m3-appbar--medium .m3-appbar__title {
+  font: var(--m3e-type-headline-small);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px 16px;
+}
+.m3-appbar--large .m3-appbar__title {
+  font: var(--m3e-type-headline-medium);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px 20px;
+}
+.m3-appbar__actions {
+  display: flex;
+  align-items: center;
+  flex: none;
+  margin-left: auto;
+  color: var(--on-surface-variant);
+}
 </style>

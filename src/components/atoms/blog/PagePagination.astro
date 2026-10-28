@@ -161,143 +161,146 @@ const pageLabel = (p: number) => labels.page.replace("{page}", String(p));
 	</div>
 </div>
 
-<style lang="stylus">
-.m3-blog-pagination
-	display: flex
-	align-items: center
-	justify-content: center
-	gap: var(--m3e-space-3)
-
-	&__mobile
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-3)
-
-	&__desktop
-		display: none
-
-	@media (min-width: 1024px)
-		&__mobile
-			display: none
-		&__desktop
-			display: flex
-			align-items: center
-			gap: var(--m3e-space-3)
-
-	&__arrow
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 2.5rem
-		height: 2.5rem
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-low)
-		color: var(--primary)
-		text-decoration: none
-		--m3e-state-color: var(--primary)
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-standard)
-		> :global(svg)
-			width: 1.5rem
-			height: 1.5rem
-		&:hover:not(.m3-blog-pagination__arrow--disabled)
-			background: var(--surface-container-high)
-
-		&--disabled
-			opacity: 0.38
-			pointer-events: none
-
-	/* 移动端跳转徽标：点击原地变输入框（脚本见下） */
-	&__jump
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		gap: var(--m3e-space-1)
-		min-width: 5rem
-		height: 2.5rem
-		padding: 0 var(--m3e-space-3)
-		border: none
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-low)
-		color: var(--on-surface)
-		font: var(--m3e-type-label-large)
-		--m3e-state-color: var(--on-surface)
-		cursor: pointer
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-standard)
-		&:hover
-			background: var(--surface-container-high)
-
-		&-current
-			font-weight: 700
-			color: var(--primary)
-
-		&-sep
-			color: var(--on-surface-variant)
-
-		&-total
-			color: var(--on-surface-variant)
-			font-variant-numeric: tabular-nums
-
-	/* 跳转输入框（脚本动态替换按钮） */
-	&__jump-input
-		width: 5rem
-		height: 2.5rem
-		padding: 0 var(--m3e-space-2)
-		border: none
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-low)
-		color: var(--on-surface)
-		font: var(--m3e-type-label-large)
-		font-weight: 700
-		text-align: center
-		font-variant-numeric: tabular-nums
-		outline: 2px solid var(--primary)
-		outline-offset: -2px
-
-	&__nums
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-2)
-
-	&__num
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 2.5rem
-		height: 2.5rem
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-low)
-		font: var(--m3e-type-label-large)
-		font-weight: 700
-		text-decoration: none
-		color: var(--on-surface-variant)
-		--m3e-state-color: var(--on-surface)
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			color var(--m3e-duration-short) var(--m3e-easing-standard)
-		&:hover
-			background: var(--surface-container-high)
-
-		&--active
-			background: var(--primary)
-			color: var(--on-primary)
-			--m3e-state-color: var(--on-primary)
-			&:hover
-				background: var(--primary)
-
-	&__ellipsis
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 1.5rem
-		height: 2.5rem
-		color: var(--on-surface-variant)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
+<style>
+.m3-blog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m3e-space-3);
+/* 移动端跳转徽标：点击原地变输入框（脚本见下） */
+/* 跳转输入框（脚本动态替换按钮） */
+}
+.m3-blog-pagination__mobile {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-3);
+}
+.m3-blog-pagination__desktop {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .m3-blog-pagination__mobile {
+    display: none;
+  }
+  .m3-blog-pagination__desktop {
+    display: flex;
+    align-items: center;
+    gap: var(--m3e-space-3);
+  }
+}
+.m3-blog-pagination__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-low);
+  color: var(--primary);
+  text-decoration: none;
+  --m3e-state-color: var(--primary);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-blog-pagination__arrow > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-blog-pagination__arrow:hover:not(.m3-blog-pagination__arrow--disabled) {
+  background: var(--surface-container-high);
+}
+.m3-blog-pagination__arrow--disabled {
+  opacity: 0.38;
+  pointer-events: none;
+}
+.m3-blog-pagination__jump {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m3e-space-1);
+  min-width: 5rem;
+  height: 2.5rem;
+  padding: 0 var(--m3e-space-3);
+  border: none;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  font: var(--m3e-type-label-large);
+  --m3e-state-color: var(--on-surface);
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-blog-pagination__jump:hover {
+  background: var(--surface-container-high);
+}
+.m3-blog-pagination__jump-current {
+  font-weight: 700;
+  color: var(--primary);
+}
+.m3-blog-pagination__jump-sep {
+  color: var(--on-surface-variant);
+}
+.m3-blog-pagination__jump-total {
+  color: var(--on-surface-variant);
+  font-variant-numeric: tabular-nums;
+}
+.m3-blog-pagination__jump-input {
+  width: 5rem;
+  height: 2.5rem;
+  padding: 0 var(--m3e-space-2);
+  border: none;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  font: var(--m3e-type-label-large);
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+.m3-blog-pagination__nums {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-2);
+}
+.m3-blog-pagination__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-low);
+  font: var(--m3e-type-label-large);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--on-surface-variant);
+  --m3e-state-color: var(--on-surface);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-blog-pagination__num:hover {
+  background: var(--surface-container-high);
+}
+.m3-blog-pagination__num--active {
+  background: var(--primary);
+  color: var(--on-primary);
+  --m3e-state-color: var(--on-primary);
+}
+.m3-blog-pagination__num--active:hover {
+  background: var(--primary);
+}
+.m3-blog-pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 2.5rem;
+  color: var(--on-surface-variant);
+}
+.m3-blog-pagination__ellipsis > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
 </style>
 
 <script>

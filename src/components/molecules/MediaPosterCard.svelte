@@ -111,160 +111,155 @@ $effect(() => () => glow.destroy());
 	</div>
 </article>
 
-<style lang="stylus">
-.media-card
-	position: relative
-	display: flex
-	flex-direction: column
-	height: 100%
-	box-sizing: border-box
-	overflow: visible
-	border-radius: 0
-	background: transparent
-	border: none
-	box-shadow: none
-	transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-	&:hover,
-	&--hovered
-		z-index: 5
-
-	/* ── Контейнер постера: строгий прямоугольный срез (0px) ── */
-	&__media-wrap
-		position: relative
-		width: 100%
-		aspect-ratio: 2 / 3
-		height: auto
-		overflow: visible
-		border-radius: 0
-		background: var(--surface-container-high)
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25)
-		flex-shrink: 0
-		transform: translateZ(0)
-		container-type: inline-size
-		--badge-size: unquote("clamp(1.75rem, 12cqw, 2.125rem)")
-		transition:
-			box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-		.media-card:hover &,
-		.media-card--hovered &
-			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4)
-
-	/* ── Masterpiece: 3D Tilt + Премиальный золотой матовый глянец на оверлее ── */
-	&--rating-masterpiece
-		perspective: 1100px
-		--electric-color: #ff9410
-		--tier-hi: #ffe6a3
-		--tier-lo: #b8741a
-
-		.media-card__media-wrap
-			transform-style: preserve-3d
-			transition:
-				box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-				transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)
-
-		/* Двухслойный золотой контур: внутренняя тонкая ювелирная грань-паспарту */
-		.media-card__media-link::before
-			content: ""
-			position: absolute
-			inset: 0
-			z-index: 5
-			pointer-events: none
-			border: 1px solid rgba(255, 220, 120, 0.28)
-			box-shadow: inset 0 0 10px rgba(255, 180, 50, 0.12)
-			transition: border-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&:hover .media-card__media-link::before,
-		&.media-card--hovered .media-card__media-link::before
-			border-color: rgba(255, 230, 160, 0.5)
-
-		&:hover .media-card__media-wrap,
-		&.media-card--hovered .media-card__media-wrap
-			transform: unquote("perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(5px)")
-			box-shadow: 0 14px 32px rgba(255, 148, 16, 0.22), 0 4px 12px rgba(0, 0, 0, 0.35)
-
-		:global(.media-card__overlay)
-			background: unquote("linear-gradient(180deg, rgba(255, 195, 77, 0.07) 0%, rgba(15, 23, 42, 0.72) 35%, rgba(10, 15, 29, 0.96) 100%)")
-			box-shadow: inset 0 0 40px rgba(255, 180, 50, 0.08)
-
-	/* ── 2. Фиолетовый: 8 – 9.9 ── */
-	&--rating-great
-		--electric-color: #b57cff
-		--tier-hi: #eadcff
-		--tier-lo: #6d3fc4
-
-	/* ── 3. Акцент темы: 4.0 – 7.9 ── */
-	&--rating-regular
-		--electric-color: var(--primary)
-
-	/* ── 4. Красный: 0 – 3.9 ── */
-	&--rating-poor
-		--electric-color: #ef4444
-		--tier-hi: #fca5a5
-		--tier-lo: #991b1b
-
-
-	/* ── Вишлист ── */
-	&--rating-wishlist
-		--electric-color: #38bdf8
-
-	&--rating-wishlist-discount
-		--electric-color: #84cc16
-
-	&__media-link
-		position: absolute
-		inset: 0
-		display: block
-		width: 100%
-		height: 100%
-		text-decoration: none
-		border-radius: inherit
-		overflow: hidden
-
-
-	&__scrim
-		position: absolute
-		inset: 0
-		pointer-events: none
-		border-radius: inherit
-		background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 40%, rgba(0, 0, 0, 0.35) 100%)
-		opacity: 0.6
-		transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-
+<style>
+.media-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+/* ── Контейнер постера: строгий прямоугольный срез (0px) ── */
+/* ── Masterpiece: 3D Tilt + Премиальный золотой матовый глянец на оверлее ── */
+/* ── 2. Фиолетовый: 8 – 9.9 ── */
+/* ── 3. Акцент темы: 4.0 – 7.9 ── */
+/* ── 4. Красный: 0 – 3.9 ── */
+/* ── Вишлист ── */
+}
+.media-card:hover,
+.media-card--hovered {
+  z-index: 5;
+}
+.media-card__media-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  height: auto;
+  overflow: visible;
+  border-radius: 0;
+  background: var(--surface-container-high);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  flex-shrink: 0;
+  transform: translateZ(0);
+  container-type: inline-size;
+  --badge-size: clamp(1.75rem, 12cqw, 2.125rem);
+  transition: box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.media-card:hover .media-card__media-wrap,
+.media-card--hovered .media-card__media-wrap {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.media-card--rating-masterpiece {
+  perspective: 1100px;
+  --electric-color: #ff9410;
+  --tier-hi: #ffe6a3;
+  --tier-lo: #b8741a;
+/* Двухслойный золотой контур: внутренняя тонкая ювелирная грань-паспарту */
+}
+.media-card--rating-masterpiece .media-card__media-wrap {
+  transform-style: preserve-3d;
+  transition: box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.media-card--rating-masterpiece .media-card__media-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border: 1px solid rgba(255,220,120,0.28);
+  box-shadow: inset 0 0 10px rgba(255,180,50,0.12);
+  transition: border-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.media-card--rating-masterpiece:hover .media-card__media-link::before,
+.media-card--rating-masterpiece.media-card--hovered .media-card__media-link::before {
+  border-color: rgba(255,230,160,0.5);
+}
+.media-card--rating-masterpiece:hover .media-card__media-wrap,
+.media-card--rating-masterpiece.media-card--hovered .media-card__media-wrap {
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(5px);
+  box-shadow: 0 14px 32px rgba(255,148,16,0.22), 0 4px 12px rgba(0,0,0,0.35);
+}
+.media-card--rating-masterpiece :global(.media-card__overlay) {
+  background: linear-gradient(180deg, rgba(255, 195, 77, 0.07) 0%, rgba(15, 23, 42, 0.72) 35%, rgba(10, 15, 29, 0.96) 100%);
+  box-shadow: inset 0 0 40px rgba(255,180,50,0.08);
+}
+.media-card--rating-great {
+  --electric-color: #b57cff;
+  --tier-hi: #eadcff;
+  --tier-lo: #6d3fc4;
+}
+.media-card--rating-regular {
+  --electric-color: var(--primary);
+}
+.media-card--rating-poor {
+  --electric-color: #ef4444;
+  --tier-hi: #fca5a5;
+  --tier-lo: #991b1b;
+}
+.media-card--rating-wishlist {
+  --electric-color: #38bdf8;
+}
+.media-card--rating-wishlist-discount {
+  --electric-color: #84cc16;
+}
+.media-card__media-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.media-card__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 40%, rgba(0,0,0,0.35) 100%);
+  opacity: 0.6;
+  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
 /* ── Сенсорные устройства и планшеты (iPad, телефоны, экраны < 1024px): чистое поведение без залипания и дёргания ховера ── */
-@media (hover: none), (pointer: coarse), (max-width: 1023px)
-	.media-card
-		transition: none !important
-
-		/* Отключаем трансформации и декоративные эффекты ховера */
-		&:hover,
-		&:active
-			z-index: 1 !important
-			transform: none !important
-
-		/* Фиксируем стабильное положение текста без дёргания (никаких translate3d при тапе) */
-		:global(.media-card__overlay-title),
-		:global(.media-card__overlay-meta)
-			transform: none !important
-			transition: none !important
-			opacity: 1 !important
-
-		/* Всегда стабильный 1-строчный компактный оверлей (студия, год, оценка) */
-		:global(.media-card__overlay-meta--normal)
-			display: flex !important
-
-		/* Скрываем hover-расширения (2-я строка и аккордеон с жанрами/прогрессом не дергают карточку) */
-		:global(.media-card__overlay-meta--hover)
-			display: none !important
-
-		:global(.media-card__overlay-details)
-			display: none !important
-
-		/* Оверлей всегда стабилен и полностью покрывает постер */
-		:global(.media-card__overlay)
-			opacity: 1 !important
-			pointer-events: auto !important
-			background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.02) 28%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.82) 70%, rgba(6, 6, 8, 0.96) 88%, #060608 100%) !important
-
+@media (hover: none), (pointer: coarse), (max-width: 1023px) {
+  .media-card {
+    transition: none !important;
+/* Отключаем трансформации и декоративные эффекты ховера */
+/* Фиксируем стабильное положение текста без дёргания (никаких translate3d при тапе) */
+/* Всегда стабильный 1-строчный компактный оверлей (студия, год, оценка) */
+/* Скрываем hover-расширения (2-я строка и аккордеон с жанрами/прогрессом не дергают карточку) */
+/* Оверлей всегда стабилен и полностью покрывает постер */
+  }
+  .media-card:hover,
+  .media-card:active {
+    z-index: 1 !important;
+    transform: none !important;
+  }
+  .media-card :global(.media-card__overlay-title),
+  .media-card :global(.media-card__overlay-meta) {
+    transform: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+  .media-card :global(.media-card__overlay-meta--normal) {
+    display: flex !important;
+  }
+  .media-card :global(.media-card__overlay-meta--hover) {
+    display: none !important;
+  }
+  .media-card :global(.media-card__overlay-details) {
+    display: none !important;
+  }
+  .media-card :global(.media-card__overlay) {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.02) 28%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.82) 70%, rgba(6,6,8,0.96) 88%, #060608 100%) !important;
+  }
+}
 </style>

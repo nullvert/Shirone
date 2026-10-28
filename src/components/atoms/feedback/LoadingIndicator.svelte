@@ -189,24 +189,24 @@ const rotation = $derived(isIndeterminate ? indetRotation : detRotation);
 	</svg>
 </div>
 
-<style lang="stylus">
-.m3-loading
-    position: relative
-    display: inline-flex
-    align-items: center
-    justify-content: center
-    width: var(--m3-loading-size, 48px)
-    height: var(--m3-loading-size, 48px)
-    flex-shrink: 0
-
-    &--contained
-        // 官方 ContainedLoadingIndicator：CornerFull 圆形容器 + primary-container 背景
-        border-radius: 50%
-        background: var(--m3-loading-bg, var(--primary-container))
-        overflow: hidden
-
-    &__indicator
-        display: block
-        width: 100%
-        height: 100%
+<style>
+.m3-loading {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m3-loading-size, 48px);
+  height: var(--m3-loading-size, 48px);
+  flex-shrink: 0;
+}
+.m3-loading--contained {
+  border-radius: 50%;
+  background: var(--m3-loading-bg, var(--primary-container));
+  overflow: hidden;
+}
+.m3-loading__indicator {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 </style>

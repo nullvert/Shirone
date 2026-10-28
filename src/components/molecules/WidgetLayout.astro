@@ -64,31 +64,32 @@ const className = Astro.props.class;
     }
 </style>
 
-<style lang="stylus">
-.widget-layout__header
-	display: flex
-	align-items: center
-	gap: var(--m3e-space-2)
-	margin: var(--m3e-space-4) var(--m3e-space-4) var(--m3e-space-2)
-	font: var(--m3e-type-title-medium)
-	font-weight: 600
-	color: var(--on-surface)
-	transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-.widget-layout__scroll-content
-	max-height: calc(100dvh - 11rem)
-	overflow-y: auto
-	overflow-x: hidden
-	overscroll-behavior: contain
-	scrollbar-width: thin
-
-.widget-layout__flex-scroll
-	flex: 1
-	min-height: 0
-	overflow-y: auto
-	overflow-x: hidden
-	overscroll-behavior: contain
-	scrollbar-width: thin
+<style>
+.widget-layout__header {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-2);
+  margin: var(--m3e-space-4) var(--m3e-space-4) var(--m3e-space-2);
+  font: var(--m3e-type-title-medium);
+  font-weight: 600;
+  color: var(--on-surface);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.widget-layout__scroll-content {
+  max-height: calc(100dvh - 11rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.widget-layout__flex-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
 </style>
 
 <script>

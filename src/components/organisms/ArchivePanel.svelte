@@ -229,89 +229,91 @@ $effect(() => {
 	{/if}
 </Card>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-:global(.archive-panel)
-	@media (max-width: bp-sm - 1px)
-		padding: 1rem
-
-.archive-panel
-	/* 分组切换（SegmentedButton，站内 pill 语言）与下方时间轴之间的节奏 */
-	:global(&__group-switch)
-		margin-bottom: var(--m3e-space-4)
-
-	:global(&__empty)
-		display: flex
-		align-items: center
-		justify-content: center
-		min-height: 11rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-large)
-
-	:global(&__crumb)
-		min-width: 0
-		padding: 0 var(--m3e-space-1) var(--m3e-space-3)
-		margin-bottom: var(--m3e-space-5)
-		border-bottom: 1px solid var(--outline-variant)
-
-	:global(&__crumb-list)
-		display: flex
-		align-items: center
-		min-width: 0
-		margin: 0
-		padding: 0
-		list-style: none
-
-	:global(&__crumb-item)
-		flex-shrink: 0
-
-	:global(&__crumb-link)
-		display: inline-flex
-		align-items: center
-		min-height: 2rem
-		padding: 0 0.5rem
-		margin-left: -0.5rem
-		border-radius: var(--shape-corner-m)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-medium)
-		font-weight: 600
-		text-decoration: none
-		--m3e-state-color: var(--primary)
-		> :global(svg)
-			width: 1.125rem
-			height: 1.125rem
-		&:hover
-			color: var(--primary)
-
-	:global(&__crumb-separator)
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		flex-shrink: 0
-		width: 1.5rem
-		color: var(--outline)
-		> :global(svg)
-			width: 1rem
-			height: 1rem
-
-	:global(&__crumb-current)
-		display: block
-		min-width: 0
-
-	:global(&__crumb-value)
-		display: block
-		min-width: 0
-		overflow: hidden
-		text-overflow: ellipsis
-		white-space: nowrap
-		color: var(--primary)
-		font: var(--m3e-type-body-medium)
-		font-weight: 600
-
-	@media (max-width: bp-sm - 1px)
-		:global(&__crumb)
-			padding-inline: 0
-			padding-bottom: 0.75rem
-			margin-bottom: 1rem
+<style>
+@media (max-width: 639px) {
+  :global(.archive-panel) {
+    padding: 1rem;
+  }
+}
+:global(.archive-panel__group-switch) {
+  margin-bottom: var(--m3e-space-4);
+}
+:global(.archive-panel__empty) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-large);
+}
+:global(.archive-panel__crumb) {
+  min-width: 0;
+  padding: 0 var(--m3e-space-1) var(--m3e-space-3);
+  margin-bottom: var(--m3e-space-5);
+  border-bottom: 1px solid var(--outline-variant);
+}
+:global(.archive-panel__crumb-list) {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+:global(.archive-panel__crumb-item) {
+  flex-shrink: 0;
+}
+:global(.archive-panel__crumb-link) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 0.5rem;
+  margin-left: -0.5rem;
+  border-radius: var(--shape-corner-m);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-medium);
+  font-weight: 600;
+  text-decoration: none;
+  --m3e-state-color: var(--primary);
+}
+:global(.archive-panel__crumb-link) > :global(svg) {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+:global(.archive-panel__crumb-link):hover {
+  color: var(--primary);
+}
+:global(.archive-panel__crumb-separator) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  color: var(--outline);
+}
+:global(.archive-panel__crumb-separator) > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+}
+:global(.archive-panel__crumb-current) {
+  display: block;
+  min-width: 0;
+}
+:global(.archive-panel__crumb-value) {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--primary);
+  font: var(--m3e-type-body-medium);
+  font-weight: 600;
+}
+@media (max-width: 639px) {
+  :global(.archive-panel__crumb) {
+    padding-inline: 0;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+  }
+}
 </style>

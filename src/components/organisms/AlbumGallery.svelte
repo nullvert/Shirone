@@ -102,80 +102,89 @@ function ratio(photo: AlbumPhoto): string {
 	</div>
 {/if}
 
-<style lang="stylus">
-.album-gallery
-	--album-gap: var(--m3e-space-3, 0.75rem)
-	width: 100%
-
-	&--grid
-		display: grid
-		grid-template-columns: repeat(var(--album-columns), minmax(0, 1fr))
-		gap: var(--album-gap)
-
-	&--masonry
-		direction: ltr
-		column-width: 240px
-		column-gap: var(--album-gap)
-		column-fill: balance
-
-	&__item
-		position: relative
-		display: block
-		width: 100%
-		margin: 0 0 var(--album-gap)
-		padding: 0
-		overflow: hidden
-		border: 0
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-high)
-		color: inherit
-		cursor: zoom-in
-		break-inside: avoid
-		font: inherit
-		text-align: start
-		&:focus-visible
-			outline: 2px solid var(--primary)
-			outline-offset: 2px
-		> img
-			display: block
-			width: 100%
-			max-width: 100%
-			aspect-ratio: var(--album-photo-ratio)
-			object-fit: cover
-			transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), filter var(--m3e-duration-medium) var(--m3e-easing-standard)
-		.album-gallery--masonry & > img
-			aspect-ratio: auto
-			object-fit: cover
-
-	&__item:hover > img
-		transform: scale(1.025)
-		filter: brightness(0.92)
-
-	&__empty
-		display: grid
-		place-items: center
-		gap: 0.5rem
-		min-height: 12rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-medium)
-		> :global(svg)
-			width: 2rem
-			height: 2rem
-
-@media (max-width: 47.99rem)
-	.album-gallery--masonry
-		column-width: 180px
-
-@media (max-width: 29.99rem)
-	.album-gallery--masonry
-		column-width: 140px
-	.album-gallery--grid
-		grid-template-columns: repeat(2, minmax(0, 1fr))
-
-:global(html.motion-reduced) .album-gallery__item > img
-	transition: none
-
-@media (prefers-reduced-motion: reduce)
-	.album-gallery__item > img
-		transition: none
+<style>
+.album-gallery {
+  --album-gap: var(--m3e-space-3, 0.75rem);
+  width: 100%;
+}
+.album-gallery--grid {
+  display: grid;
+  grid-template-columns: repeat(var(--album-columns), minmax(0, 1fr));
+  gap: var(--album-gap);
+}
+.album-gallery--masonry {
+  direction: ltr;
+  column-width: 240px;
+  column-gap: var(--album-gap);
+  column-fill: balance;
+}
+.album-gallery__item {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 0 var(--album-gap);
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-high);
+  color: inherit;
+  cursor: zoom-in;
+  break-inside: avoid;
+  font: inherit;
+  text-align: start;
+}
+.album-gallery__item:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.album-gallery__item > img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: var(--album-photo-ratio);
+  object-fit: cover;
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), filter var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.album-gallery--masonry .album-gallery__item > img {
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+.album-gallery__item:hover > img {
+  transform: scale(1.025);
+  filter: brightness(0.92);
+}
+.album-gallery__empty {
+  display: grid;
+  place-items: center;
+  gap: 0.5rem;
+  min-height: 12rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-medium);
+}
+.album-gallery__empty > :global(svg) {
+  width: 2rem;
+  height: 2rem;
+}
+@media (max-width: 47.99rem) {
+  .album-gallery--masonry {
+    column-width: 180px;
+  }
+}
+@media (max-width: 29.99rem) {
+  .album-gallery--masonry {
+    column-width: 140px;
+  }
+  .album-gallery--grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+:global(html.motion-reduced) .album-gallery__item > img {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .album-gallery__item > img {
+    transition: none;
+  }
+}
 </style>

@@ -129,235 +129,222 @@ const showImage = $derived(Boolean(device.image) && !coverFailed);
 	</div>
 </article>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.device-card
-	display: flex
-	flex-direction: column
-	overflow: hidden
-	background: var(--card-bg)
-	border: 1px solid var(--outline-variant)
-	border-radius: var(--shape-corner-l)
-	transition:
-		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-	&:hover
-		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-2)
-		transform: translateY(-2px)
-		background: unquote("color-mix(in oklab, var(--on-surface) 2%, var(--card-bg))")
-
-	/* 主力推荐特色高亮：边框微光 */
-	&--featured
-		border-color: unquote("color-mix(in oklab, var(--primary) 38%, var(--outline-variant))")
-		&:hover
-			border-color: var(--primary)
-
-	/* 媒体区：设备图 object-contain，浅色调渐变背景衬底，任何宽度不拉伸 */
-	&__media
-		display: flex
-		align-items: center
-		justify-content: center
-		width: 100%
-		aspect-ratio: 16 / 10
-		flex-shrink: 0
-		overflow: hidden
-		background: linear-gradient(160deg,
-			unquote("color-mix(in oklab, var(--primary) 12%, var(--surface-container-low))"),
-			var(--surface-container-high))
-
-		> img
-			display: block
-			max-width: 100%
-			max-height: 100%
-			width: auto
-			height: auto
-			object-fit: contain
-			padding: var(--m3e-space-3)
-			transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate)
-
-			.device-card:hover &
-				transform: scale(1.05)
-
-	&__body
-		display: flex
-		flex-direction: column
-		flex: 1
-		gap: var(--m3e-space-3)
-		min-width: 0
-		padding: var(--m3e-space-4) var(--m3e-space-4)
-
-	&__header
-		display: flex
-		align-items: flex-start
-		gap: var(--m3e-space-3)
-		min-width: 0
-
-	/* 图标瓷砖：无图片设备的视觉锚点 */
-	&__icon
-		display: flex
-		align-items: center
-		justify-content: center
-		width: 2.875rem
-		height: 2.875rem
-		flex-shrink: 0
-		box-sizing: border-box
-		border-radius: var(--shape-corner-m)
-		background: linear-gradient(135deg,
-			unquote("color-mix(in oklab, var(--primary) 14%, var(--surface-container-high))"),
-			var(--surface-container-highest))
-		border: 1px solid var(--outline-variant)
-		color: var(--primary)
-		transition:
-			transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-			box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-		> :global(svg)
-			width: 1.5rem
-			height: 1.5rem
-
-		.device-card:hover &
-			transform: translateY(-0.125rem)
-			box-shadow: var(--m3e-elevation-1)
-
-	&__heading
-		display: flex
-		flex-direction: column
-		flex: 1
-		gap: 0.25rem
-		min-width: 0
-
-	&__title-row
-		display: flex
-		align-items: baseline
-		justify-content: space-between
-		gap: 0.75rem
-		min-width: 0
-
-	&__title
-		margin: 0
-		min-width: 0
-		color: var(--on-surface)
-		font: var(--m3e-type-title-small)
-		font-weight: 700
-		line-height: 1.3
-		overflow-wrap: anywhere
-		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		.device-card:hover &
-			color: var(--primary)
-
-	&__year
-		flex-shrink: 0
-		padding: 0.0625rem 0.375rem
-		border-radius: var(--shape-corner-xs)
-		background: var(--surface-container-high)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-small)
-		font-variant-numeric: tabular-nums
-
-	&__brand
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-medium)
-
-	/* 状态 pill：语义色来自 inline --device-status-color */
-	&__status
-		display: inline-flex
-		align-items: center
-		gap: 0.3125rem
-		flex-shrink: 0
-		padding: 0.125rem 0.5625rem
-		border-radius: var(--shape-corner-full)
-		background: unquote("color-mix(in oklab, var(--device-status-color) 12%, transparent)")
-		color: var(--device-status-color)
-		font: var(--m3e-type-label-small)
-		font-weight: 600
-		border: 1px solid unquote("color-mix(in oklab, var(--device-status-color) 22%, transparent)")
-
-		> :global(svg)
-			width: 0.875rem
-			height: 0.875rem
-			flex-shrink: 0
-
-	/* 核心规格简述：pill 徽章 + 代码图标 */
-	&__specs
-		display: inline-flex
-		align-items: center
-		gap: 0.5rem
-		align-self: flex-start
-		max-width: 100%
-		padding: 0.25rem 0.625rem
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-high)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-small)
-		font-weight: 500
-
-		> :global(svg)
-			width: 1rem
-			height: 1rem
-			flex-shrink: 0
-			color: var(--primary)
-
-	&__description
-		display: -webkit-box
-		margin: 0
-		overflow: hidden
-		-webkit-line-clamp: 3
-		-webkit-box-orient: vertical
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-		line-height: 1.5
-
-	&__footer
-		display: flex
-		flex-wrap: wrap
-		align-items: center
-		justify-content: space-between
-		gap: 0.5rem
-		margin-top: auto
-		padding-top: 0.25rem
-
-	&__link
-		display: inline-flex
-		align-items: center
-		gap: 0.3125rem
-		padding: 0.25rem 0.625rem
-		border-radius: var(--shape-corner-m)
-		background: unquote("color-mix(in oklab, var(--primary) 8%, transparent)")
-		color: var(--primary)
-		font: var(--m3e-type-label-medium)
-		font-weight: 600
-		text-decoration: none
-		border: 1px solid unquote("color-mix(in oklab, var(--primary) 16%, transparent)")
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			box-shadow var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&:hover
-			background: unquote("color-mix(in oklab, var(--primary) 16%, transparent)")
-			box-shadow: var(--m3e-elevation-1)
-			transform: translateY(-1px)
-
-		> :global(svg)
-			width: 1rem
-			height: 1rem
-
-	&__featured
-		display: inline-flex
-		align-items: center
-		gap: 0.25rem
-		color: var(--tertiary)
-		font: var(--m3e-type-label-small)
-		font-weight: 700
-
-		> :global(svg)
-			width: 0.875rem
-			height: 0.875rem
-			color: #facc15
+<style>
+.device-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-corner-l);
+  transition: border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), background-color var(--m3e-duration-medium) var(--m3e-easing-standard);
+/* 主力推荐特色高亮：边框微光 */
+/* 媒体区：设备图 object-contain，浅色调渐变背景衬底，任何宽度不拉伸 */
+/* 图标瓷砖：无图片设备的视觉锚点 */
+/* 状态 pill：语义色来自 inline --device-status-color */
+/* 核心规格简述：pill 徽章 + 代码图标 */
+}
+.device-card:hover {
+  border-color: var(--outline);
+  box-shadow: var(--m3e-elevation-2);
+  transform: translateY(-2px);
+  background: color-mix(in oklab, var(--on-surface) 2%, var(--card-bg));
+}
+.device-card--featured {
+  border-color: color-mix(in oklab, var(--primary) 38%, var(--outline-variant));
+}
+.device-card--featured:hover {
+  border-color: var(--primary);
+}
+.device-card__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 16/10;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: linear-gradient(160deg, color-mix(in oklab, var(--primary) 12%, var(--surface-container-low)), var(--surface-container-high));
+}
+.device-card__media > img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  padding: var(--m3e-space-3);
+  transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate);
+}
+.device-card:hover .device-card__media > img {
+  transform: scale(1.05);
+}
+.device-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--m3e-space-3);
+  min-width: 0;
+  padding: var(--m3e-space-4) var(--m3e-space-4);
+}
+.device-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--m3e-space-3);
+  min-width: 0;
+}
+.device-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.875rem;
+  height: 2.875rem;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-m);
+  background: linear-gradient(135deg, color-mix(in oklab, var(--primary) 14%, var(--surface-container-high)), var(--surface-container-highest));
+  border: 1px solid var(--outline-variant);
+  color: var(--primary);
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.device-card__icon > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.device-card:hover .device-card__icon {
+  transform: translateY(-0.125rem);
+  box-shadow: var(--m3e-elevation-1);
+}
+.device-card__heading {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.device-card__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+.device-card__title {
+  margin: 0;
+  min-width: 0;
+  color: var(--on-surface);
+  font: var(--m3e-type-title-small);
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.device-card:hover .device-card__title {
+  color: var(--primary);
+}
+.device-card__year {
+  flex-shrink: 0;
+  padding: 0.0625rem 0.375rem;
+  border-radius: var(--shape-corner-xs);
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+  font-variant-numeric: tabular-nums;
+}
+.device-card__brand {
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-medium);
+}
+.device-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  flex-shrink: 0;
+  padding: 0.125rem 0.5625rem;
+  border-radius: var(--shape-corner-full);
+  background: color-mix(in oklab, var(--device-status-color) 12%, transparent);
+  color: var(--device-status-color);
+  font: var(--m3e-type-label-small);
+  font-weight: 600;
+  border: 1px solid color-mix(in oklab, var(--device-status-color) 22%, transparent);
+}
+.device-card__status > :global(svg) {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+.device-card__specs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  max-width: 100%;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+  font-weight: 500;
+}
+.device-card__specs > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.device-card__description {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+  line-height: 1.5;
+}
+.device-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+.device-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--shape-corner-m);
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  color: var(--primary);
+  font: var(--m3e-type-label-medium);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid color-mix(in oklab, var(--primary) 16%, transparent);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.device-card__link:hover {
+  background: color-mix(in oklab, var(--primary) 16%, transparent);
+  box-shadow: var(--m3e-elevation-1);
+  transform: translateY(-1px);
+}
+.device-card__link > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+}
+.device-card__featured {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--tertiary);
+  font: var(--m3e-type-label-small);
+  font-weight: 700;
+}
+.device-card__featured > :global(svg) {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: #facc15;
+}
 </style>

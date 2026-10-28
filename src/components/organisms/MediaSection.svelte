@@ -465,57 +465,66 @@ onMount(() => {
 	{/if}
 </div>
 
-<style lang="stylus">
-.media-section
-	display: flex
-	flex-direction: column
-	width: 100%
-
+<style>
+.media-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 /* Верхняя строка управления над сеткой постеров (единая карточка в стиле темы) */
 /* Пустое состояние */
-.media-section__empty
-	display: flex
-	flex-direction: column
-	align-items: center
-	justify-content: center
-	padding: 4rem 1rem
-	color: var(--on-surface-variant)
-	gap: 0.5rem
-	> :global(svg)
-		width: 3rem
-		height: 3rem
-		opacity: 0.5
-
+.media-section__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  color: var(--on-surface-variant);
+  gap: 0.5rem;
+}
+.media-section__empty > :global(svg) {
+  width: 3rem;
+  height: 3rem;
+  opacity: 0.5;
+}
 /* Пустое состояние */
-.media-section__empty
-	display: flex
-	flex-direction: column
-	align-items: center
-	justify-content: center
-	padding: 4rem 1rem
-	color: var(--on-surface-variant)
-	gap: 0.5rem
-	> :global(svg)
-		width: 3rem
-		height: 3rem
-		opacity: 0.5
-
-.media-grid
-	display: grid
-	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr))
-	gap: 1rem
-	padding: 4px 6px
-	box-sizing: border-box
-
-	@media (min-width: 640px)
-		grid-template-columns: repeat(auto-fill, minmax(185px, 1fr))
-		gap: 1.125rem
-
-	@media (min-width: 1024px)
-		grid-template-columns: repeat(auto-fill, minmax(215px, 1fr))
-		gap: 1.25rem
-
-	@media (min-width: 1440px)
-		grid-template-columns: repeat(auto-fill, minmax(230px, 1fr))
-		gap: 1.5rem
+.media-section__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  color: var(--on-surface-variant);
+  gap: 0.5rem;
+}
+.media-section__empty > :global(svg) {
+  width: 3rem;
+  height: 3rem;
+  opacity: 0.5;
+}
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  padding: 4px 6px;
+  box-sizing: border-box;
+}
+@media (min-width: 640px) {
+  .media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+    gap: 1.125rem;
+  }
+}
+@media (min-width: 1024px) {
+  .media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    gap: 1.25rem;
+  }
+}
+@media (min-width: 1440px) {
+  .media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+}
 </style>

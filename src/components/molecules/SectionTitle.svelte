@@ -33,33 +33,35 @@ let {
 	{/if}
 </div>
 
-<style lang="stylus">
-.section-title
-	margin-bottom: 0.75rem
-
-	&__row
-		display: flex
-		align-items: center
-		gap: 0.5rem
-
-	&__icon
-		display: inline-flex
-		flex-shrink: 0
-		color: var(--primary)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-
-	&__title
-		margin: 0
-		color: var(--on-surface)
-		font: var(--m3e-type-title-large)
-		font-weight: 700
-		line-height: 1.3
-
-	&__subtitle
-		margin: 0.25rem 0 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-		line-height: 1.5
+<style>
+.section-title {
+  margin-bottom: 0.75rem;
+}
+.section-title__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.section-title__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.section-title__icon > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.section-title__title {
+  margin: 0;
+  color: var(--on-surface);
+  font: var(--m3e-type-title-large);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.section-title__subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+  line-height: 1.5;
+}
 </style>

@@ -132,110 +132,225 @@ $effect(() => {
 	</dialog>
 {/if}
 
-<style lang="stylus">
-.m3-dialog
-	position: fixed
-	left: 50%
-	top: 50%
-	transform: translate(-50%, -50%)
-	box-sizing: border-box
-	min-width: 17.5rem
-	max-width: calc(100vw - 3rem)
-	margin: 0
-	border: none
-	border-radius: var(--shape-corner-xl)
-	background: var(--surface-container-high)
-	color: var(--on-surface)
-	box-shadow: var(--m3e-elevation-3)
-	padding: 1.5rem
-	animation: m3-dialog-in var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-	&:focus
-		outline: none
-
-	&.closing
-		animation: m3-dialog-out var(--m3e-duration-medium) var(--m3e-easing-emphasized-accelerate) forwards
-
-	&::backdrop
-		background: unquote("color-mix(in srgb, var(--mc-scrim, #000) 32%, transparent)")
-		animation: m3-dialog-fade-in var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-	&.closing::backdrop
-		animation: m3-dialog-fade-out var(--m3e-duration-medium) var(--m3e-easing-standard) forwards
-
-	&__header
-		display: flex
-		align-items: center
-		justify-content: space-between
-		gap: 1rem
-		min-width: 0
-		margin-bottom: 1rem
-
-	&__title
-		min-width: 0
-		font: var(--m3e-type-headline-small)
-		color: var(--on-surface)
-		margin-bottom: 0
-
-	&__close-btn
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 2.25rem
-		height: 2.25rem
-		padding: 0
-		border: none
-		border-radius: var(--shape-corner-full)
-		background: transparent
-		color: var(--on-surface-variant)
-		cursor: pointer
-		flex-shrink: 0
-		margin-left: auto
-		--m3e-state-color: var(--on-surface)
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-
-	&__content
-		min-width: 0
-		font: var(--m3e-type-body-medium)
-		color: var(--on-surface-variant)
-
-	&__actions
-		display: flex
-		justify-content: flex-end
-		gap: 0.5rem
-		margin-top: 1.5rem
-
-@keyframes m3-dialog-fade-in
-	from
-		opacity: 0
-	to
-		opacity: 1
-
-@keyframes m3-dialog-fade-out
-	from
-		opacity: 1
-	to
-		opacity: 0
-
-@keyframes m3-dialog-in
-	from
-		opacity: 0
-		transform: translate(-50%, -50%) scale(0.9)
-	to
-		opacity: 1
-		transform: translate(-50%, -50%) scale(1)
-
-@keyframes m3-dialog-out
-	from
-		opacity: 1
-		transform: translate(-50%, -50%) scale(1)
-	to
-		opacity: 0
-		transform: translate(-50%, -50%) scale(0.9)
+<style>
+.m3-dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  min-width: 17.5rem;
+  max-width: calc(100vw - 3rem);
+  margin: 0;
+  border: none;
+  border-radius: var(--shape-corner-xl);
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+  box-shadow: var(--m3e-elevation-3);
+  padding: 1.5rem;
+  animation: m3-dialog-in var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-dialog:focus {
+  outline: none;
+}
+.m3-dialog.closing {
+  animation: m3-dialog-out var(--m3e-duration-medium) var(--m3e-easing-emphasized-accelerate) forwards;
+}
+.m3-dialog::backdrop {
+  background: color-mix(in srgb, var(--mc-scrim, #000) 32%, transparent);
+  animation: m3-dialog-fade-in var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.m3-dialog.closing::backdrop {
+  animation: m3-dialog-fade-out var(--m3e-duration-medium) var(--m3e-easing-standard) forwards;
+}
+.m3-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+  margin-bottom: 1rem;
+}
+.m3-dialog__title {
+  min-width: 0;
+  font: var(--m3e-type-headline-small);
+  color: var(--on-surface);
+  margin-bottom: 0;
+}
+.m3-dialog__close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: transparent;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: auto;
+  --m3e-state-color: var(--on-surface);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-dialog__close-btn > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.m3-dialog__content {
+  min-width: 0;
+  font: var(--m3e-type-body-medium);
+  color: var(--on-surface-variant);
+}
+.m3-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+@-moz-keyframes m3-dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes m3-dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes m3-dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes m3-dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes m3-dialog-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes m3-dialog-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-o-keyframes m3-dialog-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes m3-dialog-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-moz-keyframes m3-dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@-webkit-keyframes m3-dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@-o-keyframes m3-dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes m3-dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@-moz-keyframes m3-dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+@-webkit-keyframes m3-dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+@-o-keyframes m3-dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+@keyframes m3-dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
 </style>

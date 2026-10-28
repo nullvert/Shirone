@@ -172,13 +172,14 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 	)}
 </aside>
 
-<style lang="stylus">
-	/* 包装层修正：widget 根元素原本直接作为 flex item 被 blockified；
+<style>
+/* 包装层修正：widget 根元素原本直接作为 flex item 被 blockified；
 	   包进 .sidebar-widget 后自定义元素（widget-layout）恢复 inline，
 	   需显式拉满宽度 */
-	.sidebar-widget > *
-		display: block
-		width: 100%
+.sidebar-widget > * {
+  display: block;
+  width: 100%;
+}
 </style>
 
 <script>

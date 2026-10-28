@@ -63,26 +63,27 @@ const filteredItems = $derived(
 	</div>
 </Card>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.skills-section
-	display: block
-
-	@media (max-width: bp-sm - 1px)
-		padding: 1rem 0.75rem
-
-	&__filters
-		padding-bottom: 1rem
-		border-bottom: 1px solid var(--outline-variant)
-
-	&__count
-		margin: 1rem 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-
-	&__grid
-		display: grid
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr))
-		gap: 0.75rem
+<style>
+.skills-section {
+  display: block;
+}
+@media (max-width: 639px) {
+  .skills-section {
+    padding: 1rem 0.75rem;
+  }
+}
+.skills-section__filters {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--outline-variant);
+}
+.skills-section__count {
+  margin: 1rem 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+}
+.skills-section__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.75rem;
+}
 </style>

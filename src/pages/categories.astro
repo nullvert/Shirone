@@ -50,68 +50,70 @@ const categorySummary = `${categories.length} ${i18n(I18nKey.categoriesCount)} �
 	</Card>
 </MainGridLayout>
 
-<style lang="stylus">
-@import "../styles/breakpoints.styl"
-
-.category-index
-	display: block
-
-	&__list
-		display: grid
-		grid-template-columns: repeat(2, minmax(0, 1fr))
-		gap: var(--m3e-space-2) var(--m3e-space-4)
-		margin: 0
-		padding: 0
-		list-style: none
-
-	&__row
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-3)
-		min-height: 3.5rem
-		padding: var(--m3e-space-3) var(--m3e-space-4)
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-low)
-		text-decoration: none
-		--m3e-state-color: var(--on-surface)
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 6%, transparent)")
-
-	&__name
-		font: var(--m3e-type-body-large)
-		font-weight: 500
-		color: var(--on-surface)
-		white-space: nowrap
-		overflow: hidden
-		text-overflow: ellipsis
-
-	/* 点线引导：与 SiteStats 同语言，沉到文字基线附近 */
-	&__rule
-		flex: 1
-		align-self: flex-end
-		margin-bottom: 0.35em
-		min-width: 0.75rem
-		border-bottom: 2px dotted var(--outline-variant)
-
-	&__count
-		font: var(--m3e-type-title-small)
-		font-weight: 600
-		font-variant-numeric: tabular-nums
-		color: var(--on-surface-variant)
-		white-space: nowrap
-
-	&__empty
-		display: flex
-		align-items: center
-		justify-content: center
-		min-height: 11rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-large)
-
-	@media (max-width: bp-sm - 1px)
-		padding: 1rem 0.75rem
-
-		&__list
-			grid-template-columns: 1fr
+<style>
+.category-index {
+  display: block;
+/* 点线引导：与 SiteStats 同语言，沉到文字基线附近 */
+}
+.category-index__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--m3e-space-2) var(--m3e-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.category-index__row {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-3);
+  min-height: 3.5rem;
+  padding: var(--m3e-space-3) var(--m3e-space-4);
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-low);
+  text-decoration: none;
+  --m3e-state-color: var(--on-surface);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.category-index__row:hover {
+  background: color-mix(in oklab, var(--on-surface) 6%, transparent);
+}
+.category-index__name {
+  font: var(--m3e-type-body-large);
+  font-weight: 500;
+  color: var(--on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.category-index__rule {
+  flex: 1;
+  align-self: flex-end;
+  margin-bottom: 0.35em;
+  min-width: 0.75rem;
+  border-bottom: 2px dotted var(--outline-variant);
+}
+.category-index__count {
+  font: var(--m3e-type-title-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+}
+.category-index__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-large);
+}
+@media (max-width: 639px) {
+  .category-index {
+    padding: 1rem 0.75rem;
+  }
+  .category-index__list {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

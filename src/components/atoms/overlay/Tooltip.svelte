@@ -234,74 +234,75 @@ $effect(() => {
 	{/if}
 </span>
 
-<style lang="stylus">
-.m3-tooltip
-	position: relative
-	display: inline-flex
-
-.m3-tooltip__tip
-	position: fixed
-	top: 0
-	left: 0
-	margin: 0
-	max-width: 18rem
-	padding: 0.375rem 0.75rem
-	border-radius: var(--shape-corner-xs)
-	background: var(--inverse-surface)
-	color: var(--inverse-on-surface)
-	font: var(--m3e-type-body-small)
-	text-align: left
-	white-space: nowrap
-	overflow-wrap: anywhere
-	z-index: 120
-	opacity: 0
-	pointer-events: none
-	box-shadow: var(--m3e-elevation-1)
-	transform: scale(0.96)
-	transition:
-		opacity var(--m3e-duration-short) var(--m3e-easing-standard),
-		transform var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&--open
-		opacity: 1
-		transform: scale(1)
-
-	&--rich
-		display: flex
-		flex-direction: column
-		gap: 0.25rem
-		max-width: 20rem
-		padding: 1rem
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container)
-		color: var(--on-surface)
-		box-shadow: var(--m3e-elevation-2)
-		white-space: normal
-
-	&--rich.m3-tooltip__tip--open
-		pointer-events: auto
-
-	&__title
-		font: var(--m3e-type-title-small)
-		color: var(--on-surface-variant)
-
-	&__supporting
-		font: var(--m3e-type-body-medium)
-		color: var(--on-surface-variant)
-
-	&__action
-		align-self: flex-start
-		margin-top: 0.25rem
-		padding: 0.25rem 0.5rem
-		border: none
-		background: none
-		color: var(--primary)
-		font: var(--m3e-type-label-large)
-		cursor: pointer
-		border-radius: var(--shape-corner-xs)
-		&:hover
-			background: unquote("color-mix(in srgb, var(--primary) 8%, transparent)")
-		&:focus-visible
-			outline: 2px solid var(--primary)
-			outline-offset: 2px
+<style>
+.m3-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+.m3-tooltip__tip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  max-width: 18rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--shape-corner-xs);
+  background: var(--inverse-surface);
+  color: var(--inverse-on-surface);
+  font: var(--m3e-type-body-small);
+  text-align: left;
+  white-space: nowrap;
+  overflow-wrap: anywhere;
+  z-index: 120;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: var(--m3e-elevation-1);
+  transform: scale(0.96);
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-tooltip__tip--open {
+  opacity: 1;
+  transform: scale(1);
+}
+.m3-tooltip__tip--rich {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 20rem;
+  padding: 1rem;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container);
+  color: var(--on-surface);
+  box-shadow: var(--m3e-elevation-2);
+  white-space: normal;
+}
+.m3-tooltip__tip--rich.m3-tooltip__tip--open {
+  pointer-events: auto;
+}
+.m3-tooltip__tip__title {
+  font: var(--m3e-type-title-small);
+  color: var(--on-surface-variant);
+}
+.m3-tooltip__tip__supporting {
+  font: var(--m3e-type-body-medium);
+  color: var(--on-surface-variant);
+}
+.m3-tooltip__tip__action {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  background: none;
+  color: var(--primary);
+  font: var(--m3e-type-label-large);
+  cursor: pointer;
+  border-radius: var(--shape-corner-xs);
+}
+.m3-tooltip__tip__action:hover {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+.m3-tooltip__tip__action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
 </style>

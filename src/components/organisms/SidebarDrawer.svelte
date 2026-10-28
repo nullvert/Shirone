@@ -209,183 +209,191 @@ function toggleDrawer(tab: "content" | "theme" = "content") {
 	</aside>
 </div>
 
-<style lang="stylus">
-.sidebar-drawer
-	position: fixed
-	inset: 0
-	z-index: 60
-	visibility: hidden
-	pointer-events: none
-
-	&--open
-		visibility: visible
-		pointer-events: auto
-
-	&__scrim
-		position: absolute
-		inset: 0
-		background: unquote("color-mix(in oklab, var(--scrim, #000) 36%, transparent)")
-		opacity: 0
-		backdrop-filter: blur(4px)
-		-webkit-backdrop-filter: blur(4px)
-		transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-	&--open &__scrim
-		opacity: 1
-
-	/* Панель: справа, адаптивная ширина (до 420px на планшетах) */
-	&__panel
-		position: absolute
-		top: 0
-		bottom: 0
-		right: 0
-		display: flex
-		flex-direction: column
-		width: 360px
-		max-width: 90vw
-		box-sizing: border-box
-		background: var(--surface-container-low)
-		color: var(--on-surface)
-		border-radius: 0
-		border-left: 1px solid var(--outline-variant)
-		box-shadow: var(--m3e-elevation-3)
-		transform: translateX(100%)
-		transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate)
-		overflow: hidden
-		touch-action: pan-y
-
-		@media (min-width: 600px)
-			width: 440px
-
-	&--open &__panel
-		transform: translateX(0)
-
-	&__header
-		display: flex
-		align-items: center
-		justify-content: space-between
-		padding: var(--m3e-space-2) var(--m3e-space-4)
-		min-height: 3.5rem
-		border-bottom: 1px solid var(--outline-variant)
-		background: var(--surface-container)
-		flex: none
-
-	&__close-btn
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 2rem
-		height: 2rem
-		padding: 0
-		border: none
-		border-radius: var(--shape-corner-full)
-		background: transparent
-		color: var(--on-surface-variant)
-		cursor: pointer
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
-		&:hover
-			background: var(--surface-container-high)
-			color: var(--on-surface)
-		&:active
-			transform: scale(0.92)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-
-	&__title-group
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-3)
-
-	&__indicator
-		display: block
-		width: 4px
-		height: 18px
-		border-radius: var(--shape-corner-full)
-		background: var(--primary)
-
-	&__title
-		font: var(--m3e-type-title-medium)
-		color: var(--on-surface)
-		margin: 0
-
-	&__body
-		flex: 1
-		min-height: 0
-		overflow-y: auto
-		padding: var(--m3e-space-4)
-		display: flex
-		flex-direction: column
-		gap: 0
-		overscroll-behavior: contain
-		-webkit-overflow-scrolling: touch
-		scrollbar-width: thin
-		scrollbar-color: var(--scrollbar-bg) transparent
-
-		&::-webkit-scrollbar
-			width: 6px
-
-		&::-webkit-scrollbar-track
-			background: transparent
-
-		&::-webkit-scrollbar-thumb
-			background: var(--scrollbar-bg)
-			border-radius: var(--shape-corner-full)
-
-			&:hover
-				background: var(--scrollbar-bg-hover)
-
-			&:active
-				background: var(--scrollbar-bg-active)
-
-	&__theme-wrap
-		width: 100%
-		margin-top: auto
-
-	/* Нижний футер: чистый полноразмерный Text Button на всю ширину блока */
-	&__footer
-		display: flex
-		align-items: center
-		height: var(--bar-h-mobile, 3.75rem)
-		box-sizing: border-box
-		padding: 0
-		padding-bottom: env(safe-area-inset-bottom, 0px)
-		border-top: 1px solid unquote("color-mix(in oklab, var(--outline-variant) 40%, transparent)")
-		background: var(--surface-container)
-		flex: none
-
-		@media (min-width: 600px)
-			height: var(--bar-h-tablet, 4.5rem)
-
-	&__bottom-close-btn
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 100%
-		height: 100%
-		padding: 0 var(--m3e-space-4)
-		box-sizing: border-box
-		border: none
-		border-radius: 0
-		background: transparent
-		color: var(--on-surface)
-		font: var(--m3e-type-label-large)
-		font-weight: 600
-		letter-spacing: 0.04em
-		cursor: pointer
-		user-select: none
-		touch-action: manipulation
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		@media (min-width: 600px)
-			font-size: 1rem
-
-		&:hover
-			background: var(--surface-container-high)
-			color: var(--primary)
-
-		&:active
-			background: unquote("color-mix(in oklab, var(--on-surface) 8%, var(--surface-container-high))")
+<style>
+.sidebar-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  visibility: hidden;
+  pointer-events: none;
+/* Панель: справа, адаптивная ширина (до 420px на планшетах) */
+/* Нижний футер: чистый полноразмерный Text Button на всю ширину блока */
+}
+.sidebar-drawer--open {
+  visibility: visible;
+  pointer-events: auto;
+}
+.sidebar-drawer__scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklab, var(--scrim, #000) 36%, transparent);
+  opacity: 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.sidebar-drawer--open .sidebar-drawer__scrim {
+  opacity: 1;
+}
+.sidebar-drawer__panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  max-width: 90vw;
+  box-sizing: border-box;
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  border-radius: 0;
+  border-left: 1px solid var(--outline-variant);
+  box-shadow: var(--m3e-elevation-3);
+  transform: translateX(100%);
+  transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate);
+  overflow: hidden;
+  touch-action: pan-y;
+}
+@media (min-width: 600px) {
+  .sidebar-drawer__panel {
+    width: 440px;
+  }
+}
+.sidebar-drawer--open .sidebar-drawer__panel {
+  transform: translateX(0);
+}
+.sidebar-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--m3e-space-2) var(--m3e-space-4);
+  min-height: 3.5rem;
+  border-bottom: 1px solid var(--outline-variant);
+  background: var(--surface-container);
+  flex: none;
+}
+.sidebar-drawer__close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: transparent;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.sidebar-drawer__close-btn:hover {
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+}
+.sidebar-drawer__close-btn:active {
+  transform: scale(0.92);
+}
+.sidebar-drawer__close-btn > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.sidebar-drawer__title-group {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-3);
+}
+.sidebar-drawer__indicator {
+  display: block;
+  width: 4px;
+  height: 18px;
+  border-radius: var(--shape-corner-full);
+  background: var(--primary);
+}
+.sidebar-drawer__title {
+  font: var(--m3e-type-title-medium);
+  color: var(--on-surface);
+  margin: 0;
+}
+.sidebar-drawer__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--m3e-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-bg) transparent;
+}
+.sidebar-drawer__body::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-drawer__body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-drawer__body::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-bg);
+  border-radius: var(--shape-corner-full);
+}
+.sidebar-drawer__body::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-bg-hover);
+}
+.sidebar-drawer__body::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-bg-active);
+}
+.sidebar-drawer__theme-wrap {
+  width: 100%;
+  margin-top: auto;
+}
+.sidebar-drawer__footer {
+  display: flex;
+  align-items: center;
+  height: var(--bar-h-mobile, 3.75rem);
+  box-sizing: border-box;
+  padding: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid color-mix(in oklab, var(--outline-variant) 40%, transparent);
+  background: var(--surface-container);
+  flex: none;
+}
+@media (min-width: 600px) {
+  .sidebar-drawer__footer {
+    height: var(--bar-h-tablet, 4.5rem);
+  }
+}
+.sidebar-drawer__bottom-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--m3e-space-4);
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--on-surface);
+  font: var(--m3e-type-label-large);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+@media (min-width: 600px) {
+  .sidebar-drawer__bottom-close-btn {
+    font-size: 1rem;
+  }
+}
+.sidebar-drawer__bottom-close-btn:hover {
+  background: var(--surface-container-high);
+  color: var(--primary);
+}
+.sidebar-drawer__bottom-close-btn:active {
+  background: color-mix(in oklab, var(--on-surface) 8%, var(--surface-container-high));
+}
 </style>

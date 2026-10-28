@@ -127,87 +127,89 @@ function onBlur() {
     {/if}
 </div>
 
-<style lang="stylus">
-.m3-date-input
-    position: relative
-    display: flex
-    align-items: center
-    gap: 12px
-    padding: 0 16px
-    background: var(--field-filled-bg)
-    border-radius: var(--shape-corner-xs) var(--shape-corner-xs) 0 0
-    transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    &:hover
-        background: unquote("color-mix(in oklab, var(--on-surface) 12%, var(--field-filled-bg))")
-
-    &__icon
-        display: flex
-        flex: none
-        color: var(--on-surface-variant)
-        > :global(svg)
-            width: 1.25rem
-            height: 1.25rem
-
-    &__field
-        position: relative
-        flex: 1
-        display: flex
-        flex-direction: column
-        justify-content: center
-        min-height: 56px
-        padding-top: 8px
-
-    input
-        width: 100%
-        border: none
-        outline: none
-        background: none
-        font: var(--m3e-type-body-large)
-        color: var(--on-surface)
-        caret-color: var(--primary)
-
-    &__label
-        position: absolute
-        left: 0
-        top: 50%
-        transform: translateY(-50%)
-        font: var(--m3e-type-body-large)
-        color: var(--on-surface-variant)
-        pointer-events: none
-        transition: all var(--m3e-duration-short) var(--m3e-easing-standard)
-
-        &--float
-            top: 8px
-            transform: none
-            font: var(--m3e-type-body-small)
-            color: var(--primary)
-
-    &--focused &__label--float
-        color: var(--primary)
-
-    &__underline
-        position: absolute
-        left: 0
-        right: 0
-        bottom: 0
-        height: 1px
-        background: var(--outline-variant)
-        transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    &--focused &__underline
-        height: 2px
-        background: var(--primary)
-
-    &--error &__underline
-        height: 2px
-        background: var(--error)
-
-    &__error
-        position: absolute
-        top: 100%
-        left: 16px
-        margin-top: 4px
-        font: var(--m3e-type-label-small)
-        color: var(--error)
+<style>
+.m3-date-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  background: var(--field-filled-bg);
+  border-radius: var(--shape-corner-xs) var(--shape-corner-xs) 0 0;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-date-input:hover {
+  background: color-mix(in oklab, var(--on-surface) 12%, var(--field-filled-bg));
+}
+.m3-date-input__icon {
+  display: flex;
+  flex: none;
+  color: var(--on-surface-variant);
+}
+.m3-date-input__icon > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.m3-date-input__field {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 56px;
+  padding-top: 8px;
+}
+.m3-date-input input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  font: var(--m3e-type-body-large);
+  color: var(--on-surface);
+  caret-color: var(--primary);
+}
+.m3-date-input__label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font: var(--m3e-type-body-large);
+  color: var(--on-surface-variant);
+  pointer-events: none;
+  transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-date-input__label--float {
+  top: 8px;
+  transform: none;
+  font: var(--m3e-type-body-small);
+  color: var(--primary);
+}
+.m3-date-input--focused .m3-date-input__label--float {
+  color: var(--primary);
+}
+.m3-date-input__underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--outline-variant);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-date-input--focused .m3-date-input__underline {
+  height: 2px;
+  background: var(--primary);
+}
+.m3-date-input--error .m3-date-input__underline {
+  height: 2px;
+  background: var(--error);
+}
+.m3-date-input__error {
+  position: absolute;
+  top: 100%;
+  left: 16px;
+  margin-top: 4px;
+  font: var(--m3e-type-label-small);
+  color: var(--error);
+}
 </style>

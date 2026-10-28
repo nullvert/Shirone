@@ -23,15 +23,16 @@ let {
     aria-hidden="true"
 />
 
-<style lang="stylus">
-.m3-divider
-    border: none
-    height: var(--divider-thickness, 1px)
-    background: var(--divider-color, var(--outline-variant))
-    margin: 0
-
-    &--vertical
-        height: auto
-        width: var(--divider-thickness, 1px)
-        align-self: stretch
+<style>
+.m3-divider {
+  border: none;
+  height: var(--divider-thickness, 1px);
+  background: var(--divider-color, var(--outline-variant));
+  margin: 0;
+}
+.m3-divider--vertical {
+  height: auto;
+  width: var(--divider-thickness, 1px);
+  align-self: stretch;
+}
 </style>

@@ -118,202 +118,199 @@ const radiusVar = (r: string) => RADIUS_TOKENS[r] ?? r;
 	</button>
 {/if}
 
-<style lang="stylus">
-.m3-button
-	display: inline-flex
-	align-items: center
-	justify-content: center
-	box-sizing: border-box
-	gap: 0.5rem /* icon 与 label 间距 8px */
-	height: 2.5rem /* small 40px */
-	padding: 0 1.5rem /* small 水平 24px */
-	border: none
-	border-radius: var(--m3-button-radius, var(--shape-corner-m)) /* 站点形状契约 12px，radius prop 可覆盖 */
-	background: transparent
-	color: var(--primary)
-	font: var(--m3e-type-label-large)
-	cursor: pointer
-	user-select: none
-	white-space: nowrap
-	text-decoration: none
-	flex-shrink: 0
-	-webkit-tap-highlight-color: transparent
-	--m3e-state-color: var(--primary)
-	--m3-button-elevation: var(--m3e-elevation-0)
-	box-shadow: var(--m3-button-elevation)
-	transition:
-		box-shadow var(--m3e-duration-short) var(--m3e-easing-standard),
-		background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-		color var(--m3e-duration-short) var(--m3e-easing-standard),
-		border-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&__icon
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		flex-shrink: 0
-
-		> :global(svg)
-			width: 1.125rem /* 18px 基础 */
-			height: 1.125rem
-
-	/* children 插槽内容容器（对齐 / 占满由 align + full 控制） */
-	&__content
-		display: flex
-		flex: 1
-		align-items: center
-		gap: 0.5rem
-		min-width: 0
-
-	&--center &__content
-		justify-content: center
-
-	&--start &__content
-		justify-content: flex-start
-
-	&--between &__content
-		justify-content: space-between
-
-	&--full
-		width: 100%
-
-	&--disabled
-		pointer-events: none
-
-	/* === 尺寸（latest md-comp-button-*） === */
-	&--xsmall
-		height: 2rem /* 32px */
-		padding: 0 1rem
-
-		.m3-button__icon > :global(svg)
-			width: 1.25rem /* 20px */
-			height: 1.25rem
-
-	&--small
-		height: 2.5rem /* 40px */
-		padding: 0 1.5rem
-
-		.m3-button__icon > :global(svg)
-			width: 1.25rem /* 20px */
-			height: 1.25rem
-
-	&--medium
-		height: 3.5rem /* 56px */
-		padding: 0 2rem
-
-		.m3-button__icon > :global(svg)
-			width: 1.5rem /* 24px */
-			height: 1.5rem
-
-	&--large
-		height: 6rem /* 96px */
-		padding: 0 2rem
-
-		.m3-button__icon > :global(svg)
-			width: 2rem /* 32px */
-			height: 2rem
-
-	&--xlarge
-		height: 8.5rem /* 136px */
-		padding: 0 2.5rem
-
-		.m3-button__icon > :global(svg)
-			width: 2.5rem /* 40px */
-			height: 2.5rem
-
-	/* === 变体（v0.192 tokens） === */
-	&--filled
-		background: var(--primary)
-		color: var(--on-primary)
-		--m3e-state-color: var(--on-primary)
-		--m3-button-elevation: var(--m3e-elevation-0)
-
-		&:hover
-			--m3-button-elevation: var(--m3e-elevation-1) /* hover-container-elevation level1 */
-
-		&.m3-button--disabled
-			/* 覆盖全局 .m3-state-layer[disabled] 0.38：容器 12%、文字/图标 38% 分开控制 */
-			opacity: 1
-			background: unquote("color-mix(in srgb, var(--on-surface) 12%, transparent)")
-			color: var(--on-surface)
-
-			.m3-button__icon > :global(svg)
-				opacity: 0.38
-
-			.m3-button__label
-				opacity: 0.38
-
-	&--elevated
-		background: var(--surface-container-low)
-		color: var(--primary)
-		--m3e-state-color: var(--primary)
-		--m3-button-elevation: var(--m3e-elevation-1)
-
-		&:hover
-			--m3-button-elevation: var(--m3e-elevation-2) /* hover-container-elevation level2 */
-
-		&.m3-button--disabled
-			opacity: 1
-			background: unquote("color-mix(in srgb, var(--on-surface) 12%, transparent)")
-			color: var(--on-surface)
-			box-shadow: none
-
-			.m3-button__icon > :global(svg)
-				opacity: 0.38
-
-			.m3-button__label
-				opacity: 0.38
-
-	&--tonal
-		background: var(--secondary-container)
-		color: var(--on-secondary-container)
-		--m3e-state-color: var(--on-secondary-container)
-		--m3-button-elevation: var(--m3e-elevation-0)
-
-		&:hover
-			--m3-button-elevation: var(--m3e-elevation-1) /* hover-container-elevation level1 */
-
-		&.m3-button--disabled
-			opacity: 1
-			background: unquote("color-mix(in srgb, var(--on-surface) 12%, transparent)")
-			color: var(--on-surface)
-
-			.m3-button__icon > :global(svg)
-				opacity: 0.38
-
-			.m3-button__label
-				opacity: 0.38
-
-	&--outlined
-		border: 1px solid var(--outline)
-		color: var(--primary)
-		--m3e-state-color: var(--primary)
-
-		&:hover
-			border-color: var(--outline)
-
-		&.m3-button--disabled
-			opacity: 1
-			border-color: unquote("color-mix(in srgb, var(--on-surface) 12%, transparent)")
-			color: var(--on-surface)
-
-			.m3-button__icon > :global(svg)
-				opacity: 0.38
-
-			.m3-button__label
-				opacity: 0.38
-
-	&--text
-		color: var(--primary)
-		--m3e-state-color: var(--primary)
-
-		&.m3-button--disabled
-			opacity: 1
-			color: var(--on-surface)
-
-			.m3-button__icon > :global(svg)
-				opacity: 0.38
-
-			.m3-button__label
-				opacity: 0.38
+<style>
+.m3-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  gap: 0.5rem /* icon 与 label 间距 8px */;
+  height: 2.5rem /* small 40px */;
+  padding: 0 1.5rem /* small 水平 24px */;
+  border: none;
+  border-radius: var(--m3-button-radius, var(--shape-corner-m)) /* 站点形状契约 12px，radius prop 可覆盖 */;
+  background: transparent;
+  color: var(--primary);
+  font: var(--m3e-type-label-large);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  --m3e-state-color: var(--primary);
+  --m3-button-elevation: var(--m3e-elevation-0);
+  box-shadow: var(--m3-button-elevation);
+  transition: box-shadow var(--m3e-duration-short) var(--m3e-easing-standard), background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard), border-color var(--m3e-duration-short) var(--m3e-easing-standard);
+/* children 插槽内容容器（对齐 / 占满由 align + full 控制） */
+/* === 尺寸（latest md-comp-button-*） === */
+/* === 变体（v0.192 tokens） === */
+}
+.m3-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.m3-button__icon > :global(svg) {
+  width: 1.125rem /* 18px 基础 */;
+  height: 1.125rem;
+}
+.m3-button__content {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.m3-button--center .m3-button__content {
+  justify-content: center;
+}
+.m3-button--start .m3-button__content {
+  justify-content: flex-start;
+}
+.m3-button--between .m3-button__content {
+  justify-content: space-between;
+}
+.m3-button--full {
+  width: 100%;
+}
+.m3-button--disabled {
+  pointer-events: none;
+}
+.m3-button--xsmall {
+  height: 2rem /* 32px */;
+  padding: 0 1rem;
+}
+.m3-button--xsmall .m3-button__icon > :global(svg) {
+  width: 1.25rem /* 20px */;
+  height: 1.25rem;
+}
+.m3-button--small {
+  height: 2.5rem /* 40px */;
+  padding: 0 1.5rem;
+}
+.m3-button--small .m3-button__icon > :global(svg) {
+  width: 1.25rem /* 20px */;
+  height: 1.25rem;
+}
+.m3-button--medium {
+  height: 3.5rem /* 56px */;
+  padding: 0 2rem;
+}
+.m3-button--medium .m3-button__icon > :global(svg) {
+  width: 1.5rem /* 24px */;
+  height: 1.5rem;
+}
+.m3-button--large {
+  height: 6rem /* 96px */;
+  padding: 0 2rem;
+}
+.m3-button--large .m3-button__icon > :global(svg) {
+  width: 2rem /* 32px */;
+  height: 2rem;
+}
+.m3-button--xlarge {
+  height: 8.5rem /* 136px */;
+  padding: 0 2.5rem;
+}
+.m3-button--xlarge .m3-button__icon > :global(svg) {
+  width: 2.5rem /* 40px */;
+  height: 2.5rem;
+}
+.m3-button--filled {
+  background: var(--primary);
+  color: var(--on-primary);
+  --m3e-state-color: var(--on-primary);
+  --m3-button-elevation: var(--m3e-elevation-0);
+}
+.m3-button--filled:hover {
+  --m3-button-elevation: var(--m3e-elevation-1) /* hover-container-elevation level1 */;
+}
+.m3-button--filled.m3-button--disabled {
+/* 覆盖全局 .m3-state-layer[disabled] 0.38：容器 12%、文字/图标 38% 分开控制 */
+  opacity: 1;
+  background: color-mix(in srgb, var(--on-surface) 12%, transparent);
+  color: var(--on-surface);
+}
+.m3-button--filled.m3-button--disabled .m3-button__icon > :global(svg) {
+  opacity: 0.38;
+}
+.m3-button--filled.m3-button--disabled .m3-button__label {
+  opacity: 0.38;
+}
+.m3-button--elevated {
+  background: var(--surface-container-low);
+  color: var(--primary);
+  --m3e-state-color: var(--primary);
+  --m3-button-elevation: var(--m3e-elevation-1);
+}
+.m3-button--elevated:hover {
+  --m3-button-elevation: var(--m3e-elevation-2) /* hover-container-elevation level2 */;
+}
+.m3-button--elevated.m3-button--disabled {
+  opacity: 1;
+  background: color-mix(in srgb, var(--on-surface) 12%, transparent);
+  color: var(--on-surface);
+  box-shadow: none;
+}
+.m3-button--elevated.m3-button--disabled .m3-button__icon > :global(svg) {
+  opacity: 0.38;
+}
+.m3-button--elevated.m3-button--disabled .m3-button__label {
+  opacity: 0.38;
+}
+.m3-button--tonal {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --m3e-state-color: var(--on-secondary-container);
+  --m3-button-elevation: var(--m3e-elevation-0);
+}
+.m3-button--tonal:hover {
+  --m3-button-elevation: var(--m3e-elevation-1) /* hover-container-elevation level1 */;
+}
+.m3-button--tonal.m3-button--disabled {
+  opacity: 1;
+  background: color-mix(in srgb, var(--on-surface) 12%, transparent);
+  color: var(--on-surface);
+}
+.m3-button--tonal.m3-button--disabled .m3-button__icon > :global(svg) {
+  opacity: 0.38;
+}
+.m3-button--tonal.m3-button--disabled .m3-button__label {
+  opacity: 0.38;
+}
+.m3-button--outlined {
+  border: 1px solid var(--outline);
+  color: var(--primary);
+  --m3e-state-color: var(--primary);
+}
+.m3-button--outlined:hover {
+  border-color: var(--outline);
+}
+.m3-button--outlined.m3-button--disabled {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--on-surface) 12%, transparent);
+  color: var(--on-surface);
+}
+.m3-button--outlined.m3-button--disabled .m3-button__icon > :global(svg) {
+  opacity: 0.38;
+}
+.m3-button--outlined.m3-button--disabled .m3-button__label {
+  opacity: 0.38;
+}
+.m3-button--text {
+  color: var(--primary);
+  --m3e-state-color: var(--primary);
+}
+.m3-button--text.m3-button--disabled {
+  opacity: 1;
+  color: var(--on-surface);
+}
+.m3-button--text.m3-button--disabled .m3-button__icon > :global(svg) {
+  opacity: 0.38;
+}
+.m3-button--text.m3-button--disabled .m3-button__label {
+  opacity: 0.38;
+}
 </style>

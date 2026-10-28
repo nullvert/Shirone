@@ -27,45 +27,40 @@ let {
     </span>
 </span>
 
-<style lang="stylus">
-.m3-badge
-    display: inline-flex
-    align-items: center
-    justify-content: center
-    min-width: 1rem
-    height: 1rem
-    border-radius: var(--shape-corner-full)
-    background: var(--error)
-    color: var(--on-error)
-    padding: 0 0.25rem
-    font: var(--m3e-type-label-small)
-    box-sizing: border-box
-    /* dot ↔ 数字切换：尺寸/间距过渡 */
-    transition:
-        width var(--m3e-duration-short) var(--m3e-easing-standard),
-        min-width var(--m3e-duration-short) var(--m3e-easing-standard),
-        height var(--m3e-duration-short) var(--m3e-easing-standard),
-        padding var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    /* 无内容：6px 红点 */
-    &--dot
-        width: 0.375rem
-        height: 0.375rem
-        min-width: 0.375rem
-        padding: 0
-
-    &.disabled
-        opacity: 0.38
-
-    /* 数字 label：恒渲染 + show 驱动 scale/fade（避免 {#if} 插入无动画） */
-    &__label
-        transform: scale(0)
-        opacity: 0
-        transition:
-            transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-            opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-
-        &.show
-            transform: scale(1)
-            opacity: 1
+<style>
+.m3-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1rem;
+  height: 1rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--error);
+  color: var(--on-error);
+  padding: 0 0.25rem;
+  font: var(--m3e-type-label-small);
+  box-sizing: border-box;
+/* dot ↔ 数字切换：尺寸/间距过渡 */
+  transition: width var(--m3e-duration-short) var(--m3e-easing-standard), min-width var(--m3e-duration-short) var(--m3e-easing-standard), height var(--m3e-duration-short) var(--m3e-easing-standard), padding var(--m3e-duration-short) var(--m3e-easing-standard);
+/* 无内容：6px 红点 */
+/* 数字 label：恒渲染 + show 驱动 scale/fade（避免 {#if} 插入无动画） */
+}
+.m3-badge--dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  min-width: 0.375rem;
+  padding: 0;
+}
+.m3-badge.disabled {
+  opacity: 0.38;
+}
+.m3-badge__label {
+  transform: scale(0);
+  opacity: 0;
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-badge__label.show {
+  transform: scale(1);
+  opacity: 1;
+}
 </style>

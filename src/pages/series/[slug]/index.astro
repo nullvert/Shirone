@@ -117,82 +117,84 @@ const subtitle = `${statusLabel} · ${ordered.length} ${i18n(I18nKey.postsCount)
 	</Card>
 </MainGridLayout>
 
-<style lang="stylus">
-.series-detail
-	display: block
-
-	&__overview
-		margin-top: var(--m3e-space-4)
-		padding: var(--m3e-space-4)
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-low)
-
-	/* 单列：两列时每行只有 ~280px（桌面侧栏占据后卡片仅 ~640px），
+<style>
+.series-detail {
+  display: block;
+/* 单列：两列时每行只有 ~280px（桌面侧栏占据后卡片仅 ~640px），
 	   标题会被压到 110px 左右并截断，点线引导也退化成最小值 */
-	&__list
-		display: flex
-		flex-direction: column
-		gap: var(--m3e-space-2)
-		margin: var(--m3e-space-4) 0 0
-		padding: 0
-		list-style: none
-
-	&__row
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-3)
-		min-height: 3.5rem
-		padding: var(--m3e-space-3) var(--m3e-space-4)
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-low)
-		text-decoration: none
-		--m3e-state-color: var(--on-surface)
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 6%, transparent)")
-
-	&__index
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		min-width: 1.75rem
-		height: 1.75rem
-		padding: 0 0.375rem
-		border-radius: var(--shape-corner-full)
-		background: unquote("color-mix(in oklab, var(--primary) 12%, transparent)")
-		color: var(--primary)
-		font: var(--m3e-type-label-small)
-		font-weight: 600
-		font-variant-numeric: tabular-nums
-		flex-shrink: 0
-
-	&__title
-		font: var(--m3e-type-body-large)
-		font-weight: 500
-		color: var(--on-surface)
-		flex: 0 1 auto
-		min-width: 0
-		white-space: nowrap
-		overflow: hidden
-		text-overflow: ellipsis
-
-	&__rule
-		flex: 1 1 0
-		align-self: flex-end
-		margin-bottom: 0.35em
-		min-width: var(--m3e-space-4)
-		border-bottom: 2px dotted var(--outline-variant)
-
-	&__date
-		font: var(--m3e-type-label-small)
-		color: var(--on-surface-variant)
-		white-space: nowrap
-
-	&__empty
-		display: flex
-		align-items: center
-		justify-content: center
-		min-height: 11rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-large)
+}
+.series-detail__overview {
+  margin-top: var(--m3e-space-4);
+  padding: var(--m3e-space-4);
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-low);
+}
+.series-detail__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m3e-space-2);
+  margin: var(--m3e-space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.series-detail__row {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-3);
+  min-height: 3.5rem;
+  padding: var(--m3e-space-3) var(--m3e-space-4);
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-low);
+  text-decoration: none;
+  --m3e-state-color: var(--on-surface);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.series-detail__row:hover {
+  background: color-mix(in oklab, var(--on-surface) 6%, transparent);
+}
+.series-detail__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 0.375rem;
+  border-radius: var(--shape-corner-full);
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font: var(--m3e-type-label-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.series-detail__title {
+  font: var(--m3e-type-body-large);
+  font-weight: 500;
+  color: var(--on-surface);
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.series-detail__rule {
+  flex: 1 1 0;
+  align-self: flex-end;
+  margin-bottom: 0.35em;
+  min-width: var(--m3e-space-4);
+  border-bottom: 2px dotted var(--outline-variant);
+}
+.series-detail__date {
+  font: var(--m3e-type-label-small);
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+}
+.series-detail__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-large);
+}
 </style>

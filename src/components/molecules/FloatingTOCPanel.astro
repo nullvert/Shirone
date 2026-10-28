@@ -81,76 +81,74 @@ const tocHeadings = headings.map((h) => ({
 	</div>
 </div>
 
-<style lang="stylus">
-.m3-floating-toc-panel
-	position: absolute
-	bottom: calc(100% + var(--m3e-space-3))
-	right: 0
-	width: min(85vw, 20rem)
-	max-height: min(65vh, 28rem)
-	display: flex
-	flex-direction: column
-	background: var(--surface-container-high)
-	color: var(--on-surface)
-	border: 1px solid var(--outline-variant)
-	border-radius: var(--shape-corner-xl)
-	box-shadow: var(--m3e-elevation-3)
-	overflow: hidden
-	opacity: 0
-	visibility: hidden
-	transform: translateY(var(--m3e-space-3)) scale(0.94)
-	transform-origin: bottom right
-	transition:
-		transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		opacity var(--m3e-duration-short) var(--m3e-easing-standard),
-		visibility var(--m3e-duration-short)
-	pointer-events: none
-	z-index: 60
-
-	&.is-open
-		opacity: 1
-		visibility: visible
-		transform: translateY(0) scale(1)
-		pointer-events: auto
-
-	&__header
-		display: flex
-		align-items: center
-		justify-content: space-between
-		padding: var(--m3e-space-3) var(--m3e-space-4)
-		border-bottom: 1px solid var(--outline-variant)
-		background: var(--surface-container-high)
-
-	&__title
-		font: var(--m3e-type-title-small)
-		font-weight: 600
-		color: var(--on-surface)
-		margin: 0
-
-	&__content
-		padding: var(--m3e-space-2)
-		overflow-y: auto
-		overscroll-behavior: contain
-		scrollbar-width: none
-		-ms-overflow-style: none
-		-webkit-overflow-scrolling: touch
-
-		&::-webkit-scrollbar
-			display: none
-			width: 0
-			height: 0
-
-.m3-floating-toc-close
-	display: inline-flex
-	align-items: center
-	justify-content: center
-	width: 2rem
-	height: 2rem
-	border-radius: var(--shape-corner-full)
-	border: none
-	background: transparent
-	color: var(--on-surface-variant)
-	cursor: pointer
-	--m3e-state-color: var(--on-surface)
-	transition: background-color var(--m3e-duration-short)
+<style>
+.m3-floating-toc-panel {
+  position: absolute;
+  bottom: calc(100% + var(--m3e-space-3));
+  right: 0;
+  width: 20rem;
+  max-height: 28rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-corner-xl);
+  box-shadow: var(--m3e-elevation-3);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(var(--m3e-space-3)) scale(0.94);
+  transform-origin: bottom right;
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), opacity var(--m3e-duration-short) var(--m3e-easing-standard), visibility var(--m3e-duration-short);
+  pointer-events: none;
+  z-index: 60;
+}
+.m3-floating-toc-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.m3-floating-toc-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--m3e-space-3) var(--m3e-space-4);
+  border-bottom: 1px solid var(--outline-variant);
+  background: var(--surface-container-high);
+}
+.m3-floating-toc-panel__title {
+  font: var(--m3e-type-title-small);
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0;
+}
+.m3-floating-toc-panel__content {
+  padding: var(--m3e-space-2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+.m3-floating-toc-panel__content::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.m3-floating-toc-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--shape-corner-full);
+  border: none;
+  background: transparent;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  --m3e-state-color: var(--on-surface);
+  transition: background-color var(--m3e-duration-short);
+}
 </style>

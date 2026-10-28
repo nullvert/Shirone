@@ -247,82 +247,84 @@ function handleChange(item: ButtonGroupItem) {
     {/if}
 </div>
 
-<style lang="stylus">
-.m3-button-group
-    position: relative
-    display: inline-flex
-    align-items: stretch
-
-    /* === standard：12px 间距（ButtonGroupSmallTokens.BetweenSpace） === */
-    &--standard
-        gap: 0.75rem
-
-    /* === connected：2px 间距 + 首/中/尾形状 + 内角变形（官方 tokens） === */
-    &--connected
-        gap: 2px
-        :global(.m3-toggle-button)
-            border-radius: 4px
-        /* 首项：外侧全圆 + 内侧 8px；按压内角 8→4px */
-        :global(.m3-button-group__item--first)
-            border-radius: var(--shape-corner-full) 8px 8px var(--shape-corner-full)
-        :global(.m3-button-group__item--first:active)
-            border-radius: var(--shape-corner-full) 4px 4px var(--shape-corner-full)
-        /* 尾项：外侧全圆 + 内侧 8px；按压内角 8→4px */
-        :global(.m3-button-group__item--last)
-            border-radius: 8px var(--shape-corner-full) var(--shape-corner-full) 8px
-        :global(.m3-button-group__item--last:active)
-            border-radius: 4px var(--shape-corner-full) var(--shape-corner-full) 4px
-        /* 选中项：全圆 pill（官方 connectedButtonCheckedShape = CornerFull） */
-        :global(.m3-toggle-button--checked)
-            border-radius: var(--shape-corner-full)
-
-    /* 项：宽度交换动画（官方 animateWidth，总宽不变） */
-    :global(.m3-button-group__item)
-        flex: 0 0 auto
-        transition:
-            border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-            background-color var(--m3e-duration-medium) var(--m3e-easing-standard),
-            color var(--m3e-duration-medium) var(--m3e-easing-standard),
-            border-color var(--m3e-duration-medium) var(--m3e-easing-standard),
-            box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard),
-            width var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-    /* weight 项（官方 NonAdaptiveButtonGroupMeasurePolicy）：flex-basis 0 + flex-grow
+<style>
+.m3-button-group {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+/* === standard：12px 间距（ButtonGroupSmallTokens.BetweenSpace） === */
+/* === connected：2px 间距 + 首/中/尾形状 + 内角变形（官方 tokens） === */
+/* 项：宽度交换动画（官方 animateWidth，总宽不变） */
+/* weight 项（官方 NonAdaptiveButtonGroupMeasurePolicy）：flex-basis 0 + flex-grow
        按 weight 比例分配剩余空间；无 weight 项保持内容宽 */
-    :global(.m3-button-group__item--weight)
-        flex-basis: 0
-        flex-shrink: 1
-
-    /* 溢出项折叠进「更多」菜单 */
-    :global(.m3-button-group__item--hidden)
-        display: none
-
-    /* === 溢出「更多」按钮（官方 FilledIconButton + DropdownMenu） === */
-    &__overflow
-        position: relative
-
-    &__more
-        display: flex
-        align-items: center
-        justify-content: center
-        width: 2.5rem
-        height: 2.5rem
-        border: none
-        border-radius: var(--shape-corner-full)
-        background: var(--secondary-container)
-        color: var(--on-secondary-container)
-        --m3e-state-color: var(--on-secondary-container)
-        cursor: pointer
-        > :global(svg)
-            width: 1.25rem
-            height: 1.25rem
-
-    &__menu
-        position: absolute
-        top: calc(100% + 0.25rem)
-        right: 0
-
-    :global(.m3-button-group__menu-icon)
-        font-size: 1.25rem
-        flex-shrink: 0
+/* 溢出项折叠进「更多」菜单 */
+/* === 溢出「更多」按钮（官方 FilledIconButton + DropdownMenu） === */
+}
+.m3-button-group--standard {
+  gap: 0.75rem;
+}
+.m3-button-group--connected {
+  gap: 2px;
+/* 首项：外侧全圆 + 内侧 8px；按压内角 8→4px */
+/* 尾项：外侧全圆 + 内侧 8px；按压内角 8→4px */
+/* 选中项：全圆 pill（官方 connectedButtonCheckedShape = CornerFull） */
+}
+.m3-button-group--connected :global(.m3-toggle-button) {
+  border-radius: 4px;
+}
+.m3-button-group--connected :global(.m3-button-group__item--first) {
+  border-radius: var(--shape-corner-full) 8px 8px var(--shape-corner-full);
+}
+.m3-button-group--connected :global(.m3-button-group__item--first:active) {
+  border-radius: var(--shape-corner-full) 4px 4px var(--shape-corner-full);
+}
+.m3-button-group--connected :global(.m3-button-group__item--last) {
+  border-radius: 8px var(--shape-corner-full) var(--shape-corner-full) 8px;
+}
+.m3-button-group--connected :global(.m3-button-group__item--last:active) {
+  border-radius: 4px var(--shape-corner-full) var(--shape-corner-full) 4px;
+}
+.m3-button-group--connected :global(.m3-toggle-button--checked) {
+  border-radius: var(--shape-corner-full);
+}
+.m3-button-group :global(.m3-button-group__item) {
+  flex: 0 0 auto;
+  transition: border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), background-color var(--m3e-duration-medium) var(--m3e-easing-standard), color var(--m3e-duration-medium) var(--m3e-easing-standard), border-color var(--m3e-duration-medium) var(--m3e-easing-standard), box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard), width var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-button-group :global(.m3-button-group__item--weight) {
+  flex-basis: 0;
+  flex-shrink: 1;
+}
+.m3-button-group :global(.m3-button-group__item--hidden) {
+  display: none;
+}
+.m3-button-group__overflow {
+  position: relative;
+}
+.m3-button-group__more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --m3e-state-color: var(--on-secondary-container);
+  cursor: pointer;
+}
+.m3-button-group__more > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.m3-button-group__menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+}
+.m3-button-group :global(.m3-button-group__menu-icon) {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
 </style>

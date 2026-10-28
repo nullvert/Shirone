@@ -51,119 +51,140 @@ let { album }: { album: AlbumIndexItem } = $props();
 	</a>
 </article>
 
-<style lang="stylus">
-.album-card
-	min-width: 0
-	overflow: hidden
-	border: 1px solid var(--outline-variant)
-	border-radius: var(--shape-corner-l)
-	background: var(--card-bg)
-	transition: border-color var(--m3e-duration-medium) var(--m3e-easing-standard), box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-	&:hover
-		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-1)
-	&__link
-		display: block
-		color: inherit
-		text-decoration: none
-		&:focus-visible
-			outline: 2px solid var(--primary)
-			outline-offset: -2px
-	&__cover
-		position: relative
-		aspect-ratio: 4 / 3
-		overflow: hidden
-		background: var(--surface-container-high)
-		> :global(img)
-			position: relative
-			z-index: 1
-			display: block
-			width: 100%
-			height: 100%
-			object-fit: cover
-	&__cover-fallback
-		position: absolute
-		inset: 0
-		display: grid
-		place-items: center
-		color: var(--on-surface-variant)
-		font-size: 2rem
-		> :global(svg)
-			width: 2rem
-			height: 2rem
-	&__badges
-		position: absolute
-		z-index: 2
-		inset: 0.75rem 0.75rem auto
-		display: flex
-		justify-content: flex-end
-		align-items: flex-start
-	&__protected
-		display: inline-flex
-		align-items: center
-		gap: 0.25rem
-		min-height: 2rem
-		padding: 0.25rem 0.5rem
-		border-radius: var(--shape-corner-full)
-		background: unquote("color-mix(in oklab, var(--scrim) 78%, transparent)")
-		color: white
-		font: var(--m3e-type-label-medium)
-		backdrop-filter: blur(0.5rem)
-		> :global(svg)
-			width: 1.125rem
-			height: 1.125rem
-	&__body
-		padding: var(--m3e-space-4) var(--m3e-space-4)
-	&__title-row
-		display: flex
-		align-items: flex-start
-		gap: 0.5rem
-		> h2
-			flex: 1
-			min-width: 0
-			margin: 0
-			color: var(--on-surface)
-			font: var(--m3e-type-title-large)
-			font-weight: 700
-			line-height: 1.25
-		> :global(svg)
-			flex: 0 0 auto
-			color: var(--on-surface-variant)
-			transition: color var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-		.album-card:hover & > :global(svg)
-			color: var(--primary)
-			transform: translateX(0.25rem)
-	&__description
-		display: -webkit-box
-		margin: 0.5rem 0 0
-		overflow: hidden
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-medium)
-		line-height: 1.5
-		-webkit-box-orient: vertical
-		-webkit-line-clamp: 2
-	&__meta,
-	&__tags
-		display: flex
-		flex-wrap: wrap
-		gap: 0.5rem
-		margin-top: 0.75rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-	&__meta span + span::before
-		content: "•"
-		margin-inline-end: 0.5rem
-		color: var(--outline)
-	&__tags
-		gap: 0.375rem
-		margin-top: 0.625rem
-		color: var(--primary)
-		font: var(--m3e-type-label-medium)
-
-:global(html.motion-reduced) .album-card
-	transition: none
-
-@media (prefers-reduced-motion: reduce)
-	.album-card
-		transition: none
+<style>
+.album-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-corner-l);
+  background: var(--card-bg);
+  transition: border-color var(--m3e-duration-medium) var(--m3e-easing-standard), box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.album-card:hover {
+  border-color: var(--outline);
+  box-shadow: var(--m3e-elevation-1);
+}
+.album-card__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.album-card__link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+.album-card__cover {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--surface-container-high);
+}
+.album-card__cover > :global(img) {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.album-card__cover-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--on-surface-variant);
+  font-size: 2rem;
+}
+.album-card__cover-fallback > :global(svg) {
+  width: 2rem;
+  height: 2rem;
+}
+.album-card__badges {
+  position: absolute;
+  z-index: 2;
+  inset: 0.75rem 0.75rem auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.album-card__protected {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--shape-corner-full);
+  background: color-mix(in oklab, var(--scrim) 78%, transparent);
+  color: #fff;
+  font: var(--m3e-type-label-medium);
+  backdrop-filter: blur(0.5rem);
+}
+.album-card__protected > :global(svg) {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+.album-card__body {
+  padding: var(--m3e-space-4) var(--m3e-space-4);
+}
+.album-card__title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.album-card__title-row > h2 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: var(--on-surface);
+  font: var(--m3e-type-title-large);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.album-card__title-row > :global(svg) {
+  flex: 0 0 auto;
+  color: var(--on-surface-variant);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.album-card:hover .album-card__title-row > :global(svg) {
+  color: var(--primary);
+  transform: translateX(0.25rem);
+}
+.album-card__description {
+  display: -webkit-box;
+  margin: 0.5rem 0 0;
+  overflow: hidden;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-medium);
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.album-card__meta,
+.album-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+}
+.album-card__meta span + span::before {
+  content: "•";
+  margin-inline-end: 0.5rem;
+  color: var(--outline);
+}
+.album-card__tags {
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+  color: var(--primary);
+  font: var(--m3e-type-label-medium);
+}
+:global(html.motion-reduced) .album-card {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .album-card {
+    transition: none;
+  }
+}
 </style>

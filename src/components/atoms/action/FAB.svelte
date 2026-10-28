@@ -82,110 +82,108 @@ const radiusVar = (r: string) => RADIUS_TOKENS[r] ?? r;
 	{/if}
 </button>
 
-<style lang="stylus">
-.m3-fab
-	display: inline-flex
-	align-items: center
-	justify-content: center
-	box-sizing: border-box
-	gap: 0.5rem /* icon 与 label 间距 8px（ExtendedFab IconLabelSpace） */
-	padding: 0
-	border: none
-	border-radius: var(--m3-fab-radius, var(--shape-corner-l)) /* corner-large 16px */
-	background: var(--primary-container)
-	color: var(--on-primary-container)
-	font: var(--m3e-type-label-large)
-	cursor: pointer
-	flex-shrink: 0
-	user-select: none
-	white-space: nowrap
-	-webkit-tap-highlight-color: transparent
-	--m3e-state-color: var(--on-primary-container)
-	--m3-fab-elevation: var(--m3e-elevation-3)
-	box-shadow: var(--m3-fab-elevation)
-	transition:
-		box-shadow var(--m3e-duration-short) var(--m3e-easing-standard),
-		background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-		color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&__icon
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		flex-shrink: 0
-
-		> :global(svg)
-			width: 1.5rem /* 24px */
-			height: 1.5rem
-
-	&:hover
-		--m3-fab-elevation: var(--m3e-elevation-4) /* hover-container-elevation level4 */
-
-	&--disabled
-		pointer-events: none
-		opacity: 0.38
-
-	/* === 尺寸（图标形态） === */
-	&--small
-		width: 2.5rem /* 40px */
-		height: 2.5rem
-		border-radius: var(--m3-fab-radius, var(--shape-corner-m)) /* corner-medium 12px */
-
-	&--regular
-		width: 3.5rem /* 56px */
-		height: 3.5rem
-
-	&--large
-		width: 6rem /* 96px */
-		height: 6rem
-		border-radius: var(--m3-fab-radius, var(--shape-corner-xl)) /* corner-extra-large 28px */
-
-		.m3-fab__icon > :global(svg)
-			width: 2.25rem /* 36px（v0.192 large-icon-size） */
-			height: 2.25rem
-
-	/* === Extended 形态 === */
-	&--extended
-		width: auto
-		min-width: 5rem /* 80px 最小宽度 */
-		height: 3.5rem /* 56px */
-		padding: 0 1.25rem 0 1rem /* trailing 20px / leading 16px */
-		border-radius: var(--m3-fab-radius, var(--shape-corner-l)) /* corner-large 16px */
-
-		&.m3-fab--large
-			height: 6rem /* 96px */
-			padding: 0 1.75rem /* 28px */
-			border-radius: var(--m3-fab-radius, var(--shape-corner-xl))
-
-			.m3-fab__icon > :global(svg)
-				width: 2.25rem
-				height: 2.25rem
-
-	/* === 变体（v0.192 tokens） === */
-	&--primary
-		background: var(--primary-container)
-		color: var(--on-primary-container)
-		--m3e-state-color: var(--on-primary-container)
-
-	&--secondary
-		background: var(--secondary-container)
-		color: var(--on-secondary-container)
-		--m3e-state-color: var(--on-secondary-container)
-
-	&--tertiary
-		background: var(--tertiary-container)
-		color: var(--on-tertiary-container)
-		--m3e-state-color: var(--on-tertiary-container)
-
-	&--surface
-		background: var(--surface-container-high)
-		color: var(--primary)
-		--m3e-state-color: var(--primary)
-
-	/* === 降低高度（lowered FAB：level1 / hover level2） === */
-	&--lowered
-		--m3-fab-elevation: var(--m3e-elevation-1)
-
-		&:hover
-			--m3-fab-elevation: var(--m3e-elevation-2)
+<style>
+.m3-fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  gap: 0.5rem /* icon 与 label 间距 8px（ExtendedFab IconLabelSpace） */;
+  padding: 0;
+  border: none;
+  border-radius: var(--m3-fab-radius, var(--shape-corner-l)) /* corner-large 16px */;
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font: var(--m3e-type-label-large);
+  cursor: pointer;
+  flex-shrink: 0;
+  user-select: none;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  --m3e-state-color: var(--on-primary-container);
+  --m3-fab-elevation: var(--m3e-elevation-3);
+  box-shadow: var(--m3-fab-elevation);
+  transition: box-shadow var(--m3e-duration-short) var(--m3e-easing-standard), background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+/* === 尺寸（图标形态） === */
+/* === Extended 形态 === */
+/* === 变体（v0.192 tokens） === */
+/* === 降低高度（lowered FAB：level1 / hover level2） === */
+}
+.m3-fab__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.m3-fab__icon > :global(svg) {
+  width: 1.5rem /* 24px */;
+  height: 1.5rem;
+}
+.m3-fab:hover {
+  --m3-fab-elevation: var(--m3e-elevation-4) /* hover-container-elevation level4 */;
+}
+.m3-fab--disabled {
+  pointer-events: none;
+  opacity: 0.38;
+}
+.m3-fab--small {
+  width: 2.5rem /* 40px */;
+  height: 2.5rem;
+  border-radius: var(--m3-fab-radius, var(--shape-corner-m)) /* corner-medium 12px */;
+}
+.m3-fab--regular {
+  width: 3.5rem /* 56px */;
+  height: 3.5rem;
+}
+.m3-fab--large {
+  width: 6rem /* 96px */;
+  height: 6rem;
+  border-radius: var(--m3-fab-radius, var(--shape-corner-xl)) /* corner-extra-large 28px */;
+}
+.m3-fab--large .m3-fab__icon > :global(svg) {
+  width: 2.25rem /* 36px（v0.192 large-icon-size） */;
+  height: 2.25rem;
+}
+.m3-fab--extended {
+  width: auto;
+  min-width: 5rem /* 80px 最小宽度 */;
+  height: 3.5rem /* 56px */;
+  padding: 0 1.25rem 0 1rem /* trailing 20px / leading 16px */;
+  border-radius: var(--m3-fab-radius, var(--shape-corner-l)) /* corner-large 16px */;
+}
+.m3-fab--extended.m3-fab--large {
+  height: 6rem /* 96px */;
+  padding: 0 1.75rem /* 28px */;
+  border-radius: var(--m3-fab-radius, var(--shape-corner-xl));
+}
+.m3-fab--extended.m3-fab--large .m3-fab__icon > :global(svg) {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.m3-fab--primary {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  --m3e-state-color: var(--on-primary-container);
+}
+.m3-fab--secondary {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --m3e-state-color: var(--on-secondary-container);
+}
+.m3-fab--tertiary {
+  background: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+  --m3e-state-color: var(--on-tertiary-container);
+}
+.m3-fab--surface {
+  background: var(--surface-container-high);
+  color: var(--primary);
+  --m3e-state-color: var(--primary);
+}
+.m3-fab--lowered {
+  --m3-fab-elevation: var(--m3e-elevation-1);
+}
+.m3-fab--lowered:hover {
+  --m3-fab-elevation: var(--m3e-elevation-2);
+}
 </style>

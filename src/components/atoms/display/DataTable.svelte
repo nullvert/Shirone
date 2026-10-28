@@ -150,102 +150,105 @@ function cellAlign(col: { align?: "start" | "center" | "end" }) {
 	{/if}
 </div>
 
-<style lang="stylus">
-.m3-data-table
-	display: inline-block
-	border-radius: var(--shape-corner-xs) /* corner-extra-small 4px */
-	border: 1px solid var(--outline-variant)
-	background: var(--surface)
-	overflow: hidden
-	box-sizing: border-box
-
-	table
-		border-collapse: collapse
-		width: 100%
-
-	th, td
-		padding: 0 1rem /* 16px */
-		text-align: start
-
-	thead tr
-		height: 3.5rem /* 56px */
-		background: var(--surface)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-title-small)
-
-	th
-		user-select: none
-
-		&.align-center
-			text-align: center
-		&.align-end
-			text-align: end
-
-		&.m3-data-table__sortable
-			cursor: pointer
-
-			&:hover .m3-data-table__header-label
-				color: var(--on-surface)
-
-	.m3-data-table__header-label
-		display: inline-flex
-
-	.m3-data-table__sort-icon
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 1.5rem
-		height: 1.5rem
-		margin-inline-start: 0.25rem
-		font-size: 1rem
-		color: var(--on-surface-variant)
-		vertical-align: middle
-
-		.idle
-			opacity: 0.6
-
-		.desc
-			transform: rotate(180deg)
-
-	tbody tr
-		height: 3.25rem /* 52px */
-		background: var(--surface)
-		color: var(--on-surface)
-		font: var(--m3e-type-body-medium)
-		border-top: 1px solid var(--outline-variant)
-
-		&.m3-data-table__selected
-			background: var(--surface-container-highest)
-
-		&.m3-data-table__disabled
-			color: var(--on-surface)
-			opacity: 0.38
-			pointer-events: none
-
-	td
-		&.align-center
-			text-align: center
-		&.align-end
-			text-align: end
-
-	.m3-data-table__checkbox
-		width: 3.5rem /* 56px */
-		padding: 0 0 0 1rem
-		text-align: start
-
-		input[type="checkbox"]
-			accent-color: var(--primary)
-			width: 1.125rem
-			height: 1.125rem
-			cursor: pointer
-
-	.m3-data-table__footer
-		height: 3.25rem /* 52px */
-		display: flex
-		align-items: center
-		padding: 0 1rem
-		background: var(--surface)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-medium)
-		border-top: 1px solid var(--outline-variant)
+<style>
+.m3-data-table {
+  display: inline-block;
+  border-radius: var(--shape-corner-xs) /* corner-extra-small 4px */;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.m3-data-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.m3-data-table th,
+.m3-data-table td {
+  padding: 0 1rem /* 16px */;
+  text-align: start;
+}
+.m3-data-table thead tr {
+  height: 3.5rem /* 56px */;
+  background: var(--surface);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-title-small);
+}
+.m3-data-table th {
+  user-select: none;
+}
+.m3-data-table th.align-center {
+  text-align: center;
+}
+.m3-data-table th.align-end {
+  text-align: end;
+}
+.m3-data-table th.m3-data-table__sortable {
+  cursor: pointer;
+}
+.m3-data-table th.m3-data-table__sortable:hover .m3-data-table__header-label {
+  color: var(--on-surface);
+}
+.m3-data-table .m3-data-table__header-label {
+  display: inline-flex;
+}
+.m3-data-table .m3-data-table__sort-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-inline-start: 0.25rem;
+  font-size: 1rem;
+  color: var(--on-surface-variant);
+  vertical-align: middle;
+}
+.m3-data-table .m3-data-table__sort-icon .idle {
+  opacity: 0.6;
+}
+.m3-data-table .m3-data-table__sort-icon .desc {
+  transform: rotate(180deg);
+}
+.m3-data-table tbody tr {
+  height: 3.25rem /* 52px */;
+  background: var(--surface);
+  color: var(--on-surface);
+  font: var(--m3e-type-body-medium);
+  border-top: 1px solid var(--outline-variant);
+}
+.m3-data-table tbody tr.m3-data-table__selected {
+  background: var(--surface-container-highest);
+}
+.m3-data-table tbody tr.m3-data-table__disabled {
+  color: var(--on-surface);
+  opacity: 0.38;
+  pointer-events: none;
+}
+.m3-data-table td.align-center {
+  text-align: center;
+}
+.m3-data-table td.align-end {
+  text-align: end;
+}
+.m3-data-table .m3-data-table__checkbox {
+  width: 3.5rem /* 56px */;
+  padding: 0 0 0 1rem;
+  text-align: start;
+}
+.m3-data-table .m3-data-table__checkbox input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 1.125rem;
+  height: 1.125rem;
+  cursor: pointer;
+}
+.m3-data-table .m3-data-table__footer {
+  height: 3.25rem /* 52px */;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background: var(--surface);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-medium);
+  border-top: 1px solid var(--outline-variant);
+}
 </style>

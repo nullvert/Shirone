@@ -32,29 +32,27 @@ const { categories = [], class: className } = Astro.props;
 	))}
 </div>
 
-<style lang="stylus">
-.m3-blog-categorylist
-	&__name
-		overflow: hidden
-		text-overflow: ellipsis
-		white-space: nowrap
-		min-width: 0
-
-	&__badge
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		flex-shrink: 0
-		min-width: 2rem
-		height: 1.75rem
-		margin-left: var(--m3e-space-4)
-		padding: 0 var(--m3e-space-2)
-		border-radius: var(--shape-corner-s)
-		background: var(--secondary-container)
-		color: var(--on-secondary-container)
-		font: var(--m3e-type-label-medium)
-		font-weight: 700
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			color var(--m3e-duration-short) var(--m3e-easing-standard)
+<style>
+.m3-blog-categorylist__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.m3-blog-categorylist__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 2rem;
+  height: 1.75rem;
+  margin-left: var(--m3e-space-4);
+  padding: 0 var(--m3e-space-2);
+  border-radius: var(--shape-corner-s);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  font: var(--m3e-type-label-medium);
+  font-weight: 700;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
 </style>

@@ -135,214 +135,224 @@ function toggleGroup(id: string) {
 	{/each}
 </div>
 
-<style lang="stylus">
-@import "../../../styles/breakpoints.styl"
-
-.m3-blog-archive
-	&__group + &__group
-		margin-top: 1.5rem
-
-	&__header
-		display: flex
-		align-items: center
-		gap: 1rem
-		width: 100%
-		height: 3.75rem
-		box-sizing: border-box
-		padding: 0 0.75rem 0 0.5rem
-		border: none
-		border-radius: var(--shape-corner-m)
-		background: transparent
-		box-shadow: none
-		text-align: left
-		cursor: pointer
-		color: inherit
-		--m3e-state-color: var(--on-surface)
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-			box-shadow var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-standard)
-		&:hover
-			background: var(--surface-container)
-			border-radius: var(--shape-corner-l)
-			box-shadow: var(--m3e-elevation-1)
-		&:active
-			background: unquote("color-mix(in oklab, var(--primary) 7%, transparent)")
-			border-radius: var(--shape-corner-l)
-			box-shadow: var(--m3e-elevation-1)
-			transform: translateY(1px)
-		&:focus-visible
-			outline-offset: -2px
-		&:focus-within:not(:focus-visible)::before
-			opacity: 0
-
-	&__group-title
-		flex: 1 1 auto
-		min-width: 3.5rem
-		text-align: left
-		font: var(--m3e-type-title-large)
-		font-weight: 700
-		color: var(--on-surface)
-		white-space: nowrap
-		overflow: hidden
-		text-overflow: ellipsis
-
-	&__dot
-		flex-shrink: 0
-		width: 0.75rem
-		height: 0.75rem
-		border-radius: var(--shape-corner-full)
-		border: 3px solid var(--primary)
-		background: var(--surface)
-
-	&__count
-		font: var(--m3e-type-body-small)
-		color: var(--on-surface-variant)
-
-	&__chevron
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		flex-shrink: 0
-		width: 2rem
-		height: 2rem
-		margin-left: auto
-		border-radius: var(--shape-corner-full)
-		color: var(--on-surface-variant)
-		transition:
-			color var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-		.m3-blog-archive__header:hover &
-			color: var(--primary)
-		.m3-blog-archive__header:active &
-			color: var(--primary)
-
-		&--open
-			transform: rotate(180deg)
-
-	&__list
-		display: flex
-		flex-direction: column
-		list-style: none
-		margin: 0
-		padding: 0
-
-	&__item
-		display: flex
-		align-items: center
-		gap: 0.75rem
-		width: 100%
-		min-height: 2.5rem
-		padding: 0.25rem 0.5rem
-		border-radius: var(--shape-corner-s)
-		text-decoration: none
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 5%, transparent)")
-		&:active
-			background: unquote("color-mix(in oklab, var(--on-surface) 10%, transparent)")
-		&:focus-visible
-			outline: 2px solid var(--secondary)
-			outline-offset: -2px
-
-	&__date
-		flex-shrink: 0
-		width: 4rem
-		font: var(--m3e-type-body-small)
-		color: var(--on-surface-variant)
-
-	&__node
-		flex-shrink: 0
-		width: 0.375rem
-		height: 0.375rem
-		border-radius: var(--shape-corner-full)
-		background: var(--on-surface-variant)
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate)
-		.m3-blog-archive__item:hover &
-			background: var(--primary)
-			transform: scale(1.6)
-
-	&__title
-		flex: 1
-		min-width: 0
-		display: flex
-		align-items: center
-		gap: 0.5rem
-		font: var(--m3e-type-body-medium)
-		font-weight: 700
-		color: var(--on-surface)
-		transition:
-			color var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate)
-		.m3-blog-archive__item:hover &
-			color: var(--primary)
-			transform: translateX(0.25rem)
-
-	&__title-text
-		min-width: 0
-		overflow: hidden
-		text-overflow: ellipsis
-		white-space: nowrap
-
-	&__cat
-		flex-shrink: 0
-		display: inline-flex
-		align-items: center
-		height: 1.25rem
-		padding: 0 0.375rem
-		border-radius: var(--shape-corner-xs)
-		background: var(--primary-container)
-		color: var(--on-primary-container)
-		font: var(--m3e-type-label-small)
-		font-weight: 600
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			color var(--m3e-duration-short) var(--m3e-easing-standard)
-		.m3-blog-archive__item:hover &
-			background: var(--primary)
-			color: var(--on-primary)
-
-	&__tags
-		flex-shrink: 1
-		min-width: 0
-		overflow: hidden
-		text-overflow: ellipsis
-		white-space: nowrap
-		max-width: 20%
-		font: var(--m3e-type-body-small)
-		color: var(--on-surface-variant)
-		@media (max-width: bp-md - 1px)
-			display: none
-
-	@media (max-width: bp-sm - 1px)
-		&__group + &__group
-			margin-top: 1rem
-		&__header
-			gap: 0.75rem
-			padding-right: 0.5rem
-		&__group-title
-			min-width: 3.25rem
-		&__item
-			gap: 0.5rem
-		&__date
-			width: 3.5rem
-		&__cat
-			max-width: 6rem
-			overflow: hidden
-			text-overflow: ellipsis
-			white-space: nowrap
-
-	@media (hover: none)
-		&__header:not(:active)
-			background: transparent
-			box-shadow: none
-			transform: none
-			&::before
-				opacity: 0
+<style>
+.m3-blog-archive__group + .m3-blog-archive__group {
+  margin-top: 1.5rem;
+}
+.m3-blog-archive__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  height: 3.75rem;
+  box-sizing: border-box;
+  padding: 0 0.75rem 0 0.5rem;
+  border: none;
+  border-radius: var(--shape-corner-m);
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  --m3e-state-color: var(--on-surface);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-blog-archive__header:hover {
+  background: var(--surface-container);
+  border-radius: var(--shape-corner-l);
+  box-shadow: var(--m3e-elevation-1);
+}
+.m3-blog-archive__header:active {
+  background: color-mix(in oklab, var(--primary) 7%, transparent);
+  border-radius: var(--shape-corner-l);
+  box-shadow: var(--m3e-elevation-1);
+  transform: translateY(1px);
+}
+.m3-blog-archive__header:focus-visible {
+  outline-offset: -2px;
+}
+.m3-blog-archive__header:focus-within:not(:focus-visible)::before {
+  opacity: 0;
+}
+.m3-blog-archive__group-title {
+  flex: 1 1 auto;
+  min-width: 3.5rem;
+  text-align: left;
+  font: var(--m3e-type-title-large);
+  font-weight: 700;
+  color: var(--on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.m3-blog-archive__dot {
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: var(--shape-corner-full);
+  border: 3px solid var(--primary);
+  background: var(--surface);
+}
+.m3-blog-archive__count {
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+}
+.m3-blog-archive__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+  border-radius: var(--shape-corner-full);
+  color: var(--on-surface-variant);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-blog-archive__chevron > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.m3-blog-archive__header:hover .m3-blog-archive__chevron {
+  color: var(--primary);
+}
+.m3-blog-archive__header:active .m3-blog-archive__chevron {
+  color: var(--primary);
+}
+.m3-blog-archive__chevron--open {
+  transform: rotate(180deg);
+}
+.m3-blog-archive__list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.m3-blog-archive__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--shape-corner-s);
+  text-decoration: none;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-blog-archive__item:hover {
+  background: color-mix(in oklab, var(--on-surface) 5%, transparent);
+}
+.m3-blog-archive__item:active {
+  background: color-mix(in oklab, var(--on-surface) 10%, transparent);
+}
+.m3-blog-archive__item:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: -2px;
+}
+.m3-blog-archive__date {
+  flex-shrink: 0;
+  width: 4rem;
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+}
+.m3-blog-archive__node {
+  flex-shrink: 0;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--on-surface-variant);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-blog-archive__item:hover .m3-blog-archive__node {
+  background: var(--primary);
+  transform: scale(1.6);
+}
+.m3-blog-archive__title {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font: var(--m3e-type-body-medium);
+  font-weight: 700;
+  color: var(--on-surface);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-blog-archive__item:hover .m3-blog-archive__title {
+  color: var(--primary);
+  transform: translateX(0.25rem);
+}
+.m3-blog-archive__title-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.m3-blog-archive__cat {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  height: 1.25rem;
+  padding: 0 0.375rem;
+  border-radius: var(--shape-corner-xs);
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font: var(--m3e-type-label-small);
+  font-weight: 600;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-blog-archive__item:hover .m3-blog-archive__cat {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.m3-blog-archive__tags {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 20%;
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+}
+@media (max-width: 767px) {
+  .m3-blog-archive__tags {
+    display: none;
+  }
+}
+@media (max-width: 639px) {
+  .m3-blog-archive__group + .m3-blog-archive__group {
+    margin-top: 1rem;
+  }
+  .m3-blog-archive__header {
+    gap: 0.75rem;
+    padding-right: 0.5rem;
+  }
+  .m3-blog-archive__group-title {
+    min-width: 3.25rem;
+  }
+  .m3-blog-archive__item {
+    gap: 0.5rem;
+  }
+  .m3-blog-archive__date {
+    width: 3.5rem;
+  }
+  .m3-blog-archive__cat {
+    max-width: 6rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+@media (hover: none) {
+  .m3-blog-archive__header:not(:active) {
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+  }
+  .m3-blog-archive__header:not(:active)::before {
+    opacity: 0;
+  }
+}
 </style>

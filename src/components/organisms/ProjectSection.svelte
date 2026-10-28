@@ -207,130 +207,168 @@ $effect(() => {
 	{/if}
 </Card>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.projects-section
-	display: block
-
-	@media (max-width: bp-sm - 1px)
-		padding: 1rem 0.75rem
-
-	&__tools
-		display: flex
-		flex-direction: column
-		gap: 0.875rem
-		padding-bottom: 1.25rem
-		border-bottom: 1px solid var(--outline-variant)
-
-	&__search-row
-		display: flex
-		align-items: center
-		width: 100%
-
-	&__search
-		position: relative
-		width: 100%
-		max-width: 32rem
-
-		:global(.m3-text-field)
-			width: 100%
-
-	&__search-clear
-		position: absolute
-		right: 0.5rem
-		top: 50%
-		transform: translateY(-50%)
-		display: inline-flex
-		flex-shrink: 0
-		align-items: center
-		justify-content: center
-		width: 1.75rem
-		height: 1.75rem
-		padding: 0.25rem
-		border: none
-		background: none
-		color: var(--on-surface-variant)
-		cursor: pointer
-		border-radius: var(--shape-corner-full)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface-variant) 8%, transparent)")
-
-	&__filter-row
-		display: flex
-		flex-wrap: wrap
-		align-items: center
-		justify-content: space-between
-		gap: 0.75rem
-		width: 100%
-
-	&__chips
-		flex: 1
-		min-width: 0
-		overflow-x: auto
-		scrollbar-width: none
-		&::-webkit-scrollbar
-			display: none
-
-	&__count
-		margin: 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-		white-space: nowrap
-
-	/* 筛选过渡：区块位置的大号 contained LoadingIndicator（out = 淡出退场） */
-	&__loading
-		display: flex
-		align-items: center
-		justify-content: center
-		min-height: 11rem
-		padding-top: 1.5rem
-
-		&--out
-			animation: project-loading-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both
-
-	&__empty
-		display: flex
-		flex-direction: column
-		align-items: center
-		justify-content: center
-		gap: 0.875rem
-		min-height: 12rem
-		padding-top: 1.5rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-large)
-
-		> :global(svg)
-			width: 2.75rem
-			height: 2.75rem
-			color: var(--outline)
-
-	&__grid
-		display: grid
-		grid-template-columns: minmax(0, 1fr)
-		gap: 0.75rem
-		margin-top: 1.25rem
-
-		/* 瀑布流：仅 ≥md（本断点内即使只排得下 1 列，packMasonry 也会写
+<style>
+.projects-section {
+  display: block;
+/* 筛选过渡：区块位置的大号 contained LoadingIndicator（out = 淡出退场） */
+}
+@media (max-width: 639px) {
+  .projects-section {
+    padding: 1rem 0.75rem;
+  }
+}
+.projects-section__tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--outline-variant);
+}
+.projects-section__search-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.projects-section__search {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+}
+.projects-section__search :global(.m3-text-field) {
+  width: 100%;
+}
+.projects-section__search-clear {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0.25rem;
+  border: none;
+  background: none;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  border-radius: var(--shape-corner-full);
+}
+.projects-section__search-clear > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.projects-section__search-clear:hover {
+  background: color-mix(in oklab, var(--on-surface-variant) 8%, transparent);
+}
+.projects-section__filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+}
+.projects-section__chips {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.projects-section__chips::-webkit-scrollbar {
+  display: none;
+}
+.projects-section__count {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+  white-space: nowrap;
+}
+.projects-section__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  padding-top: 1.5rem;
+}
+.projects-section__loading--out {
+  animation: project-loading-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both;
+}
+.projects-section__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem;
+  min-height: 12rem;
+  padding-top: 1.5rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-large);
+}
+.projects-section__empty > :global(svg) {
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--outline);
+}
+.projects-section__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+/* 瀑布流：仅 ≥md（本断点内即使只排得下 1 列，packMasonry 也会写
 		   grid-row-end span，否则卡片只占 1 行 8px 会重叠）。
 		   约定与 PostPage/masonry.ts 同步：auto-rows 8px、row-gap 0、
 		   行距 16px 烘焙进 span（column-gap 与 ROW_GAP 同值） */
-		@media (min-width: bp-md)
-			grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr))
-			align-items: start
-			grid-auto-rows: 8px
-			row-gap: 0
-			column-gap: var(--m3e-space-4)
-
+}
+@media (min-width: 768px) {
+  .projects-section__grid {
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    align-items: start;
+    grid-auto-rows: 8px;
+    row-gap: 0;
+    column-gap: var(--m3e-space-4);
+  }
+}
 /* 指示器退场：淡出 + 轻微收拢（reduced-motion 由全局规则压至终态） */
-@keyframes project-loading-out
-	from
-		opacity: 1
-		transform: none
-	to
-		opacity: 0
-		transform: scale(0.96)
+@-moz-keyframes project-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@-webkit-keyframes project-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@-o-keyframes project-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@keyframes project-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
 </style>

@@ -78,129 +78,130 @@ let {
 	</button>
 {/if}
 
-<style lang="stylus">
-.media-genres-wrap
-	display: grid
-	grid-template-columns: repeat(2, minmax(0, 1fr))
-	gap: 0.5rem
-
-.media-genre-pill
-	display: flex
-	align-items: center
-	justify-content: space-between
-	width: 100%
-	height: var(--media-filter-item-height, 2.25rem)
-	box-sizing: border-box
-	padding: 0 0.75rem
-	font-size: 0.8125rem
-	font-weight: 500
-	color: var(--on-surface-variant)
-	background: var(--surface-container)
-	border: none
-	border-radius: var(--shape-corner-m)
-	cursor: pointer
-	transition: all var(--m3e-duration-short) ease
-	overflow: hidden
-
-	&:last-child:nth-child(odd)
-		grid-column: span 2
-
-	&:hover:not(:disabled)
-		background: unquote('color-mix(in srgb, var(--primary) 15%, var(--surface-container-high))')
-		color: var(--on-surface)
-
-		.media-genre-pill__hash
-			color: var(--primary)
-			opacity: 1
-
-	&:focus-visible
-		outline: 2px solid var(--primary)
-		outline-offset: 1px
-
-	&--active
-		background: var(--primary)
-		color: var(--on-primary)
-		font-weight: 600
-
-		.media-genre-pill__hash
-			color: var(--on-primary)
-			opacity: 0.85
-
-		.media-genre-pill__count
-			background: var(--surface-container)
-			color: var(--on-surface)
-			font-weight: 700
-
-	&--disabled
-		opacity: 0.38
-		cursor: not-allowed
-		pointer-events: none
-
-	&__left
-		display: inline-flex
-		align-items: center
-		gap: 0.35rem
-		min-width: 0
-		overflow: hidden
-
-	&__hash
-		font-size: 0.875rem
-		font-weight: 700
-		color: var(--primary)
-		line-height: 1
-		opacity: 0.8
-		transition: all var(--m3e-duration-short) ease
-
-	&__name
-		white-space: nowrap
-		overflow: hidden
-		text-overflow: ellipsis
-
-	&__count
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		font-size: 0.6875rem
-		font-weight: 700
-		min-width: 1.3rem
-		height: 1.25rem
-		padding: 0 0.35rem
-		box-sizing: border-box
-		border-radius: var(--shape-corner-s)
-		background: unquote('color-mix(in srgb, var(--on-surface) 10%, transparent)')
-		color: var(--on-surface-variant)
-		flex-shrink: 0
-		transition: all var(--m3e-duration-short) var(--m3e-easing-standard)
-
-.media-genres-toggle
-	display: flex
-	align-items: center
-	justify-content: center
-	gap: 0.35rem
-	width: 100%
-	height: var(--media-filter-item-height, 2.25rem)
-	box-sizing: border-box
-	margin-top: 0.65rem
-	margin-bottom: 0.25rem
-	padding: 0 0.75rem
-	font-size: 0.78125rem
-	font-weight: 500
-	color: var(--primary)
-	background: unquote('color-mix(in srgb, var(--primary) 10%, transparent)')
-	border: none
-	border-radius: var(--shape-corner-m)
-	cursor: pointer
-	transition: all var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&:focus-visible
-		outline: 2px solid var(--primary)
-		outline-offset: 1px
-
-	> :global(svg)
-		width: 1rem
-		height: 1rem
-		transition: transform var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&:hover
-		background: unquote('color-mix(in srgb, var(--primary) 18%, transparent)')
+<style>
+.media-genres-wrap {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.media-genre-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--media-filter-item-height, 2.25rem);
+  box-sizing: border-box;
+  padding: 0 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  background: var(--surface-container);
+  border: none;
+  border-radius: var(--shape-corner-m);
+  cursor: pointer;
+  transition: all var(--m3e-duration-short) ease;
+  overflow: hidden;
+}
+.media-genre-pill:last-child:nth-child(odd) {
+  grid-column: span 2;
+}
+.media-genre-pill:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primary) 15%, var(--surface-container-high));
+  color: var(--on-surface);
+}
+.media-genre-pill:hover:not(:disabled) .media-genre-pill__hash {
+  color: var(--primary);
+  opacity: 1;
+}
+.media-genre-pill:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.media-genre-pill--active {
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 600;
+}
+.media-genre-pill--active .media-genre-pill__hash {
+  color: var(--on-primary);
+  opacity: 0.85;
+}
+.media-genre-pill--active .media-genre-pill__count {
+  background: var(--surface-container);
+  color: var(--on-surface);
+  font-weight: 700;
+}
+.media-genre-pill--disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.media-genre-pill__left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  overflow: hidden;
+}
+.media-genre-pill__hash {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+  opacity: 0.8;
+  transition: all var(--m3e-duration-short) ease;
+}
+.media-genre-pill__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.media-genre-pill__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  min-width: 1.3rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-s);
+  background: color-mix(in srgb, var(--on-surface) 10%, transparent);
+  color: var(--on-surface-variant);
+  flex-shrink: 0;
+  transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.media-genres-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  height: var(--media-filter-item-height, 2.25rem);
+  box-sizing: border-box;
+  margin-top: 0.65rem;
+  margin-bottom: 0.25rem;
+  padding: 0 0.75rem;
+  font-size: 0.78125rem;
+  font-weight: 500;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border: none;
+  border-radius: var(--shape-corner-m);
+  cursor: pointer;
+  transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.media-genres-toggle:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.media-genres-toggle > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.media-genres-toggle:hover {
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
 </style>

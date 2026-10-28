@@ -55,84 +55,85 @@ const fallback = $derived((skill.name.charAt(0) || "?").toUpperCase());
 	</div>
 </article>
 
-<style lang="stylus">
-.skill-card
-	display: flex
-	flex-direction: column
-	gap: var(--m3e-space-3)
-	min-width: 0
-	padding: var(--m3e-space-4)
-	background: var(--card-bg)
-	border: 1px solid var(--outline-variant)
-	border-radius: var(--shape-corner-l)
-	transition:
-		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-	&:hover
-		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-1)
-
-	&__header
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-3)
-		min-width: 0
-
-	&__icon
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 2.75rem
-		height: 2.75rem
-		flex-shrink: 0
-		border-radius: var(--shape-corner-m)
-		background: var(--secondary-container)
-		color: var(--on-secondary-container)
-		font: var(--m3e-type-title-medium)
-		> :global(svg)
-			width: 1.5rem
-			height: 1.5rem
-
-	&__identity
-		display: flex
-		align-items: center
-		justify-content: space-between
-		gap: 0.75rem
-		min-width: 0
-		width: 100%
-		h2
-			margin: 0
-			min-width: 0
-			color: var(--on-surface)
-			font: var(--m3e-type-title-medium)
-			font-weight: 600
-			overflow-wrap: anywhere
-
-	&__level
-		flex-shrink: 0
-		padding: 0.125rem 0.625rem
-		border-radius: var(--shape-corner-full)
-		background: var(--secondary-container)
-		color: var(--on-secondary-container)
-		font: var(--m3e-type-label-small)
-
-	&__description
-		margin: 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-medium)
-		line-height: 1.5
-
-	&__meter
-		display: grid
-		grid-template-columns: repeat(4, minmax(0, 1fr))
-		gap: var(--m3e-space-1)
-
-	&__meter > span
-		height: 0.375rem
-		border-radius: var(--shape-corner-full)
-		background: var(--surface-container-highest)
-
-	&__meter > &__segment--active
-		background: var(--primary)
+<style>
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m3e-space-3);
+  min-width: 0;
+  padding: var(--m3e-space-4);
+  background: var(--card-bg);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-corner-l);
+  transition: border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.skill-card:hover {
+  border-color: var(--outline);
+  box-shadow: var(--m3e-elevation-1);
+}
+.skill-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-3);
+  min-width: 0;
+}
+.skill-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  border-radius: var(--shape-corner-m);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  font: var(--m3e-type-title-medium);
+}
+.skill-card__icon > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.skill-card__identity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+  width: 100%;
+}
+.skill-card__identity h2 {
+  margin: 0;
+  min-width: 0;
+  color: var(--on-surface);
+  font: var(--m3e-type-title-medium);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.skill-card__level {
+  flex-shrink: 0;
+  padding: 0.125rem 0.625rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  font: var(--m3e-type-label-small);
+}
+.skill-card__description {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-medium);
+  line-height: 1.5;
+}
+.skill-card__meter {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--m3e-space-1);
+}
+.skill-card__meter > span {
+  height: 0.375rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--surface-container-highest);
+}
+.skill-card__meter > .skill-card__segment--active {
+  background: var(--primary);
+}
 </style>

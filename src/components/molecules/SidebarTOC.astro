@@ -51,50 +51,50 @@ const wrapperId = isDrawer ? "drawer-toc-inner-wrapper" : "toc-inner-wrapper";
 	</div>
 </WidgetLayout>
 
-<style lang="stylus">
-:global(.sidebar-toc .m3-card)
-	background: transparent !important
-	box-shadow: none !important
-	padding: 0 !important
-
-:global(.sidebar-toc .collapse-wrapper)
-	padding: 0 !important
-
-.sidebar-toc__content
-	max-height: calc(100dvh - 15rem)
-	overflow-y: auto
-	overflow-x: hidden
-	overscroll-behavior: contain
-	padding-block: 0.25rem
-	padding-right: 0.25rem
-	scroll-padding-block: 0.25rem
-	scrollbar-width: thin
-	scrollbar-color: transparent transparent
-	transition: scrollbar-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&:hover
-		scrollbar-color: var(--scrollbar-bg) transparent
-
-	&::-webkit-scrollbar
-		width: 4px
-
-	&::-webkit-scrollbar-track
-		background: transparent
-
-	&::-webkit-scrollbar-thumb
-		background: transparent
-		border-radius: var(--shape-corner-full)
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&:hover::-webkit-scrollbar-thumb
-		background: var(--scrollbar-bg)
-
-	&:hover::-webkit-scrollbar-thumb:hover
-		background: var(--scrollbar-bg-hover)
-
-	&:hover::-webkit-scrollbar-thumb:active
-		background: var(--scrollbar-bg-active)
-
+<style>
+:global(.sidebar-toc .m3-card) {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+:global(.sidebar-toc .collapse-wrapper) {
+  padding: 0 !important;
+}
+.sidebar-toc__content {
+  max-height: calc(100dvh - 15rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding-block: 0.25rem;
+  padding-right: 0.25rem;
+  scroll-padding-block: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.sidebar-toc__content:hover {
+  scrollbar-color: var(--scrollbar-bg) transparent;
+}
+.sidebar-toc__content::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-toc__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-toc__content::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: var(--shape-corner-full);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.sidebar-toc__content:hover::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-bg);
+}
+.sidebar-toc__content:hover::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-bg-hover);
+}
+.sidebar-toc__content:hover::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-bg-active);
+}
 </style>
 
 <script>

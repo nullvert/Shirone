@@ -89,135 +89,134 @@ $effect(() => {
     <slot />
 </div>
 
-<style lang="stylus">
-.m3-menu
-    min-width: 7rem
-    max-width: 17.5rem
-    width: max-content
-    padding: var(--m3e-space-2) var(--m3e-space-1)
-    border-radius: var(--shape-corner-l)
-    /* StandardMenuTokens.ContainerColor = SurfaceContainerLow. */
-    background: var(--surface-container-low)
-    box-shadow: var(--m3e-elevation-2)
-    max-height: 20rem
-    overflow-y: auto
-    /* 展开动画（官方 DropdownMenu transition：scale 0.8→1 + fade，
+<style>
+.m3-menu {
+  min-width: 7rem;
+  max-width: 17.5rem;
+  width: max-content;
+  padding: var(--m3e-space-2) var(--m3e-space-1);
+  border-radius: var(--shape-corner-l);
+/* StandardMenuTokens.ContainerColor = SurfaceContainerLow. */
+  background: var(--surface-container-low);
+  box-shadow: var(--m3e-elevation-2);
+  max-height: 20rem;
+  overflow-y: auto;
+/* 展开动画（官方 DropdownMenu transition：scale 0.8→1 + fade，
        FastSpatial/FastEffects spring 近似）。--menu-origin 按锚点缩放，
        调用方可覆盖（默认 top center 下拉）。展开态 transition 控制进入 */
-    transform-origin: var(--menu-origin, top center)
-    transform: scale(1)
-    transition:
-        opacity var(--m3e-duration-short) var(--m3e-easing-standard),
-        transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-        visibility var(--m3e-duration-medium)
-
-    /* 关闭时自隐藏（父级仅需控制 open 与定位）；收起更快 + 缩小淡出 */
-    &.closed
-        visibility: hidden
-        opacity: 0
-        transform: scale(0.8)
-        pointer-events: none
-        transition:
-            opacity var(--m3e-duration-short) var(--m3e-easing-standard),
-            transform var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate),
-            visibility var(--m3e-duration-short)
-
-    :global(.m3-menu-item)
-        display: flex
-        align-items: center
-        gap: 0.75rem
-        width: 100%
-        min-height: 3rem
-        padding: 0 0.75rem
-        border: none
-        border-radius: var(--shape-corner-m)
-        background: transparent
-        color: var(--on-surface)
-        font: var(--m3e-type-label-large)
-        text-align: left
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
-        cursor: pointer
-        transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-        /* Keep a fallback hover for consumers that do not opt into m3-state-layer. */
-        &:not(.m3-state-layer):hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-        &:focus-visible
-            outline: 2px solid var(--primary)
-            outline-offset: -2px
-
-    /* 选中/勾选态（M3 菜单规范）：.selected 单选高亮、.checked 勾选 */
-    :global(.m3-menu-item.selected),
-    :global(.m3-menu-item.checked)
-        background: var(--tertiary-container)
-        color: var(--on-tertiary-container)
-
-    /* 勾选图标动画（官方 expandHorizontally + fadeIn）：调用方给 check 图标加该类 */
-    :global(.m3-menu-item__check)
-        transform: scaleX(0)
-        opacity: 0
-        transition:
-            transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-            opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    :global(.m3-menu-item.selected .m3-menu-item__check),
-    :global(.m3-menu-item.checked .m3-menu-item__check)
-        transform: scaleX(1)
-        opacity: 1
-
-    /* 菜单项结构辅助类（调用方组织，Menu 提供样式）：
+  transform-origin: var(--menu-origin, top center);
+  transform: scale(1);
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), visibility var(--m3e-duration-medium);
+/* 关闭时自隐藏（父级仅需控制 open 与定位）；收起更快 + 缩小淡出 */
+/* 选中/勾选态（M3 菜单规范）：.selected 单选高亮、.checked 勾选 */
+/* 勾选图标动画（官方 expandHorizontally + fadeIn）：调用方给 check 图标加该类 */
+/* 菜单项结构辅助类（调用方组织，Menu 提供样式）：
        __trailing 右对齐内容（官方 trailingContent）；
        __content 垂直排列 label + supportingText */
-    :global(.m3-menu-item__trailing)
-        margin-left: auto
-        display: flex
-        align-items: center
-
-    :global(.m3-menu-item__content)
-        display: flex
-        flex-direction: column
-        min-width: 0
-
-    :global(.m3-menu-item__label)
-        white-space: nowrap
-
-    :global(.m3-menu-item__supporting)
-        font: var(--m3e-type-body-small)
-        color: var(--on-surface-variant)
-        white-space: nowrap
-
-    :global(.m3-menu-item:disabled)
-        color: unquote("color-mix(in oklab, var(--on-surface) 38%, transparent)")
-        cursor: default
-        pointer-events: none
-
-    /* 分组（官方 SegmentedMenuTokens）：surface-container-low 背景 + 4px padding，
+/* 分组（官方 SegmentedMenuTokens）：surface-container-low 背景 + 4px padding，
        组间 2px 间距；hover 聚焦时圆角 8→16 变形（FastSpatial 动效感） */
-    :global(.m3-menu-group)
-        padding: 0.25rem
-        border-radius: var(--shape-corner-s)
-        background: var(--surface-container-low)
-        transition: border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-        &:hover
-            border-radius: var(--shape-corner-l)
-
-    :global(.m3-menu-group + .m3-menu-group)
-        margin-top: 2px
-
-    /* === vibrant 变体：tertiary 基，高强调（官方 VibrantMenuTokens） === */
-    &--vibrant
-        background: var(--tertiary-container)
-        color: var(--on-tertiary-container)
-        :global(.m3-menu-item)
-            color: var(--on-tertiary-container)
-            &:hover
-                background: unquote("color-mix(in oklab, var(--on-tertiary-container) 8%, transparent)")
-            &:focus-visible
-                outline: 2px solid var(--tertiary)
-        :global(.m3-menu-item.selected),
-        :global(.m3-menu-item.checked)
-            background: var(--tertiary)
-            color: var(--on-tertiary)
+/* === vibrant 变体：tertiary 基，高强调（官方 VibrantMenuTokens） === */
+}
+.m3-menu.closed {
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate), visibility var(--m3e-duration-short);
+}
+.m3-menu :global(.m3-menu-item) {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0 0.75rem;
+  border: none;
+  border-radius: var(--shape-corner-m);
+  background: transparent;
+  color: var(--on-surface);
+  font: var(--m3e-type-label-large);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+/* Keep a fallback hover for consumers that do not opt into m3-state-layer. */
+}
+.m3-menu :global(.m3-menu-item):not(.m3-state-layer):hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-menu :global(.m3-menu-item):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+.m3-menu :global(.m3-menu-item.selected),
+.m3-menu :global(.m3-menu-item.checked) {
+  background: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+}
+.m3-menu :global(.m3-menu-item__check) {
+  transform: scaleX(0);
+  opacity: 0;
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-menu :global(.m3-menu-item.selected .m3-menu-item__check),
+.m3-menu :global(.m3-menu-item.checked .m3-menu-item__check) {
+  transform: scaleX(1);
+  opacity: 1;
+}
+.m3-menu :global(.m3-menu-item__trailing) {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+.m3-menu :global(.m3-menu-item__content) {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.m3-menu :global(.m3-menu-item__label) {
+  white-space: nowrap;
+}
+.m3-menu :global(.m3-menu-item__supporting) {
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+}
+.m3-menu :global(.m3-menu-item:disabled) {
+  color: color-mix(in oklab, var(--on-surface) 38%, transparent);
+  cursor: default;
+  pointer-events: none;
+}
+.m3-menu :global(.m3-menu-group) {
+  padding: 0.25rem;
+  border-radius: var(--shape-corner-s);
+  background: var(--surface-container-low);
+  transition: border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-menu :global(.m3-menu-group):hover {
+  border-radius: var(--shape-corner-l);
+}
+.m3-menu :global(.m3-menu-group + .m3-menu-group) {
+  margin-top: 2px;
+}
+.m3-menu--vibrant {
+  background: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+}
+.m3-menu--vibrant :global(.m3-menu-item) {
+  color: var(--on-tertiary-container);
+}
+.m3-menu--vibrant :global(.m3-menu-item):hover {
+  background: color-mix(in oklab, var(--on-tertiary-container) 8%, transparent);
+}
+.m3-menu--vibrant :global(.m3-menu-item):focus-visible {
+  outline: 2px solid var(--tertiary);
+}
+.m3-menu--vibrant :global(.m3-menu-item.selected),
+.m3-menu--vibrant :global(.m3-menu-item.checked) {
+  background: var(--tertiary);
+  color: var(--on-tertiary);
+}
 </style>

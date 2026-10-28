@@ -147,111 +147,115 @@ function handleRemove(item: ChipItem) {
 	{/each}
 </div>
 
-<style lang="stylus">
-.m3-chips
-	display: flex
-	flex-wrap: wrap
-	gap: var(--m3e-chip-gap, 0.5rem)
-
-.m3-chip
-	display: inline-flex
-	align-items: center
-	box-sizing: border-box
-	height: 2rem /* 32px */
-	gap: 0.5rem
-	padding: 0 1rem
-	border: 1px solid var(--outline)
-	border-radius: var(--shape-corner-s) /* corner-small 8px */
-	background: transparent
-	color: var(--on-surface)
-	font: var(--m3e-type-label-large)
-	cursor: pointer
-	user-select: none
-	--m3e-state-color: var(--on-surface)
-
-	&--disabled
-		opacity: 0.38
-		pointer-events: none
-
-	/* === 图标 === */
-	&__icon, &__remove
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		flex-shrink: 0
-
-		> :global(svg)
-			width: 18px
-			height: 18px
-
-	&__avatar
-		width: 1.5rem /* 24px */
-		height: 1.5rem
-		border-radius: var(--shape-corner-full)
-		object-fit: cover
-		flex-shrink: 0
-
-	/* === 形态 === */
-	&--assist
-		color: var(--on-surface)
-		--m3e-state-color: var(--on-surface)
-
-		.m3-chip__icon
-			color: var(--primary) /* with-icon-icon-color */
-
-	&--suggestion
-		color: var(--on-surface-variant) /* suggestion label 用 on-surface-variant */
-		--m3e-state-color: var(--on-surface-variant)
-
-		.m3-chip__icon
-			color: var(--primary)
-
-	&--filter, &--input
-		&.m3-chip--selected
-			background: var(--secondary-container)
-			color: var(--on-secondary-container)
-			border-color: transparent
-			--m3e-state-color: var(--on-secondary-container)
-
-			.m3-chip__icon
-				color: var(--on-secondary-container)
-
-	/* === input 内部结构 === */
-	&--input
-		padding: 0 0.25rem 0 1rem /* 右侧给删除按钮留位 */
-
-		.m3-chip__icon
-			color: var(--on-surface-variant)
-
-		&.m3-chip--selected .m3-chip__icon
-			color: var(--on-secondary-container)
-
-	&__action
-		display: inline-flex
-		align-items: center
-		gap: 0.5rem
-		height: 100%
-		padding: 0
-		border: none
-		background: transparent
-		color: inherit
-		font: inherit
-		cursor: pointer
-
-	&__remove
-		width: 1.5rem
-		height: 1.5rem
-		padding: 0
-		border: none
-		border-radius: var(--shape-corner-full)
-		background: transparent
-		color: var(--on-surface-variant)
-		cursor: pointer
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&:hover
-			background: unquote("color-mix(in srgb, var(--on-surface-variant) 8%, transparent)")
-
-		&:active
-			background: unquote("color-mix(in srgb, var(--on-surface-variant) 12%, transparent)")
+<style>
+.m3-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m3e-chip-gap, 0.5rem);
+}
+.m3-chip {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 2rem /* 32px */;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  border: 1px solid var(--outline);
+  border-radius: var(--shape-corner-s) /* corner-small 8px */;
+  background: transparent;
+  color: var(--on-surface);
+  font: var(--m3e-type-label-large);
+  cursor: pointer;
+  user-select: none;
+  --m3e-state-color: var(--on-surface);
+/* === 图标 === */
+/* === 形态 === */
+/* === input 内部结构 === */
+}
+.m3-chip--disabled {
+  opacity: 0.38;
+  pointer-events: none;
+}
+.m3-chip__icon,
+.m3-chip__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.m3-chip__icon > :global(svg),
+.m3-chip__remove > :global(svg) {
+  width: 18px;
+  height: 18px;
+}
+.m3-chip__avatar {
+  width: 1.5rem /* 24px */;
+  height: 1.5rem;
+  border-radius: var(--shape-corner-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.m3-chip--assist {
+  color: var(--on-surface);
+  --m3e-state-color: var(--on-surface);
+}
+.m3-chip--assist .m3-chip__icon {
+  color: var(--primary) /* with-icon-icon-color */;
+}
+.m3-chip--suggestion {
+  color: var(--on-surface-variant) /* suggestion label 用 on-surface-variant */;
+  --m3e-state-color: var(--on-surface-variant);
+}
+.m3-chip--suggestion .m3-chip__icon {
+  color: var(--primary);
+}
+.m3-chip--filter.m3-chip--selected,
+.m3-chip--input.m3-chip--selected {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  border-color: transparent;
+  --m3e-state-color: var(--on-secondary-container);
+}
+.m3-chip--filter.m3-chip--selected .m3-chip__icon,
+.m3-chip--input.m3-chip--selected .m3-chip__icon {
+  color: var(--on-secondary-container);
+}
+.m3-chip--input {
+  padding: 0 0.25rem 0 1rem /* 右侧给删除按钮留位 */;
+}
+.m3-chip--input .m3-chip__icon {
+  color: var(--on-surface-variant);
+}
+.m3-chip--input.m3-chip--selected .m3-chip__icon {
+  color: var(--on-secondary-container);
+}
+.m3-chip__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.m3-chip__remove {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: transparent;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-chip__remove:hover {
+  background: color-mix(in srgb, var(--on-surface-variant) 8%, transparent);
+}
+.m3-chip__remove:active {
+  background: color-mix(in srgb, var(--on-surface-variant) 12%, transparent);
+}
 </style>

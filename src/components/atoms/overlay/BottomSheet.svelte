@@ -54,62 +54,63 @@ onMount(() => {
     </div>
 </div>
 
-<style lang="stylus">
-.m3-sheet-root
-    position: fixed
-    inset: 0
-    z-index: 70
-    visibility: hidden
-    pointer-events: none
-
-    &.m3-sheet-root--open
-        visibility: visible
-        pointer-events: auto
-
-    .m3-sheet__scrim
-        position: absolute
-        inset: 0
-        background: unquote("color-mix(in oklab, var(--scrim, #000) 32%, transparent)")
-        opacity: 0
-        transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-    &.m3-sheet-root--open .m3-sheet__scrim
-        opacity: 1
-
-    /* 面板：底部滑入，顶部 16dp 圆角，surface-container-low */
-    .m3-sheet
-        position: absolute
-        left: 50%
-        bottom: 0
-        transform: translateX(-50%) translateY(100%)
-        width: 100%
-        max-width: 656px
-        max-height: 80vh
-        box-sizing: border-box
-        display: flex
-        flex-direction: column
-        background: var(--surface-container-low)
-        color: var(--on-surface)
-        border-radius: var(--shape-corner-l) var(--shape-corner-l) 0 0
-        transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate)
-
-    &.m3-sheet-root--open .m3-sheet
-        transform: translateX(-50%) translateY(0)
-
-    .m3-sheet__handle
-        width: 32px
-        height: 4px
-        margin: 12px auto 4px
-        border-radius: var(--shape-corner-full)
-        background: var(--on-surface-variant)
-        opacity: 0.4
-        flex: none
-
-    .m3-sheet__title
-        font: var(--m3e-type-headline-small)
-        padding: 8px 24px 0
-
-    .m3-sheet__content
-        padding: 16px 24px 24px
-        overflow-y: auto
+<style>
+.m3-sheet-root {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  visibility: hidden;
+  pointer-events: none;
+/* 面板：底部滑入，顶部 16dp 圆角，surface-container-low */
+}
+.m3-sheet-root.m3-sheet-root--open {
+  visibility: visible;
+  pointer-events: auto;
+}
+.m3-sheet-root .m3-sheet__scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklab, var(--scrim, #000) 32%, transparent);
+  opacity: 0;
+  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.m3-sheet-root.m3-sheet-root--open .m3-sheet__scrim {
+  opacity: 1;
+}
+.m3-sheet-root .m3-sheet {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(100%);
+  width: 100%;
+  max-width: 656px;
+  max-height: 80vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  border-radius: var(--shape-corner-l) var(--shape-corner-l) 0 0;
+  transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-sheet-root.m3-sheet-root--open .m3-sheet {
+  transform: translateX(-50%) translateY(0);
+}
+.m3-sheet-root .m3-sheet__handle {
+  width: 32px;
+  height: 4px;
+  margin: 12px auto 4px;
+  border-radius: var(--shape-corner-full);
+  background: var(--on-surface-variant);
+  opacity: 0.4;
+  flex: none;
+}
+.m3-sheet-root .m3-sheet__title {
+  font: var(--m3e-type-headline-small);
+  padding: 8px 24px 0;
+}
+.m3-sheet-root .m3-sheet__content {
+  padding: 16px 24px 24px;
+  overflow-y: auto;
+}
 </style>

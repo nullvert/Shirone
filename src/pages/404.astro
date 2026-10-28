@@ -50,38 +50,39 @@ import { url } from "@utils/url-utils";
 	</Card>
 </MainGridLayout>
 
-<style lang="stylus">
-.not-found-card
-	position: relative
-	min-height: clamp(22rem, 50vh, 36rem)
-	display: flex
-	align-items: center
-	justify-content: center
-
-.not-found-watermark
-	position: absolute
-	inset: 0
-	display: flex
-	align-items: center
-	justify-content: center
-	pointer-events: none
-	user-select: none
-	font-family: var(--font-sans)
-	font-size: clamp(8rem, 22vw, 18rem)
-	font-weight: 900
-	line-height: 1
-	letter-spacing: -0.05em
-	color: var(--primary)
-	opacity: 0.04
-
-.not-found-badge
-	display: inline-flex
-	align-items: center
-	justify-content: center
-	width: 4.5rem
-	height: 4.5rem
-	border-radius: var(--shape-corner-full)
-	background: var(--surface-container-high)
-	border: 1px solid var(--outline-variant)
-	box-shadow: var(--m3e-elevation-1)
+<style>
+.not-found-card {
+  position: relative;
+  min-height: clamp(22rem, 50vh, 36rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.not-found-watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-sans);
+  font-size: clamp(8rem, 22vw, 18rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--primary);
+  opacity: 0.04;
+}
+.not-found-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--surface-container-high);
+  border: 1px solid var(--outline-variant);
+  box-shadow: var(--m3e-elevation-1);
+}
 </style>

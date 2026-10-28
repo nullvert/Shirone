@@ -102,40 +102,41 @@ const rows = [
 	</ul>
 </WidgetLayout>
 
-<style lang="stylus">
-.m3-site-stats
-	display: flex
-	flex-direction: column
-	gap: var(--m3e-space-2)
-	margin: 0
-	padding: 0
-	list-style: none
-
-	&__row
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-2)
-
-	&__label
-		font: var(--m3e-type-body-medium)
-		font-weight: 500
-		color: var(--on-surface-variant)
-		white-space: nowrap
-
-	/* 点线引导：沉到文字基线附近，长度伸缩填满中段 */
-	&__rule
-		flex: 1
-		align-self: flex-end
-		margin-bottom: 0.35em
-		min-width: 0.75rem
-		border-bottom: 2px dotted var(--outline-variant)
-
-	&__value
-		font: var(--m3e-type-title-small)
-		font-weight: 600
-		font-variant-numeric: tabular-nums
-		color: var(--on-surface)
-		white-space: nowrap
+<style>
+.m3-site-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m3e-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+/* 点线引导：沉到文字基线附近，长度伸缩填满中段 */
+}
+.m3-site-stats__row {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-2);
+}
+.m3-site-stats__label {
+  font: var(--m3e-type-body-medium);
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+}
+.m3-site-stats__rule {
+  flex: 1;
+  align-self: flex-end;
+  margin-bottom: 0.35em;
+  min-width: 0.75rem;
+  border-bottom: 2px dotted var(--outline-variant);
+}
+.m3-site-stats__value {
+  font: var(--m3e-type-title-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-surface);
+  white-space: nowrap;
+}
 </style>
 
 <script is:inline define:vars={{ lastActivityISO: stats.lastActivity, todayText, yesterdayText, daysAgoText }}>

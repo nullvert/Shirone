@@ -123,32 +123,33 @@ function onScrollerKeydown(e: KeyboardEvent) {
 	</div>
 </div>
 
-<style lang="stylus">
-.m3-carousel
-	width: 100%
-	box-sizing: border-box
-
-	.m3-carousel__scroller
-		display: flex
-		align-items: stretch
-		gap: var(--m3-carousel-gap, 1rem)
-		padding-inline: var(--m3-carousel-padding, 1rem)
-		overflow-x: auto
-		scroll-snap-type: x mandatory
-		scrollbar-width: none
-		-webkit-overflow-scrolling: touch
-
-		&::-webkit-scrollbar
-			display: none
-
-	.m3-carousel__item
-		flex: 0 0 auto
-		scroll-snap-align: center
-		box-sizing: border-box
-
-	&--proximity .m3-carousel__scroller
-		scroll-snap-type: unquote("x proximity")
-
-	&--none .m3-carousel__scroller
-		scroll-snap-type: unquote("x none")
+<style>
+.m3-carousel {
+  width: 100%;
+  box-sizing: border-box;
+}
+.m3-carousel .m3-carousel__scroller {
+  display: flex;
+  align-items: stretch;
+  gap: var(--m3-carousel-gap, 1rem);
+  padding-inline: var(--m3-carousel-padding, 1rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.m3-carousel .m3-carousel__scroller::-webkit-scrollbar {
+  display: none;
+}
+.m3-carousel .m3-carousel__item {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  box-sizing: border-box;
+}
+.m3-carousel--proximity .m3-carousel__scroller {
+  scroll-snap-type: x proximity;
+}
+.m3-carousel--none .m3-carousel__scroller {
+  scroll-snap-type: x none;
+}
 </style>

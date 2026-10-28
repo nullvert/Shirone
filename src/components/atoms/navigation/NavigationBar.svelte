@@ -40,65 +40,68 @@ let {
     {/each}
 </div>
 
-<style lang="stylus">
-.m3-nav-bar
-    display: flex
-    height: 4rem
-    background: var(--surface-container)
-    box-shadow: var(--m3e-elevation-2)
-    border-radius: var(--shape-corner-l)
-
-    &__item
-        position: relative
-        flex: 1
-        display: flex
-        flex-direction: column
-        align-items: center
-        justify-content: center
-        gap: 0.5rem
-        border: none
-        background: none
-        cursor: pointer
-        &:focus-visible
-            outline: 2px solid var(--secondary)
-            outline-offset: -2px
-
-    /* 指示器 pill（官方 ItemActiveIndicator 64×32 全圆，只包图标）：
+<style>
+.m3-nav-bar {
+  display: flex;
+  height: 4rem;
+  background: var(--surface-container);
+  box-shadow: var(--m3e-elevation-2);
+  border-radius: var(--shape-corner-l);
+/* 指示器 pill（官方 ItemActiveIndicator 64×32 全圆，只包图标）：
        active 时 scaleX 0→1 生长（官方 animateFloatAsState indicatorWidth）；
        top 4px 定位使 pill 底 36 与 label 顶 40 留 4px 间距，不互相接触 */
-    &__indicator
-        position: absolute
-        top: 0.25rem
-        left: 50%
-        transform: translateX(-50%) scaleX(0)
-        width: 4rem
-        height: 2rem
-        border-radius: var(--shape-corner-full)
-        background: var(--secondary-container)
-        transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-    &__item--active &__indicator
-        transform: translateX(-50%) scaleX(1)
-
-    &__icon
-        position: relative
-        display: flex
-        color: var(--on-surface-variant)
-        transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-        > :global(svg)
-            width: 1.5rem
-            height: 1.5rem
-
-    &__item--active &__icon
-        color: var(--on-secondary-container)
-
-    &__label
-        position: relative
-        font: var(--m3e-type-label-medium)
-        color: var(--on-surface-variant)
-        white-space: nowrap
-        transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    &__item--active &__label
-        color: var(--secondary)
+}
+.m3-nav-bar__item {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.m3-nav-bar__item:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: -2px;
+}
+.m3-nav-bar__indicator {
+  position: absolute;
+  top: 0.25rem;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 4rem;
+  height: 2rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--secondary-container);
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-nav-bar__item--active .m3-nav-bar__indicator {
+  transform: translateX(-50%) scaleX(1);
+}
+.m3-nav-bar__icon {
+  position: relative;
+  display: flex;
+  color: var(--on-surface-variant);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-nav-bar__icon > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-nav-bar__item--active .m3-nav-bar__icon {
+  color: var(--on-secondary-container);
+}
+.m3-nav-bar__label {
+  position: relative;
+  font: var(--m3e-type-label-medium);
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-nav-bar__item--active .m3-nav-bar__label {
+  color: var(--secondary);
+}
 </style>

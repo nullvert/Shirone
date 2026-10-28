@@ -256,110 +256,111 @@ function searchViewOutro(
 	</div>
 {/if}
 
-<style lang="stylus">
-.m3-search-view
-	display: flex
-	flex-direction: column
-	box-sizing: border-box
-	background: var(--surface-container-high)
-	color: var(--on-surface)
-
-	&--full
-		position: fixed
-		inset: 0
-		z-index: 100
-		border-radius: 0
-
-		.m3-search-view__header
-			height: 4.5rem /* 72px */
-
-	&--docked
-		border-radius: var(--shape-corner-xl) /* corner-extra-large 28px */
-		box-shadow: var(--m3e-elevation-3)
-
-		.m3-search-view__header
-			height: 3.5rem /* 56px */
-
-		.m3-search-view__body
-			/* 底部圆角裁剪：与 SearchBar.__expand 对齐，避免内容/hover 背景呈矩形盖过圆角阴影 */
-			border-radius: 0 0 var(--shape-corner-xl) var(--shape-corner-xl)
-
-	.m3-search-view__header
-		display: flex
-		align-items: center
-		gap: 0.5rem
-		padding: 0 0.5rem
-		flex-shrink: 0
-
-		&--divider
-			border-bottom: 1px solid var(--outline)
-			transition: border-bottom-color 200ms var(--m3e-easing-standard)
-
-	.m3-search-view__icon
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		width: 3rem
-		height: 3rem
-		border: none
-		background: transparent
-		color: var(--on-surface)
-		border-radius: var(--shape-corner-full)
-		cursor: pointer
-		flex-shrink: 0
-
-		> :global(svg)
-			width: 1.5rem
-			height: 1.5rem
-
-		&.m3-search-view__clear
-			color: var(--on-surface-variant)
-
-	.m3-search-view__input
-		flex: 1
-		min-width: 0
-		border: none
-		outline: none
-		background: transparent
-		color: var(--on-surface)
-		font: var(--m3e-type-body-large)
-		padding: 0 0.25rem
-		box-sizing: border-box
-
-		&::placeholder
-			color: var(--on-surface-variant)
-
-	.m3-search-view__body
-		overflow-y: auto
-		padding: 0.5rem 0
-
-	.m3-search-view__section-label
-		padding: 0.75rem 1.5rem 0.25rem
-		font: var(--m3e-type-body-large)
-		color: var(--on-surface-variant)
-
-	.m3-search-view__item
-		display: flex
-		align-items: center
-		gap: 1rem
-		width: 100%
-		padding: 0.75rem 1.5rem
-		border: none
-		background: transparent
-		color: var(--on-surface)
-		font: var(--m3e-type-body-large)
-		text-align: start
-		cursor: pointer
-
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-
-		&--active
-			background: unquote("color-mix(in oklab, var(--on-surface) 12%, transparent)")
-
-		.m3-search-view__item-icon
-			width: 1.5rem
-			height: 1.5rem
-			color: var(--on-surface-variant)
-			flex-shrink: 0
+<style>
+.m3-search-view {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+}
+.m3-search-view--full {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  border-radius: 0;
+}
+.m3-search-view--full .m3-search-view__header {
+  height: 4.5rem /* 72px */;
+}
+.m3-search-view--docked {
+  border-radius: var(--shape-corner-xl) /* corner-extra-large 28px */;
+  box-shadow: var(--m3e-elevation-3);
+}
+.m3-search-view--docked .m3-search-view__header {
+  height: 3.5rem /* 56px */;
+}
+.m3-search-view--docked .m3-search-view__body {
+/* 底部圆角裁剪：与 SearchBar.__expand 对齐，避免内容/hover 背景呈矩形盖过圆角阴影 */
+  border-radius: 0 0 var(--shape-corner-xl) var(--shape-corner-xl);
+}
+.m3-search-view .m3-search-view__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+  flex-shrink: 0;
+}
+.m3-search-view .m3-search-view__header--divider {
+  border-bottom: 1px solid var(--outline);
+  transition: border-bottom-color 200ms var(--m3e-easing-standard);
+}
+.m3-search-view .m3-search-view__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  background: transparent;
+  color: var(--on-surface);
+  border-radius: var(--shape-corner-full);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.m3-search-view .m3-search-view__icon > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-search-view .m3-search-view__icon.m3-search-view__clear {
+  color: var(--on-surface-variant);
+}
+.m3-search-view .m3-search-view__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--on-surface);
+  font: var(--m3e-type-body-large);
+  padding: 0 0.25rem;
+  box-sizing: border-box;
+}
+.m3-search-view .m3-search-view__input::placeholder {
+  color: var(--on-surface-variant);
+}
+.m3-search-view .m3-search-view__body {
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+.m3-search-view .m3-search-view__section-label {
+  padding: 0.75rem 1.5rem 0.25rem;
+  font: var(--m3e-type-body-large);
+  color: var(--on-surface-variant);
+}
+.m3-search-view .m3-search-view__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: transparent;
+  color: var(--on-surface);
+  font: var(--m3e-type-body-large);
+  text-align: start;
+  cursor: pointer;
+}
+.m3-search-view .m3-search-view__item:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-search-view .m3-search-view__item--active {
+  background: color-mix(in oklab, var(--on-surface) 12%, transparent);
+}
+.m3-search-view .m3-search-view__item .m3-search-view__item-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--on-surface-variant);
+  flex-shrink: 0;
+}
 </style>

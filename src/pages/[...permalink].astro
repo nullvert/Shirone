@@ -412,25 +412,25 @@ const jsonLd = {
 
 </MainGridLayout>
 
-<style is:global lang="stylus">
-	/* ???/????? hover ????????????????????
+<style is:global>
+/* ???/????? hover ????????????????????
 	   reduced-motion ??? motion-reduced ???????????? */
-	.post-nav
-		.post-nav__arrow
-			transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-		.post-nav__title
-			font: var(--m3e-type-title-medium)
-			font-weight: 600
-			color: var(--on-surface-variant)
-			transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&:hover .post-nav__title
-			color: var(--primary)
-
-		&--prev:hover .post-nav__arrow
-			transform: translateX(-0.25rem)
-
-		&--next:hover .post-nav__arrow
-			transform: translateX(0.25rem)
+.post-nav .post-nav__arrow {
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.post-nav .post-nav__title {
+  font: var(--m3e-type-title-medium);
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.post-nav:hover .post-nav__title {
+  color: var(--primary);
+}
+.post-nav--prev:hover .post-nav__arrow {
+  transform: translateX(-0.25rem);
+}
+.post-nav--next:hover .post-nav__arrow {
+  transform: translateX(0.25rem);
+}
 </style>

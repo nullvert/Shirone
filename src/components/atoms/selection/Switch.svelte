@@ -43,86 +43,85 @@ let {
     </span>
 </label>
 
-<style lang="stylus">
-.m3-switch
-    display: inline-flex
-    cursor: pointer
-    -webkit-tap-highlight-color: transparent
-
-    &.disabled
-        opacity: 0.38
-        pointer-events: none
-
-    /* 隐藏原生 checkbox（保留可访问性） */
-    &__input
-        position: absolute
-        width: 1px
-        height: 1px
-        opacity: 0
-        overflow: hidden
-        clip: rect(0 0 0 0)
-        white-space: nowrap
-        clip-path: inset(50%)
-
-    /* checkbox 聚焦时给 track 描边（:focus-visible 无法直接作用于 label） */
-    &__input:focus-visible ~ &__track
-        outline: 2px solid var(--primary)
-        outline-offset: 2px
-
-    &__track
-        position: relative
-        width: 3rem
-        height: 1.75rem
-        border-radius: var(--shape-corner-full)
-        border: none
-        box-sizing: border-box
-        background: var(--surface-container-highest)
-        transition: background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-    &__thumb
-        position: absolute
-        top: 50%
-        left: 0.25rem
-        width: 1.25rem
-        height: 1.25rem
-        border-radius: var(--shape-corner-full)
-        background: var(--outline)
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25)
-        transform: translateY(-50%)
-        transition:
-            left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-            background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-    &__input:checked ~ &__track
-        background: var(--primary)
-
-    &__input:checked ~ &__track &__thumb
-        left: 1.5rem
-        background: var(--on-primary)
-
-    /* M3E 图标变体：thumb 恒定尺寸，选中时优雅 check */
-    &.m3-switch--icons &__thumb
-        left: 0.25rem
-
-    &.m3-switch--icons &__input:checked ~ &__track &__thumb
-        left: 1.5rem
-
-    &__icon
-        position: absolute
-        top: 50%
-        left: 50%
-        width: 0.875rem
-        height: 0.875rem
-        transform: translate(-50%, -50%)
-        transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    &__icon--check
-        fill: var(--primary)
-        opacity: 0
-
-    &__icon--close
-        display: none
-
-    &__input:checked ~ &__track &__icon--check
-        opacity: 1
+<style>
+.m3-switch {
+  display: inline-flex;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+/* 隐藏原生 checkbox（保留可访问性） */
+/* checkbox 聚焦时给 track 描边（:focus-visible 无法直接作用于 label） */
+/* M3E 图标变体：thumb 恒定尺寸，选中时优雅 check */
+}
+.m3-switch.disabled {
+  opacity: 0.38;
+  pointer-events: none;
+}
+.m3-switch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+.m3-switch__input:focus-visible ~ .m3-switch__track {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.m3-switch__track {
+  position: relative;
+  width: 3rem;
+  height: 1.75rem;
+  border-radius: var(--shape-corner-full);
+  border: none;
+  box-sizing: border-box;
+  background: var(--surface-container-highest);
+  transition: background-color var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.m3-switch__thumb {
+  position: absolute;
+  top: 50%;
+  left: 0.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--outline);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  transform: translateY(-50%);
+  transition: left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), background-color var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.m3-switch__input:checked ~ .m3-switch__track {
+  background: var(--primary);
+}
+.m3-switch__input:checked ~ .m3-switch__track .m3-switch__thumb {
+  left: 1.5rem;
+  background: var(--on-primary);
+}
+.m3-switch.m3-switch--icons .m3-switch__thumb {
+  left: 0.25rem;
+}
+.m3-switch.m3-switch--icons .m3-switch__input:checked ~ .m3-switch__track .m3-switch__thumb {
+  left: 1.5rem;
+}
+.m3-switch__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.875rem;
+  height: 0.875rem;
+  transform: translate(-50%, -50%);
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-switch__icon--check {
+  fill: var(--primary);
+  opacity: 0;
+}
+.m3-switch__icon--close {
+  display: none;
+}
+.m3-switch__input:checked ~ .m3-switch__track .m3-switch__icon--check {
+  opacity: 1;
+}
 </style>

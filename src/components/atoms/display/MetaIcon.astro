@@ -22,18 +22,20 @@ const { icon, class: className, style } = Astro.props;
 	<Icon icon={icon} />
 </span>
 
-<style lang="stylus">
-.m3-meta-icon
-	display: flex
-	align-items: center
-	justify-content: center
-	width: 2rem
-	height: 2rem
-	border-radius: var(--shape-corner-s)
-	background: var(--btn-regular-bg)
-	color: var(--btn-content)
-	flex-shrink: 0
-	> :global(svg)
-		width: 1.25rem
-		height: 1.25rem
+<style>
+.m3-meta-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--shape-corner-s);
+  background: var(--btn-regular-bg);
+  color: var(--btn-content);
+  flex-shrink: 0;
+}
+.m3-meta-icon > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
 </style>

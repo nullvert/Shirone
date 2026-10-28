@@ -139,93 +139,146 @@ onMount(() => {
 	{/if}
 </Card>
 
-<style lang="stylus">
-.album-section
-	display: block
-	&__tools
-		display: grid
-		gap: 0.875rem
-		padding-bottom: 1.5rem
-		border-bottom: 1px solid var(--outline-variant)
-	&__search
-		position: relative
-		width: 100%
-		max-width: 32rem
-		:global(.m3-text-field)
-			width: 100%
-	&__clear
-		position: absolute
-		right: 0.5rem
-		top: 50%
-		display: grid
-		place-items: center
-		width: 1.75rem
-		height: 1.75rem
-		padding: 0.25rem
-		transform: translateY(-50%)
-		border: 0
-		border-radius: var(--shape-corner-full)
-		background: transparent
-		color: var(--on-surface-variant)
-		cursor: pointer
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-	&__count
-		margin: 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-	&__grid
-		display: grid
-		grid-template-columns: repeat(1, minmax(0, 1fr))
-		gap: 1rem
-		padding-top: 1.5rem
-		@media (min-width: 40rem)
-			grid-template-columns: repeat(2, minmax(0, 1fr))
-		@media (min-width: 75rem)
-			grid-template-columns: repeat(3, minmax(0, 1fr))
-	&__item
-		min-width: 0
-		animation: album-card-in var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate) both
-		animation-delay: var(--album-delay)
-	&__loading
-		display: grid
-		place-items: center
-		min-height: 12rem
-		padding-top: 1.5rem
-		opacity: 1
-		transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-		&--out
-			opacity: 0
-	&__empty
-		display: grid
-		place-items: center
-		gap: 0.75rem
-		min-height: 12rem
-		padding-top: 1.5rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-medium)
-		> :global(svg)
-			width: 2rem
-			height: 2rem
-
-@keyframes album-card-in
-	from
-		opacity: 0
-		transform: translateY(0.5rem)
-	to
-		opacity: 1
-		transform: translateY(0)
-
-:global(html.motion-reduced) .album-section__item
-	animation: none
-
-:global(html.motion-reduced) .album-section__loading
-	transition: none
-
-@media (prefers-reduced-motion: reduce)
-	.album-section__item
-		animation: none
-	.album-section__loading
-		transition: none
+<style>
+.album-section {
+  display: block;
+}
+.album-section__tools {
+  display: grid;
+  gap: 0.875rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--outline-variant);
+}
+.album-section__search {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+}
+.album-section__search :global(.m3-text-field) {
+  width: 100%;
+}
+.album-section__clear {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0.25rem;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: var(--shape-corner-full);
+  background: transparent;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+}
+.album-section__clear > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.album-section__count {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+}
+.album-section__grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+@media (min-width: 40rem) {
+  .album-section__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 75rem) {
+  .album-section__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.album-section__item {
+  min-width: 0;
+  animation: album-card-in var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate) both;
+  animation-delay: var(--album-delay);
+}
+.album-section__loading {
+  display: grid;
+  place-items: center;
+  min-height: 12rem;
+  padding-top: 1.5rem;
+  opacity: 1;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.album-section__loading--out {
+  opacity: 0;
+}
+.album-section__empty {
+  display: grid;
+  place-items: center;
+  gap: 0.75rem;
+  min-height: 12rem;
+  padding-top: 1.5rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-medium);
+}
+.album-section__empty > :global(svg) {
+  width: 2rem;
+  height: 2rem;
+}
+:global(html.motion-reduced) .album-section__item {
+  animation: none;
+}
+:global(html.motion-reduced) .album-section__loading {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .album-section__item {
+    animation: none;
+  }
+  .album-section__loading {
+    transition: none;
+  }
+}
+@-moz-keyframes album-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes album-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-o-keyframes album-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes album-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>

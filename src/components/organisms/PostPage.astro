@@ -46,17 +46,15 @@ const { mode, cover, cardWidth } = postListConfig.layout;
     </div>
 </div>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-.m3e-post-list-shell
-	container: post-list-layout / inline-size
-
-.m3e-post-list
-	display: flex
-	flex-direction: column
-	gap: var(--m3e-space-4)
-
-	/* 网格（瀑布流）模式：仅在内容容器至少能容纳两张所选宽度的卡片时生效。
+<style>
+.m3e-post-list-shell {
+  container: post-list-layout/inline-size;
+}
+.m3e-post-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m3e-space-4);
+/* 网格（瀑布流）模式：仅在内容容器至少能容纳两张所选宽度的卡片时生效。
 	   这让单/双侧栏压窄内容列时自动回退 list，而不是留下单列 GridUI。
 	   手机端同样回退到上方基础 flex 单列。
 	   卡片高度天然混合（有/无封面），由 utils/masonry.ts 做最短列打包：
@@ -65,28 +63,40 @@ const { mode, cover, cardWidth } = postListConfig.layout;
 	   ROW_UNIT / ROW_GAP 常量约定，两处需同步改。
 	   本块的容器查询阈值按「≥2 列」选取；masonry.ts 另有兜底：一旦此处
 	   生效而实际只排下 1 列，它会照写 span，不会留下重叠。 */
-
-activate-post-grid()
-	display: grid
-	grid-template-columns: repeat(auto-fill, minmax(var(--post-card-min, 20rem), 1fr))
-	align-items: start
-	grid-auto-rows: 8px
-	row-gap: 0
-	column-gap: var(--m3e-space-4)
-
+}
 /* 阈值 = 2 × POST_CARD_MIN_WIDTH + --m3e-space-4（列间距）。 */
-@media (min-width: bp-md)
-	@container post-list-layout (min-width: 41rem)
-		.m3e-post-list-shell--compact .m3e-post-list--grid
-			activate-post-grid()
-
-	@container post-list-layout (min-width: 49rem)
-		.m3e-post-list-shell--regular .m3e-post-list--grid
-			activate-post-grid()
-
-	@container post-list-layout (min-width: 57rem)
-		.m3e-post-list-shell--relaxed .m3e-post-list--grid
-			activate-post-grid()
+@media (min-width: 768px) {
+  @container post-list-layout (min-width: 41rem) {
+    .m3e-post-list-shell--compact .m3e-post-list--grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(var(--post-card-min, 20rem), 1fr));
+      align-items: start;
+      grid-auto-rows: 8px;
+      row-gap: 0;
+      column-gap: var(--m3e-space-4);
+    }
+  }
+  @container post-list-layout (min-width: 49rem) {
+    .m3e-post-list-shell--regular .m3e-post-list--grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(var(--post-card-min, 20rem), 1fr));
+      align-items: start;
+      grid-auto-rows: 8px;
+      row-gap: 0;
+      column-gap: var(--m3e-space-4);
+    }
+  }
+  @container post-list-layout (min-width: 57rem) {
+    .m3e-post-list-shell--relaxed .m3e-post-list--grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(var(--post-card-min, 20rem), 1fr));
+      align-items: start;
+      grid-auto-rows: 8px;
+      row-gap: 0;
+      column-gap: var(--m3e-space-4);
+    }
+  }
+}
 </style>
 
 <!-- 首屏防闪：SSR 输出的是站点默认模式，访客偏好（localStorage）在容器

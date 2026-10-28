@@ -62,48 +62,54 @@ const allItemsMap = {
 	/>
 </WidgetLayout>
 
-<style lang="stylus">
-.media-widget-header-reset
-	display: inline-flex
-	align-items: center
-	justify-content: center
-	width: 1.75rem
-	height: 1.75rem
-	padding: 0
-	color: var(--on-surface-variant)
-	background: transparent
-	border: none
-	border-radius: var(--shape-corner-full)
-	cursor: pointer
-	transition: all var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&:hover
-		background: unquote('color-mix(in srgb, var(--primary) 15%, transparent)')
-		color: var(--primary)
-
-	&.hidden
-		display: none
-
+<style>
+.media-widget-header-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  color: var(--on-surface-variant);
+  background: transparent;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  cursor: pointer;
+  transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.media-widget-header-reset:hover {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary);
+}
+.media-widget-header-reset.hidden {
+  display: none;
+}
 /* На мобильных экранах (< 1024px) виджет фильтра сворачивается ТОЛЬКО когда он активен
    (:not(.hidden)), не затрагивая сайдбар на других страницах сайта */
-:global(.sidebar-widget:not(.hidden) > widget-layout[data-id="media-filter"])
-	@media (max-width: 1023px)
-		display: contents
-		> :global(.m3-card)
-			display: contents
-			background: transparent
-			border: none
-			box-shadow: none
-			padding: 0
-			margin: 0
-		> :global(.m3-card) > :global(.widget-layout__header)
-			display: none
-		> :global(.m3-card) > :global(.collapse-wrapper)
-			display: contents
-			padding: 0
-			margin: 0
-
-:global(.sidebar-widget:not(.hidden):has(widget-layout[data-id="media-filter"]))
-	@media (max-width: 1023px)
-		display: contents
+@media (max-width: 1023px) {
+  :global(.sidebar-widget:not(.hidden) > widget-layout[data-id="media-filter"]) {
+    display: contents;
+  }
+  :global(.sidebar-widget:not(.hidden) > widget-layout[data-id="media-filter"]) > :global(.m3-card) {
+    display: contents;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+  :global(.sidebar-widget:not(.hidden) > widget-layout[data-id="media-filter"]) > :global(.m3-card) > :global(.widget-layout__header) {
+    display: none;
+  }
+  :global(.sidebar-widget:not(.hidden) > widget-layout[data-id="media-filter"]) > :global(.m3-card) > :global(.collapse-wrapper) {
+    display: contents;
+    padding: 0;
+    margin: 0;
+  }
+}
+@media (max-width: 1023px) {
+  :global(.sidebar-widget:not(.hidden):has(widget-layout[data-id="media-filter"])) {
+    display: contents;
+  }
+}
 </style>

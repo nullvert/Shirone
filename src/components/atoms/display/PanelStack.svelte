@@ -33,19 +33,20 @@ let {
 	{@render children?.()}
 </div>
 
-<style lang="stylus">
-.m3-panel-stack
-	display: flex
-	flex-direction: column
-	gap: var(--m3ps-gap, 0.5rem)
-	box-sizing: border-box
-	padding: var(--m3ps-padding, 0.5rem)
-	border-radius: var(--shape-corner-xl) /* 官方 CornerExtraLarge 28dp 面板圆角 */
-	background: var(--surface-container)
-	color: var(--on-surface)
-
-	/* 每个直接子元素 = 一个段：tonal elevation 高一级 + corner-large 圆角 */
-	> :global(*)
-		border-radius: var(--shape-corner-l)
-		background: var(--surface-container-high)
+<style>
+.m3-panel-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m3ps-gap, 0.5rem);
+  box-sizing: border-box;
+  padding: var(--m3ps-padding, 0.5rem);
+  border-radius: var(--shape-corner-xl) /* 官方 CornerExtraLarge 28dp 面板圆角 */;
+  background: var(--surface-container);
+  color: var(--on-surface);
+/* 每个直接子元素 = 一个段：tonal elevation 高一级 + corner-large 圆角 */
+}
+.m3-panel-stack > :global(*) {
+  border-radius: var(--shape-corner-l);
+  background: var(--surface-container-high);
+}
 </style>

@@ -308,90 +308,88 @@ function downloadPoster() {
 	{/if}
 </section>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.article-share
-	&__watermark
-		position: absolute
-		right: 1.5rem
-		top: 50%
-		transform: translateY(-50%)
-		pointer-events: none
-		color: var(--outline-variant)
-		opacity: 0.18
-		line-height: 1
-		user-select: none
-
-		> :global(svg)
-			width: 7.5rem
-			height: 7.5rem
-
-:global(.article-share-dialog)
-	width: 100%
-	/* !important boundary: Dialog owns the scoped default width; its public class API lets ArticleShare own this variant width. */
-	max-width: unquote("min(36rem, calc(100vw - 2rem))") !important
-	max-height: calc(100dvh - 2rem)
-	display: flex
-	flex-direction: column
-
-:global(.article-share-dialog .m3-dialog__content)
-	min-height: 0
-	overflow: visible
-
-.share-dialog-content
-	display: flex
-	flex-direction: column
-	align-items: center
-	justify-content: center
-	width: 100%
-
-.share-poster-preview
-	display: flex
-	align-items: center
-	justify-content: center
-	width: 100%
-	box-sizing: border-box
-	padding: var(--m3e-space-2)
-	background: var(--surface-container-low)
-	border-radius: var(--shape-corner-m)
-	border: 1px solid var(--outline-variant)
-
-	&__img
-		display: block
-		max-height: calc(100dvh - 16rem)
-		max-width: 100%
-		width: auto
-		height: auto
-		border-radius: var(--shape-corner-s)
-		object-fit: contain
-
-.share-poster-status
-	display: flex
-	flex-direction: column
-	align-items: center
-	justify-content: center
-	width: 100%
-	height: 100%
-	box-sizing: border-box
-	gap: var(--m3e-space-3)
-	padding: var(--m3e-space-8)
-	text-align: center
-	color: var(--on-surface-variant)
-	font: var(--m3e-type-body-medium)
-
-	&--error
-		color: var(--error)
-
-	&__icon
-		font-size: 2.5rem
-		line-height: 1
-		color: var(--error)
-
-		> :global(svg)
-			width: 2.5rem
-			height: 2.5rem
-
-.share-dialog-actions
-	width: 100%
+<style>
+.article-share__watermark {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--outline-variant);
+  opacity: 0.18;
+  line-height: 1;
+  user-select: none;
+}
+.article-share__watermark > :global(svg) {
+  width: 7.5rem;
+  height: 7.5rem;
+}
+:global(.article-share-dialog) {
+  width: 100%;
+/* !important boundary: Dialog owns the scoped default width; its public class API lets ArticleShare own this variant width. */
+  max-width: min(36rem, calc(100vw - 2rem)) !important;
+  max-height: calc(100dvh - 2rem);
+  display: flex;
+  flex-direction: column;
+}
+:global(.article-share-dialog .m3-dialog__content) {
+  min-height: 0;
+  overflow: visible;
+}
+.share-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.share-poster-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--m3e-space-2);
+  background: var(--surface-container-low);
+  border-radius: var(--shape-corner-m);
+  border: 1px solid var(--outline-variant);
+}
+.share-poster-preview__img {
+  display: block;
+  max-height: calc(100dvh - 16rem);
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  border-radius: var(--shape-corner-s);
+  object-fit: contain;
+}
+.share-poster-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  gap: var(--m3e-space-3);
+  padding: var(--m3e-space-8);
+  text-align: center;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-medium);
+}
+.share-poster-status--error {
+  color: var(--error);
+}
+.share-poster-status__icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--error);
+}
+.share-poster-status__icon > :global(svg) {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.share-dialog-actions {
+  width: 100%;
+}
 </style>

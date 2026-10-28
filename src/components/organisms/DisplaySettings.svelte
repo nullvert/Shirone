@@ -486,257 +486,265 @@ const stylePreviews = $derived(
     {/if}
 </div>
 
-<style lang="stylus">
-    /* ── Embedded wrapper ─────────────────────────── */
-    .ds-embedded
-        display: flex
-        flex-direction: column
-        gap: 0.875rem
-        width: 100%
-        padding-top: 0.5rem
-        padding-bottom: 0.5rem
-
-    /* ── Color header row ─────────────────────────── */
-    .ds-color-header
-        display: flex
-        align-items: center
-        gap: 0.75rem
-        padding: 0.25rem var(--m3e-space-4)
-        min-height: 2.75rem
-
-    .ds-color-swatch
-        width: 2rem
-        height: 2rem
-        border-radius: var(--shape-corner-m)
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.15)
-        flex-shrink: 0
-
-    .ds-color-info
-        display: flex
-        flex-direction: column
-        flex: 1
-        min-width: 0
-
-    .ds-color-title
-        font: var(--m3e-type-label-large)
-        font-weight: 600
-        color: var(--on-surface)
-        line-height: 1.25
-
-    .ds-color-sub
-        font: var(--m3e-type-body-small)
-        color: var(--on-surface-variant)
-        line-height: 1.25
-
-    /* ── Reset button ─────────────────────────────── */
-    .ds-reset-btn
-        display: inline-flex
-        align-items: center
-        gap: 0.35rem
-        height: 2rem
-        padding: 0 0.75rem
-        border-radius: var(--shape-corner-s)
-        border: none
-        background: var(--surface-container-high)
-        color: var(--on-surface-variant)
-        font: var(--m3e-type-label-small)
-        font-weight: 600
-        cursor: pointer
-        user-select: none
-        opacity: 0.25
-        pointer-events: none
-        flex-shrink: 0
-        transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), background var(--m3e-duration-short) var(--m3e-easing-standard)
-
-        &.is-active
-            opacity: 1
-            pointer-events: auto
-            &:hover
-                background: var(--surface-container-highest)
-                color: var(--on-surface)
-            &:active
-                transform: scale(0.96)
-
-    /* ── Slider wrapper with matching padding ────────── */
-    .ds-row-pad
-        padding: 0 var(--m3e-space-4)
-
-    /* ── List groups and full-width list items (No capsules) ── */
-    .ds-list-group
-        display: flex
-        flex-direction: column
-        gap: 0.375rem
-        padding: 0 var(--m3e-space-4)
-
-    .ds-inline-group
-        display: flex
-        flex-direction: column
-        gap: 0.375rem
-        padding: 0 var(--m3e-space-4)
-
-    .ds-inline-grid
-        display: grid
-        grid-template-columns: 1fr 1fr
-        gap: 0.5rem
-        width: 100%
-
-        &--3
-            grid-template-columns: 1fr 1fr 1fr
-            gap: 0.375rem
-
-    .ds-grid-item
-        display: inline-flex
-        align-items: center
-        justify-content: center
-        gap: 0.4rem
-        height: 2.625rem
-        padding: 0 0.75rem
-        box-sizing: border-box
-        border-radius: var(--shape-corner-m)
-        border: none
-        background: var(--surface-container)
-        color: var(--on-surface-variant)
-        font: var(--m3e-type-label-medium)
-        font-weight: 500
-        cursor: pointer
-        user-select: none
-        transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 8%, var(--surface-container))")
-
-        &:active
-            transform: scale(0.98)
-
-        &--active
-            background: var(--secondary-container)
-            color: var(--on-secondary-container)
-            font-weight: 600
-
-    .ds-grid-icon
-        font-size: 1.125rem
-        color: inherit
-        flex-shrink: 0
-
-    .ds-grid-check
-        font-size: 1.125rem
-        color: inherit
-        flex-shrink: 0
-
-    .ds-group-title
-        font: var(--m3e-type-label-small)
-        font-weight: 600
-        text-transform: uppercase
-        letter-spacing: 0.05em
-        color: var(--on-surface-variant)
-        padding: 0.25rem 0.125rem 0.25rem
-        user-select: none
-
-    .ds-list-item
-        display: flex
-        align-items: center
-        width: 100%
-        height: 2.625rem
-        padding: 0 0.875rem
-        box-sizing: border-box
-        border-radius: var(--shape-corner-m)
-        border: none
-        background: var(--surface-container)
-        color: var(--on-surface-variant)
-        cursor: pointer
-        user-select: none
-        text-align: left
-        transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 8%, var(--surface-container))")
-
-        &:active
-            transform: scale(0.99)
-
-        &--active
-            background: var(--secondary-container)
-            color: var(--on-secondary-container)
-            font-weight: 600
-
-    .ds-list-leading
-        display: inline-flex
-        align-items: center
-        justify-content: center
-        width: 1.5rem
-        flex-shrink: 0
-        margin-right: 0.75rem
-
-    .ds-dot
-        display: inline-block
-        width: 0.5rem
-        height: 0.5rem
-        border-radius: var(--shape-corner-full)
-        margin-right: 0.2rem
-
-        &:last-child
-            margin-right: 0
-
-    .ds-texture-icon
-        font-size: 1.25rem
-        color: inherit
-
-    .ds-list-label
-        flex: 1
-        min-width: 0
-        font: var(--m3e-type-label-large)
-        color: inherit
-
-    .ds-list-trailing
-        display: inline-flex
-        align-items: center
-        justify-content: flex-end
-        width: 1.5rem
-        flex-shrink: 0
-
-    .ds-check-icon
-        font-size: 1.25rem
-        color: inherit
-
-    /* ── Setting row (label left, control right) ──── */
-    .ds-row
-        display: flex
-        align-items: center
-        justify-content: space-between
-        gap: 0.75rem
-        padding: 0.25rem var(--m3e-space-4)
-        min-height: 3.25rem
-
-    .ds-row-label
-        font: var(--m3e-type-label-medium)
-        font-weight: 500
-        color: var(--on-surface)
-        flex-shrink: 0
-
-    /* ── Non-embedded float panel (desktop dropdown) ────────── */
-    :global(.float-panel#display-setting)
-        display: flex
-        flex-direction: column
-        gap: 0.875rem
-        padding: 0.75rem 0
-        background: var(--surface-container-high)
-        box-shadow: var(--m3e-elevation-3)
-        border-radius: var(--shape-corner-l)
-
-    /* ── Scrollbar (non-embedded) ─────────────────── */
-    :global(#display-setting.m3-scroll-contain)
-        scrollbar-width: thin
-        scrollbar-color: var(--scrollbar-bg) transparent
-        -webkit-overflow-scrolling: touch
-        &::-webkit-scrollbar
-            width: 0.375rem
-        &::-webkit-scrollbar-track
-            background: transparent
-        &::-webkit-scrollbar-thumb
-            background: var(--scrollbar-bg)
-            border-radius: var(--shape-corner-full)
-            &:hover
-                background: var(--scrollbar-bg-hover)
-            &:active
-                background: var(--scrollbar-bg-active)
+<style>
+/* ── Embedded wrapper ─────────────────────────── */
+.ds-embedded {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+/* ── Color header row ─────────────────────────── */
+.ds-color-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.25rem var(--m3e-space-4);
+  min-height: 2.75rem;
+}
+.ds-color-swatch {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--shape-corner-m);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+.ds-color-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.ds-color-title {
+  font: var(--m3e-type-label-large);
+  font-weight: 600;
+  color: var(--on-surface);
+  line-height: 1.25;
+}
+.ds-color-sub {
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+  line-height: 1.25;
+}
+/* ── Reset button ─────────────────────────────── */
+.ds-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 2rem;
+  padding: 0 0.75rem;
+  border-radius: var(--shape-corner-s);
+  border: none;
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.25;
+  pointer-events: none;
+  flex-shrink: 0;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), background var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.ds-reset-btn.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.ds-reset-btn.is-active:hover {
+  background: var(--surface-container-highest);
+  color: var(--on-surface);
+}
+.ds-reset-btn.is-active:active {
+  transform: scale(0.96);
+}
+/* ── Slider wrapper with matching padding ────────── */
+.ds-row-pad {
+  padding: 0 var(--m3e-space-4);
+}
+/* ── List groups and full-width list items (No capsules) ── */
+.ds-list-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0 var(--m3e-space-4);
+}
+.ds-inline-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0 var(--m3e-space-4);
+}
+.ds-inline-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  width: 100%;
+}
+.ds-inline-grid--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.375rem;
+}
+.ds-grid-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 2.625rem;
+  padding: 0 0.75rem;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-m);
+  border: none;
+  background: var(--surface-container);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-medium);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.ds-grid-item:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, var(--surface-container));
+}
+.ds-grid-item:active {
+  transform: scale(0.98);
+}
+.ds-grid-item--active {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  font-weight: 600;
+}
+.ds-grid-icon {
+  font-size: 1.125rem;
+  color: inherit;
+  flex-shrink: 0;
+}
+.ds-grid-check {
+  font-size: 1.125rem;
+  color: inherit;
+  flex-shrink: 0;
+}
+.ds-group-title {
+  font: var(--m3e-type-label-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--on-surface-variant);
+  padding: 0.25rem 0.125rem 0.25rem;
+  user-select: none;
+}
+.ds-list-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 2.625rem;
+  padding: 0 0.875rem;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-m);
+  border: none;
+  background: var(--surface-container);
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.ds-list-item:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, var(--surface-container));
+}
+.ds-list-item:active {
+  transform: scale(0.99);
+}
+.ds-list-item--active {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  font-weight: 600;
+}
+.ds-list-leading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+}
+.ds-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--shape-corner-full);
+  margin-right: 0.2rem;
+}
+.ds-dot:last-child {
+  margin-right: 0;
+}
+.ds-texture-icon {
+  font-size: 1.25rem;
+  color: inherit;
+}
+.ds-list-label {
+  flex: 1;
+  min-width: 0;
+  font: var(--m3e-type-label-large);
+  color: inherit;
+}
+.ds-list-trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 1.5rem;
+  flex-shrink: 0;
+}
+.ds-check-icon {
+  font-size: 1.25rem;
+  color: inherit;
+}
+/* ── Setting row (label left, control right) ──── */
+.ds-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.25rem var(--m3e-space-4);
+  min-height: 3.25rem;
+}
+.ds-row-label {
+  font: var(--m3e-type-label-medium);
+  font-weight: 500;
+  color: var(--on-surface);
+  flex-shrink: 0;
+}
+/* ── Non-embedded float panel (desktop dropdown) ────────── */
+:global(.float-panel#display-setting) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 0.75rem 0;
+  background: var(--surface-container-high);
+  box-shadow: var(--m3e-elevation-3);
+  border-radius: var(--shape-corner-l);
+}
+/* ── Scrollbar (non-embedded) ─────────────────── */
+:global(#display-setting.m3-scroll-contain) {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-bg) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+:global(#display-setting.m3-scroll-contain)::-webkit-scrollbar {
+  width: 0.375rem;
+}
+:global(#display-setting.m3-scroll-contain)::-webkit-scrollbar-track {
+  background: transparent;
+}
+:global(#display-setting.m3-scroll-contain)::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-bg);
+  border-radius: var(--shape-corner-full);
+}
+:global(#display-setting.m3-scroll-contain)::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-bg-hover);
+}
+:global(#display-setting.m3-scroll-contain)::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-bg-active);
+}
 </style>

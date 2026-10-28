@@ -278,259 +278,293 @@ $effect(() => {
 	{/if}
 </div>
 
-<style lang="stylus">
-.m3-select
-	position: relative
-	display: inline-flex
-	flex-direction: column
-	min-width: 210px
-	box-sizing: border-box
-	color: var(--on-surface)
-	font: var(--m3e-type-body-large)
-
-	&__field
-		position: relative
-		display: flex
-		align-items: center
-		gap: 0.75rem
-		height: 3.5rem
-		padding: 0 1rem
-		border: none
-		background: none
-		color: inherit
-		font: inherit
-		text-align: left
-		cursor: pointer
-		--m3e-state-color: var(--on-surface)
-		transition:
-			background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-			border-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	/* ===== filled：--field-filled-bg + 顶部圆角 + 底部下划线（与站内 TextField 一致）===== */
-	&--filled &__field
-		border-radius: var(--shape-corner-m) var(--shape-corner-m) 0 0
-		background: var(--field-filled-bg)
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 12%, var(--field-filled-bg))")
-		&:focus-visible
-			outline: none
-
-	&--filled.m3-select--open &__field
-		background: unquote("color-mix(in oklab, var(--on-surface) 16%, var(--field-filled-bg))")
-
-	/* ===== outlined：surface + 1px outline-variant 边框 ===== */
-	&--outlined &__field
-		border-radius: var(--shape-corner-xs)
-		border: 1px solid var(--outline-variant)
-		background: var(--surface)
-		&:hover
-			border-color: var(--outline)
-		&:focus-visible
-			outline: none
-
-	&--outlined.m3-select--open &__field
-		border-color: var(--primary)
-		border-width: 2px
-		padding: 0 calc(1rem - 1px)
-
-	&__leading
-		display: flex
-		align-items: center
-		flex: none
-		color: var(--on-surface-variant)
-
-		> :global(svg)
-			width: 24px
-			height: 24px
-
-	&__text
-		position: relative
-		flex: 1
-		min-width: 0
-		height: 100%
-		display: flex
-		align-items: flex-end
-
-	&__label
-		position: absolute
-		top: 8px
-		left: 0
-		max-width: 100%
-		font: var(--m3e-type-body-small)
-		color: var(--on-surface-variant)
-		white-space: nowrap
-		overflow: hidden
-		text-overflow: ellipsis
-		pointer-events: none
-		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&--open &__label
-		color: var(--primary)
-
-	&__required
-		color: var(--error)
-
-	&__value
-		flex: 1
-		min-width: 0
-		padding-top: 24px /* 官方公式：top-space 8 + label 行高 16 */
-		padding-bottom: 8px
-		white-space: nowrap
-		overflow: hidden
-		text-overflow: ellipsis
-
-		&--placeholder
-			color: var(--on-surface-variant)
-
-	&__arrow
-		display: flex
-		flex: none
-		color: var(--on-surface-variant)
-		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		> :global(svg)
-			width: 24px
-			height: 24px
-
-	&--open &__arrow
-		color: var(--primary)
-
-	/* filled 下划线（focus/展开时 primary 2px） */
-	&__underline
-		position: absolute
-		left: 0.5rem
-		right: 0.5rem
-		bottom: 0.25rem
-		height: 2px
-		border-radius: var(--shape-corner-full)
-		background: var(--primary)
-		opacity: 0
-		transform: scaleX(0.5)
-		transition:
-			opacity var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate)
-
-	&--filled &__underline
-		display: block
-
-	&--filled.m3-select--open &__underline
-		opacity: 1
-		transform: scaleX(1)
-
-	/* error 态 */
-	&--error &__label
-		color: var(--error)
-
-	&--error &__underline
-		opacity: 1
-		transform: scaleX(1)
-		background: var(--error)
-
-	&--error.m3-select--outlined &__field
-		border-color: var(--error)
-		border-width: 2px
-		padding: 0 calc(1rem - 1px)
-
-	&__supporting
-		margin-top: 4px
-		margin-left: 1rem
-		font: var(--m3e-type-body-small)
-		color: var(--on-surface-variant)
-
-		&--error
-			color: var(--error)
-
-	/* 菜单（fixed 锚定 field；容器风格与站内 Menu 一致） */
-	&__menu
-		position: fixed
-		z-index: 40
-		box-sizing: border-box
-		max-height: min(20rem, 60vh)
-		overflow-y: auto
-		padding: 0.25rem
-		border-radius: var(--shape-corner-l)
-		background: var(--surface-container)
-		box-shadow: var(--m3e-elevation-2)
-		transform-origin: top center
-		animation: m3-select-pop var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-		&--above
-			transform-origin: bottom center
-
-	&__option
-		display: flex
-		align-items: center
-		gap: 0.5rem
-		width: 100%
-		height: 3rem
-		padding: 0 1rem
-		border: none
-		border-radius: var(--shape-corner-s)
-		background: transparent
-		color: var(--on-surface)
-		font: var(--m3e-type-label-large)
-		text-align: left
-		white-space: nowrap
-		cursor: pointer
-		--m3e-state-color: var(--on-surface)
-
-		&:hover,
-		&--active
-			background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-
-		&--selected
-			background: var(--surface-container-highest)
-			&:hover,
-			&--active
-				background: unquote("color-mix(in oklab, var(--on-surface) 8%, var(--surface-container-highest))")
-
-	&__option-leading
-		display: flex
-		flex: none
-		color: var(--on-surface-variant)
-
-		> :global(svg)
-			width: 24px
-			height: 24px
-
-	&__option-label
-		flex: 1
-		min-width: 0
-		overflow: hidden
-		text-overflow: ellipsis
-
-	&__option-check
-		display: flex
-		flex: none
-		color: var(--on-surface-variant)
-
-		> :global(svg)
-			width: 24px
-			height: 24px
-
-	/* disabled（官方分项透明度，非整体 opacity）：文字 38%、filled 容器 4%、outlined 边框 12% */
-	&--disabled
-		pointer-events: none
-
-		.m3-select__label,
-		.m3-select__value,
-		.m3-select__arrow
-			color: unquote("color-mix(in oklab, var(--on-surface) 38%, transparent)")
-
-	&--disabled.m3-select--filled &__field
-		background: unquote("color-mix(in oklab, var(--on-surface) 4%, var(--field-filled-bg))")
-
-	&--disabled.m3-select--filled &__underline
-		background: unquote("color-mix(in oklab, var(--on-surface) 38%, transparent)")
-
-	&--disabled.m3-select--outlined &__field
-		border-color: unquote("color-mix(in oklab, var(--on-surface) 12%, transparent)")
-
-@keyframes m3-select-pop
-	from
-		opacity: 0
-		transform: scale(0.8)
-	to
-		opacity: 1
-		transform: scale(1)
+<style>
+.m3-select {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 210px;
+  box-sizing: border-box;
+  color: var(--on-surface);
+  font: var(--m3e-type-body-large);
+/* ===== filled：--field-filled-bg + 顶部圆角 + 底部下划线（与站内 TextField 一致）===== */
+/* ===== outlined：surface + 1px outline-variant 边框 ===== */
+/* filled 下划线（focus/展开时 primary 2px） */
+/* error 态 */
+/* 菜单（fixed 锚定 field；容器风格与站内 Menu 一致） */
+/* disabled（官方分项透明度，非整体 opacity）：文字 38%、filled 容器 4%、outlined 边框 12% */
+}
+.m3-select__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 3.5rem;
+  padding: 0 1rem;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  --m3e-state-color: var(--on-surface);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), border-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-select--filled .m3-select__field {
+  border-radius: var(--shape-corner-m) var(--shape-corner-m) 0 0;
+  background: var(--field-filled-bg);
+}
+.m3-select--filled .m3-select__field:hover {
+  background: color-mix(in oklab, var(--on-surface) 12%, var(--field-filled-bg));
+}
+.m3-select--filled .m3-select__field:focus-visible {
+  outline: none;
+}
+.m3-select--filled.m3-select--open .m3-select__field {
+  background: color-mix(in oklab, var(--on-surface) 16%, var(--field-filled-bg));
+}
+.m3-select--outlined .m3-select__field {
+  border-radius: var(--shape-corner-xs);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface);
+}
+.m3-select--outlined .m3-select__field:hover {
+  border-color: var(--outline);
+}
+.m3-select--outlined .m3-select__field:focus-visible {
+  outline: none;
+}
+.m3-select--outlined.m3-select--open .m3-select__field {
+  border-color: var(--primary);
+  border-width: 2px;
+  padding: 0 calc(1rem - 1px);
+}
+.m3-select__leading {
+  display: flex;
+  align-items: center;
+  flex: none;
+  color: var(--on-surface-variant);
+}
+.m3-select__leading > :global(svg) {
+  width: 24px;
+  height: 24px;
+}
+.m3-select__text {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.m3-select__label {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  max-width: 100%;
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-select--open .m3-select__label {
+  color: var(--primary);
+}
+.m3-select__required {
+  color: var(--error);
+}
+.m3-select__value {
+  flex: 1;
+  min-width: 0;
+  padding-top: 24px /* 官方公式：top-space 8 + label 行高 16 */;
+  padding-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.m3-select__value--placeholder {
+  color: var(--on-surface-variant);
+}
+.m3-select__arrow {
+  display: flex;
+  flex: none;
+  color: var(--on-surface-variant);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-select__arrow > :global(svg) {
+  width: 24px;
+  height: 24px;
+}
+.m3-select--open .m3-select__arrow {
+  color: var(--primary);
+}
+.m3-select__underline {
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.25rem;
+  height: 2px;
+  border-radius: var(--shape-corner-full);
+  background: var(--primary);
+  opacity: 0;
+  transform: scaleX(0.5);
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-select--filled .m3-select__underline {
+  display: block;
+}
+.m3-select--filled.m3-select--open .m3-select__underline {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.m3-select--error .m3-select__label {
+  color: var(--error);
+}
+.m3-select--error .m3-select__underline {
+  opacity: 1;
+  transform: scaleX(1);
+  background: var(--error);
+}
+.m3-select--error.m3-select--outlined .m3-select__field {
+  border-color: var(--error);
+  border-width: 2px;
+  padding: 0 calc(1rem - 1px);
+}
+.m3-select__supporting {
+  margin-top: 4px;
+  margin-left: 1rem;
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+}
+.m3-select__supporting--error {
+  color: var(--error);
+}
+.m3-select__menu {
+  position: fixed;
+  z-index: 40;
+  box-sizing: border-box;
+  max-height: 20rem;
+  overflow-y: auto;
+  padding: 0.25rem;
+  border-radius: var(--shape-corner-l);
+  background: var(--surface-container);
+  box-shadow: var(--m3e-elevation-2);
+  transform-origin: top center;
+  animation: m3-select-pop var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-select__menu--above {
+  transform-origin: bottom center;
+}
+.m3-select__option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 3rem;
+  padding: 0 1rem;
+  border: none;
+  border-radius: var(--shape-corner-s);
+  background: transparent;
+  color: var(--on-surface);
+  font: var(--m3e-type-label-large);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  --m3e-state-color: var(--on-surface);
+}
+.m3-select__option:hover,
+.m3-select__option--active {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-select__option--selected {
+  background: var(--surface-container-highest);
+}
+.m3-select__option--selected:hover,
+.m3-select__option--selected--active {
+  background: color-mix(in oklab, var(--on-surface) 8%, var(--surface-container-highest));
+}
+.m3-select__option-leading {
+  display: flex;
+  flex: none;
+  color: var(--on-surface-variant);
+}
+.m3-select__option-leading > :global(svg) {
+  width: 24px;
+  height: 24px;
+}
+.m3-select__option-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.m3-select__option-check {
+  display: flex;
+  flex: none;
+  color: var(--on-surface-variant);
+}
+.m3-select__option-check > :global(svg) {
+  width: 24px;
+  height: 24px;
+}
+.m3-select--disabled {
+  pointer-events: none;
+}
+.m3-select--disabled .m3-select__label,
+.m3-select--disabled .m3-select__value,
+.m3-select--disabled .m3-select__arrow {
+  color: color-mix(in oklab, var(--on-surface) 38%, transparent);
+}
+.m3-select--disabled.m3-select--filled .m3-select__field {
+  background: color-mix(in oklab, var(--on-surface) 4%, var(--field-filled-bg));
+}
+.m3-select--disabled.m3-select--filled .m3-select__underline {
+  background: color-mix(in oklab, var(--on-surface) 38%, transparent);
+}
+.m3-select--disabled.m3-select--outlined .m3-select__field {
+  border-color: color-mix(in oklab, var(--on-surface) 12%, transparent);
+}
+@-moz-keyframes m3-select-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes m3-select-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-o-keyframes m3-select-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes m3-select-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 </style>

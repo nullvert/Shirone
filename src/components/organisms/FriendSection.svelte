@@ -170,113 +170,183 @@ onMount(() => {
 	{/if}
 </Card>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.friend-section
-	display: block
-
-	&__tools
-		display: flex
-		flex-direction: column
-		gap: 0.875rem
-		padding-bottom: 1.5rem
-		border-bottom: 1px solid var(--outline-variant)
-
-	&__search
-		position: relative
-		width: 100%
-		max-width: 32rem
-
-		:global(.m3-text-field)
-			width: 100%
-
-	&__search-clear
-		position: absolute
-		right: 0.5rem
-		top: 50%
-		transform: translateY(-50%)
-		display: inline-flex
-		flex-shrink: 0
-		align-items: center
-		justify-content: center
-		width: 1.75rem
-		height: 1.75rem
-		padding: 0.25rem
-		border: none
-		background: none
-		color: var(--on-surface-variant)
-		cursor: pointer
-		border-radius: var(--shape-corner-full)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface-variant) 8%, transparent)")
-
-	&__chips
-		width: 100%
-
-	&__count
-		margin: 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-
-	/* 标签筛选过渡：区块位置的大号 contained LoadingIndicator（out = 淡出退场，与动态页同语言） */
-	&__loading
-		display: flex
-		align-items: center
-		justify-content: center
-		min-height: 11rem
-		padding-top: 1.5rem
-
-		&--out
-			animation: friend-loading-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both
-
-	&__list
-		display: grid
-		grid-template-columns: 1fr
-		gap: 1rem
-		padding-top: 1.5rem
-		animation: friend-fade-in var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-		@media (min-width: bp-md)
-			grid-template-columns: repeat(2, 1fr)
-
-	&__empty
-		display: flex
-		flex-direction: column
-		align-items: center
-		justify-content: center
-		gap: 0.75rem
-		min-height: 11rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-large)
-		> :global(svg)
-			width: 2.5rem
-			height: 2.5rem
-
-	@media (max-width: bp-sm - 1px)
-		padding: 1rem 0.75rem
-
-		&__list
-			padding-top: 1.25rem
-
+<style>
+.friend-section {
+  display: block;
+/* 标签筛选过渡：区块位置的大号 contained LoadingIndicator（out = 淡出退场，与动态页同语言） */
+}
+.friend-section__tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--outline-variant);
+}
+.friend-section__search {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+}
+.friend-section__search :global(.m3-text-field) {
+  width: 100%;
+}
+.friend-section__search-clear {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0.25rem;
+  border: none;
+  background: none;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  border-radius: var(--shape-corner-full);
+}
+.friend-section__search-clear > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.friend-section__search-clear:hover {
+  background: color-mix(in oklab, var(--on-surface-variant) 8%, transparent);
+}
+.friend-section__chips {
+  width: 100%;
+}
+.friend-section__count {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+}
+.friend-section__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  padding-top: 1.5rem;
+}
+.friend-section__loading--out {
+  animation: friend-loading-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both;
+}
+.friend-section__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  animation: friend-fade-in var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+@media (min-width: 768px) {
+  .friend-section__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.friend-section__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 11rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-large);
+}
+.friend-section__empty > :global(svg) {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+@media (max-width: 639px) {
+  .friend-section {
+    padding: 1rem 0.75rem;
+  }
+  .friend-section__list {
+    padding-top: 1.25rem;
+  }
+}
 /* 筛选结果淡入（reduced-motion 由全局 motion-reduced 规则禁用动画） */
-@keyframes friend-fade-in
-	from
-		opacity: 0
-		transform: translateY(0.25rem)
-	to
-		opacity: 1
-		transform: translateY(0)
-
 /* 指示器退场：淡出 + 轻微收拢（reduced-motion 由全局规则压至终态） */
-@keyframes friend-loading-out
-	from
-		opacity: 1
-		transform: none
-	to
-		opacity: 0
-		transform: scale(0.96)
+@-moz-keyframes friend-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes friend-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-o-keyframes friend-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes friend-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-moz-keyframes friend-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@-webkit-keyframes friend-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@-o-keyframes friend-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@keyframes friend-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
 </style>

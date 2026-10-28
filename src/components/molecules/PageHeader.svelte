@@ -38,33 +38,35 @@ let {
 	{/if}
 </div>
 
-<style lang="stylus">
-.page-header
-	margin-bottom: 1.5rem
-
-	&__title-row
-		display: flex
-		align-items: center
-		gap: 0.75rem
-
-	&__icon
-		display: inline-flex
-		flex-shrink: 0
-		color: var(--primary)
-		> :global(svg)
-			width: 2rem
-			height: 2rem
-
-	&__title
-		margin: 0
-		color: var(--on-surface)
-		font: var(--m3e-type-headline-medium)
-		font-weight: 700
-		line-height: 1.2
-
-	&__subtitle
-		margin: 0.375rem 0 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-medium)
-		line-height: 1.5
+<style>
+.page-header {
+  margin-bottom: 1.5rem;
+}
+.page-header__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.page-header__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.page-header__icon > :global(svg) {
+  width: 2rem;
+  height: 2rem;
+}
+.page-header__title {
+  margin: 0;
+  color: var(--on-surface);
+  font: var(--m3e-type-headline-medium);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.page-header__subtitle {
+  margin: 0.375rem 0 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-medium);
+  line-height: 1.5;
+}
 </style>

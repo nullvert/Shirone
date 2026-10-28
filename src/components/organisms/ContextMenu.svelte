@@ -217,54 +217,57 @@ $effect(() => {
 	</div>
 {/if}
 
-<style lang="stylus">
-.context-menu-layer
-	position: fixed
-	left: var(--context-menu-x)
-	top: var(--context-menu-y)
-	z-index: 120
-	pointer-events: none
-
-.context-menu-layer :global(.context-menu)
-	pointer-events: auto
-	min-width: 12rem
-	max-width: 17rem
-	background: var(--surface-container-low)
-	padding: 0.5rem 0.25rem
-	border-radius: var(--shape-corner-l)
-	box-shadow: var(--m3e-elevation-2)
-
-.context-menu-layer :global(.context-menu .m3-menu-item)
-	min-height: 3rem
-	padding: 0 0.75rem
-	gap: 0.75rem
-	font: var(--m3e-type-label-large)
-	color: var(--on-surface)
-	--m3e-state-color: var(--on-surface)
-	border-radius: var(--shape-corner-m)
-
-.context-menu-layer :global(.context-menu .m3-menu-item:focus-visible)
-	/* Pointer-open menus should not show a keyboard focus ring around the first row. */
-	outline: none
-	outline-offset: 0
-
-.context-menu-layer.context-menu--keyboard-focus :global(.context-menu .m3-menu-item:focus-visible)
-	outline: 2px solid var(--m3e-focus-outline, var(--primary))
-	outline-offset: 2px
-
-.context-menu-layer :global(.m3-menu-item__icon)
-	flex: 0 0 1.5rem
-	width: 1.5rem
-	height: 1.5rem
-	color: var(--on-surface-variant)
-	display: block
-
-@media (max-width: 1023.98px), (hover: none), (pointer: coarse)
-	.context-menu-layer
-		display: none
-
-@media (hover: hover) and (pointer: fine)
-	.context-menu-layer :global(.context-menu .m3-menu-item)
-		/* Desktop density -1 resolves the standard 48dp row to 44dp. */
-		min-height: 2.75rem
+<style>
+.context-menu-layer {
+  position: fixed;
+  left: var(--context-menu-x);
+  top: var(--context-menu-y);
+  z-index: 120;
+  pointer-events: none;
+}
+.context-menu-layer :global(.context-menu) {
+  pointer-events: auto;
+  min-width: 12rem;
+  max-width: 17rem;
+  background: var(--surface-container-low);
+  padding: 0.5rem 0.25rem;
+  border-radius: var(--shape-corner-l);
+  box-shadow: var(--m3e-elevation-2);
+}
+.context-menu-layer :global(.context-menu .m3-menu-item) {
+  min-height: 3rem;
+  padding: 0 0.75rem;
+  gap: 0.75rem;
+  font: var(--m3e-type-label-large);
+  color: var(--on-surface);
+  --m3e-state-color: var(--on-surface);
+  border-radius: var(--shape-corner-m);
+}
+.context-menu-layer :global(.context-menu .m3-menu-item:focus-visible) {
+/* Pointer-open menus should not show a keyboard focus ring around the first row. */
+  outline: none;
+  outline-offset: 0;
+}
+.context-menu-layer.context-menu--keyboard-focus :global(.context-menu .m3-menu-item:focus-visible) {
+  outline: 2px solid var(--m3e-focus-outline, var(--primary));
+  outline-offset: 2px;
+}
+.context-menu-layer :global(.m3-menu-item__icon) {
+  flex: 0 0 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--on-surface-variant);
+  display: block;
+}
+@media (max-width: 1023.98px), (hover: none), (pointer: coarse) {
+  .context-menu-layer {
+    display: none;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .context-menu-layer :global(.context-menu .m3-menu-item) {
+/* Desktop density -1 resolves the standard 48dp row to 44dp. */
+    min-height: 2.75rem;
+  }
+}
 </style>

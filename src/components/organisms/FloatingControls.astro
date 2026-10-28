@@ -134,34 +134,38 @@ const isHomeItemVisible = homeItem
 	)}
 </aside>
 
-<style lang="stylus">
-.m3-floating-controls-container
-	position: fixed
-	right: unquote("max(var(--fab-inline-offset), calc((100vw - var(--page-width)) / 2 - 4rem))")
-	bottom: var(--fab-bottom)
-	z-index: 45
-	display: none
-	flex-direction: column
-	align-items: flex-end
-	gap: var(--m3e-space-2)
-	pointer-events: none
-	transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-	@media (min-width: 1024px)
-		display: flex
-
-	&.fab-scroll-hidden
-		opacity: 0
-		transform: translateY(var(--m3e-space-3))
-		pointer-events: none
-
-	&--start
-		right: auto
-		left: unquote("max(var(--fab-inline-offset), calc((100vw - var(--page-width)) / 2 - 4rem))")
-
-@media (prefers-reduced-motion: reduce)
-	.m3-floating-controls-container
-		transition: none
+<style>
+.m3-floating-controls-container {
+  position: fixed;
+  right: max(var(--fab-inline-offset), calc((100vw - var(--page-width)) / 2 - 4rem));
+  bottom: var(--fab-bottom);
+  z-index: 45;
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--m3e-space-2);
+  pointer-events: none;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+@media (min-width: 1024px) {
+  .m3-floating-controls-container {
+    display: flex;
+  }
+}
+.m3-floating-controls-container.fab-scroll-hidden {
+  opacity: 0;
+  transform: translateY(var(--m3e-space-3));
+  pointer-events: none;
+}
+.m3-floating-controls-container--start {
+  right: auto;
+  left: max(var(--fab-inline-offset), calc((100vw - var(--page-width)) / 2 - 4rem));
+}
+@media (prefers-reduced-motion: reduce) {
+  .m3-floating-controls-container {
+    transition: none;
+  }
+}
 </style>
 
 <script>

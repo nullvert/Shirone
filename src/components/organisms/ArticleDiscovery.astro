@@ -78,97 +78,98 @@ const hasRandom = random.length > 0;
 	</section>
 )}
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-.article-discovery
-	display: flex
-	width: 100%
-	min-width: 0
-	flex-direction: column
-	gap: var(--m3e-space-4)
-	margin-top: var(--m3e-space-6)
-	padding-top: var(--m3e-space-2)
-
-	&__header
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-4)
-		color: var(--on-surface)
-
-		&::after
-			content: ""
-			flex: 1
-			height: 1px
-			background: var(--outline-variant)
-
-		h2
-			margin: 0
-			font: var(--m3e-type-headline-medium)
-			font-weight: 700
-			color: inherit
-
-	&__lanes
-		display: grid
-		grid-template-columns: minmax(0, 1fr)
-		gap: var(--m3e-space-5)
-		min-width: 0
-
-	&__lane
-		display: flex
-		min-width: 0
-		flex-direction: column
-		gap: var(--m3e-space-2)
-
-	&__lane-heading
-		display: flex
-		min-width: 0
-		flex-direction: column
-		gap: var(--m3e-space-2)
-		padding-inline: var(--m3e-space-3)
-
-		p
-			margin: 0
-			font: var(--m3e-type-body-small)
-			color: var(--on-surface-variant)
-
-	&__lane-title
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-2)
-		min-width: 0
-		color: var(--primary)
-
-		> :global(svg)
-			flex: 0 0 var(--m3e-space-5)
-			width: var(--m3e-space-5)
-			height: var(--m3e-space-5)
-
-		h3
-			margin: 0
-			font: var(--m3e-type-title-medium)
-			font-weight: 700
-			color: inherit
-
-	&__lane--random &__lane-title
-		color: var(--tertiary)
-
-	&__list
-		display: flex
-		min-width: 0
-		flex-direction: column
-		gap: var(--m3e-space-1)
-		margin: 0
-		padding: 0
-		list-style: none
-
-	@media (min-width: bp-md)
-		&__lanes
-			grid-template-columns: repeat(2, minmax(0, 1fr))
-
-		&__lanes--single
-			grid-template-columns: minmax(0, 1fr)
-
-		&__lane + &__lane
-			border-left: 1px solid var(--outline-variant)
-			padding-left: var(--m3e-space-4)
+<style>
+.article-discovery {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--m3e-space-4);
+  margin-top: var(--m3e-space-6);
+  padding-top: var(--m3e-space-2);
+}
+.article-discovery__header {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-4);
+  color: var(--on-surface);
+}
+.article-discovery__header::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--outline-variant);
+}
+.article-discovery__header h2 {
+  margin: 0;
+  font: var(--m3e-type-headline-medium);
+  font-weight: 700;
+  color: inherit;
+}
+.article-discovery__lanes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--m3e-space-5);
+  min-width: 0;
+}
+.article-discovery__lane {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--m3e-space-2);
+}
+.article-discovery__lane-heading {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--m3e-space-2);
+  padding-inline: var(--m3e-space-3);
+}
+.article-discovery__lane-heading p {
+  margin: 0;
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+}
+.article-discovery__lane-title {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-2);
+  min-width: 0;
+  color: var(--primary);
+}
+.article-discovery__lane-title > :global(svg) {
+  flex: 0 0 var(--m3e-space-5);
+  width: var(--m3e-space-5);
+  height: var(--m3e-space-5);
+}
+.article-discovery__lane-title h3 {
+  margin: 0;
+  font: var(--m3e-type-title-medium);
+  font-weight: 700;
+  color: inherit;
+}
+.article-discovery__lane--random .article-discovery__lane-title {
+  color: var(--tertiary);
+}
+.article-discovery__list {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--m3e-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 768px) {
+  .article-discovery__lanes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .article-discovery__lanes--single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .article-discovery__lane + .article-discovery__lane {
+    border-left: 1px solid var(--outline-variant);
+    padding-left: var(--m3e-space-4);
+  }
+}
 </style>

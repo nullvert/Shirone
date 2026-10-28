@@ -49,41 +49,42 @@ const tagSummary = `${tags.length} ${i18n(I18nKey.tagsCount)} · ${totalPosts} $
 	</Card>
 </MainGridLayout>
 
-<style lang="stylus">
-@import "../styles/breakpoints.styl"
-
-.tag-index
-	display: block
-
-	&__cloud
-		display: flex
-		flex-wrap: wrap
-		gap: var(--m3e-space-2) var(--m3e-space-3)
-
-	/* 计数徽标：chip 内部右侧的小号数字，与站内 badge 语言一致 */
-	&__count
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		min-width: 1.375rem
-		height: 1.125rem
-		margin-left: var(--m3e-space-1)
-		padding: 0 var(--m3e-space-1)
-		border-radius: var(--shape-corner-full)
-		background: unquote("color-mix(in oklab, var(--primary) 12%, transparent)")
-		color: var(--on-surface)
-		font: var(--m3e-type-label-small)
-		font-weight: 600
-		font-variant-numeric: tabular-nums
-
-	&__empty
-		display: flex
-		align-items: center
-		justify-content: center
-		min-height: 11rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-large)
-
-	@media (max-width: bp-sm - 1px)
-		padding: 1rem 0.75rem
+<style>
+.tag-index {
+  display: block;
+/* 计数徽标：chip 内部右侧的小号数字，与站内 badge 语言一致 */
+}
+.tag-index__cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m3e-space-2) var(--m3e-space-3);
+}
+.tag-index__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.375rem;
+  height: 1.125rem;
+  margin-left: var(--m3e-space-1);
+  padding: 0 var(--m3e-space-1);
+  border-radius: var(--shape-corner-full);
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  color: var(--on-surface);
+  font: var(--m3e-type-label-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.tag-index__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-large);
+}
+@media (max-width: 639px) {
+  .tag-index {
+    padding: 1rem 0.75rem;
+  }
+}
 </style>

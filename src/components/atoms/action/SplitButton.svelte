@@ -63,130 +63,142 @@ let {
     </button>
 </div>
 
-<style lang="stylus">
-.m3-split-button
-    display: inline-flex
-    gap: 2px
-    user-select: none
-    border-radius: var(--shape-corner-full)
-    background: var(--primary)
-    color: var(--on-primary)
-    --m3e-state-color: var(--on-primary)
-
-    &__leading, &__trailing
-        display: inline-flex
-        align-items: center
-        justify-content: center
-        border: none
-        cursor: pointer
-        white-space: nowrap
-        background: transparent
-        transition: border-radius var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    &__leading
-        height: var(--split-height)
-        padding: 0 var(--split-leading-right) 0 var(--split-leading-left)
-        border-radius: var(--shape-corner-full) var(--split-inner-corner) var(--split-inner-corner) var(--shape-corner-full)
-        font: var(--m3e-type-label-large)
-
-    &__trailing
-        height: var(--split-height)
-        padding: 0 var(--split-trailing-space)
-        border-radius: var(--split-inner-corner) var(--shape-corner-full) var(--shape-corner-full) var(--split-inner-corner)
-
-    &__content
-        display: flex
-        align-items: center
-        gap: 0.5rem
-        min-width: 0
-
-    &__trailing-icon
-        display: flex
-        align-items: center
-        justify-content: center
-        font-size: var(--split-trailing-icon)
-        transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-        > :global(svg)
-            width: 1em
-            height: 1em
-
-    /* trailing 激活时箭头旋转 180° */
-    &--open &__trailing-icon
-        transform: rotate(180deg)
-
-    /* 内角形状变形：hover/pressed 时相接处更圆（M3E 核心动效） */
-    &__leading:hover, &__leading:active,
-    &__trailing:hover, &__trailing:active
-        --split-inner-corner: var(--split-inner-corner-hover)
-
-    /* === 五档尺寸（官方 SplitButton*Tokens） === */
-    &--xs
-        --split-height: 2rem
-        --split-leading-left: 0.75rem
-        --split-leading-right: 0.625rem
-        --split-trailing-space: 0.8125rem
-        --split-trailing-icon: 1.375rem
-        --split-inner-corner: 4px
-        --split-inner-corner-hover: 8px
-    &--s
-        --split-height: 2.5rem
-        --split-leading-left: 1rem
-        --split-leading-right: 0.75rem
-        --split-trailing-space: 0.8125rem
-        --split-trailing-icon: 1.375rem
-        --split-inner-corner: 4px
-        --split-inner-corner-hover: 12px
-    &--m
-        --split-height: 3.5rem
-        --split-leading-left: 1.5rem
-        --split-leading-right: 1.5rem
-        --split-trailing-space: 0.9375rem
-        --split-trailing-icon: 1.625rem
-        --split-inner-corner: 4px
-        --split-inner-corner-hover: 12px
-    &--l
-        --split-height: 6rem
-        --split-leading-left: 3rem
-        --split-leading-right: 3rem
-        --split-trailing-space: 1.8125rem
-        --split-trailing-icon: 2.375rem
-        --split-inner-corner: 8px
-        --split-inner-corner-hover: 20px
-    &--xl
-        --split-height: 8.5rem
-        --split-leading-left: 4rem
-        --split-leading-right: 4rem
-        --split-trailing-space: 2.6875rem
-        --split-trailing-icon: 3.125rem
-        --split-inner-corner: 12px
-        --split-inner-corner-hover: 20px
-
-    /* === 变体（容器着色，段透明，gap 处同色） === */
-    &--tonal
-        background: var(--secondary-container)
-        color: var(--on-secondary-container)
-        --m3e-state-color: var(--on-secondary-container)
-        box-shadow: var(--m3e-elevation-1)
-
-    &--elevated
-        background: var(--secondary-container)
-        color: var(--on-secondary-container)
-        --m3e-state-color: var(--on-secondary-container)
-        box-shadow: var(--m3e-elevation-1)
-        &:hover
-            box-shadow: var(--m3e-elevation-2)
-
-    &--outlined
-        background: transparent
-        color: var(--primary)
-        --m3e-state-color: var(--primary)
-        box-shadow: none
-        .m3-split-button__leading, .m3-split-button__trailing
-            border: 1px solid var(--outline)
-            background: transparent
-
-    /* disabled：两段整体禁用 */
-    &:has(button:disabled)
-        opacity: 0.38
-        pointer-events: none
+<style>
+.m3-split-button {
+  display: inline-flex;
+  gap: 2px;
+  user-select: none;
+  border-radius: var(--shape-corner-full);
+  background: var(--primary);
+  color: var(--on-primary);
+  --m3e-state-color: var(--on-primary);
+/* trailing 激活时箭头旋转 180° */
+/* 内角形状变形：hover/pressed 时相接处更圆（M3E 核心动效） */
+/* === 五档尺寸（官方 SplitButton*Tokens） === */
+/* === 变体（容器着色，段透明，gap 处同色） === */
+/* disabled：两段整体禁用 */
+}
+.m3-split-button__leading,
+.m3-split-button__trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  background: transparent;
+  transition: border-radius var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-split-button__leading {
+  height: var(--split-height);
+  padding: 0 var(--split-leading-right) 0 var(--split-leading-left);
+  border-radius: var(--shape-corner-full) var(--split-inner-corner) var(--split-inner-corner) var(--shape-corner-full);
+  font: var(--m3e-type-label-large);
+}
+.m3-split-button__trailing {
+  height: var(--split-height);
+  padding: 0 var(--split-trailing-space);
+  border-radius: var(--split-inner-corner) var(--shape-corner-full) var(--shape-corner-full) var(--split-inner-corner);
+}
+.m3-split-button__content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.m3-split-button__trailing-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--split-trailing-icon);
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-split-button__trailing-icon > :global(svg) {
+  width: 1em;
+  height: 1em;
+}
+.m3-split-button--open .m3-split-button__trailing-icon {
+  transform: rotate(180deg);
+}
+.m3-split-button__leading:hover,
+.m3-split-button__leading:active,
+.m3-split-button__trailing:hover,
+.m3-split-button__trailing:active {
+  --split-inner-corner: var(--split-inner-corner-hover);
+}
+.m3-split-button--xs {
+  --split-height: 2rem;
+  --split-leading-left: 0.75rem;
+  --split-leading-right: 0.625rem;
+  --split-trailing-space: 0.8125rem;
+  --split-trailing-icon: 1.375rem;
+  --split-inner-corner: 4px;
+  --split-inner-corner-hover: 8px;
+}
+.m3-split-button--s {
+  --split-height: 2.5rem;
+  --split-leading-left: 1rem;
+  --split-leading-right: 0.75rem;
+  --split-trailing-space: 0.8125rem;
+  --split-trailing-icon: 1.375rem;
+  --split-inner-corner: 4px;
+  --split-inner-corner-hover: 12px;
+}
+.m3-split-button--m {
+  --split-height: 3.5rem;
+  --split-leading-left: 1.5rem;
+  --split-leading-right: 1.5rem;
+  --split-trailing-space: 0.9375rem;
+  --split-trailing-icon: 1.625rem;
+  --split-inner-corner: 4px;
+  --split-inner-corner-hover: 12px;
+}
+.m3-split-button--l {
+  --split-height: 6rem;
+  --split-leading-left: 3rem;
+  --split-leading-right: 3rem;
+  --split-trailing-space: 1.8125rem;
+  --split-trailing-icon: 2.375rem;
+  --split-inner-corner: 8px;
+  --split-inner-corner-hover: 20px;
+}
+.m3-split-button--xl {
+  --split-height: 8.5rem;
+  --split-leading-left: 4rem;
+  --split-leading-right: 4rem;
+  --split-trailing-space: 2.6875rem;
+  --split-trailing-icon: 3.125rem;
+  --split-inner-corner: 12px;
+  --split-inner-corner-hover: 20px;
+}
+.m3-split-button--tonal {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --m3e-state-color: var(--on-secondary-container);
+  box-shadow: var(--m3e-elevation-1);
+}
+.m3-split-button--elevated {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --m3e-state-color: var(--on-secondary-container);
+  box-shadow: var(--m3e-elevation-1);
+}
+.m3-split-button--elevated:hover {
+  box-shadow: var(--m3e-elevation-2);
+}
+.m3-split-button--outlined {
+  background: transparent;
+  color: var(--primary);
+  --m3e-state-color: var(--primary);
+  box-shadow: none;
+}
+.m3-split-button--outlined .m3-split-button__leading,
+.m3-split-button--outlined .m3-split-button__trailing {
+  border: 1px solid var(--outline);
+  background: transparent;
+}
+.m3-split-button:has(button:disabled) {
+  opacity: 0.38;
+  pointer-events: none;
+}
 </style>

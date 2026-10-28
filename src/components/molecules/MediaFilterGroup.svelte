@@ -12,17 +12,18 @@ let { title, children }: { title: string; children: Snippet } = $props();
 	{@render children()}
 </div>
 
-<style lang="stylus">
-.media-sidebar-group
-	display: flex
-	flex-direction: column
-	gap: 0.4rem
-
-	&__title
-		font-size: 0.6875rem
-		font-weight: 700
-		text-transform: uppercase
-		letter-spacing: 0.08em
-		color: var(--on-surface-variant)
-		padding-left: 0.2rem
+<style>
+.media-sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.media-sidebar-group__title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--on-surface-variant);
+  padding-left: 0.2rem;
+}
 </style>

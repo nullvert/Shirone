@@ -259,40 +259,99 @@ $effect(() => {
 	</div>
 {/if}
 
-<style lang="stylus">
-.search-modal-backdrop
-	background: unquote("color-mix(in oklab, var(--mc-scrim, #000) 50%, transparent)")
-	backdrop-filter: blur(12px)
-	-webkit-backdrop-filter: blur(12px)
-	animation: modal-fade-in var(--m3e-duration-short) var(--m3e-easing-standard) forwards
-
-.search-modal-card
-	backdrop-filter: blur(24px)
-	-webkit-backdrop-filter: blur(24px)
-	opacity: 1
-	animation: modal-scale-in var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate) forwards
-
-	input::-webkit-search-cancel-button,
-	input::-webkit-search-decoration
-		-webkit-appearance: none
-		appearance: none
-
-.search-modal-excerpt :global(mark)
-	background: transparent
-	color: var(--primary)
-	font-weight: 700
-
-@keyframes modal-fade-in
-	from
-		opacity: 0
-	to
-		opacity: 1
-
-@keyframes modal-scale-in
-	from
-		opacity: 0
-		transform: scale(0.97) translateY(-6px)
-	to
-		opacity: 1
-		transform: scale(1) translateY(0)
+<style>
+.search-modal-backdrop {
+  background: color-mix(in oklab, var(--mc-scrim, #000) 50%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: modal-fade-in var(--m3e-duration-short) var(--m3e-easing-standard) forwards;
+}
+.search-modal-card {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  opacity: 1;
+  animation: modal-scale-in var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate) forwards;
+}
+.search-modal-card input::-webkit-search-cancel-button,
+.search-modal-card input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.search-modal-excerpt :global(mark) {
+  background: transparent;
+  color: var(--primary);
+  font-weight: 700;
+}
+@-moz-keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes modal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@-webkit-keyframes modal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@-o-keyframes modal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes modal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
 </style>

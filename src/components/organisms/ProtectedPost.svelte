@@ -53,10 +53,11 @@ $effect(() => {
 	</div>
 {/if}
 
-<style lang="stylus">
-.protected-post-gate
-	display: flex
-	justify-content: center
-	width: 100%
-	margin: var(--m3e-space-4) 0
+<style>
+.protected-post-gate {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: var(--m3e-space-4) 0;
+}
 </style>

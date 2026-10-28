@@ -105,68 +105,69 @@ function handleScrim() {
 	</div>
 </div>
 
-<style lang="stylus">
-.m3-sheet-side-root
-	position: fixed
-	inset: 0
-	z-index: 70
-	visibility: hidden
-	pointer-events: none
-
-	&.m3-sheet-side-root--open
-		visibility: visible
-		pointer-events: auto
-
-	.m3-sheet-side__scrim
-		position: absolute
-		inset: 0
-		background: unquote("color-mix(in oklab, var(--scrim, #000) 32%, transparent)")
-		opacity: 0
-		transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-	&.m3-sheet-side-root--open .m3-sheet-side__scrim
-		opacity: 1
-
-	/* 面板：end 侧滑入，全高，corner-large-start */
-	.m3-sheet-side
-		position: absolute
-		top: 0
-		bottom: 0
-		width: var(--m3-sheet-side-width, 360px)
-		max-width: 100vw
-		box-sizing: border-box
-		display: flex
-		flex-direction: column
-		background: var(--surface-container-low)
-		color: var(--on-surface)
-		box-shadow: var(--m3e-elevation-1)
-		transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate)
-
-		&--end
-			right: 0
-			border-radius: var(--shape-corner-l) 0 0 var(--shape-corner-l) /* corner-large-start */
-			transform: translateX(100%)
-
-		&--start
-			left: 0
-			border-radius: 0 var(--shape-corner-l) var(--shape-corner-l) 0
-			transform: translateX(-100%)
-
-	&.m3-sheet-side-root--open .m3-sheet-side--end
-		transform: translateX(0)
-
-	&.m3-sheet-side-root--open .m3-sheet-side--start
-		transform: translateX(0)
-
-	.m3-sheet-side__title
-		flex: none
-		padding: 1.5rem 1.5rem 0.5rem
-		font: var(--m3e-type-title-large)
-		color: var(--on-surface-variant)
-
-	.m3-sheet-side__content
-		flex: 1
-		min-height: 0
-		padding: 0.5rem 1.5rem 1.5rem
-		overflow-y: auto
+<style>
+.m3-sheet-side-root {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  visibility: hidden;
+  pointer-events: none;
+/* 面板：end 侧滑入，全高，corner-large-start */
+}
+.m3-sheet-side-root.m3-sheet-side-root--open {
+  visibility: visible;
+  pointer-events: auto;
+}
+.m3-sheet-side-root .m3-sheet-side__scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklab, var(--scrim, #000) 32%, transparent);
+  opacity: 0;
+  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.m3-sheet-side-root.m3-sheet-side-root--open .m3-sheet-side__scrim {
+  opacity: 1;
+}
+.m3-sheet-side-root .m3-sheet-side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--m3-sheet-side-width, 360px);
+  max-width: 100vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  box-shadow: var(--m3e-elevation-1);
+  transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-sheet-side-root .m3-sheet-side--end {
+  right: 0;
+  border-radius: var(--shape-corner-l) 0 0 var(--shape-corner-l) /* corner-large-start */;
+  transform: translateX(100%);
+}
+.m3-sheet-side-root .m3-sheet-side--start {
+  left: 0;
+  border-radius: 0 var(--shape-corner-l) var(--shape-corner-l) 0;
+  transform: translateX(-100%);
+}
+.m3-sheet-side-root.m3-sheet-side-root--open .m3-sheet-side--end {
+  transform: translateX(0);
+}
+.m3-sheet-side-root.m3-sheet-side-root--open .m3-sheet-side--start {
+  transform: translateX(0);
+}
+.m3-sheet-side-root .m3-sheet-side__title {
+  flex: none;
+  padding: 1.5rem 1.5rem 0.5rem;
+  font: var(--m3e-type-title-large);
+  color: var(--on-surface-variant);
+}
+.m3-sheet-side-root .m3-sheet-side__content {
+  flex: 1;
+  min-height: 0;
+  padding: 0.5rem 1.5rem 1.5rem;
+  overflow-y: auto;
+}
 </style>

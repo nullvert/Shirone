@@ -129,168 +129,164 @@ function handleClick() {
 	</button>
 {/if}
 
-<style lang="stylus">
-.m3-icon-button
-	display: inline-flex
-	align-items: center
-	justify-content: center
-	padding: 0
-	border: none
-	background: transparent
-	color: var(--on-surface)
-	cursor: pointer
-	flex-shrink: 0
-	user-select: none
-	-webkit-tap-highlight-color: transparent
-	--m3e-state-color: var(--on-surface)
-	--ib-square: var(--shape-corner-m)
-	--ib-radius: var(--shape-corner-full)
-	border-radius: var(--ib-radius)
-	transition:
-		background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-		color var(--m3e-duration-short) var(--m3e-easing-standard),
-		border-color var(--m3e-duration-short) var(--m3e-easing-standard),
-		border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-	> :global(svg)
-		width: 1.25rem
-		height: 1.25rem
-		flex-shrink: 0
-
-	/* icon prop 模式图标容器；children 模式的图标尺寸由调用方控制（SSR 静态场景） */
-	&__icon
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		flex-shrink: 0
-
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-			flex-shrink: 0
-
-	&--disabled
-		pointer-events: none
-
-	/* === 尺寸（latest md-comp-icon-button-*） === */
-	&--xsmall
-		width: 2rem /* 32px */
-		height: 2rem
-		--ib-square: var(--shape-corner-m)
-
-		.m3-icon-button__icon > :global(svg)
-			width: 1.25rem /* 20px */
-			height: 1.25rem
-
-	&--small
-		width: 2.5rem /* 40px */
-		height: 2.5rem
-		--ib-square: var(--shape-corner-m)
-
-		.m3-icon-button__icon > :global(svg)
-			width: 1.5rem /* 24px */
-			height: 1.5rem
-
-	&--medium
-		width: 3.5rem /* 56px */
-		height: 3.5rem
-		--ib-square: var(--shape-corner-l) /* corner-large 16px */
-
-		.m3-icon-button__icon > :global(svg)
-			width: 1.5rem /* 24px */
-			height: 1.5rem
-
-	&--large
-		width: 6rem /* 96px */
-		height: 6rem
-		--ib-square: var(--shape-corner-xl) /* corner-extra-large 28px */
-
-		.m3-icon-button__icon > :global(svg)
-			width: 2rem /* 32px */
-			height: 2rem
-
-	&--xlarge
-		width: 8.5rem /* 136px */
-		height: 8.5rem
-		--ib-square: var(--shape-corner-xl)
-
-		.m3-icon-button__icon > :global(svg)
-			width: 2.5rem /* 40px */
-			height: 2.5rem
-
-	/* === 形状（选中时互换，官方行为） === */
-	&--square
-		--ib-radius: var(--ib-square)
-
-	&--checked
-		&.m3-icon-button--round
-			--ib-radius: var(--ib-square)
-
-		&.m3-icon-button--square
-			--ib-radius: var(--shape-corner-full)
-
-	/* === 变体（v0.192 tokens） === */
-	&--standard
-		color: var(--on-surface)
-		--m3e-state-color: var(--on-surface)
-
-		&.m3-icon-button--checked
-			color: var(--primary) /* selected-icon-color */
-			--m3e-state-color: var(--primary)
-
-		&.m3-icon-button--disabled
-			color: var(--on-surface)
-			opacity: 0.38
-
-	&--filled
-		background: var(--primary)
-		color: var(--on-primary)
-		--m3e-state-color: var(--on-primary)
-
-		&.m3-icon-button--disabled
-			/* 覆盖全局 .m3-state-layer[disabled] 的 opacity 0.38，避免双重透明；容器/图标透明度分别由下方控制 */
-			opacity: 1
-			background: unquote("color-mix(in srgb, var(--on-surface) 12%, transparent)")
-			color: var(--on-surface)
-
-			.m3-icon-button__icon > :global(svg)
-				opacity: 0.38
-
-	&--tonal
-		background: var(--secondary-container)
-		color: var(--on-secondary-container)
-		--m3e-state-color: var(--on-secondary-container)
-
-		&.m3-icon-button--checked
-			background: var(--secondary) /* latest selected-container-color: secondary */
-			color: var(--on-secondary)
-			--m3e-state-color: var(--on-secondary)
-
-		&.m3-icon-button--disabled
-			/* 覆盖全局 .m3-state-layer[disabled] 的 opacity 0.38，避免双重透明；容器/图标透明度分别由下方控制 */
-			opacity: 1
-			background: unquote("color-mix(in srgb, var(--on-surface) 12%, transparent)")
-			color: var(--on-surface)
-
-			.m3-icon-button__icon > :global(svg)
-				opacity: 0.38
-
-	&--outlined
-		border: 1px solid var(--outline)
-		color: var(--on-surface)
-		--m3e-state-color: var(--on-surface)
-
-		&.m3-icon-button--checked
-			background: var(--inverse-surface) /* latest selected-container-color: inverse-surface */
-			color: var(--inverse-on-surface)
-			border-color: transparent
-			--m3e-state-color: var(--inverse-on-surface)
-
-		&.m3-icon-button--disabled
-			/* 覆盖全局 0.38：边框 12%、图标 38% 分开控制（官方 disabled-unselected-outline-opacity 0.12 + disabled-icon-opacity 0.38） */
-			opacity: 1
-			border-color: unquote("color-mix(in srgb, var(--on-surface) 12%, transparent)")
-
-			.m3-icon-button__icon > :global(svg)
-				opacity: 0.38
+<style>
+.m3-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--on-surface);
+  cursor: pointer;
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  --m3e-state-color: var(--on-surface);
+  --ib-square: var(--shape-corner-m);
+  --ib-radius: var(--shape-corner-full);
+  border-radius: var(--ib-radius);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard), border-color var(--m3e-duration-short) var(--m3e-easing-standard), border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+/* icon prop 模式图标容器；children 模式的图标尺寸由调用方控制（SSR 静态场景） */
+/* === 尺寸（latest md-comp-icon-button-*） === */
+/* === 形状（选中时互换，官方行为） === */
+/* === 变体（v0.192 tokens） === */
+}
+.m3-icon-button > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+.m3-icon-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.m3-icon-button__icon > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+.m3-icon-button--disabled {
+  pointer-events: none;
+}
+.m3-icon-button--xsmall {
+  width: 2rem /* 32px */;
+  height: 2rem;
+  --ib-square: var(--shape-corner-m);
+}
+.m3-icon-button--xsmall .m3-icon-button__icon > :global(svg) {
+  width: 1.25rem /* 20px */;
+  height: 1.25rem;
+}
+.m3-icon-button--small {
+  width: 2.5rem /* 40px */;
+  height: 2.5rem;
+  --ib-square: var(--shape-corner-m);
+}
+.m3-icon-button--small .m3-icon-button__icon > :global(svg) {
+  width: 1.5rem /* 24px */;
+  height: 1.5rem;
+}
+.m3-icon-button--medium {
+  width: 3.5rem /* 56px */;
+  height: 3.5rem;
+  --ib-square: var(--shape-corner-l) /* corner-large 16px */;
+}
+.m3-icon-button--medium .m3-icon-button__icon > :global(svg) {
+  width: 1.5rem /* 24px */;
+  height: 1.5rem;
+}
+.m3-icon-button--large {
+  width: 6rem /* 96px */;
+  height: 6rem;
+  --ib-square: var(--shape-corner-xl) /* corner-extra-large 28px */;
+}
+.m3-icon-button--large .m3-icon-button__icon > :global(svg) {
+  width: 2rem /* 32px */;
+  height: 2rem;
+}
+.m3-icon-button--xlarge {
+  width: 8.5rem /* 136px */;
+  height: 8.5rem;
+  --ib-square: var(--shape-corner-xl);
+}
+.m3-icon-button--xlarge .m3-icon-button__icon > :global(svg) {
+  width: 2.5rem /* 40px */;
+  height: 2.5rem;
+}
+.m3-icon-button--square {
+  --ib-radius: var(--ib-square);
+}
+.m3-icon-button--checked.m3-icon-button--round {
+  --ib-radius: var(--ib-square);
+}
+.m3-icon-button--checked.m3-icon-button--square {
+  --ib-radius: var(--shape-corner-full);
+}
+.m3-icon-button--standard {
+  color: var(--on-surface);
+  --m3e-state-color: var(--on-surface);
+}
+.m3-icon-button--standard.m3-icon-button--checked {
+  color: var(--primary) /* selected-icon-color */;
+  --m3e-state-color: var(--primary);
+}
+.m3-icon-button--standard.m3-icon-button--disabled {
+  color: var(--on-surface);
+  opacity: 0.38;
+}
+.m3-icon-button--filled {
+  background: var(--primary);
+  color: var(--on-primary);
+  --m3e-state-color: var(--on-primary);
+}
+.m3-icon-button--filled.m3-icon-button--disabled {
+/* 覆盖全局 .m3-state-layer[disabled] 的 opacity 0.38，避免双重透明；容器/图标透明度分别由下方控制 */
+  opacity: 1;
+  background: color-mix(in srgb, var(--on-surface) 12%, transparent);
+  color: var(--on-surface);
+}
+.m3-icon-button--filled.m3-icon-button--disabled .m3-icon-button__icon > :global(svg) {
+  opacity: 0.38;
+}
+.m3-icon-button--tonal {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --m3e-state-color: var(--on-secondary-container);
+}
+.m3-icon-button--tonal.m3-icon-button--checked {
+  background: var(--secondary) /* latest selected-container-color: secondary */;
+  color: var(--on-secondary);
+  --m3e-state-color: var(--on-secondary);
+}
+.m3-icon-button--tonal.m3-icon-button--disabled {
+/* 覆盖全局 .m3-state-layer[disabled] 的 opacity 0.38，避免双重透明；容器/图标透明度分别由下方控制 */
+  opacity: 1;
+  background: color-mix(in srgb, var(--on-surface) 12%, transparent);
+  color: var(--on-surface);
+}
+.m3-icon-button--tonal.m3-icon-button--disabled .m3-icon-button__icon > :global(svg) {
+  opacity: 0.38;
+}
+.m3-icon-button--outlined {
+  border: 1px solid var(--outline);
+  color: var(--on-surface);
+  --m3e-state-color: var(--on-surface);
+}
+.m3-icon-button--outlined.m3-icon-button--checked {
+  background: var(--inverse-surface) /* latest selected-container-color: inverse-surface */;
+  color: var(--inverse-on-surface);
+  border-color: transparent;
+  --m3e-state-color: var(--inverse-on-surface);
+}
+.m3-icon-button--outlined.m3-icon-button--disabled {
+/* 覆盖全局 0.38：边框 12%、图标 38% 分开控制（官方 disabled-unselected-outline-opacity 0.12 + disabled-icon-opacity 0.38） */
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--on-surface) 12%, transparent);
+}
+.m3-icon-button--outlined.m3-icon-button--disabled .m3-icon-button__icon > :global(svg) {
+  opacity: 0.38;
+}
 </style>

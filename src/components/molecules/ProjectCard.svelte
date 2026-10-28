@@ -146,296 +146,284 @@ const showCover = $derived(Boolean(project.cover) && !coverFailed);
 	</div>
 </article>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.project-card
-	position: relative
-	display: flex
-	flex-direction: column
-	box-sizing: border-box
-	min-width: 0
-	overflow: hidden
-	background: var(--card-bg)
-	border: 1px solid var(--outline-variant)
-	border-radius: var(--shape-corner-l)
-	transition:
-		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-	&:hover
-		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-2)
-		transform: translateY(-2px)
-		background: unquote("color-mix(in oklab, var(--on-surface) 2%, var(--card-bg))")
-
-	/* 代表项目特色高亮：边框微光 */
-	&--featured
-		border-color: unquote("color-mix(in oklab, var(--primary) 38%, var(--outline-variant))")
-		&:hover
-			border-color: var(--primary)
-
-	/* 封面：16/9 稳定比例锁高，图片永远按 cover 裁切，杜绝纵向拉伸 */
-	&__cover
-		position: relative
-		display: block
-		width: 100%
-		aspect-ratio: 16 / 9
-		flex-shrink: 0
-		overflow: hidden
-		background: linear-gradient(160deg,
-			unquote("color-mix(in oklab, var(--primary) 16%, var(--surface-container-low))"),
-			var(--surface-container-high))
-		text-decoration: none
-
-		&:focus-visible
-			outline: 2px solid var(--primary)
-			outline-offset: -2px
-
-		> img
-			display: block
-			width: 100%
-			height: 100%
-			object-fit: cover
-			transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate)
-
-			.project-card:hover &
-				transform: scale(1.05)
-
-	&__scrim
-		position: absolute
-		inset: 0
-		pointer-events: none
-		background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 40%, rgba(0, 0, 0, 0.2) 100%)
-		opacity: 0.6
-		transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
-		.project-card:hover &
-			opacity: 0.8
-
-	/* 代表项目封面角标：毛玻璃 + star 图标 */
-	&__featured-badge
-		position: absolute
-		top: 0.625rem
-		left: 0.625rem
-		z-index: 2
-		display: inline-flex
-		align-items: center
-		gap: 0.25rem
-		padding: 0.1875rem 0.5rem
-		border-radius: var(--shape-corner-full)
-		background: unquote("color-mix(in srgb, #000 60%, transparent)")
-		backdrop-filter: blur(0.375rem)
-		-webkit-backdrop-filter: blur(0.375rem)
-		color: #fff
-		font: var(--m3e-type-label-small)
-		font-weight: 700
-		border: 1px solid rgba(255, 255, 255, 0.15)
-		> :global(svg)
-			width: 0.875rem
-			height: 0.875rem
-			color: #facc15
-
-	&__body
-		display: flex
-		flex-direction: column
-		flex: 1
-		gap: var(--m3e-space-3)
-		min-width: 0
-		padding: var(--m3e-space-4) var(--m3e-space-4)
-
-	&__header
-		display: flex
-		align-items: center
-		gap: 0.875rem
-		min-width: 0
-
-	/* 无封面紧凑变体：技术栈与源码操作合并一行，纵向节奏与有封面卡片对齐 */
-	&--without-cover &__body
-		display: grid
-		grid-template-columns: minmax(0, 1fr) auto
-		gap: 0.75rem 1rem
-		padding: 1.125rem 1.25rem
-
-	&--without-cover &__header,
-	&--without-cover &__summary
-		grid-column: 1 / -1
-
-	&--without-cover &__summary
-		min-height: 2.8em
-
-	&--without-cover &__technologies
-		align-self: center
-
-	&--without-cover &__actions
-		align-self: center
-		justify-content: flex-end
-		margin-top: 0
-		padding-top: 0
-
-	@media (max-width: 27.5rem)
-		&--without-cover &__body
-			grid-template-columns: minmax(0, 1fr)
-
-		&--without-cover &__header,
-		&--without-cover &__summary
-			grid-column: 1
-
-		&--without-cover &__actions
-			justify-content: flex-start
-
-	/* 图标瓷砖：无封面项目的视觉锚点（有封面时不渲染） */
-	&__icon
-		display: flex
-		align-items: center
-		justify-content: center
-		width: 2.875rem
-		height: 2.875rem
-		flex-shrink: 0
-		box-sizing: border-box
-		border-radius: var(--shape-corner-m)
-		background: linear-gradient(135deg,
-			unquote("color-mix(in oklab, var(--primary) 14%, var(--surface-container-high))"),
-			var(--surface-container-highest))
-		border: 1px solid var(--outline-variant)
-		color: var(--primary)
-		transition:
-			transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-			box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-		> :global(svg)
-			width: 1.5rem
-			height: 1.5rem
-
-		.project-card:hover &
-			transform: translateY(-0.125rem)
-			box-shadow: var(--m3e-elevation-1)
-
-	&__heading
-		display: flex
-		flex-direction: column
-		flex: 1
-		gap: 0.375rem
-		min-width: 0
-
-	&__title-row
-		display: flex
-		align-items: baseline
-		justify-content: space-between
-		gap: 0.75rem
-		min-width: 0
-
-	&__title
-		margin: 0
-		min-width: 0
-		color: var(--on-surface)
-		font: var(--m3e-type-title-small)
-		font-weight: 700
-		line-height: 1.3
-		overflow-wrap: anywhere
-		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		.project-card:hover &
-			color: var(--primary)
-
-	&__year
-		flex-shrink: 0
-		padding: 0.0625rem 0.375rem
-		border-radius: var(--shape-corner-xs)
-		background: var(--surface-container-high)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-small)
-		font-variant-numeric: tabular-nums
-
-	/* 阶段 tonal pill：语义色来自 inline --project-phase-color */
-	&__phase
-		display: inline-flex
-		align-items: center
-		align-self: flex-start
-		gap: 0.3125rem
-		min-width: 0
-		padding: 0.125rem 0.5625rem
-		border-radius: var(--shape-corner-full)
-		background: unquote("color-mix(in oklab, var(--project-phase-color) 12%, transparent)")
-		color: var(--project-phase-color)
-		font: var(--m3e-type-label-small)
-		font-weight: 600
-		border: 1px solid unquote("color-mix(in oklab, var(--project-phase-color) 20%, transparent)")
-
-		> :global(svg)
-			width: 0.875rem
-			height: 0.875rem
-			flex-shrink: 0
-
-	&__summary
-		display: -webkit-box
-		min-height: 2.8em
-		margin: 0
-		overflow: hidden
-		-webkit-line-clamp: 2
-		-webkit-box-orient: vertical
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-		line-height: 1.5
-
-	/* 技术栈徽标：微胶囊（micro-badges）风格 */
-	&__technologies
-		display: flex
-		flex-wrap: wrap
-		gap: 0.3125rem
-		margin: 0
-		padding: 0
-		list-style: none
-
-		li
-			display: inline-flex
-			align-items: center
-			padding: 0.125rem 0.5rem
-			border-radius: var(--shape-corner-m)
-			background: var(--surface-container-high)
-			color: var(--on-surface-variant)
-			font: var(--m3e-type-label-small)
-			font-weight: 500
-			transition:
-				background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-				color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-			&:hover
-				background: var(--surface-container-highest)
-				color: var(--on-surface)
-
-	/* 操作按钮：M3 胶囊操作按钮 */
-	&__actions
-		display: flex
-		flex-wrap: wrap
-		gap: 0.5rem
-		margin-top: auto
-		padding-top: 0.25rem
-
-		a
-			display: inline-flex
-			align-items: center
-			gap: 0.3125rem
-			padding: 0.25rem 0.625rem
-			border-radius: var(--shape-corner-m)
-			background: unquote("color-mix(in oklab, var(--primary) 8%, transparent)")
-			color: var(--primary)
-			font: var(--m3e-type-label-medium)
-			font-weight: 600
-			text-decoration: none
-			border: 1px solid unquote("color-mix(in oklab, var(--primary) 16%, transparent)")
-			transition:
-				background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-				box-shadow var(--m3e-duration-short) var(--m3e-easing-standard),
-				transform var(--m3e-duration-short) var(--m3e-easing-standard)
-
-			&:hover
-				background: unquote("color-mix(in oklab, var(--primary) 16%, transparent)")
-				box-shadow: var(--m3e-elevation-1)
-				transform: translateY(-1px)
-
-			> :global(svg)
-				width: 1rem
-				height: 1rem
+<style>
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-corner-l);
+  transition: border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), background-color var(--m3e-duration-medium) var(--m3e-easing-standard);
+/* 代表项目特色高亮：边框微光 */
+/* 封面：16/9 稳定比例锁高，图片永远按 cover 裁切，杜绝纵向拉伸 */
+/* 代表项目封面角标：毛玻璃 + star 图标 */
+/* 无封面紧凑变体：技术栈与源码操作合并一行，纵向节奏与有封面卡片对齐 */
+/* 图标瓷砖：无封面项目的视觉锚点（有封面时不渲染） */
+/* 阶段 tonal pill：语义色来自 inline --project-phase-color */
+/* 技术栈徽标：微胶囊（micro-badges）风格 */
+/* 操作按钮：M3 胶囊操作按钮 */
+}
+.project-card:hover {
+  border-color: var(--outline);
+  box-shadow: var(--m3e-elevation-2);
+  transform: translateY(-2px);
+  background: color-mix(in oklab, var(--on-surface) 2%, var(--card-bg));
+}
+.project-card--featured {
+  border-color: color-mix(in oklab, var(--primary) 38%, var(--outline-variant));
+}
+.project-card--featured:hover {
+  border-color: var(--primary);
+}
+.project-card__cover {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: linear-gradient(160deg, color-mix(in oklab, var(--primary) 16%, var(--surface-container-low)), var(--surface-container-high));
+  text-decoration: none;
+}
+.project-card__cover:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+.project-card__cover > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate);
+}
+.project-card:hover .project-card__cover > img {
+  transform: scale(1.05);
+}
+.project-card__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 40%, rgba(0,0,0,0.2) 100%);
+  opacity: 0.6;
+  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.project-card:hover .project-card__scrim {
+  opacity: 0.8;
+}
+.project-card__featured-badge {
+  position: absolute;
+  top: 0.625rem;
+  left: 0.625rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1875rem 0.5rem;
+  border-radius: var(--shape-corner-full);
+  background: color-mix(in srgb, #000 60%, transparent);
+  backdrop-filter: blur(0.375rem);
+  -webkit-backdrop-filter: blur(0.375rem);
+  color: #fff;
+  font: var(--m3e-type-label-small);
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.project-card__featured-badge > :global(svg) {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: #facc15;
+}
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--m3e-space-3);
+  min-width: 0;
+  padding: var(--m3e-space-4) var(--m3e-space-4);
+}
+.project-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  min-width: 0;
+}
+.project-card--without-cover .project-card__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem 1rem;
+  padding: 1.125rem 1.25rem;
+}
+.project-card--without-cover .project-card__header,
+.project-card--without-cover .project-card__summary {
+  grid-column: 1/-1;
+}
+.project-card--without-cover .project-card__summary {
+  min-height: 2.8em;
+}
+.project-card--without-cover .project-card__technologies {
+  align-self: center;
+}
+.project-card--without-cover .project-card__actions {
+  align-self: center;
+  justify-content: flex-end;
+  margin-top: 0;
+  padding-top: 0;
+}
+@media (max-width: 27.5rem) {
+  .project-card--without-cover .project-card__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .project-card--without-cover .project-card__header,
+  .project-card--without-cover .project-card__summary {
+    grid-column: 1;
+  }
+  .project-card--without-cover .project-card__actions {
+    justify-content: flex-start;
+  }
+}
+.project-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.875rem;
+  height: 2.875rem;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-m);
+  background: linear-gradient(135deg, color-mix(in oklab, var(--primary) 14%, var(--surface-container-high)), var(--surface-container-highest));
+  border: 1px solid var(--outline-variant);
+  color: var(--primary);
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.project-card__icon > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.project-card:hover .project-card__icon {
+  transform: translateY(-0.125rem);
+  box-shadow: var(--m3e-elevation-1);
+}
+.project-card__heading {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.375rem;
+  min-width: 0;
+}
+.project-card__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+.project-card__title {
+  margin: 0;
+  min-width: 0;
+  color: var(--on-surface);
+  font: var(--m3e-type-title-small);
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.project-card:hover .project-card__title {
+  color: var(--primary);
+}
+.project-card__year {
+  flex-shrink: 0;
+  padding: 0.0625rem 0.375rem;
+  border-radius: var(--shape-corner-xs);
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+  font-variant-numeric: tabular-nums;
+}
+.project-card__phase {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.3125rem;
+  min-width: 0;
+  padding: 0.125rem 0.5625rem;
+  border-radius: var(--shape-corner-full);
+  background: color-mix(in oklab, var(--project-phase-color) 12%, transparent);
+  color: var(--project-phase-color);
+  font: var(--m3e-type-label-small);
+  font-weight: 600;
+  border: 1px solid color-mix(in oklab, var(--project-phase-color) 20%, transparent);
+}
+.project-card__phase > :global(svg) {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+.project-card__summary {
+  display: -webkit-box;
+  min-height: 2.8em;
+  margin: 0;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+  line-height: 1.5;
+}
+.project-card__technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.project-card__technologies li {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+  font-weight: 500;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.project-card__technologies li:hover {
+  background: var(--surface-container-highest);
+  color: var(--on-surface);
+}
+.project-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+.project-card__actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--shape-corner-m);
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  color: var(--primary);
+  font: var(--m3e-type-label-medium);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid color-mix(in oklab, var(--primary) 16%, transparent);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.project-card__actions a:hover {
+  background: color-mix(in oklab, var(--primary) 16%, transparent);
+  box-shadow: var(--m3e-elevation-1);
+  transform: translateY(-1px);
+}
+.project-card__actions a > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+}
 </style>

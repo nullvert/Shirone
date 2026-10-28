@@ -345,246 +345,248 @@ function onDialClick(e: MouseEvent) {
 	{/if}
 </div>
 
-<style lang="stylus">
-.m3-time-picker
-	display: inline-flex
-	flex-direction: column
-	width: 304px
-	box-sizing: border-box
-	padding: 24px
-	gap: 24px
-	border-radius: var(--shape-corner-xl)
-	background: var(--surface-container-high)
-	color: var(--on-surface)
-
-	&__header
-		display: flex
-		align-items: center
-		justify-content: space-between
-		width: 100%
-		height: 96px
-
-	&__time
-		display: flex
-		align-items: baseline
-		gap: 4px
-		font: var(--m3e-type-headline-medium)
-
-	&__segment
-		border: none
-		background: none
-		padding: 4px 8px
-		border-radius: var(--shape-corner-s)
-		font: inherit
-		line-height: 1.25
-		color: var(--on-surface-variant)
-		cursor: pointer
-		transition: color var(--m3e-duration-short) var(--m3e-easing-standard), background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&--active
-			color: var(--on-surface)
-
-	&__colon
-		color: var(--on-surface-variant)
-
-	&__header-right
-		display: flex
-		align-items: center
-		gap: 8px
-
-	&__period
-		display: flex
-		flex-direction: column
-		gap: 8px
-
-	&__period-btn
-		height: 40px
-		min-width: 72px
-		padding: 0 12px
-		border: 1px solid var(--outline)
-		border-radius: var(--shape-corner-full)
-		background: transparent
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-large)
-		cursor: pointer
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard), border-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-
-		&--selected
-			background: var(--tertiary-container)
-			color: var(--on-tertiary-container)
-			border-color: transparent
-
-			&:hover
-				background: var(--tertiary-container)
-
-	&__mode-btn
-		display: flex
-		align-items: center
-		justify-content: center
-		width: 40px
-		height: 40px
-		border: none
-		border-radius: var(--shape-corner-full)
-		background: none
-		color: var(--on-surface-variant)
-		cursor: pointer
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-			color: var(--on-surface)
-
-		> :global(svg)
-			width: 20px
-			height: 20px
-
-	&__inputs
-		display: flex
-		align-items: center
-		gap: 6px
-
-	&__input
-		width: 56px
-		height: 64px
-		box-sizing: border-box
-		border: none
-		outline: none
-		border-radius: var(--shape-corner-xs) var(--shape-corner-xs) 0 0
-		background: var(--surface-container-highest)
-		color: var(--on-surface)
-		caret-color: var(--primary)
-		font: var(--m3e-type-headline-medium)
-		text-align: center
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 8%, var(--surface-container-highest))")
-
-		&:focus
-			box-shadow: inset 0 -2px 0 var(--primary)
-
-		&::placeholder
-			color: var(--on-surface-variant)
-
-		&--error
-			box-shadow: inset 0 -2px 0 var(--error)
-			&:focus
-				box-shadow: inset 0 -2px 0 var(--error)
-
-	&__dial
-		position: relative
-		width: 256px
-		height: 256px
-		margin: 0 auto
-		border-radius: var(--shape-corner-full)
-		background: var(--surface-container-highest)
-		user-select: none
-
-	&__track
-		position: absolute
-		left: calc(50% - 1px)
-		top: 50%
-		width: 2px
-		height: var(--m3e-track-len, 100px)
-		border-radius: var(--shape-corner-full)
-		background: var(--primary)
-		transform-origin: top center
-		pointer-events: none
-		transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-	&__center
-		position: absolute
-		left: 50%
-		top: 50%
-		width: 8px
-		height: 8px
-		border-radius: var(--shape-corner-full)
-		background: var(--primary)
-		transform: translate(-50%, -50%)
-		pointer-events: none
-
-	&__overlay
-		position: absolute
-		inset: 0
-		border: none
-		border-radius: var(--shape-corner-full)
-		background: transparent
-		cursor: pointer
-
-	&__num
-		position: absolute
-		width: 40px
-		height: 40px
-		transform: translate(-50%, -50%)
-		border: none
-		border-radius: var(--shape-corner-full)
-		background: none
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-large)
-		cursor: pointer
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-
-		&--inner
-			width: 30px
-			height: 30px
-			font: var(--m3e-type-label-medium)
-
-		&--minute
-			width: 36px
-			height: 36px
-			font: var(--m3e-type-label-small)
-
-		&--selected
-			width: 48px
-			height: 48px
-			background: var(--primary-container)
-			color: var(--on-primary-container)
-			font: var(--m3e-type-title-medium)
-
-			&:hover
-				background: var(--primary-container)
-
-	&__tick
-		position: absolute
-		width: 20px
-		height: 20px
-		transform: translate(-50%, -50%)
-		pointer-events: none
-
-		&::after
-			content: ""
-			position: absolute
-			left: 50%
-			top: 50%
-			width: 2px
-			height: 2px
-			border-radius: var(--shape-corner-full)
-			background: var(--on-surface-variant)
-			transform: translate(-50%, -50%)
-
-		&--selected::after
-			width: 6px
-			height: 6px
-			background: var(--primary)
-
-	&__handle
-		position: absolute
-		width: 48px
-		height: 48px
-		transform: translate(-50%, -50%)
-		display: flex
-		align-items: center
-		justify-content: center
-		border-radius: var(--shape-corner-full)
-		background: var(--primary-container)
-		color: var(--on-primary-container)
-		font: var(--m3e-type-title-medium)
-		pointer-events: none
-		transition: left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), top var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
+<style>
+.m3-time-picker {
+  display: inline-flex;
+  flex-direction: column;
+  width: 304px;
+  box-sizing: border-box;
+  padding: 24px;
+  gap: 24px;
+  border-radius: var(--shape-corner-xl);
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+}
+.m3-time-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 96px;
+}
+.m3-time-picker__time {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font: var(--m3e-type-headline-medium);
+}
+.m3-time-picker__segment {
+  border: none;
+  background: none;
+  padding: 4px 8px;
+  border-radius: var(--shape-corner-s);
+  font: inherit;
+  line-height: 1.25;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard), background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-time-picker__segment--active {
+  color: var(--on-surface);
+}
+.m3-time-picker__colon {
+  color: var(--on-surface-variant);
+}
+.m3-time-picker__header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.m3-time-picker__period {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.m3-time-picker__period-btn {
+  height: 40px;
+  min-width: 72px;
+  padding: 0 12px;
+  border: 1px solid var(--outline);
+  border-radius: var(--shape-corner-full);
+  background: transparent;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-large);
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard), border-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-time-picker__period-btn:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-time-picker__period-btn--selected {
+  background: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+  border-color: transparent;
+}
+.m3-time-picker__period-btn--selected:hover {
+  background: var(--tertiary-container);
+}
+.m3-time-picker__mode-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: none;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-time-picker__mode-btn:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+  color: var(--on-surface);
+}
+.m3-time-picker__mode-btn > :global(svg) {
+  width: 20px;
+  height: 20px;
+}
+.m3-time-picker__inputs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.m3-time-picker__input {
+  width: 56px;
+  height: 64px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  border-radius: var(--shape-corner-xs) var(--shape-corner-xs) 0 0;
+  background: var(--surface-container-highest);
+  color: var(--on-surface);
+  caret-color: var(--primary);
+  font: var(--m3e-type-headline-medium);
+  text-align: center;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-time-picker__input:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, var(--surface-container-highest));
+}
+.m3-time-picker__input:focus {
+  box-shadow: inset 0 -2px 0 var(--primary);
+}
+.m3-time-picker__input::placeholder {
+  color: var(--on-surface-variant);
+}
+.m3-time-picker__input--error {
+  box-shadow: inset 0 -2px 0 var(--error);
+}
+.m3-time-picker__input--error:focus {
+  box-shadow: inset 0 -2px 0 var(--error);
+}
+.m3-time-picker__dial {
+  position: relative;
+  width: 256px;
+  height: 256px;
+  margin: 0 auto;
+  border-radius: var(--shape-corner-full);
+  background: var(--surface-container-highest);
+  user-select: none;
+}
+.m3-time-picker__track {
+  position: absolute;
+  left: calc(50% - 1px);
+  top: 50%;
+  width: 2px;
+  height: var(--m3e-track-len, 100px);
+  border-radius: var(--shape-corner-full);
+  background: var(--primary);
+  transform-origin: top center;
+  pointer-events: none;
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-time-picker__center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--shape-corner-full);
+  background: var(--primary);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.m3-time-picker__overlay {
+  position: absolute;
+  inset: 0;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: transparent;
+  cursor: pointer;
+}
+.m3-time-picker__num {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: none;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-large);
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-time-picker__num:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-time-picker__num--inner {
+  width: 30px;
+  height: 30px;
+  font: var(--m3e-type-label-medium);
+}
+.m3-time-picker__num--minute {
+  width: 36px;
+  height: 36px;
+  font: var(--m3e-type-label-small);
+}
+.m3-time-picker__num--selected {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font: var(--m3e-type-title-medium);
+}
+.m3-time-picker__num--selected:hover {
+  background: var(--primary-container);
+}
+.m3-time-picker__tick {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.m3-time-picker__tick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  border-radius: var(--shape-corner-full);
+  background: var(--on-surface-variant);
+  transform: translate(-50%, -50%);
+}
+.m3-time-picker__tick--selected::after {
+  width: 6px;
+  height: 6px;
+  background: var(--primary);
+}
+.m3-time-picker__handle {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--shape-corner-full);
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font: var(--m3e-type-title-medium);
+  pointer-events: none;
+  transition: left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), top var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
 </style>

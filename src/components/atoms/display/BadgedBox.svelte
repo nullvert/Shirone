@@ -11,15 +11,16 @@
     <span class="m3-badged-box__badge"><slot name="badge" /></span>
 </span>
 
-<style lang="stylus">
-.m3-badged-box
-    position: relative
-    display: inline-flex
-
-    &__badge
-        position: absolute
-        top: 0
-        right: 0
-        transform: translate(50%, -50%)
-        display: flex
+<style>
+.m3-badged-box {
+  position: relative;
+  display: inline-flex;
+}
+.m3-badged-box__badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  display: flex;
+}
 </style>

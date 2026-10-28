@@ -130,117 +130,124 @@ onMount(() => {
     {/if}
 </div>
 
-<style lang="stylus">
-.m3-search-bar
-    position: relative
-    display: flex
-    flex-direction: column
-    width: 100%
-
-    /* 收起态 field：56dp pill（官方 SearchBarTokens.ContainerHeight/Shape） */
-    &__field
-        display: flex
-        align-items: center
-        gap: 0.75rem
-        min-height: 3.5rem
-        padding: 0 0.75rem 0 1.25rem
-        border-radius: var(--shape-corner-xl)
-        background: var(--surface-container-high)
-        color: var(--on-surface)
-        box-shadow: var(--m3e-elevation-3)
-        cursor: text
-        /* 聚焦指示（官方 SearchBarTokens.FocusIndicatorColor = Secondary）；仅收起态，
-           展开态容器 shadow 已是视觉焦点，outline 会与 divider 叠加成难看的黑边 */
-        &:focus-within
-            outline: 2px solid var(--secondary)
-            outline-offset: 2px
-
-    &__leading
-        display: flex
-        flex-shrink: 0
-        color: var(--on-surface)
-        > :global(svg)
-            width: 1.5rem
-            height: 1.5rem
-
-    &__input
-        flex: 1
-        min-width: 0
-        border: none
-        background: none
-        color: var(--on-surface)
-        font: var(--m3e-type-body-large)
-        outline: none
-        &::placeholder
-            color: var(--on-surface-variant)
-        /* 隐藏原生 search 清除按钮，用自绘 trailing */
-        &::-webkit-search-cancel-button
-            display: none
-
-    &__trailing
-        display: flex
-        flex-shrink: 0
-        padding: 0.25rem
-        border: none
-        background: none
-        color: var(--on-surface-variant)
-        cursor: pointer
-        border-radius: var(--shape-corner-full)
-        > :global(svg)
-            width: 1.5rem
-            height: 1.5rem
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface-variant) 8%, transparent)")
-        &:focus-visible
-            outline: 2px solid var(--secondary)
-            outline-offset: 2px
-
-    /* 展开区：Divider + 内容，官方 DockedEnterTransition（fadeIn + expandVertically
+<style>
+.m3-search-bar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+/* 收起态 field：56dp pill（官方 SearchBarTokens.ContainerHeight/Shape） */
+/* 展开区：Divider + 内容，官方 DockedEnterTransition（fadeIn + expandVertically
        600ms emphasized-decelerate）/ DockedExitTransition（fadeOut + shrinkVertically 350ms linear）。
        transition 定义在目标态控制「进入该状态」的时长/曲线 */
-    &__expand
-        overflow: hidden
-        max-height: 0
-        opacity: 0
-        border-radius: 0 0 var(--shape-corner-xl) var(--shape-corner-xl)
-        transition:
-            max-height 350ms linear,
-            opacity 350ms linear
-
-    &--expanded
-        background: var(--surface-container-high)
-        border-radius: var(--shape-corner-xl)
-        box-shadow: var(--m3e-elevation-3)
-        .m3-search-bar__field
-            box-shadow: none
-            background: none
-            /* 底部直角，与 divider/展开区无缝连接（收起态 pill 四角全圆） */
-            border-radius: var(--shape-corner-xl) var(--shape-corner-xl) 0 0
-            &:focus-within
-                outline: none
-        .m3-search-bar__expand
-            max-height: 24rem
-            opacity: 1
-            transition:
-                max-height 600ms var(--m3e-easing-emphasized-decelerate),
-                opacity 600ms var(--m3e-easing-emphasized-decelerate)
-
-    &__divider
-        height: 1px
-        border: none
-        background: var(--outline)
-        margin: 0
-
-    /* 内容区（建议/结果，调用方提供）：可滚动；
+/* 内容区（建议/结果，调用方提供）：可滚动；
        展开时容器展开后延迟淡入（官方 AnimationForContentFadeInSpec：100ms + 50ms delay） */
-    &__content
-        max-height: 20rem
-        overflow-y: auto
-        padding: 0.5rem
-        opacity: 0
-        transition: opacity 100ms var(--m3e-easing-standard)
-
-    &--expanded &__content
-        opacity: 1
-        transition: opacity 100ms var(--m3e-easing-standard) 50ms
+}
+.m3-search-bar__field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0 0.75rem 0 1.25rem;
+  border-radius: var(--shape-corner-xl);
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+  box-shadow: var(--m3e-elevation-3);
+  cursor: text;
+/* 聚焦指示（官方 SearchBarTokens.FocusIndicatorColor = Secondary）；仅收起态，
+           展开态容器 shadow 已是视觉焦点，outline 会与 divider 叠加成难看的黑边 */
+}
+.m3-search-bar__field:focus-within {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+.m3-search-bar__leading {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--on-surface);
+}
+.m3-search-bar__leading > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-search-bar__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  color: var(--on-surface);
+  font: var(--m3e-type-body-large);
+  outline: none;
+/* 隐藏原生 search 清除按钮，用自绘 trailing */
+}
+.m3-search-bar__input::placeholder {
+  color: var(--on-surface-variant);
+}
+.m3-search-bar__input::-webkit-search-cancel-button {
+  display: none;
+}
+.m3-search-bar__trailing {
+  display: flex;
+  flex-shrink: 0;
+  padding: 0.25rem;
+  border: none;
+  background: none;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  border-radius: var(--shape-corner-full);
+}
+.m3-search-bar__trailing > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-search-bar__trailing:hover {
+  background: color-mix(in oklab, var(--on-surface-variant) 8%, transparent);
+}
+.m3-search-bar__trailing:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+.m3-search-bar__expand {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  border-radius: 0 0 var(--shape-corner-xl) var(--shape-corner-xl);
+  transition: max-height 350ms linear, opacity 350ms linear;
+}
+.m3-search-bar--expanded {
+  background: var(--surface-container-high);
+  border-radius: var(--shape-corner-xl);
+  box-shadow: var(--m3e-elevation-3);
+}
+.m3-search-bar--expanded .m3-search-bar__field {
+  box-shadow: none;
+  background: none;
+/* 底部直角，与 divider/展开区无缝连接（收起态 pill 四角全圆） */
+  border-radius: var(--shape-corner-xl) var(--shape-corner-xl) 0 0;
+}
+.m3-search-bar--expanded .m3-search-bar__field:focus-within {
+  outline: none;
+}
+.m3-search-bar--expanded .m3-search-bar__expand {
+  max-height: 24rem;
+  opacity: 1;
+  transition: max-height 600ms var(--m3e-easing-emphasized-decelerate), opacity 600ms var(--m3e-easing-emphasized-decelerate);
+}
+.m3-search-bar__divider {
+  height: 1px;
+  border: none;
+  background: var(--outline);
+  margin: 0;
+}
+.m3-search-bar__content {
+  max-height: 20rem;
+  overflow-y: auto;
+  padding: 0.5rem;
+  opacity: 0;
+  transition: opacity 100ms var(--m3e-easing-standard);
+}
+.m3-search-bar--expanded .m3-search-bar__content {
+  opacity: 1;
+  transition: opacity 100ms var(--m3e-easing-standard) 50ms;
+}
 </style>

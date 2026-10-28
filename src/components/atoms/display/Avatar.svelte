@@ -63,35 +63,38 @@ const initial = fallback || (alt.trim() ? alt.trim()[0] : "?");
 	{/if}
 </div>
 
-<style lang="stylus">
-.m3-avatar
-	display: flex
-	align-items: center
-	justify-content: center
-	flex-shrink: 0
-	width: var(--m3e-avatar-size)
-	/* 保持 1:1 正方形：宽度可被调用方覆盖（如 !w-full），高度随宽自适应 */
-	aspect-ratio: 1
-	height: auto
-	overflow: hidden
-	background: var(--surface-container-high)
-	color: var(--on-surface-variant)
-	user-select: none
-
-	&--circle
-		border-radius: var(--shape-corner-full)
-	&--rounded
-		border-radius: var(--shape-corner-m)
-	&--square
-		border-radius: 0
-
-	> img
-		display: block
-		width: 100%
-		height: 100%
-		object-fit: cover
-
-	&__fallback
-		font: var(--m3e-type-title-medium)
-		font-weight: 700
+<style>
+.m3-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--m3e-avatar-size);
+/* 保持 1:1 正方形：宽度可被调用方覆盖（如 !w-full），高度随宽自适应 */
+  aspect-ratio: 1;
+  height: auto;
+  overflow: hidden;
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  user-select: none;
+}
+.m3-avatar--circle {
+  border-radius: var(--shape-corner-full);
+}
+.m3-avatar--rounded {
+  border-radius: var(--shape-corner-m);
+}
+.m3-avatar--square {
+  border-radius: 0;
+}
+.m3-avatar > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.m3-avatar__fallback {
+  font: var(--m3e-type-title-medium);
+  font-weight: 700;
+}
 </style>

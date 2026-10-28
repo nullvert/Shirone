@@ -486,432 +486,1063 @@ const wavyStarD = $derived(
     </svg>
 {/if}
 
-<style lang="stylus">
+<style>
 /* head/tail 插值变量（官方 FirstLine/SecondLine 关键帧时序，总循环 1750ms）：
    Line1 head 0→1000ms(57.14%)、tail 250→1250ms(14.29%→71.43%)
    Line2 head 650→1500ms(37.14%→85.71%)、tail 900→1750ms(51.43%→100%) */
-@property --pi-h1 { syntax: "<number>"; inherits: true; initial-value: 0; }
-@property --pi-t1 { syntax: "<number>"; inherits: true; initial-value: 0; }
-@property --pi-h2 { syntax: "<number>"; inherits: true; initial-value: 0; }
-@property --pi-t2 { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --pi-h1 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --pi-t1 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --pi-h2 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --pi-t2 {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
 /* circular 弧长 sweep 比例（0.1↔0.87，相对周长 --pi-circ，随 size 自适应） */
-@property --pi-sweep { syntax: "<number>"; inherits: false; initial-value: 0.1; }
-
-.m3-progress
-    /* === linear：4dp 高轨道（官方 LinearProgressIndicatorTokens.Height/ActiveThickness） === */
-    &--linear
-        width: 100%
-        height: 4px
-
-        .m3-progress__track
-            position: relative
-            width: 100%
-            height: 100%
-            border-radius: var(--shape-corner-full)
-            /* 无 overflow 裁剪：head/tail 线始终在 [0,100%] 内无需横向裁剪，
-               wave 波浪可上下溢出轨道（官方视觉） */
-
-        /* determinate track：从 progress + gap 开始（左侧 active + gap 空白区域，
+@property --pi-sweep {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.1;
+}
+.m3-progress--linear {
+  width: 100%;
+  height: 4px;
+/* determinate track：从 progress + gap 开始（左侧 active + gap 空白区域，
            官方 gapSize 参数：active 与 track 之间的间隙） */
-        .m3-progress__track-fill
-            position: absolute
-            top: 0
-            bottom: 0
-            right: 0
-            left: calc(var(--pi-progress) * 1% + var(--pi-gap))
-            border-radius: var(--shape-corner-full)
-            background: var(--pi-track)
-
-        .m3-progress__active
-            position: absolute
-            top: 0
-            bottom: 0
-            left: 0
-            width: calc(var(--pi-progress) * 1%)
-            border-radius: var(--shape-corner-full)
-            background: var(--pi-color)
-            transition: width var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-        /* stop 圆点：active 填充末端 4dp（官方 StopSize），随进度移动 */
-        .m3-progress__stop
-            position: absolute
-            top: 50%
-            transform: translate(-50%, -50%)
-            width: 4px
-            height: 4px
-            border-radius: var(--shape-corner-full)
-            background: var(--pi-color)
-            left: calc(var(--pi-progress) * 1% + var(--pi-gap) / 2)
-            transition: left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-        /* butt 平头（官方 StrokeCap.Butt） */
-        &.m3-progress--butt
-            .m3-progress__track,
-            .m3-progress__track-fill,
-            .m3-progress__active
-                border-radius: 0
-
-        /* indeterminate：track 全宽背景（颜色走 trackColor 参数） */
-        &.m3-progress--indeterminate .m3-progress__track
-            background: var(--pi-track)
-
-        /* === indeterminate：官方 head/tail 精确动画（线生长/消失，无跳变） === */
-        &.m3-progress--indeterminate .m3-progress__line
-            position: absolute
-            top: 0
-            height: 100%
-            border-radius: var(--shape-corner-full)
-            background: var(--pi-color)
-
-        /* Line 1（single 也用它）：线区间 [tail, head]（官方 head 为终点、tail 为起点，
+/* stop 圆点：active 填充末端 4dp（官方 StopSize），随进度移动 */
+/* butt 平头（官方 StrokeCap.Butt） */
+/* indeterminate：track 全宽背景（颜色走 trackColor 参数） */
+/* === indeterminate：官方 head/tail 精确动画（线生长/消失，无跳变） === */
+/* Line 1（single 也用它）：线区间 [tail, head]（官方 head 为终点、tail 为起点，
            条件 head - tail > 0 才画）；左右各留 2px gap（官方 TrackActiveSpace 4dp，
            线不贴轨道边缘避免窄线圆角在端点闪烁） */
-        &.m3-progress--indeterminate .m3-progress__line--1
-            left: calc(var(--pi-t1) * 100% + 2px)
-            width: calc((var(--pi-h1) - var(--pi-t1)) * 100% - 4px)
-            animation: pi-h1 1750ms linear infinite, pi-t1 1750ms linear infinite
-
-        /* Line 2 */
-        &.m3-progress--indeterminate .m3-progress__line--2
-            left: calc(var(--pi-t2) * 100% + 2px)
-            width: calc((var(--pi-h2) - var(--pi-t2)) * 100% - 4px)
-            animation: pi-h2 1750ms linear infinite, pi-t2 1750ms linear infinite
-
-        /* wave：官方 ActiveWave（振幅 3dp / 波长 40dp）——mask 波浪带平铺，
+/* Line 2 */
+/* wave：官方 ActiveWave（振幅 3dp / 波长 40dp）——mask 波浪带平铺，
            波浪带在 viewBox 内留白 1px（波峰波谷完整圆滑、不被切断），
            上下各超出 4dp 轨道 2px；background primary 主题色；
            波浪图案 mask-position 横向流动（官方动态效果） */
-        &.m3-progress--indeterminate .m3-progress__line--wave
-            background: none
-            background-color: var(--pi-color)
-            left: calc(var(--pi-t1) * 100% + 2px)
-            width: calc((var(--pi-h1) - var(--pi-t1)) * 100% - 4px)
-            animation:
-                pi-h1 1750ms linear infinite,
-                pi-t1 1750ms linear infinite,
-                m3-progress-wave-flow 900ms linear infinite
-            height: 8px
-            top: 50%
-            transform: translateY(-50%)
-            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='8'%3E%3Cpath d='M0 1 Q 10 7, 20 1 T 40 1 L 40 7 Q 30 1, 20 7 T 0 7 Z' fill='black'/%3E%3C/svg%3E")
-            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='8'%3E%3Cpath d='M0 1 Q 10 7, 20 1 T 40 1 L 40 7 Q 30 1, 20 7 T 0 7 Z' fill='black'/%3E%3C/svg%3E")
-            -webkit-mask-repeat: repeat-x
-            mask-repeat: repeat-x
-            -webkit-mask-size: 40px 8px
-            mask-size: 40px 8px
-
-        /* dot 变体已移除（不再需要圆点流） */
-
-        /* === circular：直径/厚度可调（size/strokeWidth 参数，viewBox 动态生成） === */
-    &--circular
-        width: var(--pi-size)
-        height: var(--pi-size)
-        /* circle dash 从 3 点起，rotate -90 到 12 点（determinate 弧起点同） */
-        transform: rotate(-90deg)
-
-        .m3-progress__track
-            stroke: var(--pi-track)
-
-        .m3-progress__active
-            stroke: var(--pi-color)
-            transition: stroke-dasharray var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-        /* indeterminate 弧长 = 周长 × sweep 比例（size 变化自动适配）；
+/* dot 变体已移除（不再需要圆点流） */
+/* === circular：直径/厚度可调（size/strokeWidth 参数，viewBox 动态生成） === */
+}
+.m3-progress--linear .m3-progress__track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--shape-corner-full);
+/* 无 overflow 裁剪：head/tail 线始终在 [0,100%] 内无需横向裁剪，
+               wave 波浪可上下溢出轨道（官方视觉） */
+}
+.m3-progress--linear .m3-progress__track-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: calc(var(--pi-progress) * 1% + var(--pi-gap));
+  border-radius: var(--shape-corner-full);
+  background: var(--pi-track);
+}
+.m3-progress--linear .m3-progress__active {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(var(--pi-progress) * 1%);
+  border-radius: var(--shape-corner-full);
+  background: var(--pi-color);
+  transition: width var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-progress--linear .m3-progress__stop {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  border-radius: var(--shape-corner-full);
+  background: var(--pi-color);
+  left: calc(var(--pi-progress) * 1% + var(--pi-gap) / 2);
+  transition: left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-progress--linear.m3-progress--butt .m3-progress__track,
+.m3-progress--linear.m3-progress--butt .m3-progress__track-fill,
+.m3-progress--linear.m3-progress--butt .m3-progress__active {
+  border-radius: 0;
+}
+.m3-progress--linear.m3-progress--indeterminate .m3-progress__track {
+  background: var(--pi-track);
+}
+.m3-progress--linear.m3-progress--indeterminate .m3-progress__line {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: var(--shape-corner-full);
+  background: var(--pi-color);
+}
+.m3-progress--linear.m3-progress--indeterminate .m3-progress__line--1 {
+  left: calc(var(--pi-t1) * 100% + 2px);
+  width: calc((var(--pi-h1) - var(--pi-t1)) * 100% - 4px);
+  animation: pi-h1 1750ms linear infinite, pi-t1 1750ms linear infinite;
+}
+.m3-progress--linear.m3-progress--indeterminate .m3-progress__line--2 {
+  left: calc(var(--pi-t2) * 100% + 2px);
+  width: calc((var(--pi-h2) - var(--pi-t2)) * 100% - 4px);
+  animation: pi-h2 1750ms linear infinite, pi-t2 1750ms linear infinite;
+}
+.m3-progress--linear.m3-progress--indeterminate .m3-progress__line--wave {
+  background: none;
+  background-color: var(--pi-color);
+  left: calc(var(--pi-t1) * 100% + 2px);
+  width: calc((var(--pi-h1) - var(--pi-t1)) * 100% - 4px);
+  animation: pi-h1 1750ms linear infinite, pi-t1 1750ms linear infinite, m3-progress-wave-flow 900ms linear infinite;
+  height: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='8'%3E%3Cpath d='M0 1 Q 10 7, 20 1 T 40 1 L 40 7 Q 30 1, 20 7 T 0 7 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='8'%3E%3Cpath d='M0 1 Q 10 7, 20 1 T 40 1 L 40 7 Q 30 1, 20 7 T 0 7 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 40px 8px;
+  mask-size: 40px 8px;
+}
+.m3-progress--circular {
+  width: var(--pi-size);
+  height: var(--pi-size);
+/* circle dash 从 3 点起，rotate -90 到 12 点（determinate 弧起点同） */
+  transform: rotate(-90deg);
+/* indeterminate 弧长 = 周长 × sweep 比例（size 变化自动适配）；
            仅 indeterminate 生效，避免覆盖 determinate 的内联 dasharray */
-        &.m3-progress--indeterminate .m3-progress__active
-            stroke-dasharray: calc(var(--pi-circ) * var(--pi-sweep)) var(--pi-circ)
-
-        /* determinate：剩余 track 环（active 末端 + gap 开始，官方无 stop 圆点） */
-        .m3-progress__track-rest
-            stroke: var(--pi-track)
-            transition: stroke-dasharray var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), stroke-dashoffset var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-        /* butt 平头（官方 StrokeCap.Butt） */
-        &.m3-progress--butt
-            .m3-progress__active,
-            .m3-progress__track-rest
-                stroke-linecap: butt
-
-        /* === indeterminate 变体（官方三层动画：弧长伸缩 + 全局旋转 + 步进） === */
-        &.m3-progress--indeterminate.m3-progress--circular-dual
-            /* 官方：弧长 0.1↔0.87 伸缩 + 360° 旋转，6000ms（globalRotation + progress） */
-            animation: m3-progress-circular-rotate 6000ms linear infinite
-            .m3-progress__active
-                animation: m3-progress-circular-dual-sweep 6000ms linear infinite
-
-        &.m3-progress--indeterminate.m3-progress--circular-single
-            /* 固定弧长（0.25 周长）+ 快速旋转（经典） */
-            animation: m3-progress-circular-rotate 1200ms linear infinite
-            .m3-progress__active
-                stroke-dasharray: calc(var(--pi-circ) * 0.25) var(--pi-circ)
-
-        &.m3-progress--indeterminate.m3-progress--circular-wave
-            /* 官方带弧度旋转：全局 3 圈匀速 + 每 1.5s 快转 90°（300ms 强调减速）停 1.2s */
-            animation: m3-progress-circular-wave-rotate 6000ms linear infinite
-            .m3-progress__active
-                /* 官方弧长伸缩 0.1↔0.87（6000ms，上行 standard / 回落 linear） */
-                animation: m3-progress-circular-wave-sweep 6000ms linear infinite
-
-    /* === wavy（官方 WavyProgressIndicator：Expressive 波浪形态） === */
-    &.m3-progress--wavy.m3-progress--linear
-        position: relative
-        width: 100%
-        height: 10px
-        overflow: visible
-        /* 官方 LinearContainerWidth 默认 240 / WaveHeight 10，容器自适应 */
-
-        .m3-progress__wavy-svg
-            position: absolute
-            inset: 0
-            width: 100%
-            height: 10px
-            overflow: visible
-
-        .m3-progress__wavy-track
-            position: absolute
-            inset: 0
-            width: 100%
-            height: 10px
-
-        .m3-progress__wavy-active
-            position: absolute
-            top: 0
-            left: 0
-            height: 10px
-            overflow: hidden
-
-        .m3-progress__wavy-wave
-            position: absolute
-            top: 0
-            left: 0
-            max-width: none
-            display: block
-
-        .m3-progress__thumb
-            position: absolute
-            top: 50%
-            z-index: 1
-            width: 10px
-            height: 10px
-            border-radius: var(--shape-corner-full)
-            background: var(--pi-color)
-            box-shadow: 0 0 0 2px var(--surface-container-lowest)
-            transform: translate(-50%, -50%)
-            pointer-events: none
-            transition: left var(--m3e-duration-short) var(--m3e-easing-standard)
-
-        /* determinate 波流动画：单一路水平平移，周期无缝衔接，由 clipPath 物理限定可视宽度 */
-        .m3-progress__wavy-flow
-            animation: m3-progress-wavy-shift var(--pi-wave-dur) linear infinite
-
-        /* indeterminate 波流动画：路径左移一个波长（--pi-wave-shift 负 px） */
-        .m3-progress__wavy-shift
-            animation: m3-progress-wavy-shift var(--pi-wave-dur) linear infinite
-
-        /* indeterminate 双线复用 pi-h1/pi-t1 时序；内部 SVG 波浪被行容器裁剪 */
-        &.m3-progress--indeterminate .m3-progress__line--wavy
-            background: none
-            border-radius: 0
-            overflow: hidden
-
-        &.m3-progress--indeterminate .m3-progress__line--1.m3-progress__line--wavy .m3-progress__wavy-wave
-            left: calc(-1 * var(--pi-t1) * 240px - 2px)
-
-        &.m3-progress--indeterminate .m3-progress__line--2.m3-progress__line--wavy .m3-progress__wavy-wave
-            left: calc(-1 * var(--pi-t2) * 240px - 2px)
-
-        .m3-progress__stop--wavy
-            top: 50%
-            transform: translate(-50%, -50%)
-
-    &.m3-progress--wavy.m3-progress--circular
-        /* 官方 circular wavy：determinate 起点 3 点钟（不加基准旋转）；
+/* determinate：剩余 track 环（active 末端 + gap 开始，官方无 stop 圆点） */
+/* butt 平头（官方 StrokeCap.Butt） */
+/* === indeterminate 变体（官方三层动画：弧长伸缩 + 全局旋转 + 步进） === */
+}
+.m3-progress--circular .m3-progress__track {
+  stroke: var(--pi-track);
+}
+.m3-progress--circular .m3-progress__active {
+  stroke: var(--pi-color);
+  transition: stroke-dasharray var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-progress--circular.m3-progress--indeterminate .m3-progress__active {
+  stroke-dasharray: calc(var(--pi-circ) * var(--pi-sweep)) var(--pi-circ);
+}
+.m3-progress--circular .m3-progress__track-rest {
+  stroke: var(--pi-track);
+  transition: stroke-dasharray var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), stroke-dashoffset var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-progress--circular.m3-progress--butt .m3-progress__active,
+.m3-progress--circular.m3-progress--butt .m3-progress__track-rest {
+  stroke-linecap: butt;
+}
+.m3-progress--circular.m3-progress--indeterminate.m3-progress--circular-dual {
+/* 官方：弧长 0.1↔0.87 伸缩 + 360° 旋转，6000ms（globalRotation + progress） */
+  animation: m3-progress-circular-rotate 6000ms linear infinite;
+}
+.m3-progress--circular.m3-progress--indeterminate.m3-progress--circular-dual .m3-progress__active {
+  animation: m3-progress-circular-dual-sweep 6000ms linear infinite;
+}
+.m3-progress--circular.m3-progress--indeterminate.m3-progress--circular-single {
+/* 固定弧长（0.25 周长）+ 快速旋转（经典） */
+  animation: m3-progress-circular-rotate 1200ms linear infinite;
+}
+.m3-progress--circular.m3-progress--indeterminate.m3-progress--circular-single .m3-progress__active {
+  stroke-dasharray: calc(var(--pi-circ) * 0.25) var(--pi-circ);
+}
+.m3-progress--circular.m3-progress--indeterminate.m3-progress--circular-wave {
+/* 官方带弧度旋转：全局 3 圈匀速 + 每 1.5s 快转 90°（300ms 强调减速）停 1.2s */
+  animation: m3-progress-circular-wave-rotate 6000ms linear infinite;
+}
+.m3-progress--circular.m3-progress--indeterminate.m3-progress--circular-wave .m3-progress__active {
+/* 官方弧长伸缩 0.1↔0.87（6000ms，上行 standard / 回落 linear） */
+  animation: m3-progress-circular-wave-sweep 6000ms linear infinite;
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  overflow: visible;
+/* 官方 LinearContainerWidth 默认 240 / WaveHeight 10，容器自适应 */
+/* determinate 波流动画：单一路水平平移，周期无缝衔接，由 clipPath 物理限定可视宽度 */
+/* indeterminate 波流动画：路径左移一个波长（--pi-wave-shift 负 px） */
+/* indeterminate 双线复用 pi-h1/pi-t1 时序；内部 SVG 波浪被行容器裁剪 */
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear .m3-progress__wavy-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 10px;
+  overflow: visible;
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear .m3-progress__wavy-track {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 10px;
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear .m3-progress__wavy-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10px;
+  overflow: hidden;
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear .m3-progress__wavy-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+  display: block;
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear .m3-progress__thumb {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--shape-corner-full);
+  background: var(--pi-color);
+  box-shadow: 0 0 0 2px var(--surface-container-lowest);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: left var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear .m3-progress__wavy-flow {
+  animation: m3-progress-wavy-shift var(--pi-wave-dur) linear infinite;
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear .m3-progress__wavy-shift {
+  animation: m3-progress-wavy-shift var(--pi-wave-dur) linear infinite;
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear.m3-progress--indeterminate .m3-progress__line--wavy {
+  background: none;
+  border-radius: 0;
+  overflow: hidden;
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear.m3-progress--indeterminate .m3-progress__line--1.m3-progress__line--wavy .m3-progress__wavy-wave {
+  left: calc(-1 * var(--pi-t1) * 240px - 2px);
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear.m3-progress--indeterminate .m3-progress__line--2.m3-progress__line--wavy .m3-progress__wavy-wave {
+  left: calc(-1 * var(--pi-t2) * 240px - 2px);
+}
+.m3-progress.m3-progress--wavy.m3-progress--linear .m3-progress__stop--wavy {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.m3-progress.m3-progress--wavy.m3-progress--circular {
+/* 官方 circular wavy：determinate 起点 3 点钟（不加基准旋转）；
            indeterminate 起点 12 点钟（rotator 内 +90° 基准） */
-        transform: none
-
-        .m3-progress__wavy-circ-rotator
-            transform-box: view-box
-            transform-origin: center
-            /* 官方 composite：基准 90° + 全局 1080° 匀速 + 附加步进 360°（6000ms） */
-            animation: m3-progress-circular-wavy-rotate 6000ms linear infinite
-
-        .m3-progress__wavy-circ-flow
-            /* determinate 波流动画：dashoffset 平移一个波长 + 同步反向旋转一圈，
+  transform: none;
+}
+.m3-progress.m3-progress--wavy.m3-progress--circular .m3-progress__wavy-circ-rotator {
+  transform-box: view-box;
+  transform-origin: center;
+/* 官方 composite：基准 90° + 全局 1080° 匀速 + 附加步进 360°（6000ms） */
+  animation: m3-progress-circular-wavy-rotate 6000ms linear infinite;
+}
+.m3-progress.m3-progress--wavy.m3-progress--circular .m3-progress__wavy-circ-flow {
+/* determinate 波流动画：dashoffset 平移一个波长 + 同步反向旋转一圈，
                官方取样 [shift, head+shift] 后 rotate(-shift) —— 弧端固定、齿形在弧内流动 */
-            animation:
-                m3-progress-circ-wave-dash var(--pi-circ-flow-dur) linear infinite,
-                m3-progress-circ-wave-counterrotate var(--pi-circ-flow-dur) linear infinite
-            transform-box: view-box
-            transform-origin: center
-
-        .m3-progress__wavy-circ-indet
-            /* indeterminate：弧长伸缩 + 波流动画 + 同步反向旋转
+  animation: m3-progress-circ-wave-dash var(--pi-circ-flow-dur) linear infinite, m3-progress-circ-wave-counterrotate var(--pi-circ-flow-dur) linear infinite;
+  transform-box: view-box;
+  transform-origin: center;
+}
+.m3-progress.m3-progress--wavy.m3-progress--circular .m3-progress__wavy-circ-indet {
+/* indeterminate：弧长伸缩 + 波流动画 + 同步反向旋转
                （弧端固定于轨道、齿形流动，整体随 rotator 刚性旋转，官方行为） */
-            animation:
-                m3-progress-circular-wavy-sweep 6000ms linear infinite,
-                m3-progress-circ-wave-dash var(--pi-circ-flow-dur) linear infinite,
-                m3-progress-circ-wave-counterrotate var(--pi-circ-flow-dur) linear infinite
-            transform-box: view-box
-            transform-origin: center
+  animation: m3-progress-circular-wavy-sweep 6000ms linear infinite, m3-progress-circ-wave-dash var(--pi-circ-flow-dur) linear infinite, m3-progress-circ-wave-counterrotate var(--pi-circ-flow-dur) linear infinite;
+  transform-box: view-box;
+  transform-origin: center;
+}
 /* 官方 Line1/Line2 head/tail 关键帧（1750ms 总循环） */
-@keyframes pi-h1
-    0%
-        --pi-h1: 0
-    57.14%
-        --pi-h1: 1
-    100%
-        --pi-h1: 1
-
-@keyframes pi-t1
-    0%, 14.29%
-        --pi-t1: 0
-    71.43%
-        --pi-t1: 1
-    100%
-        --pi-t1: 1
-
-@keyframes pi-h2
-    0%, 37.14%
-        --pi-h2: 0
-    85.71%
-        --pi-h2: 1
-    100%
-        --pi-h2: 1
-
-@keyframes pi-t2
-    0%, 51.43%
-        --pi-t2: 0
-    100%
-        --pi-t2: 1
-
 /* 波浪横向流动（一个波长 40px 的 mask 滚动） */
-@keyframes m3-progress-wave-flow
-    from
-        -webkit-mask-position: 0 0
-        mask-position: 0 0
-    to
-        -webkit-mask-position: 40px 0
-        mask-position: 40px 0
-
 /* circular indeterminate：整体旋转（弧长动画由 dasharray 变体控制） */
-@keyframes m3-progress-circular-rotate
-    from
-        transform: rotate(-90deg)
-    to
-        transform: rotate(270deg)
-
 /* 官方弧长伸缩：sweep 0.1 ↔ 0.87（6000ms） */
-@keyframes m3-progress-circular-dual-sweep
-    0%, 100%
-        --pi-sweep: 0.1
-    50%
-        --pi-sweep: 0.87
-
 /* 官方弧长伸缩（sweep 0.1 ↔ 0.87，6000ms）：上行 standard easing、回落线性 */
-@keyframes m3-progress-circular-wave-sweep
-    0%
-        --pi-sweep: 0.1
-        animation-timing-function: cubic-bezier(0.2, 0, 0, 1)
-    50%
-        --pi-sweep: 0.87
-        animation-timing-function: linear
-    100%
-        --pi-sweep: 0.1
-
 /* 官方带弧度旋转（6000ms 周期）：合成角度 = -90°（12 点基准）+ 全局 1080° 匀速
    + 附加步进 360°（每 1.5s：300ms 强调减速转 90°，随后停 1.2s，共 4 步）。
    各段 easing：步进段 cubic-bezier(0.05, 0.7, 0.1, 1)（官方 EasingEmphasizedDecelerate），
    停顿段 linear（随全局匀速） */
-@keyframes m3-progress-circular-wave-rotate
-    0%
-        transform: rotate(-90deg)
-        animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1)
-    5%
-        transform: rotate(54deg)
-        animation-timing-function: linear
-    25%
-        transform: rotate(270deg)
-        animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1)
-    30%
-        transform: rotate(414deg)
-        animation-timing-function: linear
-    50%
-        transform: rotate(630deg)
-        animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1)
-    55%
-        transform: rotate(774deg)
-        animation-timing-function: linear
-    75%
-        transform: rotate(990deg)
-        animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1)
-    80%
-        transform: rotate(1134deg)
-        animation-timing-function: linear
-    100%
-        transform: rotate(1350deg)
 /* linear wavy indeterminate 波流动画：路径左移一个波长（--pi-wave-shift 负 px） */
-@keyframes m3-progress-wavy-shift
-    from
-        transform: translateX(0)
-    to
-        transform: translateX(var(--pi-wave-shift))
-
 /* circular wavy indeterminate 合成旋转（6000ms 周期）：基准 90°（12 点）+ 全局 1080° 匀速
    + 附加步进 360°（每 1.5s：300ms 强调减速转 90°，随后停 1.2s，共 4 步）。
    各段 easing：步进段 cubic-bezier(0.05, 0.7, 0.1, 1)（官方 EasingEmphasizedDecelerate），
    停顿段 linear（随全局匀速） */
-@keyframes m3-progress-circular-wavy-rotate
-    0%
-        transform: rotate(90deg)
-        animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1)
-    5%
-        transform: rotate(234deg)
-        animation-timing-function: linear
-    25%
-        transform: rotate(450deg)
-        animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1)
-    30%
-        transform: rotate(594deg)
-        animation-timing-function: linear
-    50%
-        transform: rotate(810deg)
-        animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1)
-    55%
-        transform: rotate(954deg)
-        animation-timing-function: linear
-    75%
-        transform: rotate(1170deg)
-        animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1)
-    80%
-        transform: rotate(1314deg)
-        animation-timing-function: linear
-    100%
-        transform: rotate(1530deg)
-
 /* circular wavy 弧长伸缩（normalized 100 单位）：sweep 0.1 ↔ 0.87（6000ms，
    上行 standard cubic-bezier(0.2,0,0,1)、回落 linear） */
-@keyframes m3-progress-circular-wavy-sweep
-    0%
-        stroke-dasharray: 10 90
-        animation-timing-function: cubic-bezier(0.2, 0, 0, 1)
-    50%
-        stroke-dasharray: 87 13
-        animation-timing-function: linear
-    100%
-        stroke-dasharray: 10 90
-
 /* circular wavy 波流动画：dashoffset 平移一个波长（弧沿路径滑动，齿形周期无缝回绕） */
-@keyframes m3-progress-circ-wave-dash
-    from
-        stroke-dashoffset: 0
-    to
-        stroke-dashoffset: -100
-
 /* circular wavy 波流动画同步反向旋转：dashoffset 前移一圈使弧窗口绕圆滑动，
    这里反向旋转一圈将其抵消 —— 弧端固定、星形齿在弧内流动（官方 rotate(-shift)） */
-@keyframes m3-progress-circ-wave-counterrotate
-    from
-        transform: rotate(0deg)
-    to
-        transform: rotate(-360deg)
+@-moz-keyframes pi-h1 {
+  0% {
+    --pi-h1: 0;
+  }
+  57.14% {
+    --pi-h1: 1;
+  }
+  100% {
+    --pi-h1: 1;
+  }
+}
+@-webkit-keyframes pi-h1 {
+  0% {
+    --pi-h1: 0;
+  }
+  57.14% {
+    --pi-h1: 1;
+  }
+  100% {
+    --pi-h1: 1;
+  }
+}
+@-o-keyframes pi-h1 {
+  0% {
+    --pi-h1: 0;
+  }
+  57.14% {
+    --pi-h1: 1;
+  }
+  100% {
+    --pi-h1: 1;
+  }
+}
+@keyframes pi-h1 {
+  0% {
+    --pi-h1: 0;
+  }
+  57.14% {
+    --pi-h1: 1;
+  }
+  100% {
+    --pi-h1: 1;
+  }
+}
+@-moz-keyframes pi-t1 {
+  0%, 14.29% {
+    --pi-t1: 0;
+  }
+  71.43% {
+    --pi-t1: 1;
+  }
+  100% {
+    --pi-t1: 1;
+  }
+}
+@-webkit-keyframes pi-t1 {
+  0%, 14.29% {
+    --pi-t1: 0;
+  }
+  71.43% {
+    --pi-t1: 1;
+  }
+  100% {
+    --pi-t1: 1;
+  }
+}
+@-o-keyframes pi-t1 {
+  0%, 14.29% {
+    --pi-t1: 0;
+  }
+  71.43% {
+    --pi-t1: 1;
+  }
+  100% {
+    --pi-t1: 1;
+  }
+}
+@keyframes pi-t1 {
+  0%, 14.29% {
+    --pi-t1: 0;
+  }
+  71.43% {
+    --pi-t1: 1;
+  }
+  100% {
+    --pi-t1: 1;
+  }
+}
+@-moz-keyframes pi-h2 {
+  0%, 37.14% {
+    --pi-h2: 0;
+  }
+  85.71% {
+    --pi-h2: 1;
+  }
+  100% {
+    --pi-h2: 1;
+  }
+}
+@-webkit-keyframes pi-h2 {
+  0%, 37.14% {
+    --pi-h2: 0;
+  }
+  85.71% {
+    --pi-h2: 1;
+  }
+  100% {
+    --pi-h2: 1;
+  }
+}
+@-o-keyframes pi-h2 {
+  0%, 37.14% {
+    --pi-h2: 0;
+  }
+  85.71% {
+    --pi-h2: 1;
+  }
+  100% {
+    --pi-h2: 1;
+  }
+}
+@keyframes pi-h2 {
+  0%, 37.14% {
+    --pi-h2: 0;
+  }
+  85.71% {
+    --pi-h2: 1;
+  }
+  100% {
+    --pi-h2: 1;
+  }
+}
+@-moz-keyframes pi-t2 {
+  0%, 51.43% {
+    --pi-t2: 0;
+  }
+  100% {
+    --pi-t2: 1;
+  }
+}
+@-webkit-keyframes pi-t2 {
+  0%, 51.43% {
+    --pi-t2: 0;
+  }
+  100% {
+    --pi-t2: 1;
+  }
+}
+@-o-keyframes pi-t2 {
+  0%, 51.43% {
+    --pi-t2: 0;
+  }
+  100% {
+    --pi-t2: 1;
+  }
+}
+@keyframes pi-t2 {
+  0%, 51.43% {
+    --pi-t2: 0;
+  }
+  100% {
+    --pi-t2: 1;
+  }
+}
+@-moz-keyframes m3-progress-wave-flow {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 40px 0;
+    mask-position: 40px 0;
+  }
+}
+@-webkit-keyframes m3-progress-wave-flow {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 40px 0;
+    mask-position: 40px 0;
+  }
+}
+@-o-keyframes m3-progress-wave-flow {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 40px 0;
+    mask-position: 40px 0;
+  }
+}
+@keyframes m3-progress-wave-flow {
+  from {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-position: 40px 0;
+    mask-position: 40px 0;
+  }
+}
+@-moz-keyframes m3-progress-circular-rotate {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+@-webkit-keyframes m3-progress-circular-rotate {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+@-o-keyframes m3-progress-circular-rotate {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+@keyframes m3-progress-circular-rotate {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+@-moz-keyframes m3-progress-circular-dual-sweep {
+  0%, 100% {
+    --pi-sweep: 0.1;
+  }
+  50% {
+    --pi-sweep: 0.87;
+  }
+}
+@-webkit-keyframes m3-progress-circular-dual-sweep {
+  0%, 100% {
+    --pi-sweep: 0.1;
+  }
+  50% {
+    --pi-sweep: 0.87;
+  }
+}
+@-o-keyframes m3-progress-circular-dual-sweep {
+  0%, 100% {
+    --pi-sweep: 0.1;
+  }
+  50% {
+    --pi-sweep: 0.87;
+  }
+}
+@keyframes m3-progress-circular-dual-sweep {
+  0%, 100% {
+    --pi-sweep: 0.1;
+  }
+  50% {
+    --pi-sweep: 0.87;
+  }
+}
+@-moz-keyframes m3-progress-circular-wave-sweep {
+  0% {
+    --pi-sweep: 0.1;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  50% {
+    --pi-sweep: 0.87;
+    animation-timing-function: linear;
+  }
+  100% {
+    --pi-sweep: 0.1;
+  }
+}
+@-webkit-keyframes m3-progress-circular-wave-sweep {
+  0% {
+    --pi-sweep: 0.1;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  50% {
+    --pi-sweep: 0.87;
+    animation-timing-function: linear;
+  }
+  100% {
+    --pi-sweep: 0.1;
+  }
+}
+@-o-keyframes m3-progress-circular-wave-sweep {
+  0% {
+    --pi-sweep: 0.1;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  50% {
+    --pi-sweep: 0.87;
+    animation-timing-function: linear;
+  }
+  100% {
+    --pi-sweep: 0.1;
+  }
+}
+@keyframes m3-progress-circular-wave-sweep {
+  0% {
+    --pi-sweep: 0.1;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  50% {
+    --pi-sweep: 0.87;
+    animation-timing-function: linear;
+  }
+  100% {
+    --pi-sweep: 0.1;
+  }
+}
+@-moz-keyframes m3-progress-circular-wave-rotate {
+  0% {
+    transform: rotate(-90deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  5% {
+    transform: rotate(54deg);
+    animation-timing-function: linear;
+  }
+  25% {
+    transform: rotate(270deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  30% {
+    transform: rotate(414deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: rotate(630deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  55% {
+    transform: rotate(774deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(990deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  80% {
+    transform: rotate(1134deg);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: rotate(1350deg);
+  }
+}
+@-webkit-keyframes m3-progress-circular-wave-rotate {
+  0% {
+    transform: rotate(-90deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  5% {
+    transform: rotate(54deg);
+    animation-timing-function: linear;
+  }
+  25% {
+    transform: rotate(270deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  30% {
+    transform: rotate(414deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: rotate(630deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  55% {
+    transform: rotate(774deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(990deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  80% {
+    transform: rotate(1134deg);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: rotate(1350deg);
+  }
+}
+@-o-keyframes m3-progress-circular-wave-rotate {
+  0% {
+    transform: rotate(-90deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  5% {
+    transform: rotate(54deg);
+    animation-timing-function: linear;
+  }
+  25% {
+    transform: rotate(270deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  30% {
+    transform: rotate(414deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: rotate(630deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  55% {
+    transform: rotate(774deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(990deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  80% {
+    transform: rotate(1134deg);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: rotate(1350deg);
+  }
+}
+@keyframes m3-progress-circular-wave-rotate {
+  0% {
+    transform: rotate(-90deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  5% {
+    transform: rotate(54deg);
+    animation-timing-function: linear;
+  }
+  25% {
+    transform: rotate(270deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  30% {
+    transform: rotate(414deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: rotate(630deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  55% {
+    transform: rotate(774deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(990deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  80% {
+    transform: rotate(1134deg);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: rotate(1350deg);
+  }
+}
+@-moz-keyframes m3-progress-wavy-shift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--pi-wave-shift));
+  }
+}
+@-webkit-keyframes m3-progress-wavy-shift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--pi-wave-shift));
+  }
+}
+@-o-keyframes m3-progress-wavy-shift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--pi-wave-shift));
+  }
+}
+@keyframes m3-progress-wavy-shift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--pi-wave-shift));
+  }
+}
+@-moz-keyframes m3-progress-circular-wavy-rotate {
+  0% {
+    transform: rotate(90deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  5% {
+    transform: rotate(234deg);
+    animation-timing-function: linear;
+  }
+  25% {
+    transform: rotate(450deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  30% {
+    transform: rotate(594deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: rotate(810deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  55% {
+    transform: rotate(954deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(1170deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  80% {
+    transform: rotate(1314deg);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: rotate(1530deg);
+  }
+}
+@-webkit-keyframes m3-progress-circular-wavy-rotate {
+  0% {
+    transform: rotate(90deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  5% {
+    transform: rotate(234deg);
+    animation-timing-function: linear;
+  }
+  25% {
+    transform: rotate(450deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  30% {
+    transform: rotate(594deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: rotate(810deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  55% {
+    transform: rotate(954deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(1170deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  80% {
+    transform: rotate(1314deg);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: rotate(1530deg);
+  }
+}
+@-o-keyframes m3-progress-circular-wavy-rotate {
+  0% {
+    transform: rotate(90deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  5% {
+    transform: rotate(234deg);
+    animation-timing-function: linear;
+  }
+  25% {
+    transform: rotate(450deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  30% {
+    transform: rotate(594deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: rotate(810deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  55% {
+    transform: rotate(954deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(1170deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  80% {
+    transform: rotate(1314deg);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: rotate(1530deg);
+  }
+}
+@keyframes m3-progress-circular-wavy-rotate {
+  0% {
+    transform: rotate(90deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  5% {
+    transform: rotate(234deg);
+    animation-timing-function: linear;
+  }
+  25% {
+    transform: rotate(450deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  30% {
+    transform: rotate(594deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: rotate(810deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  55% {
+    transform: rotate(954deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(1170deg);
+    animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+  80% {
+    transform: rotate(1314deg);
+    animation-timing-function: linear;
+  }
+  100% {
+    transform: rotate(1530deg);
+  }
+}
+@-moz-keyframes m3-progress-circular-wavy-sweep {
+  0% {
+    stroke-dasharray: 10 90;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  50% {
+    stroke-dasharray: 87 13;
+    animation-timing-function: linear;
+  }
+  100% {
+    stroke-dasharray: 10 90;
+  }
+}
+@-webkit-keyframes m3-progress-circular-wavy-sweep {
+  0% {
+    stroke-dasharray: 10 90;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  50% {
+    stroke-dasharray: 87 13;
+    animation-timing-function: linear;
+  }
+  100% {
+    stroke-dasharray: 10 90;
+  }
+}
+@-o-keyframes m3-progress-circular-wavy-sweep {
+  0% {
+    stroke-dasharray: 10 90;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  50% {
+    stroke-dasharray: 87 13;
+    animation-timing-function: linear;
+  }
+  100% {
+    stroke-dasharray: 10 90;
+  }
+}
+@keyframes m3-progress-circular-wavy-sweep {
+  0% {
+    stroke-dasharray: 10 90;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+  50% {
+    stroke-dasharray: 87 13;
+    animation-timing-function: linear;
+  }
+  100% {
+    stroke-dasharray: 10 90;
+  }
+}
+@-moz-keyframes m3-progress-circ-wave-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@-webkit-keyframes m3-progress-circ-wave-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@-o-keyframes m3-progress-circ-wave-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@keyframes m3-progress-circ-wave-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@-moz-keyframes m3-progress-circ-wave-counterrotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@-webkit-keyframes m3-progress-circ-wave-counterrotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@-o-keyframes m3-progress-circ-wave-counterrotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes m3-progress-circ-wave-counterrotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
 </style>

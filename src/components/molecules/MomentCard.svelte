@@ -104,114 +104,120 @@ const timeText = $derived(formatDateToYYYYMMDDHHmm(publishedAt));
 	{/if}
 </article>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.moment-card
-	display: flex
-	flex-direction: column
-	box-sizing: border-box
-	width: 100%
-	/* 网格项自动最小尺寸归零：卡片随轨道收缩，长内容由正文自行换行 */
-	min-width: 0
-	padding: var(--m3e-space-4) var(--m3e-space-5)
-	border-radius: var(--shape-corner-l)
-	background: var(--card-bg)
-	border: 1px solid var(--outline-variant)
-	color: var(--on-surface)
-
-	&__header
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-3)
-
-	&__author
-		display: inline-flex
-		align-items: center
-		gap: var(--m3e-space-2)
-		min-width: 0
-		text-decoration: none
-		border-radius: var(--shape-corner-full)
-		&:focus-visible
-			outline: 2px solid var(--primary)
-			outline-offset: 2px
-
-	&__name
-		overflow: hidden
-		text-overflow: ellipsis
-		white-space: nowrap
-		color: var(--on-surface)
-		font: var(--m3e-type-title-small)
-		font-weight: 600
-
-	&__badges
-		display: inline-flex
-		align-items: center
-		gap: var(--m3e-space-1)
-		flex-shrink: 0
-
-	&__badge
-		display: inline-flex
-		align-items: center
-		gap: var(--m3e-space-1)
-		padding: 0.1875rem 0.5rem
-		border-radius: var(--shape-corner-full)
-		background: var(--surface-container-high)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-small)
-		> :global(svg)
-			width: 1rem
-			height: 1rem
-
-		&--pinned
-			background: var(--primary-container)
-			color: var(--on-primary-container)
-
-	&__time
-		margin-left: auto
-		flex-shrink: 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-
-	&__content
-		margin-top: var(--m3e-space-3)
-		color: var(--on-surface)
-		font: var(--m3e-type-body-medium)
-		line-height: 1.75
-		/* anywhere：换行同时参与 min-content 计算，窄宽度下长链接才不会溢出 */
-		overflow-wrap: anywhere
-		:global(p:first-child)
-			margin-top: 0
-		:global(p:last-child)
-			margin-bottom: 0
-
-	&__footer
-		display: flex
-		align-items: center
-		justify-content: space-between
-		gap: var(--m3e-space-3)
-		flex-wrap: wrap
-		margin-top: var(--m3e-space-3)
-
-	&__location
-		display: inline-flex
-		align-items: center
-		gap: 0.25rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-small)
-		> :global(svg)
-			width: 1rem
-			height: 1rem
-
-	&__tags
-		display: flex
-		flex-wrap: wrap
-		gap: 0.375rem
-
-	&__tag
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-small)
-
-	@media (max-width: bp-sm - 1px)
-		padding: 0.875rem 1rem
+<style>
+.moment-card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+/* 网格项自动最小尺寸归零：卡片随轨道收缩，长内容由正文自行换行 */
+  min-width: 0;
+  padding: var(--m3e-space-4) var(--m3e-space-5);
+  border-radius: var(--shape-corner-l);
+  background: var(--card-bg);
+  border: 1px solid var(--outline-variant);
+  color: var(--on-surface);
+}
+.moment-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-3);
+}
+.moment-card__author {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m3e-space-2);
+  min-width: 0;
+  text-decoration: none;
+  border-radius: var(--shape-corner-full);
+}
+.moment-card__author:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.moment-card__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--on-surface);
+  font: var(--m3e-type-title-small);
+  font-weight: 600;
+}
+.moment-card__badges {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m3e-space-1);
+  flex-shrink: 0;
+}
+.moment-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m3e-space-1);
+  padding: 0.1875rem 0.5rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+}
+.moment-card__badge > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+}
+.moment-card__badge--pinned {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+.moment-card__time {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+}
+.moment-card__content {
+  margin-top: var(--m3e-space-3);
+  color: var(--on-surface);
+  font: var(--m3e-type-body-medium);
+  line-height: 1.75;
+/* anywhere：换行同时参与 min-content 计算，窄宽度下长链接才不会溢出 */
+  overflow-wrap: anywhere;
+}
+.moment-card__content :global(p:first-child) {
+  margin-top: 0;
+}
+.moment-card__content :global(p:last-child) {
+  margin-bottom: 0;
+}
+.moment-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--m3e-space-3);
+  flex-wrap: wrap;
+  margin-top: var(--m3e-space-3);
+}
+.moment-card__location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+}
+.moment-card__location > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+}
+.moment-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+.moment-card__tag {
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+}
+@media (max-width: 639px) {
+  .moment-card {
+    padding: 0.875rem 1rem;
+  }
+}
 </style>

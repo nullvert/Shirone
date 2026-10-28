@@ -107,71 +107,81 @@ const maxWidth = bottomBarConfig?.maxWidth ?? "56rem";
 	</div>
 </nav>
 
-<style lang="stylus">
-.bottom-app-bar
-	background: unquote("color-mix(in oklab, var(--surface) 92%, transparent)")
-	backdrop-filter: blur(16px)
-	-webkit-backdrop-filter: blur(16px)
-	border-top: 1px solid var(--outline-variant)
-	padding-bottom: env(safe-area-inset-bottom, 0px)
-	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05)
-	transition:
-		background-color var(--m3e-duration-medium) var(--m3e-easing-standard),
-		box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard),
-		transform var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-.bottom-app-bar__container
-	box-sizing: border-box
-	max-width: var(--bar-max-w, 56rem)
-	height: var(--bar-h-mobile)
-
-	@media (min-width: 600px)
-		height: var(--bar-h-tablet)
-
-:global(.bottom-bar-btn)
-	width: var(--btn-sz-mobile) !important
-	height: var(--btn-sz-mobile) !important
-
-	@media (min-width: 600px)
-		width: var(--btn-sz-tablet) !important
-		height: var(--btn-sz-tablet) !important
-
+<style>
+.bottom-app-bar {
+  background: color-mix(in oklab, var(--surface) 92%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--outline-variant);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  transition: background-color var(--m3e-duration-medium) var(--m3e-easing-standard), box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.bottom-app-bar__container {
+  box-sizing: border-box;
+  max-width: var(--bar-max-w, 56rem);
+  height: var(--bar-h-mobile);
+}
+@media (min-width: 600px) {
+  .bottom-app-bar__container {
+    height: var(--bar-h-tablet);
+  }
+}
+:global(.bottom-bar-btn) {
+  width: var(--btn-sz-mobile) !important;
+  height: var(--btn-sz-mobile) !important;
+}
+@media (min-width: 600px) {
+  :global(.bottom-bar-btn) {
+    width: var(--btn-sz-tablet) !important;
+    height: var(--btn-sz-tablet) !important;
+  }
+}
 /* Иконки автоматически занимают идеальные 54% от размера кнопки */
-:global(.bottom-bar-icon)
-	font-size: calc(var(--btn-sz-mobile) * 0.54) !important
-	width: calc(var(--btn-sz-mobile) * 0.54) !important
-	height: calc(var(--btn-sz-mobile) * 0.54) !important
-
-	@media (min-width: 600px)
-		font-size: calc(var(--btn-sz-tablet) * 0.54) !important
-		width: calc(var(--btn-sz-tablet) * 0.54) !important
-		height: calc(var(--btn-sz-tablet) * 0.54) !important
-
-.bottom-bar-switch
-	width: var(--btn-sz-mobile)
-	height: var(--btn-sz-mobile)
-
-	@media (min-width: 600px)
-		width: var(--btn-sz-tablet)
-		height: var(--btn-sz-tablet)
-
-	:global(button#scheme-switch)
-		width: 100% !important
-		height: 100% !important
-
-	:global(button#scheme-switch svg)
-		width: calc(var(--btn-sz-mobile) * 0.54) !important
-		height: calc(var(--btn-sz-mobile) * 0.54) !important
-
-		@media (min-width: 600px)
-			width: calc(var(--btn-sz-tablet) * 0.54) !important
-			height: calc(var(--btn-sz-tablet) * 0.54) !important
-
-.bottom-bar-logo
-	height: var(--btn-sz-mobile)
-
-	@media (min-width: 600px)
-		height: var(--btn-sz-tablet)
+:global(.bottom-bar-icon) {
+  font-size: calc(var(--btn-sz-mobile) * 0.54) !important;
+  width: calc(var(--btn-sz-mobile) * 0.54) !important;
+  height: calc(var(--btn-sz-mobile) * 0.54) !important;
+}
+@media (min-width: 600px) {
+  :global(.bottom-bar-icon) {
+    font-size: calc(var(--btn-sz-tablet) * 0.54) !important;
+    width: calc(var(--btn-sz-tablet) * 0.54) !important;
+    height: calc(var(--btn-sz-tablet) * 0.54) !important;
+  }
+}
+.bottom-bar-switch {
+  width: var(--btn-sz-mobile);
+  height: var(--btn-sz-mobile);
+}
+@media (min-width: 600px) {
+  .bottom-bar-switch {
+    width: var(--btn-sz-tablet);
+    height: var(--btn-sz-tablet);
+  }
+}
+.bottom-bar-switch :global(button#scheme-switch) {
+  width: 100% !important;
+  height: 100% !important;
+}
+.bottom-bar-switch :global(button#scheme-switch svg) {
+  width: calc(var(--btn-sz-mobile) * 0.54) !important;
+  height: calc(var(--btn-sz-mobile) * 0.54) !important;
+}
+@media (min-width: 600px) {
+  .bottom-bar-switch :global(button#scheme-switch svg) {
+    width: calc(var(--btn-sz-tablet) * 0.54) !important;
+    height: calc(var(--btn-sz-tablet) * 0.54) !important;
+  }
+}
+.bottom-bar-logo {
+  height: var(--btn-sz-mobile);
+}
+@media (min-width: 600px) {
+  .bottom-bar-logo {
+    height: var(--btn-sz-tablet);
+  }
+}
 </style>
 
 <script>

@@ -59,99 +59,98 @@ const host = $derived.by(() => {
 	</div>
 </a>
 
-<style lang="stylus">
-.friend-card
-	position: relative
-	display: flex
-	flex-direction: column
-	box-sizing: border-box
-	width: 100%
-	overflow: hidden
-	border-radius: var(--shape-corner-l)
-	background: var(--card-bg)
-	color: var(--on-surface)
-	border: 1px solid var(--outline-variant)
-	text-decoration: none
-	transition:
-		border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-		background-color var(--m3e-duration-medium) var(--m3e-easing-standard)
-	&:hover
-		border-color: var(--outline)
-		box-shadow: var(--m3e-elevation-1)
-		background: unquote("color-mix(in oklab, var(--on-surface) 3%, var(--card-bg))")
-
-	&__body
-		flex: 1
-		min-width: 0
-		padding: var(--m3e-space-4) var(--m3e-space-5)
-
-	&__header
-		display: flex
-		align-items: center
-		gap: var(--m3e-space-3)
-		margin-bottom: var(--m3e-space-3)
-
-	&__info
-		min-width: 0
-		flex: 1
-
-	&__title
-		display: flex
-		align-items: center
-		margin: 0
-		color: var(--on-surface)
-		font: var(--m3e-type-title-small)
-		font-weight: 600
-		line-height: 1.3
-		text-decoration: none
-		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-		.friend-card:hover &
-			color: var(--primary)
-
-	&__title-text
-		min-width: 0
-		overflow: hidden
-		text-overflow: ellipsis
-		white-space: nowrap
-
-	&__host
-		margin-top: 0.125rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-
-	&__arrow
-		display: inline-flex
-		align-items: center
-		flex-shrink: 0
-		color: var(--on-surface-variant)
-		transition:
-			color var(--m3e-duration-short) var(--m3e-easing-standard),
-			transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-
-		.friend-card:hover &
-			color: var(--primary)
-			transform: translateX(0.25rem)
-
-	&__desc
-		margin: 0 0 var(--m3e-space-2)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-		line-height: 1.5
-		display: -webkit-box
-		-webkit-line-clamp: 2
-		-webkit-box-orient: vertical
-		overflow: hidden
-
-	&__tags
-		display: flex
-		flex-wrap: wrap
-		gap: var(--m3e-space-1)
-
-	&__tag
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-small)
+<style>
+.friend-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--shape-corner-l);
+  background: var(--card-bg);
+  color: var(--on-surface);
+  border: 1px solid var(--outline-variant);
+  text-decoration: none;
+  transition: border-color var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), background-color var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.friend-card:hover {
+  border-color: var(--outline);
+  box-shadow: var(--m3e-elevation-1);
+  background: color-mix(in oklab, var(--on-surface) 3%, var(--card-bg));
+}
+.friend-card__body {
+  flex: 1;
+  min-width: 0;
+  padding: var(--m3e-space-4) var(--m3e-space-5);
+}
+.friend-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--m3e-space-3);
+  margin-bottom: var(--m3e-space-3);
+}
+.friend-card__info {
+  min-width: 0;
+  flex: 1;
+}
+.friend-card__title {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: var(--on-surface);
+  font: var(--m3e-type-title-small);
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.friend-card:hover .friend-card__title {
+  color: var(--primary);
+}
+.friend-card__title-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.friend-card__host {
+  margin-top: 0.125rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+}
+.friend-card__arrow {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--on-surface-variant);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.friend-card__arrow > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.friend-card:hover .friend-card__arrow {
+  color: var(--primary);
+  transform: translateX(0.25rem);
+}
+.friend-card__desc {
+  margin: 0 0 var(--m3e-space-2);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.friend-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m3e-space-1);
+}
+.friend-card__tag {
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-small);
+}
 </style>

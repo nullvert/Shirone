@@ -93,139 +93,147 @@ let focused = $state(false);
     {/if}
 </div>
 
-<style lang="stylus">
-.m3-text-field
-    position: relative
-    display: flex
-    align-items: center
-    gap: 0.75rem
-    width: 100%
-    min-width: 0
-    height: 3rem
-    box-sizing: border-box
-    color: var(--on-surface)
-    font: var(--m3e-type-body-large)
-    transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), border-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    /* ===== filled（默认）：--field-filled-bg + 底部下划线 ===== */
-    &--filled
-        padding: 0 1rem
-        border-radius: var(--shape-corner-m)
-        background: var(--field-filled-bg)
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 12%, var(--field-filled-bg))")
-        &:focus-within
-            background: unquote("color-mix(in oklab, var(--on-surface) 16%, var(--field-filled-bg))")
-
-    /* ===== outlined：surface + 边框线 ===== */
-    &--outlined
-        padding: 0 1rem
-        border-radius: var(--shape-corner-xs)
-        border: 1px solid var(--outline-variant)
-        background: var(--surface)
-        &:hover
-            border-color: var(--outline)
-        &:focus-within
-            border-color: var(--primary)
-            border-width: 2px
-
-    /* 错误态：下划线/边框变 error */
-    &--error.m3-text-field--filled &__underline
-        opacity: 1
-        transform: scaleX(1)
-        background: var(--error)
-
-    &--error.m3-text-field--outlined
-        border-color: var(--error)
-        border-width: 2px
-        &:hover
-            border-color: var(--error)
-
-    &__icon,
-    &__trailing
-        display: flex
-        align-items: center
-        flex: none
-        color: var(--on-surface-variant)
-        font-size: 1.25rem
-        line-height: 1
-
-    &__icon:empty,
-    &__trailing:empty
-        display: none
-
-    &__field
-        position: relative
-        flex: 1
-        min-width: 0
-        display: flex
-        align-items: center
-        height: 100%
-
-    input
-        width: 100% /* 确保输入框填满弹性容器并覆盖浏览器默认内在尺寸 */
-        flex: 1
-        min-width: 0
-        background: transparent
-        border: none
-        outline: none
-        color: var(--on-surface)
-        caret-color: var(--primary)
-        font: inherit
-        &::placeholder
-            color: var(--on-surface-variant)
-        &:disabled
-            cursor: not-allowed
-
-    &:has(input:disabled)
-        opacity: 0.38
-        pointer-events: none
-
-    /* 浮动 label：focus/有值时上浮顶部（M3 标准） */
-    &__label
-        position: absolute
-        left: 0
-        top: 50%
-        transform: translateY(-50%)
-        font: var(--m3e-type-body-large)
-        color: var(--on-surface-variant)
-        pointer-events: none
-        transition: all var(--m3e-duration-short) var(--m3e-easing-standard)
-
-        &--float
-            top: 0
-            transform: none
-            font: var(--m3e-type-body-small)
-            color: var(--primary)
-
-    &--error &__label--float
-        color: var(--error)
-
-    /* filled 下划线 */
-    &__underline
-        position: absolute
-        left: 0.5rem
-        right: 0.5rem
-        bottom: 0.25rem
-        height: 2px
-        border-radius: var(--shape-corner-full)
-        background: var(--primary)
-        opacity: 0
-        transform: scaleX(0.5)
-        transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate)
-
-    &--filled &__underline
-        display: block
-
-    &--filled:focus-within &__underline
-        opacity: 1
-        transform: scaleX(1)
-
-    &__error
-        position: absolute
-        top: 100%
-        left: 1rem
-        margin-top: 4px
-        font: var(--m3e-type-label-small)
-        color: var(--error)
+<style>
+.m3-text-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-width: 0;
+  height: 3rem;
+  box-sizing: border-box;
+  color: var(--on-surface);
+  font: var(--m3e-type-body-large);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), border-color var(--m3e-duration-short) var(--m3e-easing-standard);
+/* ===== filled（默认）：--field-filled-bg + 底部下划线 ===== */
+/* ===== outlined：surface + 边框线 ===== */
+/* 错误态：下划线/边框变 error */
+/* 浮动 label：focus/有值时上浮顶部（M3 标准） */
+/* filled 下划线 */
+}
+.m3-text-field--filled {
+  padding: 0 1rem;
+  border-radius: var(--shape-corner-m);
+  background: var(--field-filled-bg);
+}
+.m3-text-field--filled:hover {
+  background: color-mix(in oklab, var(--on-surface) 12%, var(--field-filled-bg));
+}
+.m3-text-field--filled:focus-within {
+  background: color-mix(in oklab, var(--on-surface) 16%, var(--field-filled-bg));
+}
+.m3-text-field--outlined {
+  padding: 0 1rem;
+  border-radius: var(--shape-corner-xs);
+  border: 1px solid var(--outline-variant);
+  background: var(--surface);
+}
+.m3-text-field--outlined:hover {
+  border-color: var(--outline);
+}
+.m3-text-field--outlined:focus-within {
+  border-color: var(--primary);
+  border-width: 2px;
+}
+.m3-text-field--error.m3-text-field--filled .m3-text-field__underline {
+  opacity: 1;
+  transform: scaleX(1);
+  background: var(--error);
+}
+.m3-text-field--error.m3-text-field--outlined {
+  border-color: var(--error);
+  border-width: 2px;
+}
+.m3-text-field--error.m3-text-field--outlined:hover {
+  border-color: var(--error);
+}
+.m3-text-field__icon,
+.m3-text-field__trailing {
+  display: flex;
+  align-items: center;
+  flex: none;
+  color: var(--on-surface-variant);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.m3-text-field__icon:empty,
+.m3-text-field__trailing:empty {
+  display: none;
+}
+.m3-text-field__field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.m3-text-field input {
+  width: 100% /* 确保输入框填满弹性容器并覆盖浏览器默认内在尺寸 */;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--on-surface);
+  caret-color: var(--primary);
+  font: inherit;
+}
+.m3-text-field input::placeholder {
+  color: var(--on-surface-variant);
+}
+.m3-text-field input:disabled {
+  cursor: not-allowed;
+}
+.m3-text-field:has(input:disabled) {
+  opacity: 0.38;
+  pointer-events: none;
+}
+.m3-text-field__label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font: var(--m3e-type-body-large);
+  color: var(--on-surface-variant);
+  pointer-events: none;
+  transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-text-field__label--float {
+  top: 0;
+  transform: none;
+  font: var(--m3e-type-body-small);
+  color: var(--primary);
+}
+.m3-text-field--error .m3-text-field__label--float {
+  color: var(--error);
+}
+.m3-text-field__underline {
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.25rem;
+  height: 2px;
+  border-radius: var(--shape-corner-full);
+  background: var(--primary);
+  opacity: 0;
+  transform: scaleX(0.5);
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-text-field--filled .m3-text-field__underline {
+  display: block;
+}
+.m3-text-field--filled:focus-within .m3-text-field__underline {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.m3-text-field__error {
+  position: absolute;
+  top: 100%;
+  left: 1rem;
+  margin-top: 4px;
+  font: var(--m3e-type-label-small);
+  color: var(--error);
+}
 </style>

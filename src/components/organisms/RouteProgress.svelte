@@ -39,35 +39,35 @@ onMount(() => {
 	<ProgressIndicator indeterminate={style} />
 </div>
 
-<style lang="stylus">
-.route-progress
-	position: fixed
-	top: 4rem
-	left: 0
-	right: 0
-	height: 3px
-	z-index: 65
-	opacity: 0
-	pointer-events: none
-	overflow: hidden
-	transition:
-		top var(--m3e-duration-short) var(--m3e-easing-standard),
-		opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	/* Отображается только на десктопе с шапкой (>= 1024px), на мобильных скрыт */
-	display: none
-
-	@media (min-width: 1024px)
-		display: block
-
-	&--visible
-		opacity: 1
-
+<style>
+.route-progress {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 65;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: top var(--m3e-duration-short) var(--m3e-easing-standard), opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+/* Отображается только на десктопе с шапкой (>= 1024px), на мобильных скрыт */
+  display: none;
+}
+@media (min-width: 1024px) {
+  .route-progress {
+    display: block;
+  }
+}
+.route-progress--visible {
+  opacity: 1;
+}
 /* Когда баннер открыт и не проскроллен, TopAppBar прозрачный у самого верха */
-@media (min-width: 1024px)
-	:global(body[data-banner-visible="true"][data-banner-scrolled="false"]) .route-progress
-		top: 0
-
+@media (min-width: 1024px) {
+  :global(body[data-banner-visible="true"][data-banner-scrolled="false"]) .route-progress {
+    top: 0;
+  }
+}
 </style>
 
 

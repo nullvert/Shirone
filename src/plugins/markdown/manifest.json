@@ -265,7 +265,7 @@
 			"registeredIn": "src/utils/markdown-processor.mjs",
 			"styles": [
 				"src/styles/markdown/admonitions.css",
-				"src/styles/variables.styl"
+				"src/styles/variables.css"
 			],
 			"runtime": {
 				"mode": "native",

@@ -631,10 +631,9 @@ async function createBundledIntegrations(
 			...(expressiveCodeShared as object),
 		}),
 		svelte({
-			// The theme's Svelte components use `<style lang="stylus">`, which
-			// needs `vitePreprocess`. Supplied here for *every* mode: the repo's
-			// own `svelte.config.js` is only read by editor tooling now, and a
-			// user's project has no such file at all.
+			// Svelte components use native CSS with CSS Nesting, preprocessed via vitePreprocess.
+			// Supplied here for *every* mode: the repo's own `svelte.config.js` is only read
+			// by editor tooling now, and a user's project has no such file at all.
 			preprocess: [vitePreprocess({ script: true })],
 			compilerOptions: svelteCompilerOptions(command === "dev"),
 		}),

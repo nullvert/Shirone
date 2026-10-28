@@ -181,10 +181,8 @@ export function shironesOverlay(options: OverlayPluginOptions): Plugin {
 
 		load(id) {
 			// User-overridden .astro/.svelte files keep the theme's relative
-			// Stylus imports (`@import "../styles/…"`), which only exist inside
-			// the package. Rewrite them here — in `load` rather than `transform` —
-			// because vite-plugin-astro compiles `<style lang="stylus">` in its own
-			// pre-transform, which runs before this plugin's transform hook.
+			// style imports (`@import "../styles/…"`), which only exist inside
+			// the package. Rewrite them here — in `load` rather than `transform`.
 			const [path, query] = splitQuery(id);
 			if (query) return null;
 			const normalised = normalisePath(path);

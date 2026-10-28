@@ -34,19 +34,20 @@ const style = [
 	aria-hidden="true"
 ></span>
 
-<style lang="stylus">
-.m3-accent-bar
-	display: inline-block
-	flex-shrink: 0
-	width: 0.25rem
-	height: 1.25rem
-	border-radius: var(--m3e-accent-bar-radius, 0.375rem)
-	background: var(--m3e-accent-bar-color, var(--primary))
-	vertical-align: middle
-
-	&--small
-		height: 1rem
-
-	&--large
-		height: 1.5rem
+<style>
+.m3-accent-bar {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.25rem;
+  height: 1.25rem;
+  border-radius: var(--m3e-accent-bar-radius, 0.375rem);
+  background: var(--m3e-accent-bar-color, var(--primary));
+  vertical-align: middle;
+}
+.m3-accent-bar--small {
+  height: 1rem;
+}
+.m3-accent-bar--large {
+  height: 1.5rem;
+}
 </style>

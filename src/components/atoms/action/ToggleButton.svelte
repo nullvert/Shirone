@@ -62,80 +62,81 @@ function handleClick() {
     {/if}
 </button>
 
-<style lang="stylus">
-.m3-toggle-button
-    display: inline-flex
-    align-items: center
-    justify-content: center
-    gap: 0.5rem
-    min-height: 2.5rem
-    padding: 0 1rem
-    border: none
-    border-radius: var(--tb-corner, var(--shape-corner-full))
-    font: var(--m3e-type-label-large)
-    cursor: pointer
-    user-select: none
-    --tb-corner: var(--shape-corner-full)
-    transition:
-        border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-        background-color var(--m3e-duration-medium) var(--m3e-easing-standard),
-        color var(--m3e-duration-medium) var(--m3e-easing-standard),
-        border-color var(--m3e-duration-medium) var(--m3e-easing-standard),
-        box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard)
-    > :global(svg)
-        width: 1.25rem
-        height: 1.25rem
-        flex-shrink: 0
-
-    /* 形状变形：按压 6dp（未选中时）；选中态 12dp（优先级高于按压） */
-    &:active
-        --tb-corner: 6px
-
-    &--checked
-        --tb-corner: var(--shape-corner-m)
-
-    &--disabled
-        opacity: 0.38
-        pointer-events: none
-
-    /* === 变体颜色 === */
-    &--filled
-        background: var(--surface-container)
-        color: var(--on-surface-variant)
-        --m3e-state-color: var(--on-surface-variant)
-        &.m3-toggle-button--checked
-            background: var(--primary)
-            color: var(--on-primary)
-            --m3e-state-color: var(--on-primary)
-
-    &--tonal
-        background: var(--secondary-container)
-        color: var(--on-secondary-container)
-        --m3e-state-color: var(--on-secondary-container)
-        &.m3-toggle-button--checked
-            background: var(--secondary)
-            color: var(--on-secondary)
-            --m3e-state-color: var(--on-secondary)
-
-    &--outlined
-        background: transparent
-        color: var(--on-surface-variant)
-        border: 1px solid var(--outline)
-        --m3e-state-color: var(--on-surface-variant)
-        &.m3-toggle-button--checked
-            background: var(--inverse-surface)
-            color: var(--inverse-on-surface)
-            border-color: transparent
-            --m3e-state-color: var(--inverse-on-surface)
-
-    &--elevated
-        background: var(--surface-container-low)
-        color: var(--primary)
-        box-shadow: var(--m3e-elevation-1)
-        --m3e-state-color: var(--primary)
-        &.m3-toggle-button--checked
-            background: var(--primary)
-            color: var(--on-primary)
-            box-shadow: var(--m3e-elevation-1)
-            --m3e-state-color: var(--on-primary)
+<style>
+.m3-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border: none;
+  border-radius: var(--tb-corner, var(--shape-corner-full));
+  font: var(--m3e-type-label-large);
+  cursor: pointer;
+  user-select: none;
+  --tb-corner: var(--shape-corner-full);
+  transition: border-radius var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), background-color var(--m3e-duration-medium) var(--m3e-easing-standard), color var(--m3e-duration-medium) var(--m3e-easing-standard), border-color var(--m3e-duration-medium) var(--m3e-easing-standard), box-shadow var(--m3e-duration-medium) var(--m3e-easing-standard);
+/* 形状变形：按压 6dp（未选中时）；选中态 12dp（优先级高于按压） */
+/* === 变体颜色 === */
+}
+.m3-toggle-button > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+.m3-toggle-button:active {
+  --tb-corner: 6px;
+}
+.m3-toggle-button--checked {
+  --tb-corner: var(--shape-corner-m);
+}
+.m3-toggle-button--disabled {
+  opacity: 0.38;
+  pointer-events: none;
+}
+.m3-toggle-button--filled {
+  background: var(--surface-container);
+  color: var(--on-surface-variant);
+  --m3e-state-color: var(--on-surface-variant);
+}
+.m3-toggle-button--filled.m3-toggle-button--checked {
+  background: var(--primary);
+  color: var(--on-primary);
+  --m3e-state-color: var(--on-primary);
+}
+.m3-toggle-button--tonal {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --m3e-state-color: var(--on-secondary-container);
+}
+.m3-toggle-button--tonal.m3-toggle-button--checked {
+  background: var(--secondary);
+  color: var(--on-secondary);
+  --m3e-state-color: var(--on-secondary);
+}
+.m3-toggle-button--outlined {
+  background: transparent;
+  color: var(--on-surface-variant);
+  border: 1px solid var(--outline);
+  --m3e-state-color: var(--on-surface-variant);
+}
+.m3-toggle-button--outlined.m3-toggle-button--checked {
+  background: var(--inverse-surface);
+  color: var(--inverse-on-surface);
+  border-color: transparent;
+  --m3e-state-color: var(--inverse-on-surface);
+}
+.m3-toggle-button--elevated {
+  background: var(--surface-container-low);
+  color: var(--primary);
+  box-shadow: var(--m3e-elevation-1);
+  --m3e-state-color: var(--primary);
+}
+.m3-toggle-button--elevated.m3-toggle-button--checked {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: var(--m3e-elevation-1);
+  --m3e-state-color: var(--on-primary);
+}
 </style>

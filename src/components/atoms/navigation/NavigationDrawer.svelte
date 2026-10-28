@@ -90,100 +90,103 @@ onMount(() => {
     </aside>
 </div>
 
-<style lang="stylus">
-.m3-drawer-root
-    position: fixed
-    inset: 0
-    z-index: 60
-    visibility: hidden
-    pointer-events: none
-
-    &.m3-drawer-root--open
-        visibility: visible
-        pointer-events: auto
-
-    .m3-drawer__scrim
-        position: absolute
-        inset: 0
-        background: unquote("color-mix(in oklab, var(--scrim, #000) 32%, transparent)")
-        opacity: 0
-        transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-    &.m3-drawer-root--open .m3-drawer__scrim
-        opacity: 1
-
-    /* 面板：360dp 宽（官方 ModalNavigationDrawerTokens.ContainerWidth），
+<style>
+.m3-drawer-root {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  visibility: hidden;
+  pointer-events: none;
+/* 面板：360dp 宽（官方 ModalNavigationDrawerTokens.ContainerWidth），
        surface-container-low，右侧 16dp 圆角（官方 ShapeCornerLargeEnd）；
        从左侧滑入 */
-    .m3-drawer
-        position: absolute
-        top: 0
-        bottom: 0
-        left: 0
-        display: flex
-        flex-direction: column
-        width: 360px
-        max-width: 85vw
-        box-sizing: border-box
-        background: var(--surface-container-low)
-        color: var(--on-surface)
-        border-radius: 0 var(--shape-corner-l) var(--shape-corner-l) 0
-        transform: translateX(-100%)
-        transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate)
-
-    &.m3-drawer-root--open .m3-drawer
-        transform: translateX(0)
-
-    .m3-drawer__head
-        padding: 16px 28px 8px
-
-    .m3-drawer__items
-        flex: 1
-        overflow-y: auto
-        padding: 8px 12px
-
-    .m3-drawer__foot
-        padding: 8px 12px 16px
-
-    /* Item：全宽 56dp 高，selected 整项变 secondary-container 全圆 pill */
-    .m3-drawer__item
-        display: flex
-        align-items: center
-        gap: 12px
-        width: 100%
-        height: 56px
-        box-sizing: border-box
-        padding: 0 16px
-        border: none
-        border-radius: var(--shape-corner-full)
-        background: none
-        color: var(--on-surface-variant)
-        cursor: pointer
-        transition:
-            background-color var(--m3e-duration-short) var(--m3e-easing-standard),
-            color var(--m3e-duration-short) var(--m3e-easing-standard)
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-        &:focus-visible
-            outline: 2px solid var(--secondary)
-            outline-offset: -2px
-
-    .m3-drawer__item--active
-        background: var(--secondary-container)
-        color: var(--on-secondary-container)
-        &:hover
-            background: var(--secondary-container)
-
-    .m3-drawer__icon
-        display: flex
-        flex: none
-        > :global(svg)
-            width: 1.5rem
-            height: 1.5rem
-
-    .m3-drawer__label
-        font: var(--m3e-type-label-large)
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
+/* Item：全宽 56dp 高，selected 整项变 secondary-container 全圆 pill */
+}
+.m3-drawer-root.m3-drawer-root--open {
+  visibility: visible;
+  pointer-events: auto;
+}
+.m3-drawer-root .m3-drawer__scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklab, var(--scrim, #000) 32%, transparent);
+  opacity: 0;
+  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.m3-drawer-root.m3-drawer-root--open .m3-drawer__scrim {
+  opacity: 1;
+}
+.m3-drawer-root .m3-drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  max-width: 85vw;
+  box-sizing: border-box;
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+  border-radius: 0 var(--shape-corner-l) var(--shape-corner-l) 0;
+  transform: translateX(-100%);
+  transition: transform var(--m3e-duration-long) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-drawer-root.m3-drawer-root--open .m3-drawer {
+  transform: translateX(0);
+}
+.m3-drawer-root .m3-drawer__head {
+  padding: 16px 28px 8px;
+}
+.m3-drawer-root .m3-drawer__items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px;
+}
+.m3-drawer-root .m3-drawer__foot {
+  padding: 8px 12px 16px;
+}
+.m3-drawer-root .m3-drawer__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 56px;
+  box-sizing: border-box;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: none;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-drawer-root .m3-drawer__item:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-drawer-root .m3-drawer__item:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: -2px;
+}
+.m3-drawer-root .m3-drawer__item--active {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+}
+.m3-drawer-root .m3-drawer__item--active:hover {
+  background: var(--secondary-container);
+}
+.m3-drawer-root .m3-drawer__icon {
+  display: flex;
+  flex: none;
+}
+.m3-drawer-root .m3-drawer__icon > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-drawer-root .m3-drawer__label {
+  font: var(--m3e-type-label-large);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>

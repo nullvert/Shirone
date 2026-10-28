@@ -61,70 +61,70 @@ let {
     {/each}
 </div>
 
-<style lang="stylus">
-.m3-segmented
-    display: flex
-    gap: 2px
-    padding: 2px
-    border-radius: var(--shape-corner-m)
-    background: var(--surface-container)
-
-    /* 隐藏原生 input（保留可聚焦与键盘支持，display:none 会移出焦点序） */
-    &__input
-        position: absolute
-        width: 1px
-        height: 1px
-        opacity: 0
-        overflow: hidden
-        clip: rect(0 0 0 0)
-        white-space: nowrap
-        clip-path: inset(50%)
-
-    &__segment
-        flex: 1
-        display: flex
-        align-items: center
-        justify-content: center
-        gap: 0.375rem
-        height: 2.75rem
-        padding: 0 0.875rem
-        border-radius: var(--shape-corner-m)
-        font: var(--m3e-type-label-medium)
-        font-weight: 500
-        color: var(--on-surface-variant)
-        cursor: pointer
-        user-select: none
-        text-align: center
-        line-height: 1.25
-        transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard)
-
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-
-        &.selected
-            background: var(--secondary-container)
-            color: var(--on-secondary-container)
-            box-shadow: var(--m3e-elevation-1)
-
-        &:has(input:focus-visible)
-            outline: 2px solid var(--primary)
-            outline-offset: 1px
-
-    /* 选中 check 图标：scaleIn + fade（官方 TransformOrigin(0,1) 底部左角 + FastSpatial） */
-    &__check
-        display: flex
-        flex-shrink: 0
-        transform: scale(0)
-        opacity: 0
-        transform-origin: left bottom
-        transition:
-            transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-            opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-        > :global(svg)
-            width: 1rem
-            height: 1rem
-
-    &__segment.selected &__check
-        transform: scale(1)
-        opacity: 1
+<style>
+.m3-segmented {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container);
+/* 隐藏原生 input（保留可聚焦与键盘支持，display:none 会移出焦点序） */
+/* 选中 check 图标：scaleIn + fade（官方 TransformOrigin(0,1) 底部左角 + FastSpatial） */
+}
+.m3-segmented__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+.m3-segmented__segment {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  height: 2.75rem;
+  padding: 0 0.875rem;
+  border-radius: var(--shape-corner-m);
+  font: var(--m3e-type-label-medium);
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  line-height: 1.25;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-segmented__segment:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-segmented__segment.selected {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  box-shadow: var(--m3e-elevation-1);
+}
+.m3-segmented__segment:has(input:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.m3-segmented__check {
+  display: flex;
+  flex-shrink: 0;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: left bottom;
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-segmented__check > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+}
+.m3-segmented__segment.selected .m3-segmented__check {
+  transform: scale(1);
+  opacity: 1;
+}
 </style>

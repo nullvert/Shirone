@@ -155,125 +155,141 @@ onMount(() => {
     </button>
 </div>
 
-<style lang="stylus">
-.m3-fab-menu
-    position: relative
-    display: inline-flex
-    flex-direction: column
-
-    /* 菜单列：FAB 上方展开 */
-    &__items
-        position: absolute
-        bottom: 100%
-        margin-bottom: 0.5rem
-        display: flex
-        flex-direction: column
-        gap: 0.25rem
-        white-space: nowrap
-        pointer-events: none /* 收起时容器不拦截指针 */
-
-    /* FAB 触发器：全部由 --fab-progress（0→1）统一插值。
+<style>
+.m3-fab-menu {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+/* 菜单列：FAB 上方展开 */
+/* FAB 触发器：全部由 --fab-progress（0→1）统一插值。
        官方 lerp：颜色 primary-container→primary、尺寸 size→56、圆角 radius→28px 全圆 */
-    &__fab
-        display: flex
-        align-items: center
-        justify-content: center
-        border: none
-        cursor: pointer
-        box-shadow: var(--m3e-elevation-3)
-        width: unquote("calc(var(--fab-size) * (1 - var(--fab-progress)) + 3.5rem * var(--fab-progress))")
-        height: unquote("calc(var(--fab-size) * (1 - var(--fab-progress)) + 3.5rem * var(--fab-progress))")
-        border-radius: unquote("calc(var(--fab-radius) * (1 - var(--fab-progress)) + 1.75rem * var(--fab-progress))")
-        background: unquote("color-mix(in oklab, var(--primary) calc(var(--fab-progress) * 100%), var(--fab-container-color))")
-        color: unquote("color-mix(in oklab, var(--on-primary) calc(var(--fab-progress) * 100%), var(--fab-on-container-color))")
-        --m3e-state-color: unquote("color-mix(in oklab, var(--on-primary) calc(var(--fab-progress) * 100%), var(--fab-on-container-color))")
-
-    /* 图标：两个叠放，50% progress 处 Crossfade 交替（官方 50% 切换） */
-    &__icon
-        position: absolute
-        display: flex
-        opacity: unquote("calc(1 - var(--fab-progress) * 2)")
-        > :global(svg)
-            width: unquote("calc(var(--fab-icon) * (1 - var(--fab-progress)) + 1.25rem * var(--fab-progress))")
-            height: unquote("calc(var(--fab-icon) * (1 - var(--fab-progress)) + 1.25rem * var(--fab-progress))")
-
-    &__icon--alt
-        opacity: unquote("calc(var(--fab-progress) * 2 - 1)")
-
-    /* === 尺寸三档（官方 FabBaseline/FabMedium/FabLargeTokens） === */
-    &--small
-        --fab-size: 3.5rem
-        --fab-radius: 16px
-        --fab-icon: 1.5rem
-    &--medium
-        --fab-size: 5rem
-        --fab-radius: 20px
-        --fab-icon: 1.75rem
-    &--large
-        --fab-size: 6rem
-        --fab-radius: 28px
-        --fab-icon: 2.25rem
-
-    /* === 对齐变体（官方 horizontalAlignment + center） === */
-    &--end
-        align-items: flex-end
-        .m3-fab-menu__items
-            align-items: flex-end
-    &--start
-        align-items: flex-start
-        .m3-fab-menu__items
-            align-items: flex-start
-    &--center
-        align-items: center
-        .m3-fab-menu__items
-            left: 50%
-            transform: translateX(-50%)
-
-    /* 菜单项（调用方提供）：56px 全圆、图标 18px + body-medium；颜色可经
+/* 图标：两个叠放，50% progress 处 Crossfade 交替（官方 50% 切换） */
+/* === 尺寸三档（官方 FabBaseline/FabMedium/FabLargeTokens） === */
+/* === 对齐变体（官方 horizontalAlignment + center） === */
+/* 菜单项（调用方提供）：56px 全圆、图标 18px + body-medium；颜色可经
        menuItemColor / menuItemContentColor 配置 */
-    :global(.m3-fab-menu-item)
-        display: flex
-        align-items: center
-        gap: 0.5rem
-        min-width: 3.5rem
-        height: 3.5rem
-        padding: 0 1.5rem
-        border: none
-        border-radius: var(--shape-corner-full)
-        background: var(--fab-menu-item-bg)
-        color: var(--fab-menu-item-color)
-        font: var(--m3e-type-body-medium)
-        text-align: left
-        white-space: nowrap
-        cursor: pointer
-        box-shadow: var(--m3e-elevation-1)
-        transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-        opacity: 0
-        pointer-events: none /* 收起时不可命中，避免遮挡下方内容 */
-        transform: translateY(0.5rem)
-        > :global(svg)
-            width: 1.125rem
-            height: 1.125rem
-            flex-shrink: 0
-
-    /* stagger：逐项延迟淡入上移 */
-    &--expanded .m3-fab-menu__items
-        pointer-events: auto
-
-    &--expanded :global(.m3-fab-menu-item)
-        opacity: 1
-        transform: none
-        pointer-events: auto
-    &--expanded :global(.m3-fab-menu-item:nth-child(1))
-        transition-delay: 30ms
-    &--expanded :global(.m3-fab-menu-item:nth-child(2))
-        transition-delay: 60ms
-    &--expanded :global(.m3-fab-menu-item:nth-child(3))
-        transition-delay: 90ms
-    &--expanded :global(.m3-fab-menu-item:nth-child(4))
-        transition-delay: 120ms
-    &--expanded :global(.m3-fab-menu-item:nth-child(5))
-        transition-delay: 150ms
-    &--expanded :global(.m3-fab-menu-item:nth-child(6))
-        transition-delay: 180ms
+/* stagger：逐项延迟淡入上移 */
+}
+.m3-fab-menu__items {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  white-space: nowrap;
+  pointer-events: none /* 收起时容器不拦截指针 */;
+}
+.m3-fab-menu__fab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--m3e-elevation-3);
+  width: calc(var(--fab-size) * (1 - var(--fab-progress)) + 3.5rem * var(--fab-progress));
+  height: calc(var(--fab-size) * (1 - var(--fab-progress)) + 3.5rem * var(--fab-progress));
+  border-radius: calc(var(--fab-radius) * (1 - var(--fab-progress)) + 1.75rem * var(--fab-progress));
+  background: color-mix(in oklab, var(--primary) calc(var(--fab-progress) * 100%), var(--fab-container-color));
+  color: color-mix(in oklab, var(--on-primary) calc(var(--fab-progress) * 100%), var(--fab-on-container-color));
+  --m3e-state-color: color-mix(in oklab, var(--on-primary) calc(var(--fab-progress) * 100%), var(--fab-on-container-color));
+}
+.m3-fab-menu__icon {
+  position: absolute;
+  display: flex;
+  opacity: calc(1 - var(--fab-progress) * 2);
+}
+.m3-fab-menu__icon > :global(svg) {
+  width: calc(var(--fab-icon) * (1 - var(--fab-progress)) + 1.25rem * var(--fab-progress));
+  height: calc(var(--fab-icon) * (1 - var(--fab-progress)) + 1.25rem * var(--fab-progress));
+}
+.m3-fab-menu__icon--alt {
+  opacity: calc(var(--fab-progress) * 2 - 1);
+}
+.m3-fab-menu--small {
+  --fab-size: 3.5rem;
+  --fab-radius: 16px;
+  --fab-icon: 1.5rem;
+}
+.m3-fab-menu--medium {
+  --fab-size: 5rem;
+  --fab-radius: 20px;
+  --fab-icon: 1.75rem;
+}
+.m3-fab-menu--large {
+  --fab-size: 6rem;
+  --fab-radius: 28px;
+  --fab-icon: 2.25rem;
+}
+.m3-fab-menu--end {
+  align-items: flex-end;
+}
+.m3-fab-menu--end .m3-fab-menu__items {
+  align-items: flex-end;
+}
+.m3-fab-menu--start {
+  align-items: flex-start;
+}
+.m3-fab-menu--start .m3-fab-menu__items {
+  align-items: flex-start;
+}
+.m3-fab-menu--center {
+  align-items: center;
+}
+.m3-fab-menu--center .m3-fab-menu__items {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.m3-fab-menu :global(.m3-fab-menu-item) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 3.5rem;
+  height: 3.5rem;
+  padding: 0 1.5rem;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: var(--fab-menu-item-bg);
+  color: var(--fab-menu-item-color);
+  font: var(--m3e-type-body-medium);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: var(--m3e-elevation-1);
+  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+  opacity: 0;
+  pointer-events: none /* 收起时不可命中，避免遮挡下方内容 */;
+  transform: translateY(0.5rem);
+}
+.m3-fab-menu :global(.m3-fab-menu-item) > :global(svg) {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+.m3-fab-menu--expanded .m3-fab-menu__items {
+  pointer-events: auto;
+}
+.m3-fab-menu--expanded :global(.m3-fab-menu-item) {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.m3-fab-menu--expanded :global(.m3-fab-menu-item:nth-child(1)) {
+  transition-delay: 30ms;
+}
+.m3-fab-menu--expanded :global(.m3-fab-menu-item:nth-child(2)) {
+  transition-delay: 60ms;
+}
+.m3-fab-menu--expanded :global(.m3-fab-menu-item:nth-child(3)) {
+  transition-delay: 90ms;
+}
+.m3-fab-menu--expanded :global(.m3-fab-menu-item:nth-child(4)) {
+  transition-delay: 120ms;
+}
+.m3-fab-menu--expanded :global(.m3-fab-menu-item:nth-child(5)) {
+  transition-delay: 150ms;
+}
+.m3-fab-menu--expanded :global(.m3-fab-menu-item:nth-child(6)) {
+  transition-delay: 180ms;
+}
 </style>

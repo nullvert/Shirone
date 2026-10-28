@@ -104,52 +104,55 @@ const filteredItems = $derived(
 	{/if}
 </Card>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.timeline-section
-	display: block
-
-	@media (max-width: bp-sm - 1px)
-		padding: 1rem 0.75rem
-
-	&__tools
-		display: flex
-		flex-direction: column
-		gap: 0.875rem
-		padding-bottom: 1.25rem
-		margin-bottom: 1.5rem
-		border-bottom: 1px solid var(--outline-variant)
-
-		@media (max-width: bp-sm - 1px)
-			margin-bottom: 1rem
-			padding-bottom: 1rem
-
-	&__chips
-		width: 100%
-
-	&__count
-		margin: 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-
-	&__list
-		display: flex
-		flex-direction: column
-		width: 100%
-
-	&__empty
-		display: flex
-		flex-direction: column
-		align-items: center
-		justify-content: center
-		gap: 0.75rem
-		min-height: 11rem
-		padding-top: 1.5rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-large)
-
-		> :global(svg)
-			width: 2.5rem
-			height: 2.5rem
+<style>
+.timeline-section {
+  display: block;
+}
+@media (max-width: 639px) {
+  .timeline-section {
+    padding: 1rem 0.75rem;
+  }
+}
+.timeline-section__tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--outline-variant);
+}
+@media (max-width: 639px) {
+  .timeline-section__tools {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+.timeline-section__chips {
+  width: 100%;
+}
+.timeline-section__count {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+}
+.timeline-section__list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.timeline-section__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 11rem;
+  padding-top: 1.5rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-large);
+}
+.timeline-section__empty > :global(svg) {
+  width: 2.5rem;
+  height: 2.5rem;
+}
 </style>

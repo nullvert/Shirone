@@ -75,64 +75,63 @@ const closeDuration = Number(config.closeDuration ?? 86400);
 	</WidgetLayout>
 )}
 
-<style lang="stylus">
-.announcement-content
-	font: var(--m3e-type-body-medium)
-	color: var(--on-surface-variant)
-	line-height: 1.6
-	margin-bottom: var(--m3e-space-3)
-	word-break: break-word
-	white-space: pre-line
-
-.announcement-actions
-	display: flex
-	align-items: center
-	justify-content: space-between
-	gap: var(--m3e-space-3)
-
-.announcement-btn
-	display: inline-flex
-	align-items: center
-	gap: var(--m3e-space-1)
-	height: 2rem
-	padding: 0 var(--m3e-space-3)
-	border-radius: var(--shape-corner-m)
-	background: var(--secondary-container)
-	color: var(--on-secondary-container)
-	font: var(--m3e-type-label-medium)
-	font-weight: 500
-	text-decoration: none
-	--m3e-state-color: var(--on-secondary-container)
-	transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&__icon
-		width: 1rem
-		height: 1rem
-		opacity: 0.8
-
-.announcement-close-btn
-	display: flex
-	align-items: center
-	justify-content: center
-	width: 2rem
-	height: 2rem
-	border-radius: var(--shape-corner-full)
-	background: var(--btn-regular-bg)
-	color: var(--on-surface-variant)
-	cursor: pointer
-	border: none
-	--m3e-state-color: var(--error)
-	transition:
-		color var(--m3e-duration-short) var(--m3e-easing-standard),
-		background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-	&:hover
-		color: var(--error)
-		background: var(--error-container)
-
-	&__icon
-		width: 1.125rem
-		height: 1.125rem
+<style>
+.announcement-content {
+  font: var(--m3e-type-body-medium);
+  color: var(--on-surface-variant);
+  line-height: 1.6;
+  margin-bottom: var(--m3e-space-3);
+  word-break: break-word;
+  white-space: pre-line;
+}
+.announcement-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--m3e-space-3);
+}
+.announcement-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--m3e-space-1);
+  height: 2rem;
+  padding: 0 var(--m3e-space-3);
+  border-radius: var(--shape-corner-m);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+  font: var(--m3e-type-label-medium);
+  font-weight: 500;
+  text-decoration: none;
+  --m3e-state-color: var(--on-secondary-container);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.announcement-btn__icon {
+  width: 1rem;
+  height: 1rem;
+  opacity: 0.8;
+}
+.announcement-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--btn-regular-bg);
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  border: none;
+  --m3e-state-color: var(--error);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard), background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.announcement-close-btn:hover {
+  color: var(--error);
+  background: var(--error-container);
+}
+.announcement-close-btn__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
 </style>
 
 <script>

@@ -171,103 +171,100 @@ function onKeydown(e: KeyboardEvent, idx: number) {
 	{/each}
 </div>
 
-<style lang="stylus">
-.m3-tabs
-	position: relative
-	display: flex
-	width: 100%
-	box-sizing: border-box
-	height: 48px
-	overflow: hidden
-	background: var(--surface)
-	box-shadow: inset 0 -1px 0 var(--outline-variant) /* 底部 1dp divider（含在高度内） */
-
-	&--icon
-		height: 64px
-
-	&--scrollable
-		overflow-x: auto
-		overflow-y: hidden
-		scroll-behavior: smooth
-		scrollbar-width: none
-		padding-inline: 52px /* 官方 ScrollableTabRow 边缘留白 52dp */
-
-		&::-webkit-scrollbar
-			display: none
-
-		.m3-tabs__tab
-			flex: 0 0 auto
-			min-width: 90px /* 官方 ScrollableTabRow 最小 tab 宽 90dp */
-
-	&__tab
-		flex: 1 1 0
-		min-width: 0
-		display: flex
-		align-items: center
-		justify-content: center
-		padding: 0 16px
-		border: none
-		background: none
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-title-small)
-		cursor: pointer
-		--m3e-state-color: var(--on-surface)
-		transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		&--active
-			color: var(--primary)
-
-	&__tab-content
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		gap: 8px
-		min-width: 0
-		max-width: 100%
-
-	&__tab-icon
-		display: inline-flex
-		flex: none
-
-		> :global(svg)
-			width: 24px
-			height: 24px
-
-	&__tab-label
-		min-width: 0
-		white-space: nowrap
-		overflow: hidden
-		text-overflow: ellipsis
-
-	&--primary &__tab-content
-		flex-direction: column
-		gap: 2px /* 官方 stacked：图标上置，间距 2dp */
-
-	&__indicator
-		position: absolute
-		bottom: 1px /* 在 1dp divider 之上 */
-		height: 3px
-		border-radius: 3px 3px 0 0
-		background: var(--primary)
-		pointer-events: none
-		opacity: 0
-
-		&--ready
-			opacity: 1
-			transition:
-				opacity var(--m3e-duration-short) var(--m3e-easing-standard),
-				left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-				width var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-	&--secondary
-		.m3-tabs__tab--active
-			color: var(--on-surface)
-
-		.m3-tabs__tab-content
-			flex-direction: row
-			gap: 8px
-
-		.m3-tabs__indicator
-			height: 2px
-			border-radius: 0
+<style>
+.m3-tabs {
+  position: relative;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  height: 48px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: inset 0 -1px 0 var(--outline-variant) /* 底部 1dp divider（含在高度内） */;
+}
+.m3-tabs--icon {
+  height: 64px;
+}
+.m3-tabs--scrollable {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding-inline: 52px /* 官方 ScrollableTabRow 边缘留白 52dp */;
+}
+.m3-tabs--scrollable::-webkit-scrollbar {
+  display: none;
+}
+.m3-tabs--scrollable .m3-tabs__tab {
+  flex: 0 0 auto;
+  min-width: 90px /* 官方 ScrollableTabRow 最小 tab 宽 90dp */;
+}
+.m3-tabs__tab {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: none;
+  background: none;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-title-small);
+  cursor: pointer;
+  --m3e-state-color: var(--on-surface);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-tabs__tab--active {
+  color: var(--primary);
+}
+.m3-tabs__tab-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+}
+.m3-tabs__tab-icon {
+  display: inline-flex;
+  flex: none;
+}
+.m3-tabs__tab-icon > :global(svg) {
+  width: 24px;
+  height: 24px;
+}
+.m3-tabs__tab-label {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.m3-tabs--primary .m3-tabs__tab-content {
+  flex-direction: column;
+  gap: 2px /* 官方 stacked：图标上置，间距 2dp */;
+}
+.m3-tabs__indicator {
+  position: absolute;
+  bottom: 1px /* 在 1dp divider 之上 */;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--primary);
+  pointer-events: none;
+  opacity: 0;
+}
+.m3-tabs__indicator--ready {
+  opacity: 1;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard), left var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), width var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-tabs--secondary .m3-tabs__tab--active {
+  color: var(--on-surface);
+}
+.m3-tabs--secondary .m3-tabs__tab-content {
+  flex-direction: row;
+  gap: 8px;
+}
+.m3-tabs--secondary .m3-tabs__indicator {
+  height: 2px;
+  border-radius: 0;
+}
 </style>

@@ -209,107 +209,143 @@ onMount(() => {
 	{/if}
 </Card>
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
-.moment-section
-	display: block
-
-	&__tools
-		display: flex
-		flex-direction: column
-		gap: 0.875rem
-		padding-bottom: 1.5rem
-		border-bottom: 1px solid var(--outline-variant)
-
-	&__search
-		position: relative
-		width: 100%
-		max-width: 32rem
-
-		:global(.m3-text-field)
-			width: 100%
-
-	&__search-clear
-		position: absolute
-		right: 0.5rem
-		top: 50%
-		transform: translateY(-50%)
-		display: inline-flex
-		flex-shrink: 0
-		align-items: center
-		justify-content: center
-		width: 1.75rem
-		height: 1.75rem
-		padding: 0.25rem
-		border: none
-		background: none
-		color: var(--on-surface-variant)
-		cursor: pointer
-		border-radius: var(--shape-corner-full)
-		> :global(svg)
-			width: 1.25rem
-			height: 1.25rem
-		&:hover
-			background: unquote("color-mix(in oklab, var(--on-surface-variant) 8%, transparent)")
-
-	&__chips
-		width: 100%
-
-	&__count
-		margin: 0
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-
-	&__list
-		display: grid
-		/* 显式下限 0：长链接等不可断 token 的 min-content 不得撑宽网格轨道 */
-		grid-template-columns: minmax(0, 1fr)
-		gap: 1rem
-		padding-top: 1.5rem
-
-	/* 分类筛选过渡：区块位置的大号 contained LoadingIndicator（out = 淡出退场） */
-	&__loading
-		display: flex
-		align-items: center
-		justify-content: center
-		min-height: 11rem
-		padding-top: 1.5rem
-
-		&--out
-			animation: moment-loading-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both
-
-	&__more
-		display: flex
-		justify-content: center
-		margin-top: 1.25rem
-
-	&__empty
-		display: flex
-		flex-direction: column
-		align-items: center
-		justify-content: center
-		gap: 0.75rem
-		min-height: 11rem
-		padding-top: 1.5rem
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-large)
-		> :global(svg)
-			width: 2.5rem
-			height: 2.5rem
-
-	@media (max-width: bp-sm - 1px)
-		padding: 1rem 0.75rem
-
-		&__list
-			padding-top: 1.25rem
-
+<style>
+.moment-section {
+  display: block;
+/* 分类筛选过渡：区块位置的大号 contained LoadingIndicator（out = 淡出退场） */
+}
+.moment-section__tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--outline-variant);
+}
+.moment-section__search {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+}
+.moment-section__search :global(.m3-text-field) {
+  width: 100%;
+}
+.moment-section__search-clear {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0.25rem;
+  border: none;
+  background: none;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  border-radius: var(--shape-corner-full);
+}
+.moment-section__search-clear > :global(svg) {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.moment-section__search-clear:hover {
+  background: color-mix(in oklab, var(--on-surface-variant) 8%, transparent);
+}
+.moment-section__chips {
+  width: 100%;
+}
+.moment-section__count {
+  margin: 0;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+}
+.moment-section__list {
+  display: grid;
+/* 显式下限 0：长链接等不可断 token 的 min-content 不得撑宽网格轨道 */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+.moment-section__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  padding-top: 1.5rem;
+}
+.moment-section__loading--out {
+  animation: moment-loading-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both;
+}
+.moment-section__more {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+.moment-section__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 11rem;
+  padding-top: 1.5rem;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-large);
+}
+.moment-section__empty > :global(svg) {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+@media (max-width: 639px) {
+  .moment-section {
+    padding: 1rem 0.75rem;
+  }
+  .moment-section__list {
+    padding-top: 1.25rem;
+  }
+}
 /* 指示器退场：淡出 + 轻微收拢（reduced-motion 由全局规则压至终态） */
-@keyframes moment-loading-out
-	from
-		opacity: 1
-		transform: none
-	to
-		opacity: 0
-		transform: scale(0.96)
+@-moz-keyframes moment-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@-webkit-keyframes moment-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@-o-keyframes moment-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+@keyframes moment-loading-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
 </style>

@@ -1014,181 +1014,206 @@ const initialMobileBanner = page === "home";
 	}
 </script>
 
-<style lang="stylus">
-		.banner-stage
-			position: absolute
-			inset: 0 0 auto
-			height: var(--banner-stage-height)
-			overflow: hidden
-			background: var(--surface-container-lowest)
-
-			&[hidden]
-				display: none
-
-		.banner-stage__media,
-		.banner-stage__scrim,
-		.banner-stage__copy
-			position: absolute
-			inset: 0
-
-		.banner-stage__image
-			position: absolute
-			inset: 0
-			width: 100%
-			height: 100%
-			object-fit: cover
-			opacity: 0
-			will-change: opacity, transform
-			transform-origin: center center
-
-		.banner-stage__image--fading
-			transition: opacity var(--banner-fade-duration, 1200ms) var(--m3e-easing-standard)
-
-		.banner-stage__image--active
-			opacity: 1
-
-		.banner-stage__scrim
-			z-index: 1
-			background: unquote("rgb(0 0 0 / calc(var(--banner-dim-opacity) * 0.55))")
-			pointer-events: none
-
-		:global(html.dark) .banner-stage__scrim
-			background: unquote("rgb(0 0 0 / var(--banner-dim-opacity))")
-
-		.banner-stage__copy
-			z-index: 2
-			display: none
-			flex-direction: column
-			align-items: center
-			justify-content: center
-			padding: 4rem 1.5rem 2rem
-			color: white
-			text-align: center
-			text-shadow: 0 2px 12px rgba(0, 0, 0, 0.48)
-			pointer-events: none
-
-		.banner-stage__copy h1,
-		.banner-stage__context-title
-			margin: 0
-			font: var(--m3e-type-headline-medium)
-			font-weight: 700
-			letter-spacing: 0
-			line-height: 1.1
-
-		.banner-stage__copy h1,
-		.banner-stage__context-title
-			font-size: clamp(2.5rem, 5rem, 5rem)
-
-		.banner-stage__copy p
-			margin-top: 0.75rem
-			font: var(--m3e-type-headline-small)
-
-			&[data-subtitle-state="typing"]::after
-				content: ""
-				display: inline-block
-				width: 0.08em
-				height: 1em
-				margin-inline-start: 0.12em
-				vertical-align: -0.12em
-				background: currentColor
-				animation: banner-subtitle-caret var(--m3e-duration-long) steps(1, end) infinite
-
-		.banner-stage__copy--context
-			inset: 50% auto auto 50%
-			width: min(calc(100% - var(--m3e-space-12)), 64rem)
-			min-height: calc(var(--m3e-space-12) * 2)
-			padding: var(--m3e-space-6) var(--m3e-space-8)
-			align-items: center
-			justify-content: center
-			text-align: center
-			transform: translate(-50%, -50%)
-
-		.banner-stage__context-title,
-		.banner-stage__context-details
-			max-width: 100%
-
-		.banner-stage__context-title
-			width: 100%
-			overflow-wrap: normal
-			white-space: nowrap
-
-			&[data-title-fit="wrapped"]
-				overflow-wrap: anywhere
-				white-space: normal
-				text-wrap: balance
-
-		.banner-stage__context-details
-			display: flex
-			flex-direction: column
-			align-items: center
-			width: min(100%, 48rem)
-			margin-top: var(--m3e-space-5)
-
-		.banner-stage__context-divider
-			width: var(--m3e-space-12)
-			height: 1px
-			background: rgba(255, 255, 255, 0.72)
-
-		.banner-stage__copy--context p
-			margin: var(--m3e-space-4) 0 0
-			font: var(--m3e-type-headline-small)
-			line-height: 1.5
-			opacity: 0.9
-			overflow-wrap: anywhere
-			text-wrap: pretty
-
-		.banner-stage__context-meta
-			display: flex
-			align-items: center
-			justify-content: center
-			gap: var(--m3e-space-2)
-			margin-top: var(--m3e-space-3)
-			font: var(--m3e-type-label-large)
-			font-variant-numeric: tabular-nums
-			opacity: 0.8
-
-			> :global(svg)
-				width: var(--m3e-space-5)
-				height: var(--m3e-space-5)
-
-		.banner-stage__copy--context [hidden]
-			display: none
-
-		.banner-stage[data-copy-mode="home"] .banner-stage__copy--home,
-		.banner-stage[data-copy-mode="context"] .banner-stage__copy--context
-			display: flex
-
-
-	:global(html[data-wallpaper-mode="none"]) .banner-stage
-		display: none
-
-	@media (max-width: 1023.98px)
-		:global(body:not([data-current-page="home"])) .banner-stage
-			display: none
-
-		.banner-stage
-			&__copy h1
-				font-size: 2.75rem
-
-			&__copy p
-				font-size: 1.125rem
-
-	@keyframes banner-subtitle-caret
-		0%,
-		49%
-			opacity: 1
-		50%,
-		100%
-			opacity: 0
-
-	:global(html.motion-reduced) .banner-stage__image,
-	:global(html.motion-reduced) .banner-stage__copy p[data-subtitle-state="typing"]::after
-		transition: none
-		animation: none
-
-	@media (prefers-reduced-motion: reduce)
-		.banner-stage__image,
-		.banner-stage__copy p[data-subtitle-state="typing"]::after
-			transition: none
-			animation: none
+<style>
+.banner-stage {
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--banner-stage-height);
+  overflow: hidden;
+  background: var(--surface-container-lowest);
+}
+.banner-stage[hidden] {
+  display: none;
+}
+.banner-stage__media,
+.banner-stage__scrim,
+.banner-stage__copy {
+  position: absolute;
+  inset: 0;
+}
+.banner-stage__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  will-change: opacity, transform;
+  transform-origin: center center;
+}
+.banner-stage__image--fading {
+  transition: opacity var(--banner-fade-duration, 1200ms) var(--m3e-easing-standard);
+}
+.banner-stage__image--active {
+  opacity: 1;
+}
+.banner-stage__scrim {
+  z-index: 1;
+  background: rgb(0 0 0 / calc(var(--banner-dim-opacity) * 0.55));
+  pointer-events: none;
+}
+:global(html.dark) .banner-stage__scrim {
+  background: rgb(0 0 0 / var(--banner-dim-opacity));
+}
+.banner-stage__copy {
+  z-index: 2;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem 2rem;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.48);
+  pointer-events: none;
+}
+.banner-stage__copy h1,
+.banner-stage__context-title {
+  margin: 0;
+  font: var(--m3e-type-headline-medium);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+.banner-stage__copy h1,
+.banner-stage__context-title {
+  font-size: clamp(2.5rem, 5rem, 5rem);
+}
+.banner-stage__copy p {
+  margin-top: 0.75rem;
+  font: var(--m3e-type-headline-small);
+}
+.banner-stage__copy p[data-subtitle-state="typing"]::after {
+  content: "";
+  display: inline-block;
+  width: 0.08em;
+  height: 1em;
+  margin-inline-start: 0.12em;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: banner-subtitle-caret var(--m3e-duration-long) steps(1, end) infinite;
+}
+.banner-stage__copy--context {
+  inset: 50% auto auto 50%;
+  width: 64rem;
+  min-height: calc(var(--m3e-space-12) * 2);
+  padding: var(--m3e-space-6) var(--m3e-space-8);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+.banner-stage__context-title,
+.banner-stage__context-details {
+  max-width: 100%;
+}
+.banner-stage__context-title {
+  width: 100%;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+.banner-stage__context-title[data-title-fit="wrapped"] {
+  overflow-wrap: anywhere;
+  white-space: normal;
+  text-wrap: balance;
+}
+.banner-stage__context-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 48rem;
+  margin-top: var(--m3e-space-5);
+}
+.banner-stage__context-divider {
+  width: var(--m3e-space-12);
+  height: 1px;
+  background: rgba(255,255,255,0.72);
+}
+.banner-stage__copy--context p {
+  margin: var(--m3e-space-4) 0 0;
+  font: var(--m3e-type-headline-small);
+  line-height: 1.5;
+  opacity: 0.9;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+.banner-stage__context-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m3e-space-2);
+  margin-top: var(--m3e-space-3);
+  font: var(--m3e-type-label-large);
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+.banner-stage__context-meta > :global(svg) {
+  width: var(--m3e-space-5);
+  height: var(--m3e-space-5);
+}
+.banner-stage__copy--context [hidden] {
+  display: none;
+}
+.banner-stage[data-copy-mode="home"] .banner-stage__copy--home,
+.banner-stage[data-copy-mode="context"] .banner-stage__copy--context {
+  display: flex;
+}
+:global(html[data-wallpaper-mode="none"]) .banner-stage {
+  display: none;
+}
+@media (max-width: 1023.98px) {
+  :global(body:not([data-current-page="home"])) .banner-stage {
+    display: none;
+  }
+  .banner-stage__copy h1 {
+    font-size: 2.75rem;
+  }
+  .banner-stage__copy p {
+    font-size: 1.125rem;
+  }
+}
+:global(html.motion-reduced) .banner-stage__image,
+:global(html.motion-reduced) .banner-stage__copy p[data-subtitle-state="typing"]::after {
+  transition: none;
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .banner-stage__image,
+  .banner-stage__copy p[data-subtitle-state="typing"]::after {
+    transition: none;
+    animation: none;
+  }
+}
+@-moz-keyframes banner-subtitle-caret {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes banner-subtitle-caret {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+@-o-keyframes banner-subtitle-caret {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+@keyframes banner-subtitle-caret {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
 </style>

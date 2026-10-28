@@ -146,88 +146,206 @@ function onAnimationEnd() {
     </div>
 {/if}
 
-<style lang="stylus">
+<style>
 /* 遮罩：fade 进出 */
-.m3-alert-scrim
-    position: fixed
-    inset: 0
-    z-index: 80
-    background: unquote("color-mix(in oklab, var(--scrim, #000) 32%, transparent)")
-    animation: m3-alert-scrim-in var(--m3e-duration-medium) var(--m3e-easing-standard) both
-
-    &--closing
-        animation: m3-alert-scrim-out var(--m3e-duration-short) var(--m3e-easing-standard) both
-
+.m3-alert-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: color-mix(in oklab, var(--scrim, #000) 32%, transparent);
+  animation: m3-alert-scrim-in var(--m3e-duration-medium) var(--m3e-easing-standard) both;
+}
+.m3-alert-scrim--closing {
+  animation: m3-alert-scrim-out var(--m3e-duration-short) var(--m3e-easing-standard) both;
+}
 /* 对话框：scale 0.9→1 展开 + fade，退场对称 */
-.m3-alert
-    position: fixed
-    top: 50%
-    left: 50%
-    z-index: 81
-    transform: translate(-50%, -50%)
-    display: flex
-    flex-direction: column
-    width: unquote("min(560px, calc(100vw - 48px))")
-    min-width: 280px
-    box-sizing: border-box
-    padding: 24px
-    border-radius: var(--shape-corner-xl)
-    background: var(--surface-container-high)
-    color: var(--on-surface)
-    box-shadow: var(--m3e-elevation-3)
-    outline: none
-    animation: m3-alert-in var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate) both
-
-    &--closing
-        animation: m3-alert-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both
-
-    &__icon
-        margin-bottom: 16px
-        color: var(--primary)
-        > :global(svg)
-            width: 1.5rem
-            height: 1.5rem
-
-    &__title
-        font: var(--m3e-type-headline-small)
-        color: var(--on-surface)
-
-    &__text
-        margin-top: 16px
-        font: var(--m3e-type-body-medium)
-        color: var(--on-surface-variant)
-
-    &__actions
-        display: flex
-        justify-content: flex-end
-        gap: 8px
-        margin-top: 24px
-
-@keyframes m3-alert-scrim-in
-    from
-        opacity: 0
-    to
-        opacity: 1
-
-@keyframes m3-alert-scrim-out
-    from
-        opacity: 1
-    to
-        opacity: 0
-
-@keyframes m3-alert-in
-    from
-        opacity: 0
-        transform: translate(-50%, -50%) scale(0.9)
-    to
-        opacity: 1
-        transform: translate(-50%, -50%) scale(1)
-
-@keyframes m3-alert-out
-    from
-        opacity: 1
-        transform: translate(-50%, -50%) scale(1)
-    to
-        opacity: 0
-        transform: translate(-50%, -50%) scale(0.9)
+.m3-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 81;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  width: min(560px, calc(100vw - 48px));
+  min-width: 280px;
+  box-sizing: border-box;
+  padding: 24px;
+  border-radius: var(--shape-corner-xl);
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+  box-shadow: var(--m3e-elevation-3);
+  outline: none;
+  animation: m3-alert-in var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate) both;
+}
+.m3-alert--closing {
+  animation: m3-alert-out var(--m3e-duration-short) var(--m3e-easing-emphasized-accelerate) both;
+}
+.m3-alert__icon {
+  margin-bottom: 16px;
+  color: var(--primary);
+}
+.m3-alert__icon > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-alert__title {
+  font: var(--m3e-type-headline-small);
+  color: var(--on-surface);
+}
+.m3-alert__text {
+  margin-top: 16px;
+  font: var(--m3e-type-body-medium);
+  color: var(--on-surface-variant);
+}
+.m3-alert__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+@-moz-keyframes m3-alert-scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes m3-alert-scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes m3-alert-scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes m3-alert-scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes m3-alert-scrim-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes m3-alert-scrim-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-o-keyframes m3-alert-scrim-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes m3-alert-scrim-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-moz-keyframes m3-alert-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@-webkit-keyframes m3-alert-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@-o-keyframes m3-alert-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes m3-alert-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@-moz-keyframes m3-alert-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+@-webkit-keyframes m3-alert-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+@-o-keyframes m3-alert-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+@keyframes m3-alert-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
 </style>

@@ -216,162 +216,161 @@ function toggleDay(cell: DayCell) {
 	</div>
 </div>
 
-<style lang="stylus">
-	.m3-calendar
-		display: flex
-		flex-direction: column
-		gap: 0.5rem
-
-		&__bar
-			display: flex
-			align-items: center
-			gap: 0.25rem
-
-		&__title
-			flex: 1
-			min-width: 0
-			margin: 0
-			padding: 0.25rem 0.5rem
-			border: none
-			border-radius: var(--shape-corner-s)
-			background: transparent
-			text-align: center
-			font: var(--m3e-type-title-small)
-			font-weight: 600
-			color: var(--on-surface)
-			white-space: nowrap
-			transition:
-				color var(--m3e-duration-short) var(--m3e-easing-standard),
-				background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-			&--clickable
-				color: var(--primary)
-				cursor: pointer
-
-				&:hover
-					background: var(--btn-plain-bg-hover)
-
-		&__weekdays
-			display: grid
-			grid-template-columns: repeat(7, 1fr)
-			gap: 0.25rem
-
-		&__weekday
-			text-align: center
-			font: var(--m3e-type-label-medium)
-			color: var(--on-surface-variant)
-
-		&__grid
-			display: grid
-			grid-template-columns: repeat(7, 1fr)
-			gap: 0.25rem
-
-		&__blank
-			aspect-ratio: 1
-
-		&__day
-			aspect-ratio: 1
-			display: flex
-			align-items: center
-			justify-content: center
-			border: none
-			border-radius: var(--shape-corner-s)
-			background: transparent
-			font: var(--m3e-type-label-large)
-			font-variant-numeric: tabular-nums
-			color: var(--on-surface-variant)
-			cursor: default
-			transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-			&--has-posts
-				/* 淡 tint 状态层（primary 12%）：比实底 container 柔和得多，
+<style>
+.m3-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.m3-calendar__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.m3-calendar__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: var(--shape-corner-s);
+  background: transparent;
+  text-align: center;
+  font: var(--m3e-type-title-small);
+  font-weight: 600;
+  color: var(--on-surface);
+  white-space: nowrap;
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard), background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-calendar__title--clickable {
+  color: var(--primary);
+  cursor: pointer;
+}
+.m3-calendar__title--clickable:hover {
+  background: var(--btn-plain-bg-hover);
+}
+.m3-calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+}
+.m3-calendar__weekday {
+  text-align: center;
+  font: var(--m3e-type-label-medium);
+  color: var(--on-surface-variant);
+}
+.m3-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+}
+.m3-calendar__blank {
+  aspect-ratio: 1;
+}
+.m3-calendar__day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--shape-corner-s);
+  background: transparent;
+  font: var(--m3e-type-label-large);
+  font-variant-numeric: tabular-nums;
+  color: var(--on-surface-variant);
+  cursor: default;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-calendar__day--has-posts {
+/* 淡 tint 状态层（primary 12%）：比实底 container 柔和得多，
 				   有文日的视觉层级应低于今天（实底 primary）；数字保持
 				   on-surface（primary 浅色系在白底卡片上对比度不足），
 				   识别靠淡底 + 加粗；hover 加深 tint 一档 */
-				background: unquote("color-mix(in oklab, var(--primary) 12%, transparent)")
-				color: var(--on-surface)
-				font-weight: 600
-				cursor: pointer
-
-				&:hover
-					background: unquote("color-mix(in oklab, var(--primary) 20%, transparent)")
-
-			&--today
-				background: var(--primary)
-				color: var(--on-primary)
-				font-weight: 700
-
-				&:hover
-					filter: brightness(1.06)
-
-			&--selected
-				/* 选中强调：box-shadow 内描边跟随 corner-s 圆角
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  color: var(--on-surface);
+  font-weight: 600;
+  cursor: pointer;
+}
+.m3-calendar__day--has-posts:hover {
+  background: color-mix(in oklab, var(--primary) 20%, transparent);
+}
+.m3-calendar__day--today {
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+}
+.m3-calendar__day--today:hover {
+  filter: brightness(1.06);
+}
+.m3-calendar__day--selected {
+/* 选中强调：box-shadow 内描边跟随 corner-s 圆角
 				   （outline 不跟圆角，会画出突兀的方框） */
-				box-shadow: inset 0 0 0 2px var(--outline)
-
-			&:disabled
-				opacity: 0.55
-
-		&__panel
-			overflow: hidden
-
-		&__posts
-			list-style: none
-			margin: 0
-			padding: 0.25rem 0 0
-			display: flex
-			flex-direction: column
-			gap: 0.125rem
-			max-height: 9.5rem
-			overflow-y: auto
-			overscroll-behavior: contain
-			scrollbar-width: thin
-			scrollbar-color: var(--scrollbar-bg) transparent
-
-			&::-webkit-scrollbar
-				width: var(--m3e-space-2)
-
-			&::-webkit-scrollbar-track
-				background: transparent
-
-			&::-webkit-scrollbar-thumb
-				background: var(--scrollbar-bg)
-				border-radius: var(--shape-corner-full)
-
-				&:hover
-					background: var(--scrollbar-bg-hover)
-
-				&:active
-					background: var(--scrollbar-bg-active)
-
-		&__post
-			display: flex
-			align-items: baseline
-			gap: 0.5rem
-			padding: 0.25rem 0.5rem
-			border-radius: var(--shape-corner-s)
-			transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-			&:hover
-				background: var(--btn-plain-bg-hover)
-
-			a
-				min-width: 0
-				flex: 1
-				overflow: hidden
-				text-overflow: ellipsis
-				white-space: nowrap
-				font: var(--m3e-type-body-medium)
-				color: var(--on-surface)
-				text-decoration: none
-				transition: color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-			&:hover a
-				color: var(--primary)
-
-		&__post-date
-			flex-shrink: 0
-			font: var(--m3e-type-label-medium)
-			color: var(--on-surface-variant)
-			font-variant-numeric: tabular-nums
+  box-shadow: inset 0 0 0 2px var(--outline);
+}
+.m3-calendar__day:disabled {
+  opacity: 0.55;
+}
+.m3-calendar__panel {
+  overflow: hidden;
+}
+.m3-calendar__posts {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  max-height: 9.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-bg) transparent;
+}
+.m3-calendar__posts::-webkit-scrollbar {
+  width: var(--m3e-space-2);
+}
+.m3-calendar__posts::-webkit-scrollbar-track {
+  background: transparent;
+}
+.m3-calendar__posts::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-bg);
+  border-radius: var(--shape-corner-full);
+}
+.m3-calendar__posts::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-bg-hover);
+}
+.m3-calendar__posts::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-bg-active);
+}
+.m3-calendar__post {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--shape-corner-s);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-calendar__post:hover {
+  background: var(--btn-plain-bg-hover);
+}
+.m3-calendar__post a {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: var(--m3e-type-body-medium);
+  color: var(--on-surface);
+  text-decoration: none;
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-calendar__post:hover a {
+  color: var(--primary);
+}
+.m3-calendar__post-date {
+  flex-shrink: 0;
+  font: var(--m3e-type-label-medium);
+  color: var(--on-surface-variant);
+  font-variant-numeric: tabular-nums;
+}
 </style>

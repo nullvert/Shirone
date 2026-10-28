@@ -54,76 +54,77 @@ let {
 	{/if}
 </div>
 
-<style lang="stylus">
-.m3-banner
-	display: flex
-	align-items: center
-	gap: 1rem
-	box-sizing: border-box
-	padding: 1rem
-	background: var(--surface-container-low)
-	box-shadow: var(--m3e-elevation-1)
-
-	&--round
-		border-radius: var(--shape-corner-xl) /* 最新版 banners round：corner-extra-large 28px */
-
-	&--compact
-		padding: 0.875rem 1rem /* 上下 14px：24px 内容区 + 28px padding = 52px 单行小高度 */
-		min-height: 3.25rem /* 统一紧凑单行 52px（纯文本时也为 52px） */
-
-		.m3-banner__icon
-			width: 1.5rem
-			height: 1.5rem
-
-			> :global(svg)
-				width: 16px
-				height: 16px
-
-		.m3-banner__actions
-			margin-block: -0.5rem /* 40px 触摸目标 - 24px 内容区 = 16px，上下各 -8px */
-
-	&__icon
-		display: flex
-		align-items: center
-		justify-content: center
-		width: 2.5rem
-		height: 2.5rem
-		border-radius: var(--shape-corner-full)
-		color: var(--primary)
-		flex: none
-
-		> :global(svg)
-			width: 24px
-			height: 24px
-
-	&__text
-		flex: 1
-		min-width: 0
-		margin: 0
-		font: var(--m3e-type-body-medium)
-		color: var(--on-surface-variant)
-		overflow-wrap: break-word
-
-	&__actions
-		display: flex
-		align-items: center
-		gap: 0.5rem
-		flex: none
-		/* 40px 触摸目标不撑高容器：容器高度由文本/图标 + padding 决定（官方 52/72dp） */
-		margin-block: -0.625rem
-
-	&__action
-		display: inline-flex
-		align-items: center
-		justify-content: center
-		height: 2.5rem
-		padding: 0 0.75rem
-		border: none
-		border-radius: var(--shape-corner-m)
-		background: transparent
-		color: var(--primary)
-		font: var(--m3e-type-label-large)
-		cursor: pointer
-		white-space: nowrap
-		--m3e-state-color: var(--primary)
+<style>
+.m3-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-sizing: border-box;
+  padding: 1rem;
+  background: var(--surface-container-low);
+  box-shadow: var(--m3e-elevation-1);
+}
+.m3-banner--round {
+  border-radius: var(--shape-corner-xl) /* 最新版 banners round：corner-extra-large 28px */;
+}
+.m3-banner--compact {
+  padding: 0.875rem 1rem /* 上下 14px：24px 内容区 + 28px padding = 52px 单行小高度 */;
+  min-height: 3.25rem /* 统一紧凑单行 52px（纯文本时也为 52px） */;
+}
+.m3-banner--compact .m3-banner__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-banner--compact .m3-banner__icon > :global(svg) {
+  width: 16px;
+  height: 16px;
+}
+.m3-banner--compact .m3-banner__actions {
+  margin-block: -0.5rem /* 40px 触摸目标 - 24px 内容区 = 16px，上下各 -8px */;
+}
+.m3-banner__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--shape-corner-full);
+  color: var(--primary);
+  flex: none;
+}
+.m3-banner__icon > :global(svg) {
+  width: 24px;
+  height: 24px;
+}
+.m3-banner__text {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font: var(--m3e-type-body-medium);
+  color: var(--on-surface-variant);
+  overflow-wrap: break-word;
+}
+.m3-banner__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+/* 40px 触摸目标不撑高容器：容器高度由文本/图标 + padding 决定（官方 52/72dp） */
+  margin-block: -0.625rem;
+}
+.m3-banner__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border: none;
+  border-radius: var(--shape-corner-m);
+  background: transparent;
+  color: var(--primary);
+  font: var(--m3e-type-label-large);
+  cursor: pointer;
+  white-space: nowrap;
+  --m3e-state-color: var(--primary);
+}
 </style>

@@ -312,11 +312,12 @@ onMount(() => {
 	{/if}
 </div>
 
-<style lang="stylus">
-.media-sidebar-filter
-	display: flex
-	flex-direction: column
-	gap: 1.15rem
-	width: 100%
-	padding-bottom: 0.5rem
+<style>
+.media-sidebar-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
 </style>

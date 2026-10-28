@@ -62,56 +62,59 @@ let {
     {/if}
 </div>
 
-<style lang="stylus">
-.m3-toolbar
-    --m3-toolbar-bg: var(--primary-container)
-    display: inline-flex
-    align-items: center
-    box-sizing: border-box
-    border-radius: var(--shape-corner-full)
-    background: var(--m3-toolbar-bg)
-    color: var(--on-primary-container)
-    transition:
-        box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate),
-        padding var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-    &--collapsed
-        padding: 4px
-        box-shadow: var(--m3e-elevation-1)
-        cursor: pointer
-
-    &--expanded
-        gap: 4px
-        padding: 8px 4px
-        box-shadow: var(--m3e-elevation-2)
-
-    &__toggle
-        display: flex
-        align-items: center
-        justify-content: center
-        width: 40px
-        height: 40px
-        padding: 0
-        border: none
-        border-radius: var(--shape-corner-full)
-        background: none
-        color: var(--on-primary-container)
-        cursor: pointer
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-primary-container) 8%, transparent)")
-        &:focus-visible
-            outline: 2px solid var(--on-primary-container)
-            outline-offset: -2px
-        > :global(svg)
-            width: 1.5rem
-            height: 1.5rem
-
-    &__leading, &__trailing
-        display: flex
-        align-items: center
-
-    &__content
-        display: flex
-        align-items: center
-        gap: 4px
+<style>
+.m3-toolbar {
+  --m3-toolbar-bg: var(--primary-container);
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-full);
+  background: var(--m3-toolbar-bg);
+  color: var(--on-primary-container);
+  transition: box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), padding var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.m3-toolbar--collapsed {
+  padding: 4px;
+  box-shadow: var(--m3e-elevation-1);
+  cursor: pointer;
+}
+.m3-toolbar--expanded {
+  gap: 4px;
+  padding: 8px 4px;
+  box-shadow: var(--m3e-elevation-2);
+}
+.m3-toolbar__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: none;
+  color: var(--on-primary-container);
+  cursor: pointer;
+}
+.m3-toolbar__toggle:hover {
+  background: color-mix(in oklab, var(--on-primary-container) 8%, transparent);
+}
+.m3-toolbar__toggle:focus-visible {
+  outline: 2px solid var(--on-primary-container);
+  outline-offset: -2px;
+}
+.m3-toolbar__toggle > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-toolbar__leading,
+.m3-toolbar__trailing {
+  display: flex;
+  align-items: center;
+}
+.m3-toolbar__content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 </style>

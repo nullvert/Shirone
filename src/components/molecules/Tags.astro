@@ -44,25 +44,28 @@ const tagItems = tags.slice(0, DISPLAY_LIMIT).map((t) => ({
 	)}
 </WidgetLayout>
 
-<style lang="stylus">
-.widget-index-link
-	padding: var(--m3e-space-2) var(--m3e-space-4) 0
-	> a
-		display: flex
-		align-items: center
-		justify-content: center
-		gap: var(--m3e-space-1)
-		width: 100%
-		min-height: 2.5rem
-		padding: 0 var(--m3e-space-2)
-		border-radius: var(--shape-corner-m)
-		color: var(--primary)
-		font: var(--m3e-type-label-large)
-		font-weight: 600
-		text-decoration: none
-		--m3e-state-color: var(--primary)
-		transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-		> :global(svg)
-			width: 1.125rem
-			height: 1.125rem
+<style>
+.widget-index-link {
+  padding: var(--m3e-space-2) var(--m3e-space-4) 0;
+}
+.widget-index-link > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--m3e-space-1);
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 var(--m3e-space-2);
+  border-radius: var(--shape-corner-m);
+  color: var(--primary);
+  font: var(--m3e-type-label-large);
+  font-weight: 600;
+  text-decoration: none;
+  --m3e-state-color: var(--primary);
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.widget-index-link > a > :global(svg) {
+  width: 1.125rem;
+  height: 1.125rem;
+}
 </style>

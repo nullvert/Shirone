@@ -281,231 +281,274 @@ $effect(() => {
 	</div>
 {/if}
 
-<style lang="stylus">
-@import "../../styles/breakpoints.styl"
-
+<style>
 /* ===== 网格态（类名保持 moment-card__*，与卡片视觉一体） ===== */
-.moment-card__gallery
-	display: grid
-	gap: 0.5rem
-	margin-top: 0.875rem
-
-	/* 桌面端限宽：多图网格的格子保持精致尺度，窄屏自然全宽 */
-	&--pair
-		grid-template-columns: repeat(2, 1fr)
-		max-width: 30rem
-	/* 3 图拼图：左大图跨两行 + 右侧两方格，整体拼成一个正方形 */
-	&--mosaic
-		grid-template-columns: 2fr 1fr
-		grid-template-rows: 1fr 1fr
-		max-width: 30rem
-	&--trio
-		grid-template-columns: repeat(3, 1fr)
-		max-width: 38rem
-
-.moment-card__tile
-	position: relative
-	display: flex
-	padding: 0
-	border: none
-	overflow: hidden
-	border-radius: var(--shape-corner-m)
-	aspect-ratio: 1
-	background: var(--surface-container-high)
-	cursor: zoom-in
-	&:focus-visible
-		outline: 2px solid var(--primary)
-		outline-offset: 2px
-	> img
-		display: block
-		width: 100%
-		height: 100%
-		object-fit: cover
-		/* 加载前隐藏（指示器占位），加载完成后淡入 */
-		opacity: 0
-		transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard)
-
-		&.moment-card__tile-img--loaded
-			opacity: 1
-
-	/* 单图：固定 4:3 比例盒（限宽 30rem）。
+.moment-card__gallery {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.875rem;
+/* 桌面端限宽：多图网格的格子保持精致尺度，窄屏自然全宽 */
+/* 3 图拼图：左大图跨两行 + 右侧两方格，整体拼成一个正方形 */
+}
+.moment-card__gallery--pair {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 30rem;
+}
+.moment-card__gallery--mosaic {
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  max-width: 30rem;
+}
+.moment-card__gallery--trio {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 38rem;
+}
+.moment-card__tile {
+  position: relative;
+  display: flex;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  border-radius: var(--shape-corner-m);
+  aspect-ratio: 1;
+  background: var(--surface-container-high);
+  cursor: zoom-in;
+/* 单图：固定 4:3 比例盒（限宽 30rem）。
 	   不用自然尺寸：lazy 图片加载前无内在尺寸，fit-content 会塌成 0×0，
 	   Chrome 对零尺寸元素的懒加载可能永不触发 */
-	&--single
-		aspect-ratio: 4 / 3
-		width: 100%
-		max-width: 30rem
-		border-radius: var(--shape-corner-l)
-		> img
-			height: 100%
-			object-fit: cover
-
-	/* 拼图大图：跨两行由行高撑满（与右列两方格等比成正方形） */
-	&--hero
-		grid-row: span 2
-		aspect-ratio: auto
-
+/* 拼图大图：跨两行由行高撑满（与右列两方格等比成正方形） */
+}
+.moment-card__tile:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.moment-card__tile > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+/* 加载前隐藏（指示器占位），加载完成后淡入 */
+  opacity: 0;
+  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard);
+}
+.moment-card__tile > img.moment-card__tile-img--loaded {
+  opacity: 1;
+}
+.moment-card__tile--single {
+  aspect-ratio: 4/3;
+  width: 100%;
+  max-width: 30rem;
+  border-radius: var(--shape-corner-l);
+}
+.moment-card__tile--single > img {
+  height: 100%;
+  object-fit: cover;
+}
+.moment-card__tile--hero {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
 /* 瓦片加载指示器：lazy 图开始加载后出现，加载完成即卸载（避免离屏空转） */
-.moment-card__tile-loading
-	position: absolute
-	inset: 0
-	display: flex
-	align-items: center
-	justify-content: center
-	background: var(--surface-container-high)
-	pointer-events: none
-
-.moment-card__more
-	position: absolute
-	inset: 0
-	display: flex
-	align-items: center
-	justify-content: center
-	/* 图片折叠遮罩：站点规范允许的唯一固定黑/白叠加 */
-	background: rgb(0 0 0 / 60%)
-	color: rgb(255 255 255)
-	font: var(--m3e-type-title-large)
-
+.moment-card__tile-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-container-high);
+  pointer-events: none;
+}
+.moment-card__more {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+/* 图片折叠遮罩：站点规范允许的唯一固定黑/白叠加 */
+  background: #000;
+  color: #fff;
+  font: var(--m3e-type-title-large);
+}
 /* ===== 查看器态（卡片内展开） ===== */
-.moment-viewer
-	display: flex
-	flex-direction: column
-	gap: 0.75rem
-	margin-top: 0.875rem
-	padding: 0.75rem
-	border-radius: var(--shape-corner-l)
-	background: var(--surface-container-low)
-	border: 1px solid var(--outline-variant)
-	outline: none
-	animation: moment-viewer-in var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate)
-
-	&__bar
-		display: flex
-		align-items: center
-		justify-content: space-between
-		gap: 0.5rem
-
-	&__counter
-		padding: 0.1875rem 0.625rem
-		border-radius: var(--shape-corner-full)
-		background: var(--surface-container-high)
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-label-medium)
-		font-variant-numeric: tabular-nums
-
-	&__actions
-		display: inline-flex
-		gap: 0.25rem
-
-	&__stage
-		display: flex
-		align-items: center
-		gap: 0.5rem
-
-	&__stage-btn
-		position: relative
-		flex: 1
-		min-width: 0
-		display: flex
-		align-items: center
-		justify-content: center
-		aspect-ratio: 16 / 9
-		max-height: 26rem
-		padding: 0
-		border: none
-		background: var(--surface-container-high)
-		border-radius: var(--shape-corner-m)
-		overflow: hidden
-		cursor: zoom-in
-		&:focus-visible
-			outline: 2px solid var(--primary)
-			outline-offset: 2px
-		> img
-			display: block
-			width: 100%
-			height: 100%
-			object-fit: contain
-			opacity: 0
-			transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-
-		> img.moment-viewer__stage-img--loaded
-			opacity: 1
-
-	&__stage-loading
-		position: absolute
-		inset: 0
-		display: grid
-		place-items: center
-		pointer-events: none
-
-	&__caption
-		margin: 0
-		text-align: center
-		color: var(--on-surface-variant)
-		font: var(--m3e-type-body-small)
-		overflow: hidden
-		text-overflow: ellipsis
-		white-space: nowrap
-
-	&__thumbs
-		display: flex
-		gap: 0.5rem
-		overflow-x: auto
-		padding-bottom: 0.25rem
-		scroll-snap-type: x proximity
-
-	&__thumb
-		flex-shrink: 0
-		width: 3.5rem
-		height: 3.5rem
-		padding: 0
-		border: none
-		overflow: hidden
-		border-radius: var(--shape-corner-m)
-		background: var(--surface-container-high)
-		opacity: 0.7
-		cursor: pointer
-		scroll-snap-align: center
-		transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard)
-		&:hover
-			opacity: 1
-		&:focus-visible
-			outline: 2px solid var(--primary)
-			outline-offset: 2px
-		> img
-			display: block
-			width: 100%
-			height: 100%
-			object-fit: cover
-
-		&--active
-			opacity: 1
-			box-shadow: 0 0 0 2px var(--primary)
-			&:hover
-				opacity: 1
-
+.moment-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.875rem;
+  padding: 0.75rem;
+  border-radius: var(--shape-corner-l);
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  outline: none;
+  animation: moment-viewer-in var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
+}
+.moment-viewer__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.moment-viewer__counter {
+  padding: 0.1875rem 0.625rem;
+  border-radius: var(--shape-corner-full);
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-label-medium);
+  font-variant-numeric: tabular-nums;
+}
+.moment-viewer__actions {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+.moment-viewer__stage {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.moment-viewer__stage-btn {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16/9;
+  max-height: 26rem;
+  padding: 0;
+  border: none;
+  background: var(--surface-container-high);
+  border-radius: var(--shape-corner-m);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.moment-viewer__stage-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.moment-viewer__stage-btn > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.moment-viewer__stage-btn > img.moment-viewer__stage-img--loaded {
+  opacity: 1;
+}
+.moment-viewer__stage-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.moment-viewer__caption {
+  margin: 0;
+  text-align: center;
+  color: var(--on-surface-variant);
+  font: var(--m3e-type-body-small);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.moment-viewer__thumbs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scroll-snap-type: x proximity;
+}
+.moment-viewer__thumb {
+  flex-shrink: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  border-radius: var(--shape-corner-m);
+  background: var(--surface-container-high);
+  opacity: 0.7;
+  cursor: pointer;
+  scroll-snap-align: center;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.moment-viewer__thumb:hover {
+  opacity: 1;
+}
+.moment-viewer__thumb:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.moment-viewer__thumb > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.moment-viewer__thumb--active {
+  opacity: 1;
+  box-shadow: 0 0 0 2px var(--primary);
+}
+.moment-viewer__thumb--active:hover {
+  opacity: 1;
+}
 /* 查看器入场（emphasized-decelerate；reduced-motion 由全局 motion-reduced 规则禁用动画） */
-@keyframes moment-viewer-in
-	from
-		opacity: 0
-		transform: scale(0.98)
-	to
-		opacity: 1
-		transform: scale(1)
-
-@media (max-width: bp-sm - 1px)
-	.moment-viewer
-		&__stage-btn
-			max-height: 18rem
-
-		&__thumb
-			width: 2.75rem
-			height: 2.75rem
-
-:global(html.motion-reduced) .moment-viewer__stage-btn > img
-	transition: none
-
-@media (prefers-reduced-motion: reduce)
-	.moment-viewer__stage-btn > img
-		transition: none
+@media (max-width: 639px) {
+  .moment-viewer__stage-btn {
+    max-height: 18rem;
+  }
+  .moment-viewer__thumb {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+:global(html.motion-reduced) .moment-viewer__stage-btn > img {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .moment-viewer__stage-btn > img {
+    transition: none;
+  }
+}
+@-moz-keyframes moment-viewer-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes moment-viewer-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-o-keyframes moment-viewer-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes moment-viewer-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 </style>

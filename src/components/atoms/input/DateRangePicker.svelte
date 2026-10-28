@@ -164,96 +164,107 @@ function select(iso: string) {
     </div>
 </div>
 
-<style lang="stylus">
-.m3-date-range-picker
-    display: inline-flex
-    flex-direction: column
-    gap: 12px
-    width: 296px
-    padding: 16px
-    box-sizing: border-box
-    border-radius: var(--shape-corner-l)
-    background: var(--surface-container-high)
-    color: var(--on-surface)
-
-    /* 复用 DatePicker 头部/周/网格样式 */
-    &__header
-        display: flex
-        align-items: center
-        justify-content: space-between
-        :global(.m3-date-picker__nav)
-            display: flex
-            align-items: center
-            justify-content: center
-            width: 40px
-            height: 40px
-            border: none
-            border-radius: var(--shape-corner-full)
-            background: none
-            color: var(--on-surface-variant)
-            font-size: 1.25rem
-            cursor: pointer
-            transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-            &:hover
-                background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-        :global(.m3-date-picker__month)
-            font: var(--m3e-type-title-medium)
-
-    &__week
-        display: grid
-        grid-template-columns: repeat(7, 1fr)
-        gap: 2px
-        :global(.m3-date-picker__weekday)
-            display: flex
-            align-items: center
-            justify-content: center
-            height: 32px
-            font: var(--m3e-type-label-small)
-            color: var(--on-surface-variant)
-
-    &__grid
-        display: grid
-        grid-template-columns: repeat(7, 1fr)
-        gap: 2px 0
-
-    /* 日期：全圆 + 范围中间用 secondary-container 淡背景 */
-    :global(.m3-date-picker__day)
-        display: flex
-        align-items: center
-        justify-content: center
-        width: 36px
-        height: 36px
-        margin: 0 auto
-        border: none
-        border-radius: var(--shape-corner-full)
-        background: none
-        color: var(--on-surface)
-        font: var(--m3e-type-body-medium)
-        cursor: pointer
-        transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard)
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-        &:focus-visible
-            outline: 2px solid var(--primary)
-            outline-offset: -2px
-        &.m3-date-picker__day--today
-            box-shadow: inset 0 0 0 1px var(--primary)
-        &.m3-date-picker__day--selected
-            background: var(--primary-container)
-            color: var(--on-primary-container)
-            &:hover
-                background: var(--primary-container)
-        &.m3-date-picker__day--empty
-            background: none
-            cursor: default
-
-    /* 范围中间日期：横向延伸的淡背景（圆角仅两端） */
-    &__day-wrap
-        display: flex
-        align-items: center
-        justify-content: center
-        border-radius: 0
-
-        &--mid
-            background: unquote("color-mix(in oklab, var(--secondary-container) 40%, transparent)")
+<style>
+.m3-date-range-picker {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 296px;
+  padding: 16px;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-l);
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+/* 复用 DatePicker 头部/周/网格样式 */
+/* 日期：全圆 + 范围中间用 secondary-container 淡背景 */
+/* 范围中间日期：横向延伸的淡背景（圆角仅两端） */
+}
+.m3-date-range-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.m3-date-range-picker__header :global(.m3-date-picker__nav) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: none;
+  color: var(--on-surface-variant);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-date-range-picker__header :global(.m3-date-picker__nav):hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-date-range-picker__header :global(.m3-date-picker__month) {
+  font: var(--m3e-type-title-medium);
+}
+.m3-date-range-picker__week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.m3-date-range-picker__week :global(.m3-date-picker__weekday) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  font: var(--m3e-type-label-small);
+  color: var(--on-surface-variant);
+}
+.m3-date-range-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px 0;
+}
+.m3-date-range-picker :global(.m3-date-picker__day) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0 auto;
+  border: none;
+  border-radius: var(--shape-corner-full);
+  background: none;
+  color: var(--on-surface);
+  font: var(--m3e-type-body-medium);
+  cursor: pointer;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard), color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-date-range-picker :global(.m3-date-picker__day):hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-date-range-picker :global(.m3-date-picker__day):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+.m3-date-range-picker :global(.m3-date-picker__day).m3-date-picker__day--today {
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+.m3-date-range-picker :global(.m3-date-picker__day).m3-date-picker__day--selected {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+.m3-date-range-picker :global(.m3-date-picker__day).m3-date-picker__day--selected:hover {
+  background: var(--primary-container);
+}
+.m3-date-range-picker :global(.m3-date-picker__day).m3-date-picker__day--empty {
+  background: none;
+  cursor: default;
+}
+.m3-date-range-picker__day-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+}
+.m3-date-range-picker__day-wrap--mid {
+  background: color-mix(in oklab, var(--secondary-container) 40%, transparent);
+}
 </style>

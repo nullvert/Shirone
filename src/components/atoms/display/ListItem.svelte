@@ -97,91 +97,96 @@ const threeLine = $derived(!!overLine && !!supporting);
     {/if}
 {/snippet}
 
-<style lang="stylus">
-.m3-list-item
-    display: flex
-    align-items: center
-    gap: 16px
-    width: 100%
-    min-height: 56px
-    box-sizing: border-box
-    padding: 8px 16px
-    border: none
-    border-radius: var(--shape-corner-s)
-    background: none
-    color: var(--on-surface)
-    text-align: inherit
-    font: inherit
-    cursor: default
-    transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard)
-
-    &--two-line
-        min-height: 72px
-
-    &--three-line
-        min-height: 88px
-
-    &--selected
-        background: var(--secondary-container)
-        color: var(--on-secondary-container)
-
-    &--clickable
-        cursor: pointer
-        &:hover
-            background: unquote("color-mix(in oklab, var(--on-surface) 8%, transparent)")
-        &:focus-visible
-            outline: 2px solid var(--secondary)
-            outline-offset: -2px
-
-    &--selected.m3-list-item--clickable:hover
-        background: unquote("color-mix(in oklab, var(--on-secondary-container) 8%, var(--secondary-container))")
-
-    &__leading
-        display: flex
-        align-items: center
-        flex: none
-        color: var(--on-surface-variant)
-        > :global(svg)
-            width: 1.5rem
-            height: 1.5rem
-
-    &--selected &__leading
-        color: var(--on-secondary-container)
-
-    &__content
-        flex: 1
-        min-width: 0
-        display: flex
-        flex-direction: column
-
-    &__overline
-        font: var(--m3e-type-label-small)
-        color: var(--on-surface-variant)
-
-    &__headline
-        font: var(--m3e-type-label-large)
-        color: var(--on-surface)
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
-
-    &--selected &__headline
-        color: var(--on-secondary-container)
-
-    &__supporting
-        font: var(--m3e-type-body-medium)
-        color: var(--on-surface-variant)
-        display: -webkit-box
-        -webkit-line-clamp: 2
-        -webkit-box-orient: vertical
-        overflow: hidden
-
-    &__trailing
-        display: flex
-        align-items: center
-        flex: none
-        color: var(--on-surface-variant)
-        > :global(svg)
-            width: 1.5rem
-            height: 1.5rem
+<style>
+.m3-list-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 56px;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--shape-corner-s);
+  background: none;
+  color: var(--on-surface);
+  text-align: inherit;
+  font: inherit;
+  cursor: default;
+  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-list-item--two-line {
+  min-height: 72px;
+}
+.m3-list-item--three-line {
+  min-height: 88px;
+}
+.m3-list-item--selected {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+}
+.m3-list-item--clickable {
+  cursor: pointer;
+}
+.m3-list-item--clickable:hover {
+  background: color-mix(in oklab, var(--on-surface) 8%, transparent);
+}
+.m3-list-item--clickable:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: -2px;
+}
+.m3-list-item--selected.m3-list-item--clickable:hover {
+  background: color-mix(in oklab, var(--on-secondary-container) 8%, var(--secondary-container));
+}
+.m3-list-item__leading {
+  display: flex;
+  align-items: center;
+  flex: none;
+  color: var(--on-surface-variant);
+}
+.m3-list-item__leading > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.m3-list-item--selected .m3-list-item__leading {
+  color: var(--on-secondary-container);
+}
+.m3-list-item__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.m3-list-item__overline {
+  font: var(--m3e-type-label-small);
+  color: var(--on-surface-variant);
+}
+.m3-list-item__headline {
+  font: var(--m3e-type-label-large);
+  color: var(--on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.m3-list-item--selected .m3-list-item__headline {
+  color: var(--on-secondary-container);
+}
+.m3-list-item__supporting {
+  font: var(--m3e-type-body-medium);
+  color: var(--on-surface-variant);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.m3-list-item__trailing {
+  display: flex;
+  align-items: center;
+  flex: none;
+  color: var(--on-surface-variant);
+}
+.m3-list-item__trailing > :global(svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
 </style>
