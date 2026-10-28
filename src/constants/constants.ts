@@ -3,7 +3,7 @@ export type ThemeMode = "light" | "dark" | "auto";
 export const LIGHT_MODE = "light",
 	DARK_MODE = "dark",
 	AUTO_MODE = "auto";
-export const DEFAULT_THEME: ThemeMode = AUTO_MODE;
+export const DEFAULT_THEME: ThemeMode = DARK_MODE;
 export const THEME_CHANGE_EVENT: string = "shirone:theme-change";
 
 export const WALLPAPER_MODE_KEY = "wallpaper-mode";

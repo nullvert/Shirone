@@ -90,8 +90,21 @@ let texturePreset = $state<TexturePreset>(getStoredTexturePreset());
 let lastAppliedTexturePreset = texturePreset;
 let textureOpacity = $state<number>(getStoredTextureOpacity());
 
+
+// 8 пресетов: 7 цветов радуги (Red, Orange, Yellow, Green, Cyan, Blue, Violet) + Monochrome
+const COLOR_PRESETS: { id: string; name: string; hue: number; style?: McStyle }[] = [
+	{ id: "red", name: "Red", hue: 80 },
+	{ id: "orange", name: "Orange", hue: 110 },
+	{ id: "yellow", name: "Yellow", hue: 146 },
+	{ id: "green", name: "Green", hue: 195 },
+	{ id: "cyan", name: "Cyan", hue: 265 },
+	{ id: "blue", name: "Blue", hue: 318 },
+	{ id: "violet", name: "Violet", hue: 350 },
+	{ id: "monochrome", name: "Monochrome", hue: 0, style: "monochrome" },
+];
+
 // Разрешенные стили оформления (ровно 4 варианта: Vibrant, Expressive, Neutral, Fidelity)
-const ALLOWED_STYLES: McStyle[] = ["vibrant", "expressive", "neutral", "fidelity"];
+const ALLOWED_STYLES: McStyle[] = [...MC_STYLES];
 
 // Текстуры фона: ровно 3 опции (None по умолчанию, Starlight статичный/микро, Sakura анимированный)
 const textureOptions: {
@@ -140,19 +153,20 @@ onMount(() => {
 	};
 	document.addEventListener("swup:content:replace", onRouteChanged);
 
-	const panel = document.getElementById("display-setting");
-	const panelObserver = new MutationObserver(() => {
-		if (panel?.classList.contains("float-panel-closed")) return;
+	const panel = document.getElementById(id) ?? document.getElementById("display-setting");
+	if (embedded || (panel && !panel.classList.contains("float-panel-closed"))) {
 		panelOpened = true;
-		panelObserver.disconnect();
-	});
-	if (panel && !panel.classList.contains("float-panel-closed"))
-		panelOpened = true;
-	else if (panel)
+	} else if (panel) {
+		const panelObserver = new MutationObserver(() => {
+			if (panel.classList.contains("float-panel-closed")) return;
+			panelOpened = true;
+			panelObserver.disconnect();
+		});
 		panelObserver.observe(panel, {
 			attributes: true,
 			attributeFilter: ["class"],
 		});
+	}
 
 	return () => {
 		observer.disconnect();
@@ -261,6 +275,21 @@ const currentColor = $derived(
 	panelOpened ? styleColors(style, hue, dark, spec).primary : "transparent",
 );
 
+
+/** Превью пресетов в текущей теме Day/Night */
+const presetPreviews = $derived(
+	COLOR_PRESETS.map((p) => {
+		const targetStyle = p.style ?? (style === "monochrome" ? "fruitSalad" : style);
+		const colors = panelOpened ? styleColors(targetStyle, p.hue, dark, spec) : { primary: "#888", secondary: "#888", tertiary: "#888" };
+		const isActive = p.style ? style === p.style : (hue === p.hue && style !== "monochrome");
+		return {
+			...p,
+			colors,
+			isActive,
+		};
+	})
+);
+
 function selectStyle(newStyle: McStyle) {
 	style = newStyle;
 	const optimalHues = siteConfig.themeColor.optimalHues;
@@ -288,11 +317,7 @@ const stylePreviews = $derived(
 >
     <!-- Theme color header row -->
     <div class="ds-color-header">
-        <div class="ds-color-swatch" style={`background: ${currentColor}`}></div>
-        <div class="ds-color-info">
-            <span class="ds-color-title">{i18n(I18nKey.themeColor)}</span>
-            <span class="ds-color-sub">{hue}° · {style.charAt(0).toUpperCase() + style.slice(1)}</span>
-        </div>
+        <span class="ds-color-title">{i18n(I18nKey.themeColor)}</span>
         <button
             type="button"
             aria-label={i18n(I18nKey.reset)}
@@ -306,16 +331,45 @@ const stylePreviews = $derived(
         </button>
     </div>
 
-    <!-- Hue slider -->
-    <div class="ds-row-pad">
-        <Slider bind:value={hue} min={0} max={360} step={5} label={i18n(I18nKey.themeColor)} />
+    <!-- Theme Color Swatches (sleek borderless rounded rectangles) -->
+    <div class="ds-swatches-wrap" role="radiogroup" aria-label={i18n(I18nKey.themeColor)}>
+        <div class="ds-swatches-grid">
+            {#each presetPreviews as p (p.id)}
+                <button
+                    type="button"
+                    role="radio"
+                    aria-checked={p.isActive}
+                    title={p.name}
+                    aria-label={p.name}
+                    class="ds-swatch-tile"
+                    class:ds-swatch-tile--active={p.isActive}
+                    style={`background: ${p.colors.primary}`}
+                    onclick={() => {
+                        if (p.style) {
+                            style = p.style;
+                        } else {
+                            if (style === "monochrome") style = defaultStyle;
+                            hue = p.hue;
+                        }
+                    }}
+                >
+                    {#if p.isActive}
+                        <Icon
+                            icon="material-symbols:check-rounded"
+                            class="ds-swatch-check"
+                            style={p.id === 'monochrome' ? (dark ? 'color: #000 !important; filter: none;' : 'color: #fff !important; filter: none;') : ''}
+                        />
+                    {/if}
+                </button>
+            {/each}
+        </div>
     </div>
 
     <!-- Color style options (2x2 grid) -->
     {#if displayConfig.colorStyle}
         <div class="ds-inline-group" role="radiogroup" aria-label={i18n(I18nKey.colorStyle)}>
             <div class="ds-group-title">{i18n(I18nKey.colorStyle)}</div>
-            <div class="ds-inline-grid">
+            <div class="ds-inline-grid ds-inline-grid--3">
                 {#each stylePreviews as p (p.style)}
                     <button
                         type="button"
@@ -327,9 +381,12 @@ const stylePreviews = $derived(
                         class:ds-grid-item--active={style === p.style}
                         onclick={() => selectStyle(p.style)}
                     >
-                        <span class="ds-dot" style={`background: ${p.colors.primary}`}></span>
-                        <span class="ds-dot" style={`background: ${p.colors.secondary}`}></span>
-                        <span>{p.label}</span>
+                        <div class="flex items-center gap-1">
+                            <span class="ds-dot" style={`background: ${p.colors.primary}`}></span>
+                            <span class="ds-dot" style={`background: ${p.colors.secondary}`}></span>
+                            <span class="ds-dot" style={`background: ${p.colors.tertiary}`}></span>
+                        </div>
+                        <span class="truncate text-xs">{p.label}</span>
                         {#if style === p.style}
                             <Icon icon="material-symbols:check-rounded" class="ds-grid-check" />
                         {/if}
@@ -500,32 +557,14 @@ const stylePreviews = $derived(
 .ds-color-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: space-between;
   padding: 0.25rem var(--m3e-space-4);
-  min-height: 2.75rem;
-}
-.ds-color-swatch {
-  width: 2rem;
-  height: 2rem;
-  border-radius: var(--shape-corner-m);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.15);
-  flex-shrink: 0;
-}
-.ds-color-info {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
+  min-height: 2.25rem;
 }
 .ds-color-title {
   font: var(--m3e-type-label-large);
   font-weight: 600;
   color: var(--on-surface);
-  line-height: 1.25;
-}
-.ds-color-sub {
-  font: var(--m3e-type-body-small);
-  color: var(--on-surface-variant);
   line-height: 1.25;
 }
 /* ── Reset button ─────────────────────────────── */
@@ -564,6 +603,48 @@ const stylePreviews = $derived(
   padding: 0 var(--m3e-space-4);
 }
 /* ── List groups and full-width list items (No capsules) ── */
+
+
+
+/* ── Theme Color Swatches (Clean non-circular rounded rectangles) ── */
+.ds-swatches-wrap {
+  padding: 0 var(--m3e-space-4);
+}
+.ds-swatches-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  width: 100%;
+}
+.ds-swatch-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  border-radius: var(--shape-corner-s, 8px);
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition: transform var(--m3e-duration-short) var(--m3e-easing-standard), opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+  opacity: 0.85;
+}
+.ds-swatch-tile:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+.ds-swatch-tile:active {
+  transform: scale(0.96);
+}
+.ds-swatch-tile--active {
+  opacity: 1;
+}
+.ds-swatch-check {
+  font-size: 1.35rem;
+  color: var(--on-primary, #ffffff);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.65));
+}
+
 .ds-list-group {
   display: flex;
   flex-direction: column;

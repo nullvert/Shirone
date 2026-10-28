@@ -32,6 +32,7 @@ export const en: Translation = {
 	[Key.animeBanner]:
 		"My watchlist — watching, finished, and what's queued up next.",
 	[Key.animeNoResults]: "No anime matched your filter",
+	[Key.animeGenreMagicalGirl]: "Magical Girl",
 	[Key.animeCounts]: "anime",
 	[Key.animeStatusWatching]: "Watching",
 	[Key.animeStatusCompleted]: "Completed",

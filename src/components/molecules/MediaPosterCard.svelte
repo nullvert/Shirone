@@ -31,17 +31,18 @@ import {
 	getRatingTier,
 	getSeasonYear,
 } from "@utils/media/card";
-import { createGlowController } from "@utils/media/glow";
 import { MEDIA_STATUS_STYLES } from "@utils/media/status";
 import { reveal } from "@utils/motion";
 import type { MediaItem } from "@/types/media";
 
 let {
 	item,
+	pageType,
 	delay = 0,
 	simulatedHover = false,
 }: {
 	item: MediaItem;
+	pageType?: "anime" | "cinema" | "games";
 	delay?: number;
 	simulatedHover?: boolean;
 } = $props();
@@ -55,38 +56,22 @@ const ratingTier = $derived(getRatingTier(item));
 const cleanRank = $derived(getCleanRank(item));
 const progressPercent = $derived(getProgressPercent(item));
 
-// Режим title-on-poster: ТОЛЬКО для аниме!
-// У кино и игр постеры уже содержат название на самой картинке,
-// поэтому их название и мета выводятся только при ховере.
-const showTitleOnPoster = $derived(item.kind === "anime");
+const resolvedPageType = $derived(pageType ?? item.kind ?? "cinema");
+const showTitleOnPoster = $derived(resolvedPageType === "anime");
 
 const formattedSeasonYear = $derived(getSeasonYear(item));
 
-// Pointer glow + tilt (Masterpiece only), logic in utils/media/glow.ts
-const glow = createGlowController(() => ratingTier === "masterpiece");
-
 let articleEl: HTMLElement | null = $state(null);
-
-$effect(() => {
-	if (simulatedHover && ratingTier === "masterpiece" && articleEl) {
-		glow.simulate(articleEl);
-	}
-});
-
-$effect(() => () => glow.destroy());
 </script>
 
 <article
 	bind:this={articleEl}
-	class="media-card media-card--rating-{ratingTier}"
+	class="media-card media-card--page-{resolvedPageType} media-card--rating-{ratingTier}"
 	class:media-card--hovered={simulatedHover}
 	class:media-card--title-on-poster={showTitleOnPoster}
 	data-status={item.status}
 	style={`--media-status-color: ${statusStyle.color};`}
 	use:reveal={{ delay }}
-	onpointerenter={(e) => glow.track(e, true)}
-	onpointermove={(e) => glow.track(e, false)}
-	onpointerleave={glow.reset}
 >
 	<div class="media-card__media-wrap">
 		<!-- Ссылка / кликабельная область -->
@@ -104,7 +89,7 @@ $effect(() => () => glow.destroy());
 			<!-- Scrim -->
 			<div class="media-card__scrim" aria-hidden="true"></div>
 
-			<MediaCardOverlay {item} {formattedSeasonYear} {progressPercent} />
+			<MediaCardOverlay {item} pageType={resolvedPageType} {formattedSeasonYear} {progressPercent} />
 		</a>
 
 		<MediaCardFx {ratingTier} />
@@ -143,7 +128,7 @@ $effect(() => () => glow.destroy());
   overflow: visible;
   border-radius: 0;
   background: var(--surface-container-high);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.04);
   flex-shrink: 0;
   transform: translateZ(0);
   container-type: inline-size;
@@ -152,41 +137,12 @@ $effect(() => () => glow.destroy());
 }
 .media-card:hover .media-card__media-wrap,
 .media-card--hovered .media-card__media-wrap {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
 }
 .media-card--rating-masterpiece {
-  perspective: 1100px;
   --electric-color: #ff9410;
   --tier-hi: #ffe6a3;
   --tier-lo: #b8741a;
-/* Двухслойный золотой контур: внутренняя тонкая ювелирная грань-паспарту */
-}
-.media-card--rating-masterpiece .media-card__media-wrap {
-  transform-style: preserve-3d;
-  transition: box-shadow var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.media-card--rating-masterpiece .media-card__media-link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  border: 1px solid rgba(255,220,120,0.28);
-  box-shadow: inset 0 0 10px rgba(255,180,50,0.12);
-  transition: border-color var(--m3e-duration-short) var(--m3e-easing-standard);
-}
-.media-card--rating-masterpiece:hover .media-card__media-link::before,
-.media-card--rating-masterpiece.media-card--hovered .media-card__media-link::before {
-  border-color: rgba(255,230,160,0.5);
-}
-.media-card--rating-masterpiece:hover .media-card__media-wrap,
-.media-card--rating-masterpiece.media-card--hovered .media-card__media-wrap {
-  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(5px);
-  box-shadow: 0 14px 32px rgba(255,148,16,0.22), 0 4px 12px rgba(0,0,0,0.35);
-}
-.media-card--rating-masterpiece :global(.media-card__overlay) {
-  background: linear-gradient(180deg, rgba(255, 195, 77, 0.07) 0%, rgba(15, 23, 42, 0.72) 35%, rgba(10, 15, 29, 0.96) 100%);
-  box-shadow: inset 0 0 40px rgba(255,180,50,0.08);
 }
 .media-card--rating-great {
   --electric-color: #b57cff;

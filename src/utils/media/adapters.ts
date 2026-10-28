@@ -1,3 +1,4 @@
+import { normalizeMediaGenres } from "../anime/genres.ts";
 /**
  * Адаптеры данных для медиа-коллекций (Simkl, InfiniteBacklog, AniList).
  * Преобразуют локальные JSON-снапшоты в унифицированную структуру MediaItem.
@@ -74,7 +75,7 @@ export function getCinemaList(): MediaItem[] {
 					: undefined,
 			year: item.year ? String(item.year) : undefined,
 			runtime: typeof item.runtime === "number" ? item.runtime : undefined,
-			genres: Array.isArray(item.genres) ? item.genres : [],
+			genres: normalizeMediaGenres(item.genres),
 			description: item.description || "",
 			authorOrStudio: item.directorOrStudio || undefined,
 			lastWatchedOrPlayedAt: item.lastWatchedAt || undefined,
@@ -145,7 +146,7 @@ export function getGamesList(): MediaItem[] {
 			rating: typeof item.rating === "number" ? item.rating : undefined,
 			hours: typeof item.hours === "number" ? item.hours : undefined,
 			year: item.year ? String(item.year) : undefined,
-			genres: Array.isArray(item.genres) ? item.genres : [],
+			genres: normalizeMediaGenres(item.genres),
 			description: item.description
 				? item.description.replace(/<[^>]*>?/gm, "")
 				: "",
@@ -217,7 +218,7 @@ export function getAnimeMediaList(): MediaItem[] {
 			typeof item.repeat === "number" && item.repeat > 0
 				? item.repeat
 				: undefined,
-		genres: Array.isArray(item.genres) ? item.genres : [],
+		genres: normalizeMediaGenres(item.genres),
 		description: item.description
 			? item.description.replace(/<[^>]*>?/gm, "")
 			: "",

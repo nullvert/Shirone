@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T19:47:19.623Z",
+  "updatedAt": "2026-10-28T16:44:01.169Z",
   "total": 27,
   "provider": "anilist",
   "accountRef": "nullvert",
   "items": [
     {
       "id": "anime-19815",
-      "title": "No Game, No Life",
+      "title": "No Game No Life",
       "status": "completed",
       "rating": 8.2,
       "communityRating": 77,
@@ -62,7 +62,7 @@
     },
     {
       "id": "anime-98251",
-      "title": "AHO-GIRL",
+      "title": "Aho-Girl",
       "status": "completed",
       "rating": 6,
       "communityRating": 64,
@@ -88,7 +88,7 @@
     },
     {
       "id": "anime-142770",
-      "title": "Suzume",
+      "title": "Suzume no Tojimari",
       "status": "completed",
       "rating": 7.5,
       "communityRating": 81,
@@ -116,7 +116,7 @@
     },
     {
       "id": "anime-7465",
-      "title": "Time of Eve: The Movie",
+      "title": "Eve no Jikan Movie",
       "status": "completed",
       "rating": 6.7,
       "communityRating": 77,
@@ -142,7 +142,7 @@
     },
     {
       "id": "anime-9756",
-      "title": "Puella Magi Madoka Magica",
+      "title": "Mahou Shoujo Madoka☆Magica",
       "status": "completed",
       "rating": 9.5,
       "communityRating": 83,
@@ -156,7 +156,7 @@
       "link": "https://anilist.co/anime/9756",
       "description": "One night, 14-year-old Madoka Kaname has a terrible nightmare - against the backdrop of a devastated city, she witnesses a girl fight a losing battle against a dreadful being lingering above, while a cat-like magical creature tells Madoka the only way to change such tragic outcome is for her to make a contract with him and become a magical girl. The next day, the teen's dream seemingly becomes reality as the girl she saw in her dream - Homura - arrives at Mitakihara Middle School as a transfer student, mysteriously warning Madoka to stay just the way she is; but when later on she and her best friend Sayaka encounter the same cat-like magical creature from her dream - who introduces himself as Kyubey - the pair discovers that magical girls are real, and what's more, they can choose to become one. All they must do is sign a contract with Kyubey and agree to take on the duty to fight abstract beings called 'witches' that spread despair to the human world, and in return, each one of them will be granted any single wish they desire. However, as Homura's omen suggests, there might be far more to becoming a magical girl than Madoka and Sayaka realize... Notes: - Due to the 2011 Tōhoku earthquake and tsunami, the broadcasts of episodes 11 and 12 were delayed and were later aired as a double feature on April 21, 2011.",
       "year": "2011",
-      "studio": "Aniplex",
+      "studio": "Shaft",
       "genres": [
         "Action",
         "Drama",
@@ -172,7 +172,7 @@
     },
     {
       "id": "anime-11981",
-      "title": "Puella Magi Madoka Magica the Movie -Rebellion-",
+      "title": "Mahou Shoujo Madoka☆Magica: Hangyaku no Monogatari",
       "status": "completed",
       "rating": 9,
       "communityRating": 84,
@@ -186,7 +186,7 @@
       "link": "https://anilist.co/anime/11981",
       "description": "Were all the magical girls truly saved from despair? Now, the great \"Law of Cycles\" leads the magical girls to their new fate. Madoka Kaname, a girl who once led an ordinary life, sacrificed her very existence to set every magical girl free from their cruel destiny. Homura Akemi, another magical girl who was unable to keep her promise with Madoka, continues to fight in the world in which Madoka left her behind. \"I dream of the day when I can finally see your dear smile again.\" Madoka Kaname has changed the world. In this new world, is what the magical girls see a world of hope... or despair? (Source: Madman)",
       "year": "2013",
-      "studio": "Aniplex",
+      "studio": "Shaft",
       "genres": [
         "Drama",
         "Fantasy",
@@ -202,7 +202,7 @@
     },
     {
       "id": "anime-100526",
-      "title": "Real Girl",
+      "title": "3D Kanojo: Real Girl",
       "status": "planned",
       "rating": 0,
       "communityRating": 66,
@@ -230,7 +230,7 @@
     },
     {
       "id": "anime-105932",
-      "title": "O Maidens in Your Savage Season",
+      "title": "Araburu Kisetsu no Otome-domo yo.",
       "status": "planned",
       "rating": 0,
       "communityRating": 71,
@@ -258,7 +258,7 @@
     },
     {
       "id": "anime-7817",
-      "title": "Yamada's First Time: B Gata H Kei",
+      "title": "B Gata H Kei",
       "status": "planned",
       "rating": 0,
       "communityRating": 64,
@@ -285,7 +285,7 @@
     },
     {
       "id": "anime-1575",
-      "title": "Code Geass: Lelouch of the Rebellion",
+      "title": "Code Geass: Hangyaku no Lelouch",
       "status": "planned",
       "rating": 0,
       "communityRating": 85,
@@ -314,7 +314,7 @@
     },
     {
       "id": "anime-8142",
-      "title": "Colorful ~ The Motion Picture",
+      "title": "Colorful",
       "status": "planned",
       "rating": 0,
       "communityRating": 75,
@@ -341,7 +341,7 @@
     },
     {
       "id": "anime-20735",
-      "title": "I Can't Understand What My Husband Is Saying",
+      "title": "Danna ga Nani wo Itteiru ka Wakaranai Ken",
       "status": "planned",
       "rating": 0,
       "communityRating": 70,
@@ -382,7 +382,7 @@
       "link": "https://anilist.co/anime/790",
       "description": "Something is wrong in the perfect domed city of Romdo. Between the sudden rash of murders and a virus affecting all AutoReivs-cyborg companions and workers who assist the people of Romdo - all is not right in their dome home. Detective Re-l Meyer begins to investigate, seeking answers to the weird occurrences that are happening more and more around her. But when she begins to uncover the truth, her world is turned upside down. First, the strange immigrant Vincent Law goes missing and then a monster appears before her, shaking her to her core. But this monster is something more, something dangerous and sinister. With each question and mystery, she is led back to the creature. But what is it really? What purpose does it serve? A sign of the end or a sign of a new beginning? Whatever it is, it repeatedly brings her back to Vincent and soon, alongside his journey back to another dome world called, Mosk. As they make their way across scarred and deserted Earth, Re-l and Vincent will learn more about the monster and the \"awakening\"-which could be more of an ending than a beginning. (Source: Funimation) Note: Episode 1 received an advanced broadcast on channel WOWOW on February 5, 2006. The start date reflects the start of the regular series broadcasting.",
       "year": "2006",
-      "studio": "NBCUniversal Entertainment Japan",
+      "studio": "Manglobe",
       "genres": [
         "Adventure",
         "Mystery",
@@ -396,7 +396,7 @@
     },
     {
       "id": "anime-114232",
-      "title": "Higehiro: After Being Rejected, I Shaved and Took in a High School Runaway",
+      "title": "Hige wo Soru. Soshite Joshikousei wo Hirou.",
       "status": "planned",
       "rating": 0,
       "communityRating": 70,
@@ -423,7 +423,7 @@
     },
     {
       "id": "anime-20527",
-      "title": "One Week Friends",
+      "title": "Isshuukan Friends.",
       "status": "planned",
       "rating": 0,
       "communityRating": 73,
@@ -520,7 +520,7 @@
       "link": "https://anilist.co/anime/145665",
       "description": "The distant future, 5012. The sudden aerial invasion of Earth by ＜Aliens＞ and their creations ＜Machine Lifeforms＞led mankind to the brink of extinction. The surviving number of humans who took refuge on the moon to organize a counterattack using ＜android＞ soldiers to recapture Earth. However, the war reaches a stalemate as the ＜Machine Lifeforms＞ continue to multiply infinitely. In turn, humanity deploys anew unit of android soldiers as an ultimate weapon: ＜YoRHa＞ Newly dispatched to Earth ＜2B＞ joins＜9S＞, the analyst currently stationed there, where amid their mission, they encounter a myriad of mysterious phenomena... This is the story of these lifeless ＜androids＞ and their endless fight for the sake of mankind. (Source: NieR:Automata Ver1.1a Official USA Website) Note: Episodes 9, 10, 11, 12 aired back-to-back on July 23, 2023.",
       "year": "2023",
-      "studio": "Aniplex",
+      "studio": "A-1 Pictures",
       "genres": [
         "Action",
         "Drama",
@@ -565,7 +565,7 @@
     },
     {
       "id": "anime-13391",
-      "title": "Expelled From Paradise",
+      "title": "Rakuen Tsuihou: Expelled From Paradise",
       "status": "planned",
       "rating": 0,
       "communityRating": 70,
@@ -579,7 +579,7 @@
       "link": "https://anilist.co/anime/13391",
       "description": "Angela Balzac is an agent at the space station DEVA, whose inhabitants have no physical bodies, their minds digitized and processed into a virtual reality environment. After failing to track down the hacker known as \"Frontier Setter\", she is tasked to look for him down on Earth, now a barren planet where the rest of the humans live. (Source: Wikipedia)",
       "year": "2014",
-      "studio": "Toei Animation",
+      "studio": "Graphinica",
       "genres": [
         "Action",
         "Mecha",
@@ -592,7 +592,7 @@
     },
     {
       "id": "anime-4720",
-      "title": "White Album",
+      "title": "WHITE ALBUM",
       "status": "planned",
       "rating": 0,
       "communityRating": 61,
@@ -619,7 +619,7 @@
     },
     {
       "id": "anime-108489",
-      "title": "My Teen Romantic Comedy SNAFU Climax!",
+      "title": "Yahari Ore no Seishun Love Come wa Machigatteiru. Kan",
       "status": "planned",
       "rating": 0,
       "communityRating": 82,
@@ -647,7 +647,7 @@
     },
     {
       "id": "anime-109020",
-      "title": "SING \"YESTERDAY\" FOR ME",
+      "title": "Yesterday wo Utatte",
       "status": "planned",
       "rating": 0,
       "communityRating": 67,
@@ -674,7 +674,7 @@
     },
     {
       "id": "anime-437",
-      "title": "Perfect Blue",
+      "title": "PERFECT BLUE",
       "status": "planned",
       "rating": 0,
       "communityRating": 85,
@@ -728,7 +728,7 @@
     },
     {
       "id": "anime-21701",
-      "title": "Scum's Wish",
+      "title": "Kuzu no Honkai",
       "status": "watching",
       "rating": 0,
       "communityRating": 68,

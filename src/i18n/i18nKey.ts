@@ -44,6 +44,7 @@ enum I18nKey {
 	animeConfigMissingBangumi = "animeConfigMissingBangumi",
 	animeConfigMissingBilibili = "animeConfigMissingBilibili",
 	animeSyncEmpty = "animeSyncEmpty",
+	animeGenreMagicalGirl = "animeGenreMagicalGirl",
 
 	compass = "compass",
 	compassBanner = "compassBanner",

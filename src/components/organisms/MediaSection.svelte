@@ -9,6 +9,7 @@
 
 import Icon from "@components/atoms/display/Icon.svelte";
 import MediaPosterCard from "@components/molecules/MediaPosterCard.svelte";
+import MediaPagination from "@components/molecules/MediaPagination.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { onMount } from "svelte";
@@ -27,6 +28,8 @@ type SortKey = "title" | "rating" | "default" | "price" | "year" | "hours" | "di
 let selectedSort = $state<SortKey>("title");
 let sortDesc = $state(false);
 let selectedGenre = $state<string | null>(null);
+let currentPage = $state(1);
+const PAGE_SIZE = 24;
 let pageType = $state<"anime" | "cinema" | "games">("cinema");
 let initialized = false;
 
@@ -90,9 +93,9 @@ const sortOptions = $derived.by((): SortOption[] => {
 				allowDir: false,
 			},
 			{
-				key: "hours",
-				label: i18n(I18nKey.mediaFilterPlaytime),
-				icon: "material-symbols:schedule-rounded",
+				key: "year",
+				label: i18n(I18nKey.mediaFilterYear),
+				icon: "material-symbols:calendar-today-rounded",
 				allowDir: false,
 			},
 		];
@@ -149,6 +152,8 @@ function syncFromUrl() {
 	selectedStatus = params.get("status") || "all";
 	selectedSort = (params.get("sort") as SortKey) || "title";
 	selectedGenre = params.get("genre") || null;
+	const pNum = Number.parseInt(params.get("page") || "1", 10);
+	currentPage = Number.isNaN(pNum) || pNum < 1 ? 1 : pNum;
 
 	detectPageType();
 	reconcileSort();
@@ -179,6 +184,9 @@ function pushUrlParams() {
 	if (selectedGenre) params.set("genre", selectedGenre);
 	else params.delete("genre");
 
+	if (currentPage > 1) params.set("page", String(currentPage));
+	else params.delete("page");
+
 	if (selectedSort !== "title") {
 		params.set("sort", selectedSort);
 		if (selectedSort === "price" && sortDesc) {
@@ -199,6 +207,7 @@ function pushUrlParams() {
 	window.dispatchEvent(
 		new CustomEvent("shirone:media-filter-change", {
 			detail: {
+				source: "media-section",
 				q: query.trim(),
 				kind: selectedKind,
 				status: selectedStatus,
@@ -406,21 +415,55 @@ const displayItems = $derived.by(() => {
 	return filtered.map(({ item }) => item);
 });
 
+const totalPages = $derived(Math.max(1, Math.ceil(displayItems.length / PAGE_SIZE)));
+const paginatedItems = $derived.by(() => {
+	const start = (currentPage - 1) * PAGE_SIZE;
+	return displayItems.slice(start, start + PAGE_SIZE);
+});
+
+function handlePageChange(newPage: number) {
+	if (newPage === currentPage) return;
+	currentPage = newPage;
+	pushUrlParams();
+
+	if (typeof window !== "undefined") {
+		const mediaContainer = document.querySelector(".media-section");
+		if (mediaContainer) {
+			const bannerOffset = 72; // Clean offset below top app bar
+			const top = mediaContainer.getBoundingClientRect().top + window.pageYOffset - bannerOffset;
+			window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+		}
+	}
+}
+
+
 onMount(() => {
 	syncFromUrl();
 	initialized = true;
 
 	const onFilterChange = (e?: Event) => {
 		const custom = e as CustomEvent;
+		if (custom?.detail?.source === "media-section") {
+			return; // Ignore events triggered by self
+		}
 		if (custom?.detail) {
-			if (custom.detail.kind !== undefined) selectedKind = custom.detail.kind;
+			if (custom.detail.kind !== undefined) {
+				selectedKind = custom.detail.kind;
+				currentPage = 1;
+			}
 			if (custom.detail.status !== undefined) {
 				selectedStatus = custom.detail.status;
+				currentPage = 1;
 				reconcileSort();
 			}
-			if (custom.detail.genre !== undefined)
+			if (custom.detail.genre !== undefined) {
 				selectedGenre = custom.detail.genre;
-			if (custom.detail.q !== undefined) query = custom.detail.q;
+				currentPage = 1;
+			}
+			if (custom.detail.q !== undefined) {
+				query = custom.detail.q;
+				currentPage = 1;
+			}
 			if (custom.detail.sort !== undefined)
 				selectedSort = custom.detail.sort as SortKey;
 			if (custom.detail.desc !== undefined) sortDesc = custom.detail.desc;
@@ -442,13 +485,23 @@ onMount(() => {
 });
 </script>
 
-<div class="media-section">
+<div class="media-section media-section--{pageType}">
 	{#if displayItems.length > 0}
-		<div class="media-grid">
-			{#each displayItems as item, index (item.id)}
-				<MediaPosterCard {item} delay={Math.min(index * 20, 250)} />
-			{/each}
-		</div>
+		{#key currentPage}
+			<div class="media-grid media-grid--animated">
+				{#each paginatedItems as item, index (item.id)}
+					<MediaPosterCard {item} {pageType} delay={Math.min(index * 25, 300)} />
+				{/each}
+			</div>
+		{/key}
+
+		<MediaPagination
+			{currentPage}
+			{totalPages}
+			totalItems={displayItems.length}
+			pageSize={PAGE_SIZE}
+			onPageChange={handlePageChange}
+		/>
 	{:else}
 		<div class="media-section__empty">
 			<Icon icon="material-symbols:search-off-rounded" />
@@ -466,6 +519,21 @@ onMount(() => {
 </div>
 
 <style>
+@keyframes mediaGridFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.media-grid--animated {
+  animation: mediaGridFadeIn var(--m3e-duration-medium, 300ms) var(--m3e-easing-decelerate, cubic-bezier(0.05, 0.7, 0.1, 1)) both;
+}
+
 .media-section {
   display: flex;
   flex-direction: column;

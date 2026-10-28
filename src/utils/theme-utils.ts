@@ -130,6 +130,12 @@ export function applyCurrentScheme(): void {
 	const isDark = root.classList.contains("dark");
 	const style = getStyle();
 	const spec = getSpec();
+
+	if (style === "monochrome") {
+		root.setAttribute("data-mc-monochrome", "true");
+	} else {
+		root.removeAttribute("data-mc-monochrome");
+	}
 	const key = `${hue}|${isDark}|${style}|${spec}`;
 	if (key === appliedSchemeKey) return;
 	appliedSchemeKey = key;

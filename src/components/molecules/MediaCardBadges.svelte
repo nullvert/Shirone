@@ -85,8 +85,8 @@ let {
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   transition: background var(--m3e-duration-medium) var(--m3e-easing-standard), border-color var(--m3e-duration-medium) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
 }
-:global(.media-card:hover) .media-card__top-status,
-:global(.media-card--hovered) .media-card__top-status {
+:global(html.dark .media-card:hover) .media-card__top-status,
+:global(html.dark .media-card--hovered) .media-card__top-status {
   background: color-mix(in oklab, var(--electric-color, var(--primary)) 28%, rgba(15, 23, 42, 0.88));
 }
 .media-card__top-status :global(.media-card__top-status-icon) {
@@ -182,8 +182,8 @@ let {
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   transition: background var(--m3e-duration-medium) var(--m3e-easing-standard), border-color var(--m3e-duration-medium) var(--m3e-easing-standard), transform var(--m3e-duration-short) var(--m3e-easing-standard);
 }
-:global(.media-card:hover) .media-card__top-rating,
-:global(.media-card--hovered) .media-card__top-rating {
+:global(html.dark .media-card:hover) .media-card__top-rating,
+:global(html.dark .media-card--hovered) .media-card__top-rating {
   background: color-mix(in oklab, var(--electric-color, var(--primary)) 28%, rgba(15, 23, 42, 0.88));
 }
 .media-card__top-rating-val {

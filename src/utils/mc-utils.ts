@@ -224,6 +224,19 @@ export function resolveScheme(
 	const scheme = buildScheme(style, isDark, seedFromHue(hue), spec);
 	initRoleMap(scheme.colors);
 	const out: McScheme = {};
+	const SURFACE_ROLES = new Set([
+		"surface",
+		"surfaceDim",
+		"surfaceBright",
+		"surfaceContainerLowest",
+		"surfaceContainerLow",
+		"surfaceContainer",
+		"surfaceContainerHigh",
+		"surfaceContainerHighest",
+		"surfaceVariant",
+		"inverseSurface",
+	]);
+
 	for (const name of Object.keys(roleMap)) {
 		const dc = roleMap[name];
 		if (!dc) {
@@ -231,6 +244,16 @@ export function resolveScheme(
 			continue;
 		}
 		const argb = dc.getArgb(scheme);
+		// 60-30-10 Guard: Enforce neutral 60% surface background across ALL styles (no muddy/acidic yellow/cyan).
+		if (SURFACE_ROLES.has(name)) {
+			const hct = Hct.fromInt(argb);
+			const maxChroma = isDark ? 6.5 : 4.5;
+			if (hct.chroma > maxChroma) {
+				const clamped = Hct.from(hct.hue, maxChroma, hct.tone);
+				out[name] = argbToHex(clamped.toInt());
+				continue;
+			}
+		}
 		out[name] = argbToHex(argb);
 	}
 	return out;

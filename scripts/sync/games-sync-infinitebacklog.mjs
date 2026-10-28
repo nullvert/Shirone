@@ -192,9 +192,7 @@ async function main() {
 		const coverHash = game.cover?.image_id || (game.cover?.url ? game.cover.url.replace(/\.[^.]+$/, "") : null);
 		const cover = coverHash ? `https://images.igdb.com/igdb/image/upload/t_1080p/${coverHash}.jpg` : "";
 
-		// Время в часах
-		const playtimeMinutes = entry.playtime || 0;
-		const hours = Math.round(playtimeMinutes / 60);
+		// Playtime больше не сохраняется по запросу пользователя
 
 		// Оценка: entry.rating.score (1-10)
 		let rating = undefined;
@@ -259,7 +257,6 @@ async function main() {
 			link: `https://infinitebacklog.net/games/${game.slug || gameId}`,
 			status,
 			rating,
-			hours,
 			platform,
 			year,
 			genres,

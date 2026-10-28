@@ -6,6 +6,7 @@
 import Icon from "@components/atoms/display/Icon.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import { getGenreDisplayName, getGenreIcon } from "@utils/anime/genres";
 import {
 	GENRES_COLLAPSED,
 	GENRES_TOGGLE_THRESHOLD,
@@ -46,8 +47,10 @@ let {
 			title={g.name}
 		>
 			<span class="media-genre-pill__left">
-				<span class="media-genre-pill__hash" aria-hidden="true">#</span>
-				<span class="media-genre-pill__name">{g.name}</span>
+				<span class="media-genre-pill__icon" aria-hidden="true">
+					<Icon icon={getGenreIcon(g.name)} />
+				</span>
+				<span class="media-genre-pill__name">{getGenreDisplayName(g.name)}</span>
 			</span>
 			{#if showCounts}
 				<span class="media-genre-pill__count">{g.count}</span>
@@ -93,38 +96,47 @@ let {
   box-sizing: border-box;
   padding: 0 0.75rem;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--on-surface-variant);
   background: var(--surface-container);
-  border: none;
+  border: 1px solid transparent;
   border-radius: var(--shape-corner-m);
   cursor: pointer;
   transition: all var(--m3e-duration-short) ease;
   overflow: hidden;
 }
+:global(html.dark) .media-genre-pill {
+  color: var(--on-surface-variant);
+  background: var(--surface-container);
+}
 .media-genre-pill:last-child:nth-child(odd) {
   grid-column: span 2;
 }
 .media-genre-pill:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--primary) 15%, var(--surface-container-high));
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+  transform: translateY(-1px);
+}
+:global(html.dark) .media-genre-pill:hover:not(:disabled) {
+  background: var(--surface-container-high);
   color: var(--on-surface);
 }
-.media-genre-pill:hover:not(:disabled) .media-genre-pill__hash {
+.media-genre-pill:hover:not(:disabled) .media-genre-pill__icon {
   color: var(--primary);
-  opacity: 1;
+  transform: scale(1.12);
 }
 .media-genre-pill:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 1px;
 }
 .media-genre-pill--active {
-  background: var(--primary);
-  color: var(--on-primary);
-  font-weight: 600;
+  background: var(--primary) !important;
+  color: var(--on-primary) !important;
+  font-weight: 700;
 }
-.media-genre-pill--active .media-genre-pill__hash {
-  color: var(--on-primary);
-  opacity: 0.85;
+.media-genre-pill--active .media-genre-pill__icon {
+  color: var(--on-primary) !important;
+  opacity: 1;
 }
 .media-genre-pill--active .media-genre-pill__count {
   background: var(--surface-container);
@@ -139,17 +151,23 @@ let {
 .media-genre-pill__left {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.45rem;
   min-width: 0;
   overflow: hidden;
 }
-.media-genre-pill__hash {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--primary);
+.media-genre-pill__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  color: var(--on-surface-variant);
   line-height: 1;
   opacity: 0.8;
+  flex-shrink: 0;
   transition: all var(--m3e-duration-short) ease;
+}
+:global(html.dark) .media-genre-pill__icon {
+  color: var(--on-surface-variant);
 }
 .media-genre-pill__name {
   white-space: nowrap;

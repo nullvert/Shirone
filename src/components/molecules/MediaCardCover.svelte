@@ -12,6 +12,12 @@ let { item }: { item: MediaItem } = $props();
 
 let isImageLoaded = $state(false);
 let isImageError = $state(false);
+
+function checkImage(node: HTMLImageElement) {
+	if (node.complete && node.naturalWidth > 0) {
+		isImageLoaded = true;
+	}
+}
 </script>
 
 <!-- Обложка / Скелетон -->
@@ -30,6 +36,7 @@ let isImageError = $state(false);
 		referrerpolicy="no-referrer"
 		onload={() => (isImageLoaded = true)}
 		onerror={() => (isImageError = true)}
+		use:checkImage
 	/>
 {:else}
 	<div class="media-card__placeholder" aria-hidden="true">

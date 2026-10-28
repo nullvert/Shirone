@@ -238,5 +238,20 @@ const maxWidth = bottomBarConfig?.maxWidth ?? "56rem";
 
 	initBottomAppBar();
 	syncBottomAppBarState();
+
+	// Robust Swup synchronization across direct load & client navigation
+	const bindSwup = () => {
+		if (window.swup?.hooks) {
+			window.swup.hooks.on("content:replace", syncBottomAppBarState);
+			window.swup.hooks.on("page:view", syncBottomAppBarState);
+		}
+	};
+
+	if (window.swup?.hooks) {
+		bindSwup();
+	} else {
+		document.addEventListener("swup:enable", bindSwup, { once: true });
+	}
 	document.addEventListener("swup:content:replace", syncBottomAppBarState);
+	document.addEventListener("swup:page:view", syncBottomAppBarState);
 </script>

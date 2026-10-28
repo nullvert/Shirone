@@ -67,7 +67,9 @@ async function fetchAniListUserAnime(userName) {
                 romaji
                 english
                 native
+                userPreferred
               }
+              synonyms
               coverImage {
                 extraLarge
                 large
@@ -79,8 +81,14 @@ async function fetchAniListUserAnime(userName) {
               averageScore
               startDate { year month day }
               genres
-              studios(isMain: true) {
-                nodes { name }
+              studios {
+                edges {
+                  isMain
+                  node {
+                    name
+                    isAnimationStudio
+                  }
+                }
               }
               description(asHtml: false)
               siteUrl
@@ -142,9 +150,11 @@ async function sync() {
 				if (seenIds.has(media.id)) continue;
 				seenIds.add(media.id);
 
+				// Приоритет userPreferred из AniList аккаунта пользователя
 				const title =
-					media.title?.english ||
+					media.title?.userPreferred ||
 					media.title?.romaji ||
+					media.title?.english ||
 					media.title?.native ||
 					"Untitled";
 
@@ -168,7 +178,15 @@ async function sync() {
 						? String(media.startDate.year)
 						: "";
 
-				const studio = media.studios?.nodes?.[0]?.name;
+				const studioEdges = media.studios?.edges || [];
+				const mainAnimStudio = studioEdges.find(
+					(e) => e.isMain && e.node?.isAnimationStudio,
+				)?.node?.name;
+				const anyAnimStudio = studioEdges.find(
+					(e) => e.node?.isAnimationStudio,
+				)?.node?.name;
+				const fallbackStudio = studioEdges[0]?.node?.name;
+				const studio = mainAnimStudio || anyAnimStudio || fallbackStudio;
 				const genres = Array.isArray(media.genres) ? media.genres : [];
 				const description = cleanDescription(media.description);
 				const link = media.siteUrl || `https://anilist.co/anime/${media.id}`;

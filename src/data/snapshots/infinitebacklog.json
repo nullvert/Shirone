@@ -14,7 +14,6 @@
       "link": "https://infinitebacklog.net/games/genshin-impact",
       "status": "playing",
       "rating": 9,
-      "hours": 0,
       "platform": "PC",
       "year": "2020",
       "genres": [
@@ -34,7 +33,6 @@
       "link": "https://infinitebacklog.net/games/honkai-star-rail",
       "status": "playing",
       "rating": 8,
-      "hours": 22,
       "platform": "PC",
       "year": "2023",
       "genres": [
@@ -55,7 +53,6 @@
       "link": "https://infinitebacklog.net/games/wuthering-waves",
       "status": "playing",
       "rating": 8,
-      "hours": 132,
       "platform": "PC",
       "year": "2024",
       "genres": [
@@ -75,7 +72,6 @@
       "banner": "https://images.igdb.com/igdb/image/upload/t_screenshot_big/wzgo0jtaajeq14vl4l0q.jpg",
       "link": "https://infinitebacklog.net/games/detroit-become-human--1",
       "status": "planned",
-      "hours": 0,
       "platform": "PC",
       "year": "2018",
       "genres": [
@@ -93,7 +89,6 @@
       "banner": "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sgbofjalgwarzdgdpupz.jpg",
       "link": "https://infinitebacklog.net/games/house-flipper",
       "status": "planned",
-      "hours": 11,
       "platform": "PC",
       "year": "2018",
       "genres": [
@@ -112,7 +107,6 @@
       "banner": "https://images.igdb.com/igdb/image/upload/t_screenshot_big/arloo.jpg",
       "link": "https://infinitebacklog.net/games/in-sound-mind",
       "status": "planned",
-      "hours": 0,
       "platform": "PC",
       "year": "2021",
       "genres": [
@@ -134,7 +128,6 @@
       "banner": "https://images.igdb.com/igdb/image/upload/t_screenshot_big/jmpwspq96o9vlvguxb1q.jpg",
       "link": "https://infinitebacklog.net/games/sleeping-dogs-definitive-edition",
       "status": "planned",
-      "hours": 5,
       "platform": "PC",
       "year": "2014",
       "genres": [
@@ -155,7 +148,6 @@
       "banner": "https://images.igdb.com/igdb/image/upload/t_screenshot_big/scnx4i.jpg",
       "link": "https://infinitebacklog.net/games/an-arcade-full-of-cats",
       "status": "onHold",
-      "hours": 1,
       "platform": "PC",
       "year": "2023",
       "genres": [
@@ -175,7 +167,6 @@
       "link": "https://infinitebacklog.net/games/beyond-two-souls",
       "status": "completed",
       "rating": 10,
-      "hours": 13,
       "platform": "PC",
       "year": "2013",
       "genres": [
@@ -194,7 +185,6 @@
       "link": "https://infinitebacklog.net/games/metro-2033-redux",
       "status": "completed",
       "rating": 8,
-      "hours": 10,
       "platform": "PC",
       "year": "2014",
       "genres": [
@@ -215,7 +205,6 @@
       "link": "https://infinitebacklog.net/games/metro-exodus-enhanced-edition",
       "status": "completed",
       "rating": 9,
-      "hours": 31,
       "platform": "PC",
       "year": "2021",
       "genres": [
@@ -235,7 +224,6 @@
       "link": "https://infinitebacklog.net/games/metro-last-light-redux",
       "status": "completed",
       "rating": 10,
-      "hours": 10,
       "platform": "PC",
       "year": "2014",
       "genres": [
@@ -255,7 +243,6 @@
       "banner": "https://images.igdb.com/igdb/image/upload/t_screenshot_big/ar3cju.jpg",
       "link": "https://infinitebacklog.net/games/bongo-cat",
       "status": "dropped",
-      "hours": 290,
       "platform": "PC",
       "year": "2025",
       "genres": [
@@ -275,7 +262,6 @@
       "link": "https://infinitebacklog.net/games/efootball-pes-2021-season-update",
       "status": "dropped",
       "rating": 7,
-      "hours": 105,
       "platform": "PC",
       "year": "2020",
       "genres": [
@@ -294,7 +280,6 @@
       "banner": "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc11n1f.jpg",
       "link": "https://infinitebacklog.net/games/nte-neverness-to-everness",
       "status": "dropped",
-      "hours": 56,
       "platform": "PC",
       "year": "2026",
       "genres": [
@@ -313,7 +298,6 @@
       "banner": "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sch7o8.jpg",
       "link": "https://infinitebacklog.net/games/zenless-zone-zero",
       "status": "dropped",
-      "hours": 1,
       "platform": "PC",
       "year": "2024",
       "genres": [
@@ -332,7 +316,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/233130/header.jpg?t=1710246206",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2013",
       "genres": [
@@ -354,7 +337,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/257510/header.jpg?t=1744327639",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2014",
       "genres": [
@@ -377,7 +359,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322500/header.jpg?t=1726509130",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2016",
       "genres": [
@@ -399,7 +380,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/508980/cbdf3281c0dc9d6d1f9cfb39876c83ce35b2ad5a/header.jpg?t=1786485436",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2017",
       "genres": [
@@ -421,7 +401,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/557340/header.jpg?t=1745954928",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2019",
       "genres": [
@@ -443,7 +422,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/601150/header.jpg?t=1790215341",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2019",
       "genres": [
@@ -464,7 +442,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/690040/header.jpg?t=1726508997",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2020",
       "genres": [
@@ -486,7 +463,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1029690/header.jpg?t=1770633150",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2022",
       "genres": [
@@ -508,7 +484,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1049410/header.jpg?t=1755294276",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2020",
       "genres": [
@@ -530,7 +505,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/48a93d6445a67520ea49833c93dae8f2e68fc540/header_alt_assets_9.jpg?t=1792682505",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2020",
       "genres": [
@@ -551,7 +525,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1164940/header.jpg?t=1765814715",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2023",
       "genres": [
@@ -573,7 +546,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1265920/header.jpg?t=1779117636",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2022",
       "genres": [
@@ -595,7 +567,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2483190/bd1e762f4720cb68af365f2e41d002f14dd74fbf/header_alt_assets_5.jpg?t=1791312088",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2026",
       "genres": [
@@ -618,7 +589,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2698780/1adb47e8aa5c6404f99b5b8be94449f96094bced/header.jpg?t=1789233418",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2025",
       "genres": [
@@ -641,7 +611,6 @@
       "banner": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3919340/b1fecd3bdebb576845ceb7c82d896ff93410d06b/header.jpg?t=1793023744",
       "link": "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
       "status": "wishlist",
-      "hours": 0,
       "platform": "PC",
       "year": "2026",
       "genres": [

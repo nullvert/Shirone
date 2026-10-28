@@ -210,10 +210,10 @@ export function buildSortOptions(
 			byTitle,
 			byRating,
 			{
-				key: "hours",
+				key: "year",
 				desc: true,
-				label: i18n(I18nKey.mediaFilterPlaytime),
-				icon: "material-symbols:schedule-rounded",
+				label: i18n(I18nKey.mediaFilterYear),
+				icon: "material-symbols:calendar-today-rounded",
 			},
 		];
 	}
@@ -245,9 +245,15 @@ export function collectGenres(
 	selectedStatus: string,
 ): GenreCount[] {
 	const source =
-		pageType === "games" && selectedStatus !== "wishlist"
-			? items.filter((i) => i.status !== "wishlist")
-			: items;
+		pageType === "games"
+			? selectedStatus === "wishlist"
+				? items.filter((i) => i.status === "wishlist")
+				: selectedStatus !== "all"
+					? items.filter((i) => i.status === selectedStatus)
+					: items.filter((i) => i.status !== "wishlist")
+			: selectedStatus !== "all"
+				? items.filter((i) => i.status === selectedStatus)
+				: items;
 	const map: Record<string, number> = {};
 	for (const item of source) {
 		if (!Array.isArray(item.genres)) continue;

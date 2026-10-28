@@ -185,6 +185,9 @@ const defaultSchemeStyle = createDefaultSchemeStyle();
 			}
 
 			document.documentElement.setAttribute('data-theme', isDark ? darkTheme : lightTheme);
+			if (localStorage.getItem('mc-style') === 'monochrome') {
+				document.documentElement.setAttribute('data-mc-monochrome', 'true');
+			}
 			const hue = localStorage.getItem('hue') || configHue;
 			document.documentElement.style.setProperty('--hue', hue);
 			if (localStorage.getItem('mc-motion') === 'reduced') {
