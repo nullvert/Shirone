@@ -1,24 +1,120 @@
 ---
 /**
- * M3E 博客原子 — TagList 标签列表（tonal Chip 链接组）。
- * 数据驱动：tags 为 { name, href }[]，复用 action/Chip 原子。
+ * M3E 博客原子 — TagList 标签网格/列表。
+ * 数据驱动：tags 为 { name, href, count? }[]，2 列网格卡片样式（与 MediaFilterGenres 风格对齐）。
  */
 import Chip from "@components/atoms/action/Chip.astro";
 
 interface Props {
-	tags: { name: string; href: string }[];
+	tags: { name: string; href: string; count?: number }[];
 	class?: string;
 }
 
 const { tags = [], class: className } = Astro.props;
 ---
 
-<div class:list={["m3-blog-taglist flex flex-wrap gap-2", className]}>
+<div class:list={["m3-blog-taglist", className]}>
 	{tags.map((t) => (
 		<Chip
 			href={t.href}
 			variant="tonal"
-			
-		>{t.name}</Chip>
+			class="tag-pill"
+			label={`Tag: ${t.name}`}
+		>
+			<span class="tag-pill__left">
+				<span class="tag-pill__hash" aria-hidden="true">#</span>
+				<span class="tag-pill__name">{t.name}</span>
+			</span>
+			{typeof t.count === "number" && (
+				<span class="tag-pill__count">{t.count}</span>
+			)}
+		</Chip>
 	))}
 </div>
+
+<style>
+.m3-blog-taglist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+}
+:global(.m3-blog-taglist .tag-pill) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  height: 2.25rem !important;
+  box-sizing: border-box !important;
+  padding: 0 0.75rem !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  color: var(--on-surface-variant) !important;
+  background: var(--surface-container) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--shape-corner-m) !important;
+  text-decoration: none !important;
+  transition: all var(--m3e-duration-short) ease !important;
+  overflow: hidden !important;
+}
+:global(html.dark .m3-blog-taglist .tag-pill) {
+  color: var(--on-surface-variant) !important;
+  background: var(--surface-container) !important;
+}
+:global(.m3-blog-taglist .tag-pill:last-child:nth-child(odd)) {
+  grid-column: span 2 !important;
+}
+:global(.m3-blog-taglist .tag-pill:hover) {
+  background: var(--surface-container-high) !important;
+  color: var(--on-surface) !important;
+  transform: translateY(-1px) !important;
+}
+:global(.m3-blog-taglist .tag-pill:focus-visible) {
+  outline: 2px solid var(--primary) !important;
+  outline-offset: 1px !important;
+}
+:global(.m3-blog-taglist .tag-pill:hover .tag-pill__hash) {
+  color: var(--primary);
+  transform: scale(1.15);
+}
+.tag-pill__left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  overflow: hidden;
+}
+.tag-pill__hash {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+  opacity: 0.75;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: all var(--m3e-duration-short) ease;
+}
+.tag-pill__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tag-pill__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  min-width: 1.3rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-s);
+  background: color-mix(in srgb, var(--on-surface) 10%, transparent);
+  color: var(--on-surface-variant);
+  flex-shrink: 0;
+  transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+</style>

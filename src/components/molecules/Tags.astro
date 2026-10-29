@@ -30,6 +30,7 @@ const hasOverflow = tags.length > DISPLAY_LIMIT;
 const tagItems = tags.slice(0, DISPLAY_LIMIT).map((t) => ({
 	name: t.name.trim(),
 	href: getTagUrl(t.name),
+	count: t.count,
 }));
 ---
 <WidgetLayout name={i18n(I18nKey.tags)} id="tags" class={className} style={style}>
