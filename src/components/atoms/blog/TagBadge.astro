@@ -1,8 +1,9 @@
 ---
 /**
  * M3E 博客原子 — TagBadge 文字型小标签。
- * `# 名称` 的 tonal 小盒标签（卡片底部标签行用）：24px 高、corner-s 圆角、
- * btn-regular 容器色（跟随明暗），hover 逐级加深、`#` 前缀随文字轻微右移。
+ * Капсульный стиль для тегов под карточкой поста:
+ * - Контрастный фон (btn-regular-bg / surface-container-high)
+ * - При ховере акцентный цвет темы с заметным состоянием, не сливающимся с карточкой
  */
 interface Props {
 	name: string;
@@ -28,24 +29,31 @@ const { name, href, class: className } = Astro.props;
   height: 1.625rem;
   padding: 0 0.65rem;
   border-radius: var(--shape-corner-m);
-  background: var(--surface-container);
+  background: var(--btn-regular-bg, var(--surface-container-high));
   color: var(--on-surface-variant);
   text-decoration: none;
   white-space: nowrap;
   font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 30%, transparent);
   transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
 }
+:global(html.dark) .m3-blog-tagbadge {
+  background: color-mix(in srgb, var(--surface-container-highest) 75%, transparent);
+  border-color: color-mix(in srgb, var(--outline-variant) 20%, transparent);
+}
 .m3-blog-tagbadge:hover {
-  background: var(--surface-container-high);
-  color: var(--on-surface);
+  background: var(--primary) !important;
+  color: var(--on-primary) !important;
+  border-color: transparent !important;
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 35%, transparent);
 }
 .m3-blog-tagbadge:active {
-  background: var(--surface-container-highest);
+  transform: translateY(0);
+  opacity: 0.9;
 }
 .m3-blog-tagbadge__text {
-  transition: transform var(--m3e-duration-short) var(--m3e-easing-emphasized-decelerate);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
 }
 </style>
