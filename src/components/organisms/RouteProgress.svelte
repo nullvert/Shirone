@@ -42,7 +42,7 @@ onMount(() => {
 <style>
 .route-progress {
   position: fixed;
-  top: 4rem;
+  top: 0;
   left: 0;
   right: 0;
   height: 3px;
@@ -52,11 +52,11 @@ onMount(() => {
   overflow: hidden;
   transition: top var(--m3e-duration-short) var(--m3e-easing-standard), opacity var(--m3e-duration-short) var(--m3e-easing-standard);
 /* Отображается только на десктопе с шапкой (>= 1024px), на мобильных скрыт */
-  display: none;
+  display: block;
 }
 @media (min-width: 1024px) {
   .route-progress {
-    display: block;
+    top: 4rem;
   }
 }
 .route-progress--visible {

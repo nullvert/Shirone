@@ -273,7 +273,7 @@ export function pickDisplayedGenres(
 	genres: GenreCount[],
 	expanded: boolean,
 	selected: string | null,
-	collapseLimit = GENRES_COLLAPSED,
+	collapseLimit: number = GENRES_COLLAPSED,
 ): GenreCount[] {
 	if (expanded || genres.length <= collapseLimit) return genres;
 	const selectedHidden =

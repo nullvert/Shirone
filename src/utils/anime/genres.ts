@@ -64,7 +64,7 @@ export const MEDIA_GENRE_ICONS: Record<string, string> = {
 };
 
 /** Backward compatibility alias */
-export const ANIME_GENRE_ICONS = MEDIA_GENRE_ICONS;
+export const ANIME_GENRE_ICONS: Record<string, string> = MEDIA_GENRE_ICONS;
 
 export const ANIME_FORMAT_ICONS: Record<string, string> = {
 	TV: "material-symbols:tv-rounded",

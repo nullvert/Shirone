@@ -139,6 +139,9 @@ const maxWidth = bottomBarConfig?.maxWidth ?? "56rem";
   width: var(--btn-sz-mobile) !important;
   height: var(--btn-sz-mobile) !important;
 }
+:global(.bottom-bar-btn.hidden) {
+  display: none !important;
+}
 @media (min-width: 600px) {
   :global(.bottom-bar-btn) {
     width: var(--btn-sz-tablet) !important;
@@ -193,16 +196,19 @@ const maxWidth = bottomBarConfig?.maxWidth ?? "56rem";
 </style>
 
 <script>
+	import { sidebarConfig } from "@/config/sidebarConfig";
+	import { hasVisibleWidgetsOnPage } from "@utils/sidebar-page";
+	import type { SidebarPage } from "@/types/sidebarConfig";
+
 	function syncBottomAppBarState() {
 		const container = document.getElementById("swup-container");
-		const page = container?.dataset.currentPage;
+		const page = container?.dataset.currentPage as SidebarPage | undefined;
 		const drawerBtn = document.getElementById("bottom-bar-drawer-btn");
 		if (drawerBtn) {
 			const isMedia = page === "anime" || page === "cinema" || page === "games";
 			const isPost = page === "post";
-			const mainGrid = document.getElementById("main-grid");
-			const hasNoSidebar = mainGrid ? mainGrid.classList.contains("has-no-sidebar") : false;
-			const shouldHide = !isMedia && !isPost && hasNoSidebar;
+			const hasWidgets = sidebarConfig.enable && hasVisibleWidgetsOnPage(sidebarConfig.components, page);
+			const shouldHide = !isMedia && !isPost && !hasWidgets;
 
 			drawerBtn.classList.toggle("hidden", shouldHide);
 			drawerBtn.dataset.pageType = isMedia ? "media" : isPost ? "post" : "sidebar";

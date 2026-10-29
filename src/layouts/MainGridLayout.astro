@@ -19,10 +19,8 @@ import {
 	getResponsiveSidebarConfig,
 	isDualColumn,
 } from "@utils/responsive-utils";
-import { hasVisibleWidgetsOnPage } from "@utils/sidebar-page";
 import type { MarkdownHeading } from "astro";
 import { contextMenuConfig } from "@/config";
-import { sidebarConfig } from "@/config/sidebarConfig";
 import type { SidebarPage } from "@/types/sidebarConfig";
 import Layout from "./Layout.astro";
 
@@ -67,10 +65,6 @@ const secondarySidebarClasses =
 	generateSecondarySidebarClasses(sidebarResponsive);
 const mainContentClasses = generateMainContentClasses(sidebarResponsive);
 
-// SSR 判断当前页面是否没有任何可见的侧栏 widget
-const hasSidebarWidgetsOnCurrentPage =
-	sidebarConfig.enable &&
-	hasVisibleWidgetsOnPage(sidebarConfig.components, page);
 ---
 
 <Layout title={title} banner={banner} ogImage={ogImage} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle} page={page}>
@@ -92,8 +86,7 @@ const hasSidebarWidgetsOnCurrentPage =
     <div class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto">
 		<div id="main-grid" class:list={[
 			"transition duration-[var(--m3e-duration-long)] w-full left-0 right-0 grid grid-rows-[auto_1fr_auto] lg:grid-rows-[auto] mx-auto gap-4 px-2 md:px-4",
-			gridClasses,
-			{ "has-no-sidebar": !hasSidebarWidgetsOnCurrentPage }
+			gridClasses
 		]}>
 			<SideBar class={sidebarClasses} currentPage={page} headings={headings}></SideBar>
 			{isDualColumn(sidebarResponsive) && (
@@ -148,26 +141,5 @@ const hasSidebarWidgetsOnCurrentPage =
 		client:load
 	/>
 )}
-
-<style>
-/* 当页面无侧栏时（由 SideBar.astro 动态标记或 SSR 初始输出），
-   重写 #main-grid 为单列并居中内容列 */
-:global(#main-grid.has-no-sidebar) {
-	grid-template-columns: 1fr !important;
-}
-
-:global(#main-grid.has-no-sidebar #sidebar),
-:global(#main-grid.has-no-sidebar #sidebar-secondary) {
-	display: none !important;
-}
-
-:global(#main-grid.has-no-sidebar #main-content-column) {
-	grid-column: 1 / -1 !important;
-	width: 100%;
-	max-width: 64rem;
-	margin-left: auto;
-	margin-right: auto;
-}
-</style>
 
 </Layout>

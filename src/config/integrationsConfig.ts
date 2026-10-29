@@ -251,6 +251,7 @@ export const prebundleSpecifiers: string[] = [
 	// stale pre-bundle id and the dynamic import rejects, so poster
 	// generation fails only in dev.
 	"qrcode",
+	"@material/material-color-utilities",
 ];
 
 /**
