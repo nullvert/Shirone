@@ -22,10 +22,10 @@ export const siteConfig: SiteConfig = withUserConfig("site", {
 	// Нижняя панель навигации (BottomAppBar) для мобильных и планшетов (< 1024px).
 	// Кнопки и иконки масштабируются системно и пропорционально:
 	bottomAppBar: {
-		mobileHeight: "3.75rem", // Высота панели на телефоне (~60px)
+		mobileHeight: "4rem", // Высота панели на телефоне (~60px)
 		tabletHeight: "4.5rem", // Высота панели на планшете (~72px)
-		mobileButtonSize: "2.5rem", // Размер кнопок на телефоне (40px)
-		tabletButtonSize: "3.75rem", // Размер кнопок на планшете (52px)
+		mobileButtonSize: "2.75rem", // Размер кнопок на телефоне (40px)
+		tabletButtonSize: "3.25rem", // Размер кнопок на планшете (52px)
 		maxWidth: "64rem", // Максимальная ширина панели на планшетах
 	},
 	// 显示设置面板控制：配置各项前端切换项的可见性（默认全部开启）。

@@ -12,6 +12,7 @@ import { momentsConfig } from "@/config/momentsConfig";
 import { projectsConfig } from "@/config/projectsConfig";
 import { seriesConfig } from "@/config/seriesConfig";
 import { skillsConfig } from "@/config/skillsConfig";
+import { supportConfig } from "@/config/supportConfig";
 import { timelineConfig } from "@/config/timelineConfig";
 import type {
 	NavBarConfig,
@@ -129,6 +130,12 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		icon: "material-symbols:auto-stories-outline-rounded",
 		pageKey: "series",
 	},
+	Support: {
+		name: i18n(I18nKey.support),
+		url: "/support/",
+		icon: "material-symbols:favorite-outline-rounded",
+		pageKey: "support",
+	},
 	About: {
 		name: i18n(I18nKey.about),
 		url: "/about/",
@@ -167,6 +174,7 @@ const defaultNavBarConfig: NavBarConfig = {
 				// 需要时取消注释即可
 				// LinkPresets.Categories,
 				// LinkPresets.Tags,
+				LinkPresets.Support,
 				LinkPresets.About,
 				LinkPresets.GitHub,
 			],
@@ -202,6 +210,7 @@ const unavailableFeatureRoutes: ReadonlySet<string> = new Set([
 	...(devicesConfig.enable ? [] : ["/devices"]),
 	...(gamesConfig.enable ? [] : ["/games"]),
 	...(timelineConfig.enable ? [] : ["/timeline"]),
+	...(supportConfig.enable ? [] : ["/support"]),
 	...(aboutConfig.enable ? [] : ["/about"]),
 	...(seriesConfig.enable ? [] : ["/series"]),
 ]);

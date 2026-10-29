@@ -45,8 +45,16 @@
        实测 Δ≤0.5，无可见差异）。
        不支持 `scrollbar-gutter` 的旧版 Safari（< 18.2）忽略该声明，退回原行为；
        macOS 默认使用覆盖式滚动条，本来就不影响布局宽度。 */
-    html {
-        scrollbar-gutter: stable;
+    /* 仅桌面端预留滚动条槽位，移动端/平板 (<1024px) 恢复 auto */
+    @media (min-width: 1024px) {
+        html {
+            scrollbar-gutter: stable;
+        }
+    }
+    @media (max-width: 1023.98px) {
+        html {
+            scrollbar-gutter: auto;
+        }
     }
 
     /* 全局正文色走主题变量：裸内容（未显式设色的文字/按钮）明暗自适应，

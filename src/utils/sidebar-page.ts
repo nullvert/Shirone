@@ -19,6 +19,19 @@ export function isWidgetVisibleOnPage(
 }
 
 /**
+ * 检查在指定页面上，是否至少有一个启用的 widget 可见。
+ * 用于 SSR 和客户端判断侧栏是否为空。
+ */
+export function hasVisibleWidgetsOnPage(
+	components: Array<{ enable: boolean; pages?: SidebarPage[] }>,
+	currentPage: SidebarPage | undefined,
+): boolean {
+	return components.some(
+		(w) => w.enable && isWidgetVisibleOnPage(w.pages, currentPage),
+	);
+}
+
+/**
  * pages 列表 → data-sidebar-pages 属性值（undefined/空数组 → ""）。
  * 客户端用 attributeToPages 还原，两端往返无损。
  */

@@ -1,4 +1,5 @@
 import { aboutConfig } from "./aboutConfig.ts";
+import { supportConfig } from "./supportConfig.ts";
 import { albumsConfig } from "./albumsConfig.ts";
 import { animeConfig } from "./animeConfig.ts";
 import { compassConfig } from "./compassConfig.ts";
@@ -20,6 +21,7 @@ export function getDisabledPages(): string[] {
 	if (devicesConfig.enable === false) disabled.push("devices");
 	if (gamesConfig.enable === false) disabled.push("games");
 	if (animeConfig.enable === false) disabled.push("anime");
+	if (supportConfig.enable === false) disabled.push("support");
 	if (aboutConfig.enable === false) disabled.push("about");
 	if (friendsConfig.enable === false) disabled.push("friends");
 	if (momentsConfig.enable === false) disabled.push("moments");

@@ -47,6 +47,7 @@ export type SidebarPage =
 	| "series" // 系列索引
 	| "rss" // RSS 订阅指南
 	| "atom" // Atom 订阅指南
+	| "support" // 赞助支持
 	| "post"; // 文章详情页
 
 /** 资料卡（内容来自 profileConfig，无 WidgetLayout 标题外壳） */

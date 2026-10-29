@@ -95,7 +95,9 @@ const widgets = sidebarConfig.enable
 	? sidebarConfig.components.filter(
 			(widget) =>
 				widget.enable &&
-				(isSingle ? column === "primary" : (widget.column ?? "primary") === column) &&
+				(isSingle
+					? column === "primary"
+					: (widget.column ?? "primary") === column) &&
 				(widget.type !== "music" || MusicSidebar !== null),
 		)
 	: [];
@@ -213,7 +215,7 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 		);
 	}
 
-	/** 空组收起：组内 widget 全部隐藏时隐藏容器，避免残留底部间距 */
+	/** 空组收起：组内 widget 全部隐藏时隐藏容器，避免残留底部间距；同时联动 #main-grid */
 	function collapseEmptyGroups(): void {
 		document
 			.querySelectorAll<HTMLElement>("[data-sidebar-group]")
@@ -223,6 +225,16 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 						.length > 0;
 				group.classList.toggle("hidden", !hasVisible);
 			});
+
+		// 检查主侧栏 (#sidebar) 内是否还有可见的 widget
+		const primarySidebar = document.getElementById("sidebar");
+		if (primarySidebar) {
+			const hasAnyVisible =
+				primarySidebar.querySelectorAll("[data-sidebar-pages]:not(.hidden)")
+					.length > 0;
+			const mainGrid = document.getElementById("main-grid");
+			mainGrid?.classList.toggle("has-no-sidebar", !hasAnyVisible);
+		}
 	}
 
 	// 代际计数：退场淡出 await 期间若又发生导航（sync 再次被调用），

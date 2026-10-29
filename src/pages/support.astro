@@ -1,0 +1,19 @@
+---
+import SupportSection from "@components/organisms/SupportSection.svelte";
+import I18nKey from "@i18n/i18nKey";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { resolveI18nText } from "@utils/i18n-utils";
+import { supportConfig } from "@/config/supportConfig";
+
+if (!supportConfig.enable) {
+	return Astro.redirect("/404/");
+}
+
+const pageTitle = resolveI18nText(supportConfig.title, I18nKey.support);
+const pageDescription = "";
+---
+
+<MainGridLayout title={pageTitle} description={pageDescription} page="support">
+	<SupportSection config={supportConfig} title={pageTitle} subtitle="" client:visible />
+</MainGridLayout>
+

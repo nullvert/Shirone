@@ -48,7 +48,8 @@ const softCategory = !isHome && !isArchive && postCategory ? postCategory : "";
 			Astro.url.pathname.startsWith("/tags") ||
 			Astro.url.pathname.startsWith("/anime") ||
 			Astro.url.pathname.startsWith("/cinema") ||
-			Astro.url.pathname.startsWith("/games"),
+			Astro.url.pathname.startsWith("/games") ||
+			Astro.url.pathname.startsWith("/support"),
 	}}
 >
 	<Card color="var(--card-bg)" radius="l" class="category-bar onload-animation mb-4 p-2" id="category-bar">
@@ -127,6 +128,7 @@ const softCategory = !isHome && !isArchive && postCategory ? postCategory : "";
 				"hidden",
 				currentPage === "categories" ||
 					currentPage === "tags" ||
+					currentPage === "support" ||
 					isMediaPage,
 			);
 		const postCategory = (swupContainer?.dataset.currentPostCategory || "").trim();

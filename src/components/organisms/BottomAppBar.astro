@@ -3,7 +3,7 @@
  * BottomAppBar.astro
  * Нижняя панель навигации (M3 Bottom App Bar) для мобильных устройств (< 1024px).
  * Полностью отзеркаливает премиальный дизайн оригинальной шапки (TopAppBar):
- * 
+ *
  * - Слева:
  *   1. Кнопка меню ≡ (IconButton 40x40 с m3-state-layer, открывает SiteNavigationDrawer)
  *   2. Брендинг/Логотип: вертикальная акцентная линия + название сайта (ссылка на главную)
@@ -21,6 +21,8 @@ import { siteConfig } from "@/config";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import type { SidebarPage } from "@/types/sidebarConfig";
+import { sidebarConfig } from "@/config/sidebarConfig";
+import { hasVisibleWidgetsOnPage } from "@utils/sidebar-page";
 import LightDarkSwitch from "./LightDarkSwitch.svelte";
 
 interface Props {
@@ -29,8 +31,14 @@ interface Props {
 
 const { currentPage } = Astro.props as Props;
 
-const isMedia = currentPage === "anime" || currentPage === "cinema" || currentPage === "games";
+const isMedia =
+	currentPage === "anime" ||
+	currentPage === "cinema" ||
+	currentPage === "games";
 const isPost = currentPage === "post";
+const hasWidgets =
+	sidebarConfig.enable &&
+	hasVisibleWidgetsOnPage(sidebarConfig.components, currentPage);
 
 const bottomBarConfig = siteConfig.bottomAppBar;
 const mobileHeight = bottomBarConfig?.mobileHeight ?? "3.75rem";
@@ -86,7 +94,7 @@ const maxWidth = bottomBarConfig?.maxWidth ?? "56rem";
 			<IconButton
 				id="bottom-bar-drawer-btn"
 				label={isMedia ? i18n(I18nKey.mediaFilterTitle) : isPost ? i18n(I18nKey.tableOfContents) : i18n(I18nKey.sidebar)}
-				class="shrink-0 text-[var(--primary)] bottom-bar-btn"
+				class:list={["shrink-0 text-[var(--primary)] bottom-bar-btn", { hidden: !isMedia && !isPost && !hasWidgets }]}
 			>
 				<span class:list={["bottom-bar-drawer-icon bottom-bar-drawer-icon--media", { hidden: !isMedia }]}>
 					<Icon icon="material-symbols:tune-rounded" class="bottom-bar-icon" />
@@ -192,6 +200,11 @@ const maxWidth = bottomBarConfig?.maxWidth ?? "56rem";
 		if (drawerBtn) {
 			const isMedia = page === "anime" || page === "cinema" || page === "games";
 			const isPost = page === "post";
+			const mainGrid = document.getElementById("main-grid");
+			const hasNoSidebar = mainGrid ? mainGrid.classList.contains("has-no-sidebar") : false;
+			const shouldHide = !isMedia && !isPost && hasNoSidebar;
+
+			drawerBtn.classList.toggle("hidden", shouldHide);
 			drawerBtn.dataset.pageType = isMedia ? "media" : isPost ? "post" : "sidebar";
 
 			const mediaIcon = drawerBtn.querySelector(".bottom-bar-drawer-icon--media");

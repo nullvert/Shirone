@@ -361,6 +361,57 @@ export const en: Translation = {
 	[Key.cancel]: "Cancel",
 	[Key.reset]: "Reset",
 
+	[Key.support]: "Support & Donate",
+	[Key.supportTitle]: "Поддержать автора",
+	[Key.supportSteamGiftCard]: "Steam Gift Card",
+	[Key.supportSteamGiftCardDesc]: "Отправить подарочную карту Steam напрямую",
+	[Key.supportGachaTitle]: "Gacha Games UID",
+	[Key.supportGachaDesc]: "UID для дружбы или подарков/доната в гача-играх",
+	[Key.supportUidCopied]: "UID скопирован!",
+	[Key.supportShowUid]: "Показать UID",
+	[Key.supportHideUid]: "Скрыть UID",
+
+	[Key.supportCopyUid]: "Копировать UID",
+
+	[Key.supportSteamProfile]: "Steam",
+	[Key.supportSteamProfileDesc]: "Профиль, список желаемого и совместные игры",
+	[Key.supportDescLong]:
+		"Способы сказать спасибо или отправить донат. Всё исключительно по желанию — поддержка словом, подпиской или просто вниманием ценна ничуть не меньше.",
+	[Key.supportUzbekistan]: "УЗБЕКИСТАН",
+	[Key.supportInternational]: "МЕЖДУНАРОДНО",
+	[Key.supportSteamWishlist]: "Steam",
+	[Key.supportSteamWishlistDesc]: "Профиль, список желаемого и совместные игры",
+	[Key.supportFollowishCardDesc]:
+		"Список запланированных покупок, девайсов и идей",
+	[Key.supportShareBlog]: "Поделиться блогом",
+	[Key.supportShareBlogDesc]: "Скопировать ссылку на сайт",
+	[Key.supportTelegramCardDesc]:
+		"Написать в Telegram: сказать спасибо или предложить идею",
+	[Key.supportMin]: "Мин.",
+	[Key.supportFee]: "Комиссия",
+	[Key.supportLinkCopied]: "Ссылка скопирована!",
+
+	[Key.supportDescription]:
+		"If you enjoy my projects, articles, or open-source work, you can support me here.",
+	[Key.supportMethods]: "Ways to Support",
+	[Key.supportLocalPay]: "Local Payment Gateway",
+	[Key.supportLocalPayDesc]:
+		"Direct tip or donation via local payment systems (Uzcard / Humo / Visa).",
+	[Key.supportTribute]: "Tribute Donation",
+	[Key.supportTributeDesc]:
+		"Support via Telegram Tribute (bank cards, crypto, and digital payments).",
+	[Key.supportFollowish]: "Followish",
+	[Key.supportFollowishDesc]: "Личный список запланированных покупок и идей",
+	[Key.supportTelegram]: "Telegram Direct",
+	[Key.supportTelegramDesc]:
+		"Написать напрямую в Telegram для связи или сотрудничества.",
+	[Key.supportScanQr]: "Scan QR code to pay directly",
+	[Key.supportOpenGateway]: "Open Gateway",
+	[Key.supportOpenWishlist]: "View Wishlist",
+	[Key.supportOpenTelegram]: "Contact on Telegram",
+	[Key.supportThankYou]:
+		"Thank you very much for your kindness and support! It helps keep projects alive and independent.",
+
 	[Key.rss]: "RSS Feed",
 	[Key.rssSubtitle]: "Subscribe to latest articles via RSS reader",
 	[Key.atom]: "Atom Feed",
