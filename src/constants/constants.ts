@@ -15,10 +15,12 @@ export const TEXTURE_OPACITY_KEY = "texture-opacity";
 export const TEXTURE_CHANGE_EVENT = "texture:change";
 export const TEXTURE_PRESETS = [
 	"none",
+	"grid",
 	"starlight",
 	"cyber-dots",
 	"topography",
 	"geometric",
+	"snowflake",
 	"sakura",
 ] as const;
 

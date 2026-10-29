@@ -1,11 +1,13 @@
 /** 纹理预设类型枚举 */
 export type TexturePreset =
 	| "none" // 纯色无纹理
-	| "starlight" // 二次元星芒光斑
+	| "grid" // 极简科技网格
+	| "starlight" // 二次元星芒光斑 (兼容保留)
 	| "cyber-dots" // 极客点阵与准星
 	| "topography" // 流光等高线波纹
 	| "geometric" // M3E 晶体折纸
-	| "sakura"; // 落樱微瓣飘落
+	| "snowflake" // 冬日飘雪 / 暴风雪
+	| "sakura"; // 落樱微瓣飘落 (兼容保留)
 
 /** 纹理配置契约 */
 export interface TextureConfig {

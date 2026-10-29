@@ -347,6 +347,18 @@
                 {
                   "type": "string",
                   "enum": [
+                    "grid"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "snowflake"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
                     "geometric"
                   ]
                 },

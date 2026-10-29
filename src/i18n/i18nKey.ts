@@ -293,10 +293,12 @@ enum I18nKey {
 
 	texturePreset = "texturePreset",
 	texturePresetNone = "texturePresetNone",
+	texturePresetGrid = "texturePresetGrid",
 	texturePresetStarlight = "texturePresetStarlight",
 	texturePresetCyberDots = "texturePresetCyberDots",
 	texturePresetTopography = "texturePresetTopography",
 	texturePresetGeometric = "texturePresetGeometric",
+	texturePresetSnowflake = "texturePresetSnowflake",
 	texturePresetSakura = "texturePresetSakura",
 	textureOpacity = "textureOpacity",
 

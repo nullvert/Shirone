@@ -106,7 +106,7 @@ const COLOR_PRESETS: { id: string; name: string; hue: number; style?: McStyle }[
 // Разрешенные стили оформления (ровно 4 варианта: Vibrant, Expressive, Neutral, Fidelity)
 const ALLOWED_STYLES: McStyle[] = [...MC_STYLES];
 
-// Текстуры фона: ровно 3 опции (None по умолчанию, Starlight статичный/микро, Sakura анимированный)
+// Текстуры фона: ровно 3 опции (None по умолчанию, Grid статичный/сетка, Snowflake анимированный снегопад)
 const textureOptions: {
 	value: TexturePreset;
 	labelKey: I18nKey;
@@ -118,14 +118,14 @@ const textureOptions: {
 		icon: "material-symbols:block-rounded",
 	},
 	{
-		value: "starlight",
-		labelKey: I18nKey.texturePresetStarlight,
-		icon: "material-symbols:auto-awesome-outline-rounded",
+		value: "grid",
+		labelKey: I18nKey.texturePresetGrid,
+		icon: "material-symbols:grid-view-rounded",
 	},
 	{
-		value: "sakura",
-		labelKey: I18nKey.texturePresetSakura,
-		icon: "material-symbols:local-florist-outline-rounded",
+		value: "snowflake",
+		labelKey: I18nKey.texturePresetSnowflake,
+		icon: "material-symbols:ac-unit-rounded",
 	},
 ];
 
