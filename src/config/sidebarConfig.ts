@@ -125,7 +125,7 @@ export const sidebarConfig: SidebarConfig = withUserConfig("sidebar", {
 			type: "tags",
 			enable: true,
 			slot: "sticky",
-			collapseAfter: 6,
+			collapseAfter: 10,
 			pages: [
 				"home",
 				// "archive",

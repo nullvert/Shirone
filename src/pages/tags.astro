@@ -27,7 +27,7 @@ const tagSummary = `${tags.length} ${i18n(I18nKey.tagsCount)} · ${totalPosts} $
 				subtitle={tagSummary}
 		/>
 		{tags.length > 0 && (
-			<div class="tag-index__cloud">
+			<div class="tag-index__grid">
 				{tags.map((tag) => (
 					<Chip
 						href={getTagUrl(tag.name)}
@@ -35,7 +35,7 @@ const tagSummary = `${tags.length} ${i18n(I18nKey.tagsCount)} · ${totalPosts} $
 						class="tag-index__chip"
 						label={`View all posts with the ${tag.name} tag`}
 					>
-						{tag.name}
+						<span class="tag-index__name">{tag.name}</span>
 						<span class="tag-index__count">{tag.count}</span>
 					</Chip>
 				))}
@@ -52,27 +52,68 @@ const tagSummary = `${tags.length} ${i18n(I18nKey.tagsCount)} · ${totalPosts} $
 <style>
 .tag-index {
   display: block;
-/* 计数徽标：chip 内部右侧的小号数字，与站内 badge 语言一致 */
 }
-.tag-index__cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--m3e-space-2) var(--m3e-space-3);
+.tag-index__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.625rem;
+  margin-top: 1rem;
+}
+:global(.tag-index .tag-index__chip) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  height: 2.5rem !important;
+  box-sizing: border-box !important;
+  padding: 0 0.875rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--on-surface-variant) !important;
+  background: var(--surface-container) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--shape-corner-m) !important;
+  text-decoration: none !important;
+  transition: all var(--m3e-duration-short) ease !important;
+  overflow: hidden !important;
+}
+:global(html.dark .tag-index .tag-index__chip) {
+  color: var(--on-surface-variant) !important;
+  background: var(--surface-container) !important;
+}
+:global(.tag-index .tag-index__chip:hover) {
+  background: var(--surface-container-high) !important;
+  color: var(--on-surface) !important;
+  transform: translateY(-1px) !important;
+}
+:global(.tag-index .tag-index__chip:focus-visible) {
+  outline: 2px solid var(--primary) !important;
+  outline-offset: 1px !important;
+}
+.tag-index__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
+  text-align: left;
 }
 .tag-index__count {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 1.375rem;
-  height: 1.125rem;
-  margin-left: var(--m3e-space-1);
-  padding: 0 var(--m3e-space-1);
-  border-radius: var(--shape-corner-full);
-  background: color-mix(in oklab, var(--primary) 12%, transparent);
-  color: var(--on-surface);
-  font: var(--m3e-type-label-small);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 1.5rem;
+  height: 1.375rem;
+  padding: 0 0.4rem;
+  box-sizing: border-box;
+  border-radius: var(--shape-corner-s);
+  background: color-mix(in srgb, var(--on-surface) 10%, transparent);
+  color: var(--on-surface-variant);
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
 }
 .tag-index__empty {
   display: flex;
@@ -85,6 +126,10 @@ const tagSummary = `${tags.length} ${i18n(I18nKey.tagsCount)} · ${totalPosts} $
 @media (max-width: 639px) {
   .tag-index {
     padding: 1rem 0.75rem;
+  }
+  .tag-index__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
   }
 }
 </style>

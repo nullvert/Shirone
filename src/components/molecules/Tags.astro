@@ -37,8 +37,8 @@ const tagItems = tags.slice(0, DISPLAY_LIMIT).map((t) => ({
 	<TagList tags={tagItems} />
 	{hasOverflow && (
 		<div slot="footer" class="widget-index-link">
-			<a href={url("/tags/")} class="m3-state-layer">
-				{i18n(I18nKey.tagsViewAll)}
+			<a href={url("/tags/")} class="media-genres-toggle-link m3-state-layer">
+				<span>{i18n(I18nKey.tagsViewAll)}</span>
 				<Icon icon="material-symbols:chevron-right-rounded" />
 			</a>
 		</div>
@@ -47,26 +47,43 @@ const tagItems = tags.slice(0, DISPLAY_LIMIT).map((t) => ({
 
 <style>
 .widget-index-link {
-  padding: var(--m3e-space-2) var(--m3e-space-4) 0;
+  padding: 0;
+  width: 100%;
 }
-.widget-index-link > a {
+.media-genres-toggle-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--m3e-space-1);
+  gap: 0.35rem;
   width: 100%;
-  min-height: 2.5rem;
-  padding: 0 var(--m3e-space-2);
-  border-radius: var(--shape-corner-m);
+  height: var(--media-filter-item-height, 2.25rem);
+  box-sizing: border-box;
+  margin-top: 0.65rem;
+  margin-bottom: 0.25rem;
+  padding: 0 0.75rem;
+  font-size: 0.78125rem;
+  font-weight: 500;
   color: var(--primary);
-  font: var(--m3e-type-label-large);
-  font-weight: 600;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border: none;
+  border-radius: var(--shape-corner-m);
   text-decoration: none;
-  --m3e-state-color: var(--primary);
-  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+  cursor: pointer;
+  transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
 }
-.widget-index-link > a > :global(svg) {
-  width: 1.125rem;
-  height: 1.125rem;
+.media-genres-toggle-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.media-genres-toggle-link > :global(svg) {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.media-genres-toggle-link:hover {
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.media-genres-toggle-link:hover > :global(svg) {
+  transform: translateX(0.125rem);
 }
 </style>
