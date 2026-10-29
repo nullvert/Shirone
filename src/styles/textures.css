@@ -135,12 +135,12 @@ html[data-texture-preset="sakura"] #m3e-texture-canvas {
 
 @keyframes m3e-texture-snowflake-fall {
 	0% {
-		-webkit-mask-position: 0px 0px;
-		mask-position: 0px 0px;
+		-webkit-mask-position: 0px -360px;
+		mask-position: 0px -360px;
 	}
 	100% {
-		-webkit-mask-position: 180px 360px;
-		mask-position: 180px 360px;
+		-webkit-mask-position: 0px 0px;
+		mask-position: 0px 0px;
 	}
 }
 
