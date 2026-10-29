@@ -33,7 +33,8 @@ export type SidebarPage =
 	| "friends" // 友链
 	| "moments" // 动态
 	| "anime" // 番剧收藏
-	| "compass" // 站点罗盘
+	| "compass"
+	| "bookmarks" // 站点罗盘
 	| "skills" // 技能
 	| "projects" // 项目
 	| "devices" // 设备展示
@@ -175,6 +176,15 @@ export interface MediaFilterWidget {
 	itemHeight?: string;
 }
 
+export interface BookmarksFilterWidget {
+	type: "bookmarksFilter";
+	enable: boolean;
+	slot: SidebarWidgetSlot;
+	column?: SidebarColumn;
+	pages?: SidebarPage[];
+	itemHeight?: string;
+}
+
 export type SidebarWidget =
 	| ProfileWidget
 	| CategoriesWidget
@@ -185,7 +195,8 @@ export type SidebarWidget =
 	| CalendarWidget
 	| TocWidget
 	| MusicWidget
-	| MediaFilterWidget;
+	| MediaFilterWidget
+	| BookmarksFilterWidget;
 
 /**
  * 侧栏整体配置。components 渲染顺序 = 数组顺序，top 恒排在 sticky 之前。

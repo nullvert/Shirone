@@ -34,8 +34,8 @@ let { ratingTier }: { ratingTier: MediaRatingTier } = $props();
   transition: opacity var(--m3e-duration-short, 150ms) ease;
 }
 
-:global(.media-card:hover) .media-card__border,
-:global(.media-card--hovered) .media-card__border {
+:global(html.dark .media-card:hover) .media-card__border,
+:global(html.dark .media-card--hovered) .media-card__border {
   opacity: 1;
   box-shadow: 0 0 8px color-mix(in oklab, var(--electric-color, var(--media-status-color, var(--primary))) 40%, transparent);
 }
@@ -44,8 +44,8 @@ let { ratingTier }: { ratingTier: MediaRatingTier } = $props();
   border-color: #f59e0b;
 }
 
-:global(.media-card:hover) .media-card__border--masterpiece,
-:global(.media-card--hovered) .media-card__border--masterpiece {
+:global(html.dark .media-card:hover) .media-card__border--masterpiece,
+:global(html.dark .media-card--hovered) .media-card__border--masterpiece {
   box-shadow: 0 0 12px rgba(245, 158, 11, 0.55);
 }
 

@@ -1,0 +1,27 @@
+---
+/**
+ * Bookmarks page: /bookmarks/
+ * Displays bookmarks and resources matching the new grid & sidebar design.
+ */
+import BookmarksSection from "@components/organisms/BookmarksSection.svelte";
+import I18nKey from "@i18n/i18nKey";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { resolveI18nText } from "@utils/i18n-utils";
+import { bookmarksConfig } from "@/config/bookmarksConfig";
+import { bookmarksData } from "@/data/bookmarks";
+
+if (!bookmarksConfig.enable) {
+	return Astro.redirect("/404/");
+}
+
+const pageTitle = resolveI18nText(bookmarksConfig.title, I18nKey.compass);
+const pageDescription = resolveI18nText(
+	bookmarksConfig.description,
+	I18nKey.compassBanner,
+);
+---
+
+<MainGridLayout title={pageTitle} description={pageDescription} page="bookmarks">
+    <BookmarksSection shelves={bookmarksData} title={pageTitle} subtitle={pageDescription} client:load></BookmarksSection>
+</MainGridLayout>
+

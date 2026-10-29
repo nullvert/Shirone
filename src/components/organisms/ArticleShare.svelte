@@ -24,6 +24,7 @@ let {
 	postPath,
 	coverSelector = "#post-cover img",
 	avatarUrl = "",
+	triggerOnly = false,
 	class: className = "",
 }: {
 	options: ArticleShareOptions;
@@ -35,6 +36,7 @@ let {
 	postPath: string;
 	coverSelector?: string;
 	avatarUrl?: string;
+	triggerOnly?: boolean;
 	class?: string;
 } = $props();
 
@@ -72,6 +74,11 @@ function invalidatePoster() {
 }
 
 onMount(() => {
+	const handleOpenShare = () => {
+		openShareDialog();
+	};
+	window.addEventListener("open-article-share", handleOpenShare);
+
 	const root = document.documentElement;
 	let dark = root.classList.contains("dark");
 	const observer = new MutationObserver(() => {
@@ -87,7 +94,10 @@ onMount(() => {
 	});
 	observer.observe(root, { attributes: true, attributeFilter: ["class"] });
 
-	return () => observer.disconnect();
+	return () => {
+		window.removeEventListener("open-article-share", handleOpenShare);
+		observer.disconnect();
+	};
 });
 
 onDestroy(() => {
@@ -203,6 +213,7 @@ function downloadPoster() {
 }
 </script>
 
+{#if !triggerOnly}
 <section
 	class={`article-share relative transition overflow-hidden bg-[var(--license-block-bg)] py-5 px-6 rounded-xl ${className}`}
 	data-article-share
@@ -243,8 +254,10 @@ function downloadPoster() {
 	<span class="article-share__watermark" aria-hidden="true">
 		<Icon icon="material-symbols:share-rounded" />
 	</span>
+</section>
+{/if}
 
-	<!-- Share Dialog -->
+<!-- Share Dialog -->
 	{#if shareDialogOpen}
 		<Dialog bind:open={shareDialogOpen} title={i18n(I18nKey.shareArticle)} class="article-share-dialog">
 			<div class="share-dialog-content">
@@ -306,7 +319,6 @@ function downloadPoster() {
 			{/snippet}
 		</Dialog>
 	{/if}
-</section>
 
 <style>
 .article-share__watermark {
@@ -327,7 +339,7 @@ function downloadPoster() {
 :global(.article-share-dialog) {
   width: 100%;
 /* !important boundary: Dialog owns the scoped default width; its public class API lets ArticleShare own this variant width. */
-  max-width: min(36rem, calc(100vw - 2rem)) !important;
+  max-width: min(44rem, calc(100vw - 2rem)) !important;
   max-height: calc(100dvh - 2rem);
   display: flex;
   flex-direction: column;
@@ -349,18 +361,19 @@ function downloadPoster() {
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
-  padding: var(--m3e-space-2);
-  background: var(--surface-container-low);
-  border-radius: var(--shape-corner-m);
+  padding: 0;
+  background: transparent;
+  border-radius: var(--shape-corner-l);
   border: 1px solid var(--outline-variant);
+  overflow: hidden;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.2);
 }
 .share-poster-preview__img {
   display: block;
   max-height: calc(100dvh - 16rem);
-  max-width: 100%;
-  width: auto;
+  width: 100%;
   height: auto;
-  border-radius: var(--shape-corner-s);
+  border-radius: 0;
   object-fit: contain;
 }
 .share-poster-status {

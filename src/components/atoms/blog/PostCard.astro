@@ -1,5 +1,4 @@
 ---
-import AccentBar from "@components/atoms/display/AccentBar.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 /**
@@ -81,7 +80,6 @@ const titleLabel =
 			href={href}
 			aria-label={titleLabel}
 		>
-			<AccentBar size="medium" />
 			{pinned && (
 				<span
 					class="m3-blog-postcard__pin"
@@ -157,26 +155,27 @@ const titleLabel =
 .m3-blog-postcard {
   position: relative;
   display: flex;
-/* 移动端封面置顶（DOM：body → cover，column-reverse 反转为 cover 在前） */
   flex-direction: column-reverse;
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;
-  border-radius: var(--shape-corner-l);
-/* 站点卡片色（浅色 = surface-container-lowest 近白），与侧栏等其它卡片一致 */
+  border-radius: var(--shape-corner-l, 1rem);
   background: var(--card-bg);
   color: var(--on-surface);
-/* PostMeta 是 Astro 子组件，需用 global 命中其根节点 */
-/* 底部标签行：描述之后的独立一层（TagBadge 文字型小标签） */
-/* 封面触摸箭头：卡片 hover 时深色遮罩 + 白色大箭头（与原版封面一致） */
-/* 桌面端（≥md）正文变纵向：给右侧让位（断点用 stylus 编译期常量 bp-md，
-	   不能写 @media (--m3e-bp-md)：CSS 变量无法作 media 条件，该写法整块失效） */
-/* === 移动端：封面置顶布局优化（桌面端保持不动） === */
+  transition: transform var(--m3e-duration-short) var(--m3e-easing-standard),
+              box-shadow var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+.m3-blog-postcard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.06);
+}
+:global(html.dark) .m3-blog-postcard:hover {
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
 }
 .m3-blog-postcard__body {
   flex: 1;
   min-width: 0;
-  padding: 1.5rem 1.5rem 1.25rem;
+  padding: 1.25rem 1.25rem 1.5rem;
 }
 .m3-blog-postcard__title {
   display: flex;
@@ -184,7 +183,8 @@ const titleLabel =
   gap: 0.5rem;
   margin: 0;
   font: var(--m3e-type-title-large);
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 700;
   line-height: 1.35;
   color: var(--on-surface);
   text-decoration: none;
@@ -195,7 +195,7 @@ const titleLabel =
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
-.m3-blog-postcard:hover .m3-blog-postcard__title {
+.m3-blog-postcard__title:hover {
   color: var(--primary);
 }
 .m3-blog-postcard__title-text {
@@ -207,36 +207,33 @@ const titleLabel =
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--shape-corner-m);
-  background: var(--primary-container);
-  color: var(--on-primary-container);
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  color: var(--primary);
 }
 .m3-blog-postcard__pin > :global(svg) {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 .m3-blog-postcard__encrypted {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--shape-corner-m);
-  background: var(--tertiary-container);
-  color: var(--on-tertiary-container);
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  color: var(--tertiary);
 }
 .m3-blog-postcard__encrypted > :global(svg) {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 .m3-blog-postcard :global(.m3-blog-postcard__meta) {
-  margin-top: var(--m3e-space-4);
+  margin-top: 0.625rem;
 }
 .m3-blog-postcard__desc {
-  margin: var(--m3e-space-3) 0 0;
+  margin: 0.75rem 0 0;
   font: var(--m3e-type-body-medium);
+  font-size: 0.875rem;
   color: var(--on-surface-variant);
   line-height: 1.6;
   display: -webkit-box;
@@ -247,13 +244,15 @@ const titleLabel =
 .m3-blog-postcard__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--m3e-space-2);
-  margin-top: var(--m3e-space-4);
+  gap: 0.5rem;
+  margin-top: 0.875rem;
 }
 .m3-blog-postcard__cover {
   position: relative;
   flex-shrink: 0;
   display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   text-decoration: none;
 }
@@ -286,223 +285,65 @@ const titleLabel =
 .m3-blog-postcard__cover > picture > img {
   object-fit: cover;
   position: relative;
+  transition: transform var(--m3e-duration-medium) var(--m3e-easing-standard);
 }
-@media (min-width: 768px) {
-  .m3-blog-postcard__cover {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    bottom: 0.75rem;
-    width: 28%;
-    height: auto;
-    border-radius: var(--shape-corner-s);
-    overflow: hidden;
-  }
+.m3-blog-postcard:hover .m3-blog-postcard__cover > picture > img {
+  transform: scale(1.03);
 }
 .m3-blog-postcard__cover-mask {
   position: absolute;
   inset: 0;
-/* 触摸箭头（原版）：默认隐藏，hover/触摸时深色遮罩 + 白色大箭头 */
   background: transparent;
   transition: background-color var(--m3e-duration-medium) var(--m3e-easing-standard);
-/* 移动端不显示（触摸触发的瞬时 hover 也不出现，对齐原版） */
-}
-@media (max-width: 767px) {
-  .m3-blog-postcard__cover-mask {
-    display: none;
-  }
 }
 .m3-blog-postcard:hover .m3-blog-postcard__cover-mask {
-  background: color-mix(in srgb, #000 30%, transparent);
+  background: color-mix(in srgb, #000 15%, transparent);
 }
 .m3-blog-postcard__cover-arrow {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-standard), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
-}
-@media (max-width: 767px) {
-  .m3-blog-postcard__cover-arrow {
-    display: none;
-  }
-}
-.m3-blog-postcard__cover-arrow > :global(svg) {
-  width: 3rem;
-  height: 3rem;
-  color: #fff;
-}
-.m3-blog-postcard:hover .m3-blog-postcard__cover-arrow {
-  opacity: 1;
-  transform: scale(1);
+  display: none;
 }
 .m3-blog-postcard__enter {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.25rem;
-  border-radius: var(--shape-corner-m);
-  background: var(--enter-btn-bg);
-  color: var(--primary);
-  text-decoration: none;
-  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
+  display: none;
 }
-.m3-blog-postcard__enter:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-.m3-blog-postcard__enter > :global(svg) {
-  width: 2.25rem;
-  height: 2.25rem;
-}
-.m3-blog-postcard:hover .m3-blog-postcard__enter {
-  background: var(--enter-btn-bg-hover);
-  color: var(--primary);
-}
-@media (max-width: 767px) {
-  .m3-blog-postcard__enter {
-    display: none;
-  }
-}
-@media (min-width: 768px) {
-  .m3-blog-postcard {
-    flex-direction: column;
-  }
-  .m3-blog-postcard--cover .m3-blog-postcard__body {
-    padding-right: calc(28% + 1.5rem);
-  }
-  .m3-blog-postcard:not(.m3-blog-postcard--cover) .m3-blog-postcard__body {
-    padding-right: 4.75rem;
-  }
-}
-@media (max-width: 767px) {
-  .m3-blog-postcard .m3-blog-postcard__title :global(.m3-accent-bar) {
-    display: none;
-  }
-  .m3-blog-postcard__cover {
-    width: auto;
-    aspect-ratio: 2/1;
-    margin: 1rem 1rem 0;
-    border-radius: var(--shape-corner-m);
-  }
-  .m3-blog-postcard__cover > picture,
-  .m3-blog-postcard__cover > picture > img {
-    width: 100%;
-    height: 100%;
-  }
-  .m3-blog-postcard__body {
-    padding: 1rem;
-  }
-}
+
 /* ============================================================
-   容器模式联动（PostPage 的命名容器 + #post-list 类钩子）
-   同一卡片按所在容器切换 token 形态，而非两套皮肤：
-   - m3e-post-list--grid     封面 16:9 通栏贴边（复用移动端封面置顶语言）
-   - m3e-post-list--cover-left  list 模式封面居左（桌面 ≥md 镜像布局）
-   注意：钩子选择器用单个 &（自身复合），禁止 `& &`（会编译成嵌套后代，
-   修饰符形式永不匹配）。
+   Режимы отображения (Grid vs List) на десктопе (≥ 768px):
+   В режиме List обложка крупная, выразительная (36-38%),
+   с фиксацией пропорций 16:9 / 16:10.
    ============================================================ */
 @media (min-width: 768px) {
-  @container post-list-layout (min-width: 41rem) {
-    :global(.m3e-post-list-shell--compact .m3e-post-list--grid) .m3-blog-postcard {
-      flex-direction: column-reverse;
-    }
-    :global(.m3e-post-list-shell--compact .m3e-post-list--grid) .m3-blog-postcard__cover {
-      position: relative;
-      inset: auto;
-      width: auto;
-      height: auto;
-      aspect-ratio: 16/9;
-      margin: var(--m3e-space-4) var(--m3e-space-4) 0;
-      border-radius: var(--shape-corner-m);
-    }
-    :global(.m3e-post-list-shell--compact .m3e-post-list--grid .m3-blog-postcard) .m3-blog-postcard__body {
-      padding: var(--m3e-space-5);
-    }
-    :global(.m3e-post-list-shell--compact .m3e-post-list--grid .m3-blog-postcard:not(.m3-blog-postcard--cover)) .m3-blog-postcard__body {
-      padding-right: 4.75rem;
-    }
-    :global(.m3e-post-list-shell--compact .m3e-post-list--grid) .m3-blog-postcard :global(.m3-meta-icon) {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-    :global(.m3e-post-list-shell--compact .m3e-post-list--grid) .m3-blog-postcard :global(.m3-meta-icon) > :global(svg) {
-      width: 1rem;
-      height: 1rem;
-    }
+  :global(.m3e-post-list--list) .m3-blog-postcard {
+    flex-direction: row-reverse;
+    align-items: stretch;
+    min-height: 12.5rem;
   }
-  @container post-list-layout (min-width: 49rem) {
-    :global(.m3e-post-list-shell--regular .m3e-post-list--grid) .m3-blog-postcard {
-      flex-direction: column-reverse;
-    }
-    :global(.m3e-post-list-shell--regular .m3e-post-list--grid) .m3-blog-postcard__cover {
-      position: relative;
-      inset: auto;
-      width: auto;
-      height: auto;
-      aspect-ratio: 16/9;
-      margin: var(--m3e-space-4) var(--m3e-space-4) 0;
-      border-radius: var(--shape-corner-m);
-    }
-    :global(.m3e-post-list-shell--regular .m3e-post-list--grid .m3-blog-postcard) .m3-blog-postcard__body {
-      padding: var(--m3e-space-5);
-    }
-    :global(.m3e-post-list-shell--regular .m3e-post-list--grid .m3-blog-postcard:not(.m3-blog-postcard--cover)) .m3-blog-postcard__body {
-      padding-right: 4.75rem;
-    }
-    :global(.m3e-post-list-shell--regular .m3e-post-list--grid) .m3-blog-postcard :global(.m3-meta-icon) {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-    :global(.m3e-post-list-shell--regular .m3e-post-list--grid) .m3-blog-postcard :global(.m3-meta-icon) > :global(svg) {
-      width: 1rem;
-      height: 1rem;
-    }
+  :global(.m3e-post-list--list) .m3-blog-postcard__body {
+    padding: 1.5rem 1.75rem;
   }
-  @container post-list-layout (min-width: 57rem) {
-    :global(.m3e-post-list-shell--relaxed .m3e-post-list--grid) .m3-blog-postcard {
-      flex-direction: column-reverse;
-    }
-    :global(.m3e-post-list-shell--relaxed .m3e-post-list--grid) .m3-blog-postcard__cover {
-      position: relative;
-      inset: auto;
-      width: auto;
-      height: auto;
-      aspect-ratio: 16/9;
-      margin: var(--m3e-space-4) var(--m3e-space-4) 0;
-      border-radius: var(--shape-corner-m);
-    }
-    :global(.m3e-post-list-shell--relaxed .m3e-post-list--grid .m3-blog-postcard) .m3-blog-postcard__body {
-      padding: var(--m3e-space-5);
-    }
-    :global(.m3e-post-list-shell--relaxed .m3e-post-list--grid .m3-blog-postcard:not(.m3-blog-postcard--cover)) .m3-blog-postcard__body {
-      padding-right: 4.75rem;
-    }
-    :global(.m3e-post-list-shell--relaxed .m3e-post-list--grid) .m3-blog-postcard :global(.m3-meta-icon) {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
-    :global(.m3e-post-list-shell--relaxed .m3e-post-list--grid) .m3-blog-postcard :global(.m3-meta-icon) > :global(svg) {
-      width: 1rem;
-      height: 1rem;
-    }
-  }
-}
-@media (min-width: 768px) {
-  :global(.m3e-post-list--cover-left) .m3-blog-postcard__cover {
-    right: auto;
-    left: 0.75rem;
-  }
-  :global(.m3e-post-list--cover-left) .m3-blog-postcard--cover .m3-blog-postcard__body {
+  :global(.m3e-post-list--list) .m3-blog-postcard--cover .m3-blog-postcard__body {
     padding-right: 1.5rem;
-    padding-left: calc(28% + 1.5rem);
+  }
+  :global(.m3e-post-list--list) .m3-blog-postcard__cover {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: 36%;
+    min-width: 15rem;
+    max-width: 24rem;
+    height: auto;
+    aspect-ratio: auto;
+    margin: 0.875rem;
+    border-radius: var(--shape-corner-m, 0.75rem);
+    align-self: stretch;
+  }
+  :global(.m3e-post-list--list.m3e-post-list--cover-left) .m3-blog-postcard {
+    flex-direction: row;
+  }
+  :global(.m3e-post-list--list.m3e-post-list--cover-left) .m3-blog-postcard--cover .m3-blog-postcard__body {
+    padding-left: 1.5rem;
+    padding-right: 1.75rem;
   }
 }
 </style>

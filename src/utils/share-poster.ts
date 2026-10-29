@@ -1,22 +1,29 @@
 /**
  * 分享海报生成工具。
  *
- * 海报宽度固定，高度由封面、标题和摘要的实际排版决定。这样短内容不会在正文与
- * 页脚之间留下空洞，长内容也不会挤压作者和二维码区域。
+ * Генерация карточки публикации (Telegram / Social share banner).
+ * Соотношение сторон 16:9 (1200x675) или 1200x630 (OG стандарт).
+ * Дизайн:
+ * - Фоновое изображение обложки растягивается на весь холст с мягким тёмным градиентным затемнением
+ * - Вверху дата публикации
+ * - В центре крупный заголовок и краткое описание статьи
+ * - Внизу слева автор (Javohir), справа домен сайта
  */
 
-export const SHARE_POSTER_WIDTH = 1080;
+export const SHARE_POSTER_WIDTH = 1200;
+export const SHARE_POSTER_HEIGHT = 675; // 16:9 widescreen ratio, perfect for Telegram/socials
 
-const PAGE_PADDING = 64;
-const CONTENT_WIDTH = SHARE_POSTER_WIDTH - PAGE_PADDING * 2;
-const COVER_HEIGHT = 480;
-const NO_COVER_HEADER_HEIGHT = 240;
-const TITLE_FONT_SIZE = 56;
-const TITLE_LINE_HEIGHT = 70;
+const PAGE_PADDING_X = 80;
+const PAGE_PADDING_Y = 64;
+const CONTENT_WIDTH = SHARE_POSTER_WIDTH - PAGE_PADDING_X * 2;
+
+const DATE_FONT_SIZE = 26;
+const TITLE_FONT_SIZE = 60;
+const TITLE_LINE_HEIGHT = 76;
 const DESCRIPTION_FONT_SIZE = 30;
-const DESCRIPTION_LINE_HEIGHT = 42;
-const FOOTER_HEIGHT = 170;
-const BOTTOM_PADDING = 48;
+const DESCRIPTION_LINE_HEIGHT = 44;
+const FOOTER_FONT_SIZE = 26;
+
 const FONT_FAMILY = 'Roboto, system-ui, -apple-system, "Segoe UI", sans-serif';
 
 export interface SharePosterPalette {
@@ -45,28 +52,14 @@ export interface SharePosterInput {
 	url: string;
 	coverUrl?: string;
 	avatarUrl?: string;
-	labels: SharePosterLabels;
-	palette: SharePosterPalette;
+	labels?: SharePosterLabels;
+	palette?: SharePosterPalette;
 	signal?: AbortSignal;
 }
 
 interface DrawableImage {
 	source: CanvasImageSource;
 	close?: () => void;
-}
-
-interface PosterLayout {
-	hasCover: boolean;
-	headerHeight: number;
-	contentTop: number;
-	titleLines: string[];
-	titleHeight: number;
-	descriptionLines: string[];
-	descriptionTop: number;
-	descriptionHeight: number;
-	dividerY: number;
-	footerY: number;
-	canvasHeight: number;
 }
 
 /** 净化文件名，移除 Windows / POSIX 非法字符与控制字符。 */
@@ -230,59 +223,9 @@ function wrapTextLines(
 	return lines;
 }
 
-function drawTextEllipsis(
-	ctx: CanvasRenderingContext2D,
-	text: string,
-	x: number,
-	y: number,
-	maxWidth: number,
-) {
-	if (ctx.measureText(text).width <= maxWidth) {
-		ctx.fillText(text, x, y);
-		return;
-	}
-
-	const ellipsis = "\u2026";
-	const graphemes = segmentText(text, "grapheme");
-	while (
-		graphemes.length > 0 &&
-		ctx.measureText(`${graphemes.join("")}${ellipsis}`).width > maxWidth
-	) {
-		graphemes.pop();
-	}
-	ctx.fillText(`${graphemes.join("").trimEnd()}${ellipsis}`, x, y);
-}
-
-function drawRoundedRect(
-	ctx: CanvasRenderingContext2D,
-	x: number,
-	y: number,
-	width: number,
-	height: number,
-	radius: number,
-) {
-	ctx.beginPath();
-	if (typeof ctx.roundRect === "function") {
-		ctx.roundRect(x, y, width, height, radius);
-		return;
-	}
-	ctx.moveTo(x + radius, y);
-	ctx.lineTo(x + width - radius, y);
-	ctx.arcTo(x + width, y, x + width, y + radius, radius);
-	ctx.lineTo(x + width, y + height - radius);
-	ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius);
-	ctx.lineTo(x + radius, y + height);
-	ctx.arcTo(x, y + height, x, y + height - radius, radius);
-	ctx.lineTo(x, y + radius);
-	ctx.arcTo(x, y, x + radius, y, radius);
-	ctx.closePath();
-}
-
-function drawCoverImage(
+function drawCoverBackground(
 	ctx: CanvasRenderingContext2D,
 	image: CanvasImageSource,
-	x: number,
-	y: number,
 	width: number,
 	height: number,
 ) {
@@ -310,252 +253,11 @@ function drawCoverImage(
 		sourceY,
 		sourceWidth,
 		sourceHeight,
-		x,
-		y,
+		0,
+		0,
 		width,
 		height,
 	);
-}
-
-function measurePosterLayout(
-	ctx: CanvasRenderingContext2D,
-	input: SharePosterInput,
-	hasCover: boolean,
-): PosterLayout {
-	const headerHeight = hasCover ? COVER_HEIGHT : NO_COVER_HEADER_HEIGHT;
-	const contentTop = headerHeight + PAGE_PADDING;
-
-	ctx.font = `700 ${TITLE_FONT_SIZE}px ${FONT_FAMILY}`;
-	const titleLines = wrapTextLines(
-		ctx,
-		input.title || input.siteTitle,
-		CONTENT_WIDTH,
-		hasCover ? 3 : 4,
-	);
-	const titleHeight = Math.max(1, titleLines.length) * TITLE_LINE_HEIGHT;
-
-	const description =
-		input.description.trim() !== input.title.trim()
-			? input.description.trim()
-			: "";
-	ctx.font = `400 ${DESCRIPTION_FONT_SIZE}px ${FONT_FAMILY}`;
-	const descriptionLines = wrapTextLines(
-		ctx,
-		description,
-		CONTENT_WIDTH,
-		hasCover ? 4 : 5,
-	);
-	const descriptionTop = contentTop + titleHeight + 24;
-	const descriptionHeight = descriptionLines.length * DESCRIPTION_LINE_HEIGHT;
-	const dividerY = descriptionLines.length
-		? descriptionTop + descriptionHeight + 48
-		: contentTop + titleHeight + 40;
-	const footerY = dividerY + 32;
-	const canvasHeight = Math.ceil(footerY + FOOTER_HEIGHT + BOTTOM_PADDING);
-
-	return {
-		hasCover,
-		headerHeight,
-		contentTop,
-		titleLines,
-		titleHeight,
-		descriptionLines,
-		descriptionTop,
-		descriptionHeight,
-		dividerY,
-		footerY,
-		canvasHeight,
-	};
-}
-
-function drawBrandBadge(
-	ctx: CanvasRenderingContext2D,
-	text: string,
-	palette: SharePosterPalette,
-) {
-	ctx.font = `700 26px ${FONT_FAMILY}`;
-	const label = text || "Shirone";
-	const width = Math.min(ctx.measureText(label).width + 40, 520);
-	ctx.fillStyle = palette.primaryContainer;
-	drawRoundedRect(ctx, PAGE_PADDING, 40, width, 52, 26);
-	ctx.fill();
-	ctx.fillStyle = palette.onPrimaryContainer;
-	ctx.textBaseline = "middle";
-	drawTextEllipsis(ctx, label, PAGE_PADDING + 20, 66, width - 40);
-}
-
-function drawCoverHeader(
-	ctx: CanvasRenderingContext2D,
-	cover: CanvasImageSource,
-	input: SharePosterInput,
-) {
-	drawCoverImage(ctx, cover, 0, 0, SHARE_POSTER_WIDTH, COVER_HEIGHT);
-	drawBrandBadge(ctx, input.siteTitle, input.palette);
-
-	ctx.font = `600 25px ${FONT_FAMILY}`;
-	const date = input.published || "";
-	const badgeWidth = Math.min(ctx.measureText(date).width + 40, 320);
-	ctx.fillStyle = input.palette.surfaceContainerLowest;
-	drawRoundedRect(ctx, PAGE_PADDING, COVER_HEIGHT - 88, badgeWidth, 56, 16);
-	ctx.fill();
-	ctx.fillStyle = input.palette.onSurface;
-	ctx.textBaseline = "middle";
-	drawTextEllipsis(
-		ctx,
-		date,
-		PAGE_PADDING + 20,
-		COVER_HEIGHT - 60,
-		badgeWidth - 40,
-	);
-}
-
-function drawNoCoverHeader(
-	ctx: CanvasRenderingContext2D,
-	input: SharePosterInput,
-) {
-	const { palette } = input;
-	ctx.fillStyle = palette.primaryContainer;
-	ctx.fillRect(0, 0, SHARE_POSTER_WIDTH, NO_COVER_HEADER_HEIGHT);
-
-	ctx.fillStyle = palette.primary;
-	drawRoundedRect(ctx, PAGE_PADDING, 60, 10, 120, 5);
-	ctx.fill();
-
-	ctx.fillStyle = palette.onPrimaryContainer;
-	ctx.textBaseline = "top";
-	ctx.font = `700 46px ${FONT_FAMILY}`;
-	drawTextEllipsis(
-		ctx,
-		input.siteTitle || "Shirone",
-		PAGE_PADDING + 36,
-		62,
-		CONTENT_WIDTH - 36,
-	);
-	ctx.font = `400 28px ${FONT_FAMILY}`;
-	drawTextEllipsis(
-		ctx,
-		input.published,
-		PAGE_PADDING + 36,
-		128,
-		CONTENT_WIDTH - 36,
-	);
-}
-
-function drawArticleContent(
-	ctx: CanvasRenderingContext2D,
-	input: SharePosterInput,
-	layout: PosterLayout,
-) {
-	const { palette } = input;
-	ctx.textBaseline = "top";
-	ctx.fillStyle = palette.onSurface;
-	ctx.font = `700 ${TITLE_FONT_SIZE}px ${FONT_FAMILY}`;
-	layout.titleLines.forEach((line, index) => {
-		ctx.fillText(
-			line,
-			PAGE_PADDING,
-			layout.contentTop + index * TITLE_LINE_HEIGHT,
-		);
-	});
-
-	if (layout.descriptionLines.length > 0) {
-		ctx.fillStyle = palette.onSurfaceVariant;
-		ctx.font = `400 ${DESCRIPTION_FONT_SIZE}px ${FONT_FAMILY}`;
-		layout.descriptionLines.forEach((line, index) => {
-			ctx.fillText(
-				line,
-				PAGE_PADDING,
-				layout.descriptionTop + index * DESCRIPTION_LINE_HEIGHT,
-			);
-		});
-	}
-
-	ctx.strokeStyle = palette.outlineVariant;
-	ctx.lineWidth = 2;
-	ctx.beginPath();
-	ctx.moveTo(PAGE_PADDING, layout.dividerY);
-	ctx.lineTo(SHARE_POSTER_WIDTH - PAGE_PADDING, layout.dividerY);
-	ctx.stroke();
-}
-
-function drawAvatar(
-	ctx: CanvasRenderingContext2D,
-	input: SharePosterInput,
-	avatar: CanvasImageSource | null,
-	x: number,
-	y: number,
-	size: number,
-) {
-	ctx.save();
-	ctx.beginPath();
-	ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
-	ctx.clip();
-	if (avatar) {
-		drawCoverImage(ctx, avatar, x, y, size, size);
-	} else {
-		ctx.fillStyle = input.palette.primaryContainer;
-		ctx.fillRect(x, y, size, size);
-		const initial = segmentText(input.author || "A", "grapheme")[0] || "A";
-		ctx.fillStyle = input.palette.onPrimaryContainer;
-		ctx.font = `700 42px ${FONT_FAMILY}`;
-		ctx.textAlign = "center";
-		ctx.textBaseline = "middle";
-		ctx.fillText(initial.toUpperCase(), x + size / 2, y + size / 2);
-	}
-	ctx.restore();
-	ctx.textAlign = "left";
-}
-
-function drawFooter(
-	ctx: CanvasRenderingContext2D,
-	input: SharePosterInput,
-	layout: PosterLayout,
-	avatar: CanvasImageSource | null,
-	qrCanvas: HTMLCanvasElement,
-) {
-	const { palette } = input;
-	const avatarSize = 104;
-	const avatarX = PAGE_PADDING;
-	const avatarY = layout.footerY + 26;
-	drawAvatar(ctx, input, avatar, avatarX, avatarY, avatarSize);
-
-	const qrSize = 150;
-	const qrX = SHARE_POSTER_WIDTH - PAGE_PADDING - qrSize;
-	const qrY = layout.footerY + 10;
-	const textX = avatarX + avatarSize + 24;
-	const textWidth = qrX - 36 - textX;
-
-	ctx.textBaseline = "top";
-	ctx.fillStyle = palette.onSurfaceVariant;
-	ctx.font = `400 21px ${FONT_FAMILY}`;
-	ctx.fillText(input.labels.author, textX, layout.footerY + 12);
-	ctx.fillStyle = palette.onSurface;
-	ctx.font = `700 32px ${FONT_FAMILY}`;
-	drawTextEllipsis(
-		ctx,
-		input.author || input.siteTitle,
-		textX,
-		layout.footerY + 40,
-		textWidth,
-	);
-
-	ctx.fillStyle = palette.onSurfaceVariant;
-	ctx.font = `400 21px ${FONT_FAMILY}`;
-	ctx.fillText(input.labels.scanToRead, textX, layout.footerY + 94);
-	ctx.fillStyle = palette.onSurface;
-	ctx.font = `700 30px ${FONT_FAMILY}`;
-	drawTextEllipsis(
-		ctx,
-		input.siteTitle,
-		textX,
-		layout.footerY + 122,
-		textWidth,
-	);
-
-	ctx.fillStyle = "#ffffff";
-	drawRoundedRect(ctx, qrX, qrY, qrSize, qrSize, 16);
-	ctx.fill();
-	ctx.drawImage(qrCanvas, qrX + 7, qrY + 7, qrSize - 14, qrSize - 14);
 }
 
 function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
@@ -567,7 +269,7 @@ function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
 	});
 }
 
-/** 生成宽度固定、内容高度自适应的分享海报。 */
+/** 生成固定比例 (16:9) 的社交分享海报（Telegram / Web）。 */
 export async function generateSharePoster(
 	input: SharePosterInput,
 ): Promise<Blob> {
@@ -583,53 +285,146 @@ export async function generateSharePoster(
 		}
 	}
 
-	const qrcodeModule = await import("qrcode");
-	const QRCode =
-		(qrcodeModule as unknown as { default: typeof qrcodeModule }).default ||
-		qrcodeModule;
-	const [coverImage, avatarImage] = await Promise.all([
-		loadDrawableImage(input.coverUrl, input.signal),
-		loadDrawableImage(input.avatarUrl, input.signal),
-	]);
+	const coverImage = await loadDrawableImage(input.coverUrl, input.signal);
 
 	try {
 		if (input.signal?.aborted) {
 			throw new DOMException("Poster generation aborted", "AbortError");
 		}
 
-		const qrCanvas = document.createElement("canvas");
-		await QRCode.toCanvas(qrCanvas, input.url, {
-			width: 256,
-			margin: 1,
-			errorCorrectionLevel: "M",
-			color: { dark: "#000000", light: "#ffffff" },
-		});
-
 		const canvas = document.createElement("canvas");
 		canvas.width = SHARE_POSTER_WIDTH;
-		const measureContext = canvas.getContext("2d");
-		if (!measureContext) throw new Error("Unable to create 2d canvas context");
+		canvas.height = SHARE_POSTER_HEIGHT;
 
-		const layout = measurePosterLayout(
-			measureContext,
-			input,
-			Boolean(coverImage),
-		);
-		canvas.height = layout.canvasHeight;
 		const ctx = canvas.getContext("2d");
 		if (!ctx) throw new Error("Unable to create 2d canvas context");
 
-		ctx.fillStyle = input.palette.surfaceContainerLowest;
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		if (coverImage) drawCoverHeader(ctx, coverImage.source, input);
-		else drawNoCoverHeader(ctx, input);
+		// 1. Отрисовка фона: обложка статьи или темный премиальный фон
+		if (coverImage) {
+			drawCoverBackground(ctx, coverImage.source, canvas.width, canvas.height);
+			// Глубокое затемнение: многослойный оверлей для идеальной читаемости текста поверх фото
+			ctx.fillStyle = "rgba(12, 13, 16, 0.72)";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-		drawArticleContent(ctx, input, layout);
-		drawFooter(ctx, input, layout, avatarImage?.source || null, qrCanvas);
+			// Мягкий градиент снизу вверх для контраста футера
+			const bottomGradient = ctx.createLinearGradient(
+				0,
+				canvas.height - 240,
+				0,
+				canvas.height,
+			);
+			bottomGradient.addColorStop(0, "rgba(8, 9, 12, 0)");
+			bottomGradient.addColorStop(1, "rgba(8, 9, 12, 0.65)");
+			ctx.fillStyle = bottomGradient;
+			ctx.fillRect(0, canvas.height - 240, canvas.width, 240);
+		} else {
+			// Если обложки нет — градиентный темный фон
+			const bgGradient = ctx.createLinearGradient(
+				0,
+				0,
+				canvas.width,
+				canvas.height,
+			);
+			bgGradient.addColorStop(0, "#16171d");
+			bgGradient.addColorStop(0.5, "#101116");
+			bgGradient.addColorStop(1, "#0a0b0e");
+			ctx.fillStyle = bgGradient;
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+		}
+
+		// 2. Верхняя строка: дата публикации (полупрозрачный белый цвет)
+		const dateY = PAGE_PADDING_Y + 10;
+		if (input.published) {
+			ctx.font = `500 ${DATE_FONT_SIZE}px ${FONT_FAMILY}`;
+			ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+			ctx.textBaseline = "top";
+			ctx.textAlign = "left";
+			ctx.fillText(input.published, PAGE_PADDING_X, dateY);
+		}
+
+		// 3. Расчет текста: Заголовок и Описание
+		ctx.font = `800 ${TITLE_FONT_SIZE}px ${FONT_FAMILY}`;
+		const titleLines = wrapTextLines(
+			ctx,
+			input.title || input.siteTitle,
+			CONTENT_WIDTH,
+			3,
+		);
+		const titleBlockHeight = titleLines.length * TITLE_LINE_HEIGHT;
+
+		const cleanDesc =
+			input.description && input.description.trim() !== input.title.trim()
+				? input.description.trim()
+				: "";
+
+		ctx.font = `400 ${DESCRIPTION_FONT_SIZE}px ${FONT_FAMILY}`;
+		const maxDescLines = titleLines.length > 2 ? 2 : 3;
+		const descLines = cleanDesc
+			? wrapTextLines(ctx, cleanDesc, CONTENT_WIDTH, maxDescLines)
+			: [];
+		const descBlockHeight =
+			descLines.length > 0
+				? descLines.length * DESCRIPTION_LINE_HEIGHT + 24
+				: 0;
+
+		const totalCenterHeight = titleBlockHeight + descBlockHeight;
+		// Размещение центральной части с гармоничным отступом от даты
+		const availableAreaTop = dateY + DATE_FONT_SIZE + 36;
+		const availableAreaBottom =
+			canvas.height - PAGE_PADDING_Y - FOOTER_FONT_SIZE - 40;
+		const availableCenterY =
+			(availableAreaTop + availableAreaBottom - totalCenterHeight) / 2;
+		const contentTopY = Math.max(availableAreaTop, availableCenterY);
+
+		// 4. Отрисовка заголовка (чистый яркий белый цвет)
+		ctx.font = `800 ${TITLE_FONT_SIZE}px ${FONT_FAMILY}`;
+		ctx.fillStyle = "#ffffff";
+		ctx.textBaseline = "top";
+		ctx.textAlign = "left";
+		titleLines.forEach((line, index) => {
+			ctx.fillText(
+				line,
+				PAGE_PADDING_X,
+				contentTopY + index * TITLE_LINE_HEIGHT,
+			);
+		});
+
+		// 5. Отрисовка описания (мягкий светло-серый цвет)
+		if (descLines.length > 0) {
+			const descStartY = contentTopY + titleBlockHeight + 24;
+			ctx.font = `400 ${DESCRIPTION_FONT_SIZE}px ${FONT_FAMILY}`;
+			ctx.fillStyle = "rgba(255, 255, 255, 0.78)";
+			ctx.textBaseline = "top";
+			ctx.textAlign = "left";
+			descLines.forEach((line, index) => {
+				ctx.fillText(
+					line,
+					PAGE_PADDING_X,
+					descStartY + index * DESCRIPTION_LINE_HEIGHT,
+				);
+			});
+		}
+
+		// 6. Нижняя строка:
+		// Слева: Имя автора (Javohir)
+		// Справа: Домен сайта (например, nullvert.uz)
+		const footerY = canvas.height - PAGE_PADDING_Y;
+		ctx.font = `600 ${FOOTER_FONT_SIZE}px ${FONT_FAMILY}`;
+		ctx.textBaseline = "bottom";
+
+		// Автор слева
+		const authorText = input.author || "Javohir";
+		ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+		ctx.textAlign = "left";
+		ctx.fillText(authorText, PAGE_PADDING_X, footerY);
+
+		// Домен сайта справа (nullvert.uz)
+		ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+		ctx.textAlign = "right";
+		ctx.fillText("nullvert.uz", canvas.width - PAGE_PADDING_X, footerY);
 
 		return await canvasToBlob(canvas);
 	} finally {
 		coverImage?.close?.();
-		avatarImage?.close?.();
 	}
 }

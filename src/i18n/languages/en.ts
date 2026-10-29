@@ -10,6 +10,11 @@ export const en: Translation = {
 	[Key.archiveGroupCategory]: "By Category",
 	[Key.archiveGroupTag]: "By Tag",
 	[Key.search]: "Search",
+	[Key.searchEmptyPrompt]: "Quick Search",
+	[Key.searchEmptyHint]: "Type post title, topic, tag or content",
+	[Key.searchSelect]: "Select",
+	[Key.searchClose]: "Close",
+	[Key.searchTryDifferent]: "Try a different search term",
 	[Key.clear]: "Clear",
 
 	[Key.friends]: "Friends",
@@ -53,6 +58,9 @@ export const en: Translation = {
 		"Useful tools, documentation, services, and favorite places on the web.",
 	[Key.compassNoResults]: "No bookmarks matched your search",
 	[Key.compassCounts]: "bookmarks",
+	[Key.bookmarksAllSections]: "Все разделы",
+	[Key.bookmarksSectionsTitle]: "РАЗДЕЛЫ",
+	[Key.bookmarksSearchPlaceholder]: "Поиск",
 
 	[Key.skills]: "Skills",
 	[Key.skillsBanner]:
@@ -363,7 +371,7 @@ export const en: Translation = {
 	[Key.cancel]: "Cancel",
 	[Key.reset]: "Reset",
 
-	[Key.support]: "Support & Donate",
+	[Key.support]: "Support",
 	[Key.supportTitle]: "Поддержать автора",
 	[Key.supportSteamGiftCard]: "Steam Gift Card",
 	[Key.supportSteamGiftCardDesc]: "Отправить подарочную карту Steam напрямую",

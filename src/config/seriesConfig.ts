@@ -6,5 +6,5 @@ export const seriesConfig: SeriesConfig = withUserConfig("series", {
 	title: "$t:series",
 	// 空 = 使用动态汇总（「x 个系列 · y 篇文章」）
 	description: "",
-	cardPosition: "bottom",
+	cardPosition: "top",
 });

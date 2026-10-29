@@ -4,7 +4,7 @@ import { aboutConfig } from "@/config/aboutConfig";
 import { albumsConfig } from "@/config/albumsConfig";
 import { animeConfig } from "@/config/animeConfig";
 import { cinemaConfig } from "@/config/cinemaConfig";
-import { compassConfig } from "@/config/compassConfig";
+import { bookmarksConfig } from "@/config/bookmarksConfig";
 import { devicesConfig } from "@/config/devicesConfig";
 import { friendsConfig } from "@/config/friendsConfig";
 import { gamesConfig } from "@/config/gamesConfig";
@@ -66,9 +66,9 @@ export const LinkPresets: Record<string, NavBarLink> = {
 	},
 	Compass: {
 		name: i18n(I18nKey.compass),
-		url: "/compass/",
+		url: "/bookmarks/",
 		icon: "material-symbols:bookmarks-outline-rounded",
-		pageKey: "compass",
+		pageKey: "bookmarks",
 	},
 	Skills: {
 		name: i18n(I18nKey.skills),
@@ -133,7 +133,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 	Support: {
 		name: i18n(I18nKey.support),
 		url: "/support/",
-		icon: "material-symbols:favorite-outline-rounded",
+		icon: "material-symbols:savings-rounded",
 		pageKey: "support",
 	},
 	About: {
@@ -153,32 +153,11 @@ export const LinkPresets: Record<string, NavBarLink> = {
 
 const defaultNavBarConfig: NavBarConfig = {
 	links: [
-		LinkPresets.Home,
-		LinkPresets.Archive,
-		LinkPresets.Friends,
-		LinkPresets.Moments,
-		LinkPresets.Anime,
 		LinkPresets.Compass,
-		LinkPresets.Albums,
-		{
-			name: i18n(I18nKey.more),
-			icon: "material-symbols:apps-rounded",
-			children: [
-				LinkPresets.Timeline,
-				LinkPresets.Projects,
-				LinkPresets.Devices,
-				LinkPresets.Cinema,
-				LinkPresets.Games,
-				LinkPresets.Skills,
-				// 分类/标签入口不进导航菜单（避免菜单项过多），预设已登记指向独立页面，
-				// 需要时取消注释即可
-				// LinkPresets.Categories,
-				// LinkPresets.Tags,
-				LinkPresets.Support,
-				LinkPresets.About,
-				LinkPresets.GitHub,
-			],
-		},
+		LinkPresets.Games,
+		LinkPresets.Cinema,
+		LinkPresets.Anime,
+		LinkPresets.Support,
 	],
 };
 
@@ -203,7 +182,7 @@ const unavailableFeatureRoutes: ReadonlySet<string> = new Set([
 	...(momentsConfig.enable ? [] : ["/moments"]),
 	...(animeConfig.enable ? [] : ["/anime"]),
 	...(cinemaConfig.enable ? [] : ["/cinema"]),
-	...(compassConfig.enable ? [] : ["/compass"]),
+	...(bookmarksConfig.enable ? [] : ["/bookmarks"]),
 	...(albumsConfig.enable ? [] : ["/albums"]),
 	...(skillsConfig.enable ? [] : ["/skills"]),
 	...(projectsConfig.enable ? [] : ["/projects"]),

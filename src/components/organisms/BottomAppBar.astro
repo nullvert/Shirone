@@ -34,7 +34,7 @@ const { currentPage } = Astro.props as Props;
 const isMedia =
 	currentPage === "anime" ||
 	currentPage === "cinema" ||
-	currentPage === "games";
+	currentPage === "games" || currentPage === "bookmarks" || currentPage === "compass";
 const isPost = currentPage === "post";
 const hasWidgets =
 	sidebarConfig.enable &&
@@ -205,7 +205,7 @@ const maxWidth = bottomBarConfig?.maxWidth ?? "56rem";
 		const page = container?.dataset.currentPage as SidebarPage | undefined;
 		const drawerBtn = document.getElementById("bottom-bar-drawer-btn");
 		if (drawerBtn) {
-			const isMedia = page === "anime" || page === "cinema" || page === "games";
+			const isMedia = page === "anime" || page === "cinema" || page === "games" || page === "bookmarks" || page === "compass";
 			const isPost = page === "post";
 			const hasWidgets = sidebarConfig.enable && hasVisibleWidgetsOnPage(sidebarConfig.components, page);
 			const shouldHide = !isMedia && !isPost && !hasWidgets;

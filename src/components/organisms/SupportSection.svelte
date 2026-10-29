@@ -165,7 +165,8 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 
 .support-page__title {
 	margin: 0;
-	color: #ffffff;
+	color: var(--on-surface);
+	font: var(--m3e-type-headline-large);
 	font-size: clamp(2rem, 6vw, 2.75rem);
 	font-weight: 800;
 	line-height: 1.15;
@@ -175,10 +176,10 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 
 .support-page__subtitle {
 	margin: 0.75rem 0 0;
-	color: #94a3b8;
+	color: var(--on-surface-variant);
+	font: var(--m3e-type-body-medium);
 	font-size: 0.9375rem;
 	line-height: 1.6;
-	font-weight: 400;
 }
 
 /* Grid: 2 columns */
@@ -197,9 +198,7 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 	}
 }
 
-/* ─────────────────────────────────────────────────────────
-   Cards — Exact Match to Minimalist Reference
-───────────────────────────────────────────────────────── */
+/* Cards */
 .support-card {
 	position: relative;
 	display: flex;
@@ -211,20 +210,20 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 	border: none;
 	outline: none;
 	text-decoration: none;
-	background: #181d24;
-	border-radius: 1.25rem;
-	color: #ffffff;
+	background: var(--card-bg);
+	border-radius: var(--shape-corner-l);
+	color: var(--on-surface);
 	text-align: left;
 	cursor: pointer;
 	overflow: hidden;
 	transition:
-		background-color 0.2s ease,
-		transform 0.2s ease;
+		background-color var(--m3e-duration-short) var(--m3e-easing-standard),
+		transform var(--m3e-duration-short) var(--m3e-easing-standard);
 }
 
 .support-card:hover {
-	background: #1e242d;
-	transform: translateY(-1px);
+	background: var(--surface-container-high);
+	transform: translateY(-2px);
 }
 
 /* Hero Cards */
@@ -258,18 +257,20 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 }
 
 .support-card__kicker {
+	font: var(--m3e-type-label-small);
 	font-size: 0.6875rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;
-	color: #22d3ee;
+	color: var(--primary);
 	text-transform: uppercase;
 }
 
 .support-card__name {
 	margin: 0;
+	font: var(--m3e-type-title-large);
 	font-size: 1.375rem;
 	font-weight: 700;
-	color: #ffffff;
+	color: var(--on-surface);
 	line-height: 1.2;
 }
 
@@ -283,9 +284,11 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 }
 
 .support-card__methods {
+	font: var(--m3e-type-body-small);
 	font-size: 0.8125rem;
 	font-weight: 600;
-	color: #cbd5e1;
+	color: var(--on-surface);
+	opacity: 0.85;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -295,8 +298,9 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 	display: flex;
 	align-items: center;
 	gap: 0.4rem;
+	font: var(--m3e-type-body-small);
 	font-size: 0.75rem;
-	color: #64748b;
+	color: var(--on-surface-variant);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -333,16 +337,18 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 
 .support-card__title {
 	margin: 0;
+	font: var(--m3e-type-title-medium);
 	font-size: 0.9375rem;
 	font-weight: 600;
-	color: #ffffff;
+	color: var(--on-surface);
 	line-height: 1.3;
 }
 
 .support-card__subtext {
 	margin: 0;
+	font: var(--m3e-type-body-small);
 	font-size: 0.75rem;
-	color: #94a3b8;
+	color: var(--on-surface-variant);
 	line-height: 1.35;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -357,9 +363,9 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 	width: 2.75rem;
 	height: 2.75rem;
 	flex-shrink: 0;
-	border-radius: 0.875rem;
-	background: #232934;
-	color: #94a3b8;
+	border-radius: var(--shape-corner-m);
+	background: var(--surface-container);
+	color: var(--primary);
 }
 
 .support-card__icon-box > :global(svg) {
@@ -367,7 +373,7 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 	height: 1.375rem;
 }
 
-/* Subtle circular button */
+/* Circular arrow button */
 .support-card__arrow-circle {
 	display: inline-flex;
 	align-items: center;
@@ -375,12 +381,12 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 	width: 2rem;
 	height: 2rem;
 	flex-shrink: 0;
-	border-radius: 50%;
-	background: #232934;
-	color: #94a3b8;
+	border-radius: var(--shape-corner-full);
+	background: var(--surface-container);
+	color: var(--on-surface-variant);
 	transition:
-		background-color 0.2s ease,
-		color 0.2s ease;
+		background-color var(--m3e-duration-short) var(--m3e-easing-standard),
+		color var(--m3e-duration-short) var(--m3e-easing-standard);
 }
 
 .support-card__arrow-circle > :global(svg) {
@@ -389,7 +395,7 @@ const steamUrl = $derived(config.steamUrl || config.steamWishlistUrl);
 }
 
 .support-card:hover .support-card__arrow-circle {
-	background: #2d3542;
-	color: #ffffff;
+	background: var(--primary);
+	color: var(--on-primary);
 }
 </style>

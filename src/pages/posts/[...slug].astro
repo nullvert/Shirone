@@ -2,7 +2,6 @@
 import { type CollectionEntry, render } from "astro:content";
 import path from "node:path";
 import IconButton from "@components/atoms/action/IconButton.svelte";
-import AccentBar from "@components/atoms/display/AccentBar.svelte";
 import Card from "@components/atoms/display/Card.svelte";
 import Markdown from "@components/content/Markdown.astro";
 import ImageWrapper from "@components/molecules/ImageWrapper.astro";
@@ -222,6 +221,45 @@ const jsonLd = {
 		? entry.data.lang.replace("_", "-")
 		: siteConfig.lang.replace("_", "-"),
 };
+
+// Smart navigation: series-aware navigation
+const seriesPrev = series?.prev
+	? {
+			url: series.prev.url || getPostUrlBySlug(series.prev.slug),
+			title: series.prev.title,
+			label: `ЧАСТЬ ${series.index - 1} ИЗ ${series.total}`,
+		}
+	: null;
+
+const seriesNext = series?.next
+	? {
+			url: series.next.url || getPostUrlBySlug(series.next.slug),
+			title: series.next.title,
+			label: `ЧАСТЬ ${series.index + 1} ИЗ ${series.total}`,
+		}
+	: null;
+
+// Left nav (Older / Series Prev)
+const navPrev =
+	seriesPrev ||
+	(entry.data.nextSlug
+		? {
+				url: entry.data.nextUrl || getPostUrlBySlug(entry.data.nextSlug),
+				title: entry.data.nextTitle,
+				label: series ? `ЧАСТЬ ${series.index} ИЗ ${series.total}` : "НАЗАД",
+			}
+		: null);
+
+// Right nav (Newer / Series Next)
+const navNext =
+	seriesNext ||
+	(entry.data.prevSlug
+		? {
+				url: entry.data.prevUrl || getPostUrlBySlug(entry.data.prevSlug),
+				title: entry.data.prevTitle,
+				label: "ДАЛЕЕ",
+			}
+		: null);
 ---
 
 <MainGridLayout banner={entry.data.image} ogImage={ogImage} title={entry.data.title} description={effectiveDescription} bannerDate={formatDateToYYYYMMDD(entry.data.published)} lang={entry.data.lang} setOGTypeArticle={true} headings={effectiveHeadings} postCategory={entry.data.category || undefined} page="post" hasComments={postCommentEnabled}>
@@ -230,28 +268,22 @@ const jsonLd = {
     {markdownStylesheetAssets.map(({ pack, css }) => <style is:inline slot="head" data-swup-optional={pack} set:html={css}></style>)}
     <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative mb-4">
-		<Card color="var(--card-bg)" radius="l" class="post-card z-10 px-6 md:px-9 pt-6 pb-4 relative w-full">
-			<!-- word count and reading time -->
-			<div class="flex flex-row text-[var(--on-surface-variant)] gap-5 mb-3 transition onload-animation">
-				<div class="flex flex-row items-center">
-					<div class="transition h-6 w-6 rounded-[var(--shape-corner-xs)] bg-[var(--surface-container-high)] text-[var(--on-surface-variant)] flex items-center justify-center mr-2">
-						<Icon icon="material-symbols:notes-rounded"></Icon>
-					</div>
-					<div class="text-sm">{remarkPluginFrontmatter.words} {" " + i18n(remarkPluginFrontmatter.words === 1 ? I18nKey.wordCount : I18nKey.wordsCount)}</div>
-				</div>
-				<div class="flex flex-row items-center">
-					<div class="transition h-6 w-6 rounded-[var(--shape-corner-xs)] bg-[var(--surface-container-high)] text-[var(--on-surface-variant)] flex items-center justify-center mr-2">
-						<Icon icon="material-symbols:schedule-outline-rounded"></Icon>
-					</div>
-					<div class="text-sm">{remarkPluginFrontmatter.minutes} {" " + i18n(remarkPluginFrontmatter.minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount)}</div>
-				</div>
-				{umamiEnabled && (
-					<div class="flex flex-row items-center">
-						<UmamiStats variant="meta" path={canonicalPostUrl} />
-					</div>
-				)}
-			</div>
-
+		<Card color="var(--card-bg)" radius="l" class="post-card z-10 p-0 overflow-hidden relative w-full border border-[color-mix(in_srgb,var(--outline-variant)_18%,transparent)] dark:border-white/[0.05] shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-none">
+			{entry.data.image && (
+				<ImageWrapper
+					id="post-cover"
+					src={entry.data.image}
+					basePath={imageBasePath}
+					class="w-full h-64 sm:h-80 md:h-[23.5rem] object-cover onload-animation"
+					loading="eager"
+					fetchPriority="high"
+					widths={[360, 720, 1080, 1440]}
+					sizes="(min-width: 1280px) 1200px, 100vw"
+					formats={["avif", "webp"]}
+					quality={65}
+				/>
+			)}
+			<div class="px-6 md:px-9 pt-6 pb-6">
 			<!-- title -->
 			<div class="relative onload-animation">
 				<div
@@ -261,17 +293,10 @@ const jsonLd = {
 					text-[var(--on-surface)]
 					flex items-center gap-3"
 				>
-					<AccentBar size="large" />
 					<div class="inline-block">
 						{entry.data.title}
 					</div>
-					<IconButton
-						id="copy-post-link"
-						label={i18n(I18nKey.copyLink)}
-						class="ml-auto shrink-0"
-					>
-						<Icon icon="material-symbols:link-rounded" class="text-[1.25rem]" />
-					</IconButton>
+					
 				</div>
 			</div>
 
@@ -291,6 +316,8 @@ const jsonLd = {
 						updated={entry.data.updated}
 						tags={entry.data.tags}
 						category={entry.data.category}
+						wordCount={`${remarkPluginFrontmatter.words} ${i18n(remarkPluginFrontmatter.words === 1 ? I18nKey.wordCount : I18nKey.wordsCount)}`}
+						readingTime={`${remarkPluginFrontmatter.minutes} ${i18n(remarkPluginFrontmatter.minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount)}`}
 					></PostMetadata>
 				)}
 				{seriesCardVisible && seriesCardAtTop && series && (
@@ -301,20 +328,7 @@ const jsonLd = {
 
             <!-- always show cover as long as it has one -->
 
-			{entry.data.image &&
-				<ImageWrapper
-					id="post-cover"
-					src={entry.data.image}
-					basePath={imageBasePath}
-					class="mb-8 rounded-xl banner-container onload-animation"
-					loading="eager"
-					fetchPriority="high"
-					widths={[360, 720, 1080, 1440]}
-					sizes="(min-width: 1280px) 720px, (min-width: 768px) calc(100vw - 22rem), calc(100vw - 3.5rem)"
-					formats={["avif", "webp"]}
-					quality={65}
-				/>
-			}
+			
 
             {isEncrypted ? (
                 <EncryptedContent
@@ -328,38 +342,90 @@ const jsonLd = {
                 <Markdown class="mb-6 onload-animation">
                     <Content />
                 </Markdown>
-            )}
-
-			{/* 系列块（cardPosition: bottom）紧贴正文之后：与 top 变体对称（元信息之后 / 正文之后），
-			    并排在版权、分享与 Continue reading 这些收尾区块之前——系列导航是「继续读」，
-			    应先于署名/分发/相关推荐（页面实际顺序：系列 → 版权 → 分享 → 延伸阅读 → 评论 → 更新提示 → 全局 post-nav） */}
-			{seriesCardVisible && !seriesCardAtTop && series && (
-				<SeriesCard context={series} class="mb-6 onload-animation" />
 			)}
 
-			{postLicense.enable && <License title={entry.data.title} slug={entry.id} pubDate={entry.data.published} license={postLicense} class="mb-6 rounded-xl license-container onload-animation"></License>}
+				{entry.data.tags && entry.data.tags.length > 0 && (
+					<div class="flex sm:hidden flex-wrap gap-2 mb-6 onload-animation">
+						{entry.data.tags.map((tag: string) => (
+							<a
+								href={`/archive/?tag=${encodeURIComponent(tag.trim())}`}
+								class="inline-flex items-center gap-1 px-3 py-1.5 rounded-[var(--shape-corner-xs)] bg-[var(--surface-container-high)] text-[var(--on-surface-variant)] hover:text-[var(--primary)] text-xs font-medium no-underline transition-colors"
+							>
+								<span class="opacity-60">#</span>
+								<span>{tag.trim()}</span>
+							</a>
+						))}
+					</div>
+				)}
+			</div>
 
-			{shareOptions && (
-				<ArticleShare
-					client:visible
-					options={shareOptions}
-					title={entry.data.title}
-					description={effectiveDescription}
-					author={profileConfig.name}
-					published={formatDateToYYYYMMDD(entry.data.published)}
-					siteTitle={siteConfig.title}
-					postPath={canonicalPostUrl}
-					coverSelector={entry.data.image ? "#post-cover img" : undefined}
-					avatarUrl={authorAvatarUrl}
-					class="mb-6 rounded-xl onload-animation"
-				/>
-			)}
+		<!-- 3. Post Bottom Section with distinct background & subtle edge-to-edge borders -->
+		<div class="m3-post-footer border-t border-[color-mix(in_srgb,var(--outline-variant)_18%,transparent)] dark:border-white/[0.05] bg-[color-mix(in_srgb,var(--surface-container)_45%,var(--card-bg))] dark:bg-[var(--surface-container-low)]">
+			<!-- Actions Row -->
+			<div class="px-6 md:px-9 py-4 flex items-center justify-center md:justify-between gap-4 border-b border-[color-mix(in_srgb,var(--outline-variant)_18%,transparent)] dark:border-white/[0.05]">
+				<div class="hidden md:flex items-center gap-2.5">
+					<Icon icon="material-symbols:thumb-up-outline-rounded" class="text-lg text-[var(--primary)]" />
+					<span class="text-sm font-semibold text-[var(--on-surface)]">Было полезно?</span>
+				</div>
+				<div class="flex items-center justify-center gap-2.5 w-full md:w-auto">
+					<a href="/support/" class="group inline-flex items-center gap-2 h-11 px-4.5 rounded-[var(--shape-corner-m)] bg-[var(--surface-container-high)] hover:bg-[var(--primary)] text-[var(--on-surface)] hover:text-[var(--on-primary)] active:scale-[0.98] transition-all duration-200 no-underline cursor-pointer">
+						<Icon icon="material-symbols:savings-rounded" class="text-xl text-[var(--primary)] group-hover:text-[var(--on-primary)] transition-colors duration-200" />
+						<span class="text-sm font-semibold transition-colors duration-200">Поддержать</span>
+					</a>
+					<button id="post-share-trigger" type="button" class="group inline-flex items-center gap-2 h-11 px-4.5 rounded-[var(--shape-corner-m)] bg-[var(--surface-container-high)] text-[var(--on-surface)] hover:text-[var(--primary)] active:scale-[0.98] transition-all duration-200 cursor-pointer border-none">
+						<Icon icon="material-symbols:share-outline-rounded" class="text-xl text-[var(--on-surface-variant)] group-hover:text-[var(--primary)] transition-colors duration-200" />
+						<span class="text-sm font-semibold transition-colors duration-200">Поделиться</span>
+					</button>
+				</div>
+			</div>
 
-			<ArticleDiscovery
-				related={discovery.related}
-				random={discovery.random}
-				class="onload-animation"
+			<!-- Navigation Row (edge-to-edge border with center vertical divider) -->
+			<div class="grid grid-cols-1 md:grid-cols-2">
+				{navPrev ? (
+					<a href={navPrev.url} class="group flex flex-col justify-center px-6 md:px-9 py-5 no-underline transition hover:bg-[var(--surface-container)]">
+						<div class="text-[0.75rem] font-bold text-[var(--primary)] tracking-wider mb-1 flex items-center gap-1.5 transition group-hover:translate-x-[-2px]">
+							<span>←</span>
+							<span>{navPrev.label}</span>
+						</div>
+						<div class="text-sm font-semibold text-[var(--on-surface)] group-hover:text-[var(--primary)] transition line-clamp-2 leading-snug">
+							{navPrev.title}
+						</div>
+					</a>
+				) : (
+					<div class="hidden md:block"></div>
+				)}
+
+				{navNext ? (
+					<a href={navNext.url} class="group flex flex-col justify-center text-right px-6 md:px-9 py-5 no-underline border-t md:border-t-0 md:border-l border-[color-mix(in_srgb,var(--outline-variant)_18%,transparent)] dark:border-white/[0.05] transition hover:bg-[var(--surface-container)]">
+						<div class="text-[0.75rem] font-bold text-[var(--primary)] tracking-wider mb-1 flex items-center justify-end gap-1.5 transition group-hover:translate-x-[2px]">
+							<span>{navNext.label}</span>
+							<span>→</span>
+						</div>
+						<div class="text-sm font-semibold text-[var(--on-surface)] group-hover:text-[var(--primary)] transition line-clamp-2 leading-snug">
+							{navNext.title}
+						</div>
+					</a>
+				) : (
+					<div class="hidden md:block border-t md:border-t-0 md:border-l border-[color-mix(in_srgb,var(--outline-variant)_18%,transparent)] dark:border-white/[0.05]"></div>
+				)}
+			</div>
+		</div>
+
+		{shareOptions && (
+			<ArticleShare
+				client:load
+				options={shareOptions}
+				title={entry.data.title}
+				description={effectiveDescription}
+				author={profileConfig.name}
+				published={formatDateToYYYYMMDD(entry.data.published)}
+				siteTitle={siteConfig.title}
+				postPath={canonicalPostUrl}
+				coverSelector={entry.data.image ? "#post-cover img" : undefined}
+				avatarUrl={authorAvatarUrl}
+				triggerOnly={true}
 			/>
+		)}
 
 		</Card>
     </div>
@@ -383,41 +449,7 @@ const jsonLd = {
         />
     )}
 
-    <div class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full">
-        {entry.data.nextSlug ? (
-            <Card
-                href={entry.data.nextUrl || getPostUrlBySlug(entry.data.nextSlug)}
-                color="var(--card-bg)"
-                radius="l"
-                class="post-nav post-nav--prev w-full font-bold h-[3.75rem] max-w-full px-4 !flex items-center !justify-start gap-4"
-            >
-                <Icon icon="material-symbols:chevron-left-rounded" class="post-nav__arrow text-[2rem] text-[var(--primary)]" />
-                <div class="post-nav__title overflow-hidden transition overflow-ellipsis whitespace-nowrap max-w-[calc(100%_-_3rem)]">
-                    {entry.data.nextTitle}
-                </div>
-            </Card>
-        ) : (
-            <div class="w-full"></div>
-        )}
-
-        {entry.data.prevSlug ? (
-            <Card
-                href={entry.data.prevUrl || getPostUrlBySlug(entry.data.prevSlug)}
-                color="var(--card-bg)"
-                radius="l"
-                class="post-nav post-nav--next w-full font-bold h-[3.75rem] max-w-full px-4 !flex items-center !justify-end gap-4"
-            >
-                <div class="post-nav__title overflow-hidden transition overflow-ellipsis whitespace-nowrap max-w-[calc(100%_-_3rem)]">
-                    {entry.data.prevTitle}
-                </div>
-                <Icon icon="material-symbols:chevron-right-rounded" class="post-nav__arrow text-[2rem] text-[var(--primary)]" />
-            </Card>
-        ) : (
-            <div class="w-full"></div>
-        )}
-    </div>
-
-</MainGridLayout>
+    </MainGridLayout>
 
 <style is:global>
 /* ???/????? hover ????????????????????
@@ -441,3 +473,15 @@ const jsonLd = {
   transform: translateX(0.25rem);
 }
 </style>
+
+<script is:inline>
+document.addEventListener("DOMContentLoaded", initShareBtn);
+document.addEventListener("swup:page:view", initShareBtn);
+function initShareBtn() {
+    var trigger = document.getElementById("post-share-trigger");
+    if (!trigger) return;
+    trigger.onclick = function() {
+        window.dispatchEvent(new CustomEvent("open-article-share"));
+    };
+}
+</script>

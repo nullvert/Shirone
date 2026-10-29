@@ -52,13 +52,16 @@ const wrapperId = isDrawer ? "drawer-toc-inner-wrapper" : "toc-inner-wrapper";
 </WidgetLayout>
 
 <style>
-:global(.sidebar-toc .m3-card) {
+:global(.drawer-toc-widget .m3-card) {
   background: transparent !important;
   box-shadow: none !important;
   padding: 0 !important;
 }
-:global(.sidebar-toc .collapse-wrapper) {
+:global(.drawer-toc-widget .collapse-wrapper) {
   padding: 0 !important;
+}
+:global(.drawer-toc-widget) {
+  margin-top: auto;
 }
 .sidebar-toc__content {
   max-height: calc(100dvh - 15rem);

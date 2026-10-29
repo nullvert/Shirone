@@ -29,6 +29,7 @@ export {
 	type ResolvedCommentOptions,
 	resolveCommentOptions,
 } from "./commentConfig";
+export { bookmarksConfig } from './bookmarksConfig';
 export { compassConfig } from "./compassConfig";
 export { contextMenuConfig } from "./contextMenuConfig";
 export { devicesConfig } from "./devicesConfig";

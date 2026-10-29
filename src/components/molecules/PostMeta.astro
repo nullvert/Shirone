@@ -16,6 +16,8 @@ interface Props {
 	tags: string[];
 	category: string | null;
 	hideUpdateDate?: boolean;
+	wordCount?: string;
+	readingTime?: string;
 }
 const {
 	class: className,
@@ -24,6 +26,8 @@ const {
 	tags,
 	category,
 	hideUpdateDate = false,
+	wordCount,
+	readingTime,
 } = Astro.props;
 
 const categoryLink = category
@@ -38,6 +42,8 @@ const tagLinks = tags.map((t) => ({ name: t.trim(), href: getTagUrl(t) }));
 	updated={updated ? formatDateToYYYYMMDD(updated) : undefined}
 	category={categoryLink}
 	tags={tagLinks}
+	wordCount={wordCount}
+	readingTime={readingTime}
 	hideUpdate={hideUpdateDate}
 	uncategorizedLabel={i18n(I18nKey.uncategorized)}
 	noTagsLabel={i18n(I18nKey.noTags)}

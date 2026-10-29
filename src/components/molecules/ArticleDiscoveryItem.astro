@@ -1,5 +1,4 @@
 ---
-import AccentBar from "@components/atoms/display/AccentBar.svelte";
 import Icon from "@iconify/svelte";
 
 interface Props {
@@ -11,12 +10,10 @@ interface Props {
 }
 
 const { href, title, published, category, lane } = Astro.props;
-const accent = lane === "related" ? "var(--primary)" : "var(--tertiary)";
 ---
 
 <li class={`article-discovery-item article-discovery-item--${lane}`}>
 	<a href={href} class="article-discovery-item__link m3-state-layer">
-		<AccentBar size="small" color={accent} />
 		<span class="article-discovery-item__content">
 			<span class="article-discovery-item__title">{title}</span>
 			<span class="article-discovery-item__meta">

@@ -19,6 +19,7 @@ const { name, href, class: className } = Astro.props;
 	href={href}
 	aria-label={`View all posts with the ${name} tag`}
 >
+	<span class="m3-blog-tagbadge__hash">#</span>
 	<span class="m3-blog-tagbadge__text">{name}</span>
 </a>
 
@@ -26,32 +27,47 @@ const { name, href, class: className } = Astro.props;
 .m3-blog-tagbadge {
   display: inline-flex;
   align-items: center;
-  height: 1.625rem;
-  padding: 0 0.65rem;
-  border-radius: var(--shape-corner-m);
-  background: var(--btn-regular-bg, var(--surface-container-high));
+  gap: 0.25rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--shape-corner-xs, 0.375rem);
+  background: var(--surface-container-high);
   color: var(--on-surface-variant);
   text-decoration: none;
   white-space: nowrap;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border: 1px solid color-mix(in srgb, var(--outline-variant) 30%, transparent);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border: none;
   transition: all var(--m3e-duration-short) var(--m3e-easing-standard);
 }
 :global(html.dark) .m3-blog-tagbadge {
-  background: color-mix(in srgb, var(--surface-container-highest) 75%, transparent);
-  border-color: color-mix(in srgb, var(--outline-variant) 20%, transparent);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--on-surface-variant);
 }
 .m3-blog-tagbadge:hover {
-  background: var(--primary) !important;
-  color: var(--on-primary) !important;
-  border-color: transparent !important;
+  background: var(--surface-container-highest);
+  color: var(--primary);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+:global(html.dark) .m3-blog-tagbadge:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary);
 }
 .m3-blog-tagbadge:active {
   transform: translateY(0);
-  opacity: 0.9;
+}
+.m3-blog-tagbadge__hash {
+  color: var(--outline);
+  opacity: 0.8;
+  font-weight: 400;
+}
+:global(html.dark) .m3-blog-tagbadge__hash {
+  color: var(--outline);
+  opacity: 0.6;
+}
+.m3-blog-tagbadge:hover .m3-blog-tagbadge__hash,
+:global(html.dark) .m3-blog-tagbadge:hover .m3-blog-tagbadge__hash {
+  color: var(--primary);
+  opacity: 1;
 }
 .m3-blog-tagbadge__text {
   transition: color var(--m3e-duration-short) var(--m3e-easing-standard);

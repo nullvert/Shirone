@@ -103,7 +103,7 @@ function toggleDrawer(tab: "content" | "theme" = "content") {
 	function updateTitleFromPage() {
 		const container = document.getElementById("swup-container");
 		const page = container?.dataset.currentPage;
-		if (page === "anime" || page === "cinema" || page === "games") {
+		if (page === "anime" || page === "cinema" || page === "games" || page === "bookmarks" || page === "compass") {
 			currentTitle = i18n(I18nKey.mediaFilterTitle);
 		} else if (page === "post") {
 			currentTitle = i18n(I18nKey.tableOfContents);
@@ -346,6 +346,16 @@ function toggleDrawer(tab: "content" | "theme" = "content") {
 }
 .sidebar-drawer__theme-wrap {
   width: 100%;
+  margin-top: auto;
+}
+.sidebar-drawer__body :global(#sidebar-drawer-content) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  justify-content: flex-end;
+}
+.sidebar-drawer__body :global(#sidebar-drawer-content-sticky) {
   margin-top: auto;
 }
 .sidebar-drawer__footer {

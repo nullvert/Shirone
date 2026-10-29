@@ -211,7 +211,7 @@ $effect(() => {
 					<div class="py-14 text-center text-sm text-[var(--on-surface-variant)] flex flex-col items-center justify-center gap-2">
 						<Icon icon="material-symbols:search-off-rounded" class="text-3xl opacity-50 mb-1" />
 						<div class="font-semibold text-base text-[var(--on-surface)]">{i18n(I18nKey.noSearchResultFound)}</div>
-						<div class="text-xs opacity-60">Попробуйте изменить запрос</div>
+						<div class="text-xs opacity-60">{i18n(I18nKey.searchTryDifferent)}</div>
 					</div>
 				{:else if result.length > 0}
 					{#each result as item (item.url + item.meta.title)}
@@ -237,9 +237,9 @@ $effect(() => {
 						<div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[color-mix(in_oklab,var(--primary)_10%,transparent)] text-[var(--primary)] mb-3">
 							<Icon icon="material-symbols:search-rounded" class="text-2xl" />
 						</div>
-						<div class="text-sm font-medium text-[var(--on-surface)]">Быстрый поиск по сайту</div>
+						<div class="text-sm font-medium text-[var(--on-surface)]">{i18n(I18nKey.searchEmptyPrompt)}</div>
 						<div class="text-xs text-[var(--on-surface-variant)] opacity-70 mt-1 max-w-xs">
-							Начните вводить название статьи, темы, тега или контента
+							{i18n(I18nKey.searchEmptyHint)}
 						</div>
 					</div>
 				{/if}
@@ -248,8 +248,8 @@ $effect(() => {
 			<!-- Footer Bar (Raycast / Linear style hints) -->
 			<div class="hidden sm:flex items-center justify-between px-5 py-2.5 bg-[color-mix(in_oklab,var(--surface-container-highest)_25%,transparent)] text-[11px] text-[var(--on-surface-variant)] opacity-80 border-t border-[color-mix(in_oklab,var(--on-surface)_6%,transparent)] select-none">
 				<div class="flex items-center gap-3">
-					<span class="flex items-center gap-1"><kbd class="px-1 py-0.5 rounded bg-[color-mix(in_oklab,var(--on-surface)_8%,transparent)] font-mono text-[9px]">↵</kbd> Выбрать</span>
-					<span class="flex items-center gap-1"><kbd class="px-1 py-0.5 rounded bg-[color-mix(in_oklab,var(--on-surface)_8%,transparent)] font-mono text-[9px]">ESC</kbd> Закрыть</span>
+					<span class="flex items-center gap-1"><kbd class="px-1 py-0.5 rounded bg-[color-mix(in_oklab,var(--on-surface)_8%,transparent)] font-mono text-[9px]">↵</kbd> {i18n(I18nKey.searchSelect)}</span>
+					<span class="flex items-center gap-1"><kbd class="px-1 py-0.5 rounded bg-[color-mix(in_oklab,var(--on-surface)_8%,transparent)] font-mono text-[9px]">ESC</kbd> {i18n(I18nKey.searchClose)}</span>
 				</div>
 				<div class="flex items-center gap-1 font-mono text-[10px] opacity-70">
 					<span>Spotlight</span>

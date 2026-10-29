@@ -1,0 +1,57 @@
+---
+import BookmarksSidebarFilter from "./BookmarksSidebarFilter.svelte";
+import WidgetLayout from "./WidgetLayout.astro";
+import { bookmarksData } from "@/data/bookmarks";
+import type { BookmarksFilterWidget } from "@/types/sidebarConfig";
+
+interface Props {
+	class?: string;
+	style?: string;
+	widget?: BookmarksFilterWidget;
+	isDrawer?: boolean;
+}
+
+const { class: className, style, widget, isDrawer = false } = Astro.props;
+---
+
+<WidgetLayout
+	id="bookmarks-filter"
+	class={className}
+	style={style}
+>
+	<BookmarksSidebarFilter
+		client:load
+		shelves={bookmarksData}
+		itemHeight={widget?.itemHeight ?? "2.6rem"}
+		{isDrawer}
+	/>
+</WidgetLayout>
+
+<style>
+@media (max-width: 1023px) {
+  :global(.sidebar-widget:not(.hidden) > widget-layout[data-id="bookmarks-filter"]) {
+    display: contents;
+  }
+  :global(.sidebar-widget:not(.hidden) > widget-layout[data-id="bookmarks-filter"]) > :global(.m3-card) {
+    display: contents;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+  :global(.sidebar-widget:not(.hidden) > widget-layout[data-id="bookmarks-filter"]) > :global(.widget-layout__header) {
+    display: none;
+  }
+  :global(.sidebar-widget:not(.hidden) > widget-layout[data-id="bookmarks-filter"]) > :global(.collapse-wrapper) {
+    display: contents;
+    padding: 0;
+    margin: 0;
+  }
+}
+@media (max-width: 1023px) {
+  :global(.sidebar-widget:not(.hidden):has(widget-layout[data-id="bookmarks-filter"])) {
+    display: contents;
+  }
+}
+</style>

@@ -1,15 +1,12 @@
 ---
 import { getImage } from "astro:assets";
-import Button from "@components/atoms/action/Button.svelte";
-import IconButton from "@components/atoms/action/IconButton.svelte";
 import Avatar from "@components/atoms/display/Avatar.svelte";
 import Card from "@components/atoms/display/Card.svelte";
-import Tooltip from "@components/atoms/overlay/Tooltip.svelte";
+import Icon from "@components/atoms/display/Icon.svelte";
 import UmamiStats from "@components/organisms/UmamiStats.astro";
-import Icon from "@iconify/svelte";
 import { resolveImageAsset } from "@utils/asset-utils";
 import { url } from "@utils/url-utils";
-import { profileConfig } from "@/config";
+import { aboutConfig, profileConfig } from "@/config";
 import type { ProfileWidget } from "@/types/sidebarConfig";
 
 interface Props {
@@ -30,7 +27,7 @@ let avatarSrcset: string | undefined;
 let avatarWidth: number | undefined;
 let avatarHeight: number | undefined;
 if (typeof avatarAsset !== "string") {
-	const widths = [128, 256, 384, 512].filter(
+	const widths = [64, 96, 128, 192, 256].filter(
 		(width) => width <= avatarAsset.width,
 	);
 	const candidates = await Promise.all(
@@ -40,12 +37,12 @@ if (typeof avatarAsset !== "string") {
 				src: avatarAsset,
 				width,
 				format: "webp",
-				quality: 72,
+				quality: 75,
 			}),
 		})),
 	);
 	avatarUrl =
-		candidates.find(({ width }) => width === 256)?.image.src ??
+		candidates.find(({ width }) => width === 128)?.image.src ??
 		candidates.at(-1)?.image.src ??
 		avatarAsset.src;
 	avatarSrcset = candidates
@@ -54,121 +51,168 @@ if (typeof avatarAsset !== "string") {
 	avatarWidth = avatarAsset.width;
 	avatarHeight = avatarAsset.height;
 }
+
+const hasAbout = aboutConfig.enable;
 ---
 <div class={className} style={style}>
-	<Card color="var(--card-bg)" radius="l" class="m3-profile p-3">
-    <a aria-label="Go to About Page" href={url('/about/')}
-       class="m3-profile__avatar-link group">
-        <div class="m3-profile__avatar-overlay">
-            <Icon icon="fa7-solid:address-card"
-                  class="m3-profile__avatar-icon" />
-        </div>
-        <Avatar
-            src={avatarUrl}
-			srcset={avatarSrcset}
-			sizes="(min-width: 1024px) 256px, 176px"
-			width={avatarWidth}
-			height={avatarHeight}
-			loading={priority ? "eager" : "lazy"}
-			fetchPriority={priority ? "high" : undefined}
-            alt="Profile Image of the Author"
-            size={176}
-            shape="rounded"
-            class="mx-auto lg:!w-full"
-        />
-    </a>
-    <div class="m3-profile__info px-2">
-        <div class="m3-profile__name">{config.name}</div>
-        <div class="m3-profile__accent"></div>
-        <div class="m3-profile__bio">{config.bio}</div>
-        <div class="m3-profile__links flex flex-wrap gap-2 justify-center mb-1">
-            {config.links.length > 1 && config.links.map(item =>
-                <Tooltip label={item.name} placement="top" client:load>
-                    <IconButton href={item.url} target="_blank" rel="me" label={item.name}>
-                        <Icon icon={item.icon} class="text-[1.5rem]"></Icon>
-                    </IconButton>
-                </Tooltip>
-            )}
-            {config.links.length == 1 && <Button href={config.links[0].url} target="_blank" ariaLabel={config.links[0].name}
-                                                 variant="text" size="small" class="!px-3 !font-bold !text-[var(--on-surface)]">
-                <Icon icon={config.links[0].icon} class="text-[1.5rem]"></Icon>
-                {config.links[0].name}
-            </Button>}
-        </div>
-        <UmamiStats variant="profile" />
-    </div>
+	<Card color="var(--card-bg)" radius="l" class="m3-profile p-4 sm:p-5">
+		{hasAbout ? (
+			<a
+				href={url('/about/')}
+				class="m3-profile__header group block mb-4 cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--primary)] rounded-xl"
+				aria-label="Go to About page"
+			>
+				<div class="flex items-center gap-3.5">
+					<div class="m3-profile__avatar-wrap shrink-0">
+						<Avatar
+							src={avatarUrl}
+							srcset={avatarSrcset}
+							sizes="60px"
+							width={avatarWidth}
+							height={avatarHeight}
+							loading={priority ? "eager" : "lazy"}
+							fetchPriority={priority ? "high" : undefined}
+							alt="Profile Image of the Author"
+							size={60}
+							shape="rounded"
+							class="m3-profile__avatar !w-[60px] !h-[60px]"
+						/>
+					</div>
+					<div class="m3-profile__meta min-w-0 flex-1">
+						<div class="m3-profile__name-row flex items-center gap-1.5">
+							<span class="m3-profile__name truncate group-hover:text-[var(--primary)] transition-colors duration-200">{config.name}</span>
+							<Icon icon="material-symbols:chevron-right-rounded" class="text-[1.15rem] text-[var(--on-surface-variant)] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-[var(--primary)] transition-all duration-200" />
+						</div>
+						{config.bio && <div class="m3-profile__bio line-clamp-2">{config.bio}</div>}
+					</div>
+				</div>
+			</a>
+		) : (
+			<div class="m3-profile__header flex items-center gap-3.5 mb-4">
+				<div class="m3-profile__avatar-wrap shrink-0">
+					<Avatar
+						src={avatarUrl}
+						srcset={avatarSrcset}
+						sizes="60px"
+						width={avatarWidth}
+						height={avatarHeight}
+						loading={priority ? "eager" : "lazy"}
+						fetchPriority={priority ? "high" : undefined}
+						alt="Profile Image of the Author"
+						size={60}
+						shape="rounded"
+						class="m3-profile__avatar !w-[60px] !h-[60px]"
+					/>
+				</div>
+				<div class="m3-profile__meta min-w-0 flex-1">
+					<div class="m3-profile__name truncate">{config.name}</div>
+					{config.bio && <div class="m3-profile__bio line-clamp-2">{config.bio}</div>}
+				</div>
+			</div>
+		)}
+
+		<div class="m3-profile__links flex flex-wrap gap-2">
+			{config.links.map(item => (
+				<a
+					href={item.url}
+					target="_blank"
+					rel="me noopener noreferrer"
+					class="m3-profile__link-btn"
+				>
+					<Icon icon={item.icon} class="m3-profile__link-icon shrink-0" />
+					<span class="m3-profile__link-text truncate">{item.name}</span>
+				</a>
+			))}
+		</div>
+
+		<UmamiStats variant="profile" />
 	</Card>
 </div>
 
 <style>
-.m3-profile__avatar-link {
-  display: block;
-  position: relative;
-  margin: var(--m3e-space-1) auto var(--m3e-space-3);
-  max-width: 12rem;
-  border-radius: var(--shape-corner-m);
-  overflow: hidden;
-  transition: transform var(--m3e-duration-short) var(--m3e-easing-standard), box-shadow var(--m3e-duration-short) var(--m3e-easing-standard);
+.m3-profile__avatar-wrap {
+	border-radius: var(--shape-corner-m);
+	overflow: hidden;
+	transition: transform var(--m3e-duration-short) var(--m3e-easing-standard);
 }
-.m3-profile__avatar-link:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+
+.group:hover .m3-profile__avatar-wrap {
+	transform: scale(1.04);
 }
-@media (min-width: 1024px) {
-  .m3-profile__avatar-link {
-    max-width: none;
-    margin-top: 0;
-  }
+
+:global(.m3-profile__avatar img) {
+	border-radius: var(--shape-corner-m);
+	object-fit: cover;
 }
-.m3-profile__avatar-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transition: background-color var(--m3e-duration-medium) var(--m3e-easing-standard);
-}
-.group:hover .m3-profile__avatar-overlay {
-  background-color: rgba(0,0,0,0.3);
-}
-.group:active .m3-profile__avatar-overlay {
-  background-color: rgba(0,0,0,0.5);
-}
-.m3-profile__avatar-icon {
-  color: #fff;
-  font-size: 3rem;
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate), transform var(--m3e-duration-medium) var(--m3e-easing-emphasized-decelerate);
-}
-.group:hover .m3-profile__avatar-icon {
-  opacity: 1;
-  transform: scale(1);
-}
+
 .m3-profile__name {
-  font: var(--m3e-type-title-large);
-  font-weight: 700;
-  text-align: center;
-  margin: 0 0 var(--m3e-space-1);
-  color: var(--on-surface);
-  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+	font-size: 1.25rem;
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--on-surface);
+	letter-spacing: -0.015em;
 }
-.m3-profile__accent {
-  width: 1.25rem;
-  height: 0.25rem;
-  background: var(--primary);
-  border-radius: var(--shape-corner-full);
-  margin: 0 auto var(--m3e-space-2);
-  transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard);
-}
+
 .m3-profile__bio {
-  font: var(--m3e-type-body-medium);
-  color: var(--on-surface-variant);
-  text-align: center;
-  margin: 0 0 var(--m3e-space-3);
-  line-height: 1.5;
-  transition: color var(--m3e-duration-short) var(--m3e-easing-standard);
+	font: var(--m3e-type-body-small);
+	color: var(--on-surface-variant);
+	margin-top: 0.25rem;
+	line-height: 1.35;
+	opacity: 0.85;
+}
+
+/* Адаптивная flex-сетка кнопок */
+.m3-profile__links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.m3-profile__link-btn {
+	flex: 1 1 calc(50% - 0.25rem);
+	min-width: 6.5rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.55rem 0.85rem;
+	border-radius: var(--shape-corner-m);
+	background: var(--surface-container-high);
+	color: var(--on-surface);
+	text-decoration: none;
+	min-height: 2.5rem;
+	box-sizing: border-box;
+	border: none;
+	transition: background-color var(--m3e-duration-short) var(--m3e-easing-standard),
+	            transform var(--m3e-duration-short) var(--m3e-easing-standard),
+	            color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+
+.m3-profile__link-btn:hover {
+	background: var(--surface-container-highest);
+	color: var(--primary);
+	transform: translateY(-1.5px);
+}
+
+.m3-profile__link-btn:active {
+	transform: translateY(0);
+	background: var(--surface-container);
+}
+
+.m3-profile__link-btn:focus-visible {
+	outline: 2px solid var(--primary);
+	outline-offset: 2px;
+}
+
+.m3-profile__link-icon {
+	font-size: 1.15rem;
+	color: inherit;
+	opacity: 0.9;
+}
+
+.m3-profile__link-text {
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.2;
 }
 </style>

@@ -11,6 +11,11 @@ enum I18nKey {
 	archiveGroupCategory = "archiveGroupCategory",
 	archiveGroupTag = "archiveGroupTag",
 	search = "search",
+	searchEmptyPrompt = "searchEmptyPrompt",
+	searchEmptyHint = "searchEmptyHint",
+	searchSelect = "searchSelect",
+	searchClose = "searchClose",
+	searchTryDifferent = "searchTryDifferent",
 	clear = "clear",
 
 	friends = "friends",
@@ -50,6 +55,9 @@ enum I18nKey {
 	compassBanner = "compassBanner",
 	compassNoResults = "compassNoResults",
 	compassCounts = "compassCounts",
+	bookmarksAllSections = "bookmarksAllSections",
+	bookmarksSectionsTitle = "bookmarksSectionsTitle",
+	bookmarksSearchPlaceholder = "bookmarksSearchPlaceholder",
 
 	skills = "skills",
 	skillsBanner = "skillsBanner",
