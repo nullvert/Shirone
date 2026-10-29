@@ -62,7 +62,6 @@ const tagSummary = `${tags.length} ${i18n(I18nKey.tagsCount)} · ${totalPosts} $
 :global(.tag-index .tag-index__chip) {
   display: flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
   width: 100% !important;
   height: 2.5rem !important;
   box-sizing: border-box !important;
@@ -76,6 +75,14 @@ const tagSummary = `${tags.length} ${i18n(I18nKey.tagsCount)} · ${totalPosts} $
   text-decoration: none !important;
   transition: all var(--m3e-duration-short) ease !important;
   overflow: hidden !important;
+}
+:global(.tag-index .tag-index__chip .m3-chip__content) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  gap: 0.5rem !important;
 }
 :global(html.dark .tag-index .tag-index__chip) {
   color: var(--on-surface-variant) !important;

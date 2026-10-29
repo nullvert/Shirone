@@ -39,7 +39,6 @@ const { tags = [], class: className } = Astro.props;
 :global(.m3-blog-taglist .tag-pill) {
   display: flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
   width: 100% !important;
   height: 2.25rem !important;
   box-sizing: border-box !important;
@@ -53,6 +52,14 @@ const { tags = [], class: className } = Astro.props;
   text-decoration: none !important;
   transition: all var(--m3e-duration-short) ease !important;
   overflow: hidden !important;
+}
+:global(.m3-blog-taglist .tag-pill .m3-chip__content) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  gap: 0.5rem !important;
 }
 :global(html.dark .m3-blog-taglist .tag-pill) {
   color: var(--on-surface-variant) !important;
