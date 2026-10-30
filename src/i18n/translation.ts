@@ -28,7 +28,9 @@ export function i18n(key: I18nKey): string {
 	if (val === undefined) {
 		const fallback = defaultTranslation[key];
 		if (fallback === undefined) {
-			console.warn(`[i18n] Missing key "${key}" in translation for "${lang}" and fallback.`);
+			console.warn(
+				`[i18n] Missing key "${key}" in translation for "${lang}" and fallback.`,
+			);
 			return key;
 		}
 		return fallback;

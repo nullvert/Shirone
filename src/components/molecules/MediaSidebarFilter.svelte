@@ -110,7 +110,12 @@ const availableGenres = $derived(
 	collectGenres(currentItems, pageType, selectedStatus),
 );
 const displayedGenres = $derived(
-	pickDisplayedGenres(availableGenres, isGenresExpanded, selectedGenre, genresCollapseAfter),
+	pickDisplayedGenres(
+		availableGenres,
+		isGenresExpanded,
+		selectedGenre,
+		genresCollapseAfter,
+	),
 );
 
 function currentState(): FilterState {

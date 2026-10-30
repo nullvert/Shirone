@@ -97,11 +97,31 @@ import bookmarkSnapshot from "./snapshots/bookmarks.json";
 function resolveShelfIcon(key: string, name: string, icon?: string): string {
 	if (icon) return icon;
 	const text = `${name} ${key}`.toLowerCase();
-	if (text.includes("игр") || text.includes("game")) return "material-symbols:sports-esports-outline-rounded";
-	if (text.includes("разработ") || text.includes("веб") || text.includes("dev") || text.includes("code") || text.includes("web")) return "material-symbols:code-rounded";
-	if (text.includes("софт") || text.includes("утилит") || text.includes("tool") || text.includes("soft")) return "material-symbols:build-outline-rounded";
-	if (text.includes("дизайн") || text.includes("design") || text.includes("art")) return "material-symbols:palette-outline-rounded";
-	if (text.includes("читат") || text.includes("read") || text.includes("book")) return "material-symbols:auto-stories-outline-rounded";
+	if (text.includes("игр") || text.includes("game"))
+		return "material-symbols:sports-esports-outline-rounded";
+	if (
+		text.includes("разработ") ||
+		text.includes("веб") ||
+		text.includes("dev") ||
+		text.includes("code") ||
+		text.includes("web")
+	)
+		return "material-symbols:code-rounded";
+	if (
+		text.includes("софт") ||
+		text.includes("утилит") ||
+		text.includes("tool") ||
+		text.includes("soft")
+	)
+		return "material-symbols:build-outline-rounded";
+	if (
+		text.includes("дизайн") ||
+		text.includes("design") ||
+		text.includes("art")
+	)
+		return "material-symbols:palette-outline-rounded";
+	if (text.includes("читат") || text.includes("read") || text.includes("book"))
+		return "material-symbols:auto-stories-outline-rounded";
 	return "material-symbols:folder-outline-rounded";
 }
 
@@ -118,4 +138,3 @@ export type CompassEntry = BookmarkEntry;
 export type CompassShelf = BookmarkShelf;
 export const defaultCompassData: BookmarkShelf[] = defaultBookmarksData;
 export const compassData: BookmarkShelf[] = bookmarksData;
-

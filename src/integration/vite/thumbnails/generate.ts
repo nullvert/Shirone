@@ -52,7 +52,7 @@ export interface MomentThumbnailOptions {
 }
 
 async function collectImages(directory: string): Promise<string[]> {
-	let entries;
+	let entries: import("node:fs").Dirent[];
 	try {
 		entries = await fs.readdir(directory, { withFileTypes: true });
 	} catch {

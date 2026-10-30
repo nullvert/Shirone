@@ -105,7 +105,11 @@ export function normalizeMediaGenre(genre: string): string {
 	if (lower === "simulation" || lower === "simulator") {
 		return "Simulator";
 	}
-	if (lower === "tbs" || lower === "turn-based strategy" || lower === "turn-based strategy (tbs)") {
+	if (
+		lower === "tbs" ||
+		lower === "turn-based strategy" ||
+		lower === "turn-based strategy (tbs)"
+	) {
 		return "Turn-Based Strategy";
 	}
 	if (lower === "rpg" || lower === "role-playing (rpg)") {
@@ -120,7 +124,9 @@ export function normalizeMediaGenre(genre: string): string {
 	return trimmed;
 }
 
-export function normalizeMediaGenres(genres: string[] | undefined | null): string[] {
+export function normalizeMediaGenres(
+	genres: string[] | undefined | null,
+): string[] {
 	if (!Array.isArray(genres)) return [];
 	const seen = new Set<string>();
 	const result: string[] = [];

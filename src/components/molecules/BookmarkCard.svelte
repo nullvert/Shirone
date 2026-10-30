@@ -9,10 +9,7 @@ import Icon from "@iconify/svelte";
 import { reveal } from "@utils/motion";
 import type { BookmarkEntry } from "../../data/bookmarks";
 
-let {
-	entry,
-	delay = 0,
-}: { entry: BookmarkEntry; delay?: number } = $props();
+let { entry, delay = 0 }: { entry: BookmarkEntry; delay?: number } = $props();
 
 let imgFailed = $state(false);
 

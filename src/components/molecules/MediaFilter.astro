@@ -4,10 +4,9 @@ import {
 	getCinemaList,
 	getGamesList,
 } from "@utils/media/adapters";
+import type { MediaFilterWidget } from "@/types/sidebarConfig";
 import MediaSidebarFilter from "./MediaSidebarFilter.svelte";
 import WidgetLayout from "./WidgetLayout.astro";
-
-import type { MediaFilterWidget } from "@/types/sidebarConfig";
 
 interface Props {
 	class?: string;

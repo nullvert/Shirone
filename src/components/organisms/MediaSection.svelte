@@ -8,8 +8,8 @@
  */
 
 import Icon from "@components/atoms/display/Icon.svelte";
-import MediaPosterCard from "@components/molecules/MediaPosterCard.svelte";
 import MediaPagination from "@components/molecules/MediaPagination.svelte";
+import MediaPosterCard from "@components/molecules/MediaPosterCard.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { onMount } from "svelte";
@@ -24,7 +24,14 @@ let {
 let query = $state("");
 let selectedKind = $state<"all" | MediaKind>("all");
 let selectedStatus = $state<string>("all");
-type SortKey = "title" | "rating" | "default" | "price" | "year" | "hours" | "discount";
+type SortKey =
+	| "title"
+	| "rating"
+	| "default"
+	| "price"
+	| "year"
+	| "hours"
+	| "discount";
 let selectedSort = $state<SortKey>("title");
 let sortDesc = $state(false);
 let selectedGenre = $state<string | null>(null);
@@ -351,21 +358,31 @@ const displayItems = $derived.by(() => {
 				const pB = parsePrice(b.price);
 				const res = pA - pB;
 				if (res !== 0) return res;
-				return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+				return a.title.localeCompare(b.title, undefined, {
+					sensitivity: "base",
+				});
 			}
 
 			// 5. По дате / году выхода (Release Year: Newest first)
 			if (selectedSort === "year") {
-				const yA = a.year ? Number.parseInt(String(a.year).slice(0, 4), 10) || 0 : 0;
-				const yB = b.year ? Number.parseInt(String(b.year).slice(0, 4), 10) || 0 : 0;
+				const yA = a.year
+					? Number.parseInt(String(a.year).slice(0, 4), 10) || 0
+					: 0;
+				const yB = b.year
+					? Number.parseInt(String(b.year).slice(0, 4), 10) || 0
+					: 0;
 				if (yA !== 0 && yB !== 0) {
 					const diff = yB - yA;
 					if (diff !== 0) return diff;
-					return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+					return a.title.localeCompare(b.title, undefined, {
+						sensitivity: "base",
+					});
 				}
 				if (yA !== 0 && yB === 0) return -1;
 				if (yA === 0 && yB !== 0) return 1;
-				return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+				return a.title.localeCompare(b.title, undefined, {
+					sensitivity: "base",
+				});
 			}
 
 			// 6. По времени игры (Playtime: Most Played first)
@@ -375,11 +392,15 @@ const displayItems = $derived.by(() => {
 				if (hA !== 0 && hB !== 0) {
 					const diff = hB - hA;
 					if (diff !== 0) return diff;
-					return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+					return a.title.localeCompare(b.title, undefined, {
+						sensitivity: "base",
+					});
 				}
 				if (hA !== 0 && hB === 0) return -1;
 				if (hA === 0 && hB !== 0) return 1;
-				return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+				return a.title.localeCompare(b.title, undefined, {
+					sensitivity: "base",
+				});
 			}
 
 			// 7. По скидке (Biggest Discount (%) first со вторичной сортировкой по rank)
@@ -405,7 +426,9 @@ const displayItems = $derived.by(() => {
 				} else if (b.rank !== undefined) {
 					return 1;
 				}
-				return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+				return a.title.localeCompare(b.title, undefined, {
+					sensitivity: "base",
+				});
 			}
 
 			return a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
@@ -415,7 +438,9 @@ const displayItems = $derived.by(() => {
 	return filtered.map(({ item }) => item);
 });
 
-const totalPages = $derived(Math.max(1, Math.ceil(displayItems.length / PAGE_SIZE)));
+const totalPages = $derived(
+	Math.max(1, Math.ceil(displayItems.length / PAGE_SIZE)),
+);
 const paginatedItems = $derived.by(() => {
 	const start = (currentPage - 1) * PAGE_SIZE;
 	return displayItems.slice(start, start + PAGE_SIZE);
@@ -430,12 +455,14 @@ function handlePageChange(newPage: number) {
 		const mediaContainer = document.querySelector(".media-section");
 		if (mediaContainer) {
 			const bannerOffset = 72; // Clean offset below top app bar
-			const top = mediaContainer.getBoundingClientRect().top + window.pageYOffset - bannerOffset;
+			const top =
+				mediaContainer.getBoundingClientRect().top +
+				window.pageYOffset -
+				bannerOffset;
 			window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
 		}
 	}
 }
-
 
 onMount(() => {
 	syncFromUrl();

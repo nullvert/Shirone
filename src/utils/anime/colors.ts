@@ -105,7 +105,9 @@ export const GENRE_COLOR_PALETTES: GenreColorToken[] = [
  * Retrieve color token by explicit sequential index (0..7, where 7 = monochrome)
  * or deterministic string hash if index is not provided.
  */
-export function getGenreColor(genreNameOrIndex: string | number): GenreColorToken {
+export function getGenreColor(
+	genreNameOrIndex: string | number,
+): GenreColorToken {
 	if (typeof genreNameOrIndex === "number") {
 		const idx = Math.abs(genreNameOrIndex) % GENRE_COLOR_PALETTES.length;
 		return GENRE_COLOR_PALETTES[idx];

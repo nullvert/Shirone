@@ -52,7 +52,8 @@ export const gamesConfig: GamesConfig = withUserConfig("games", {
 	account: {
 		infinitebacklogUsername: "nullvert",
 		steamId64: "76561199150184872",
-		steamWishlistUrl: "https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
+		steamWishlistUrl:
+			"https://store.steampowered.com/wishlist/id/nullvert/?sort=name",
 	},
 });
 

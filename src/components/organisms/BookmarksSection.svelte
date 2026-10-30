@@ -6,9 +6,9 @@
  * - Слушает событие "shirone:bookmarks-filter-change" от бокового сайдбар-виджета BookmarksFilter
  */
 import BookmarkCard from "@components/molecules/BookmarkCard.svelte";
-import Icon from "@iconify/svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import Icon from "@iconify/svelte";
 import { onMount } from "svelte";
 import type { BookmarkShelf } from "@/data/bookmarks";
 
@@ -67,9 +67,15 @@ onMount(() => {
 		}
 	};
 
-	window.addEventListener("shirone:bookmarks-filter-change", handleFilterChange);
+	window.addEventListener(
+		"shirone:bookmarks-filter-change",
+		handleFilterChange,
+	);
 	return () => {
-		window.removeEventListener("shirone:bookmarks-filter-change", handleFilterChange);
+		window.removeEventListener(
+			"shirone:bookmarks-filter-change",
+			handleFilterChange,
+		);
 	};
 });
 </script>

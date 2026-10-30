@@ -90,9 +90,13 @@ let texturePreset = $state<TexturePreset>(getStoredTexturePreset());
 let lastAppliedTexturePreset = texturePreset;
 let textureOpacity = $state<number>(getStoredTextureOpacity());
 
-
 // 8 пресетов: 7 цветов радуги (Red, Orange, Yellow, Green, Cyan, Blue, Violet) + Monochrome
-const COLOR_PRESETS: { id: string; name: string; hue: number; style?: McStyle }[] = [
+const COLOR_PRESETS: {
+	id: string;
+	name: string;
+	hue: number;
+	style?: McStyle;
+}[] = [
 	{ id: "red", name: "Red", hue: 80 },
 	{ id: "orange", name: "Orange", hue: 110 },
 	{ id: "yellow", name: "Yellow", hue: 146 },
@@ -134,7 +138,11 @@ let isHomePage = $state(false);
 function checkHomePage() {
 	if (typeof window === "undefined") return;
 	const path = window.location.pathname.replace(/\/+$/, "") || "/";
-	isHomePage = path === "/" || path === "" || path === "/page" || path.startsWith("/page/");
+	isHomePage =
+		path === "/" ||
+		path === "" ||
+		path === "/page" ||
+		path.startsWith("/page/");
 }
 
 // 明暗切换时重算色卡（LightDarkSwitch 改 <html> 的 class）
@@ -153,14 +161,16 @@ onMount(() => {
 	};
 	document.addEventListener("swup:content:replace", onRouteChanged);
 
-	const panel = document.getElementById(id) ?? document.getElementById("display-setting");
+	const panel =
+		document.getElementById(id) ?? document.getElementById("display-setting");
+	let panelObserver: MutationObserver | null = null;
 	if (embedded || (panel && !panel.classList.contains("float-panel-closed"))) {
 		panelOpened = true;
 	} else if (panel) {
-		const panelObserver = new MutationObserver(() => {
+		panelObserver = new MutationObserver(() => {
 			if (panel.classList.contains("float-panel-closed")) return;
 			panelOpened = true;
-			panelObserver.disconnect();
+			panelObserver?.disconnect();
 		});
 		panelObserver.observe(panel, {
 			attributes: true,
@@ -170,7 +180,7 @@ onMount(() => {
 
 	return () => {
 		observer.disconnect();
-		panelObserver.disconnect();
+		panelObserver?.disconnect();
 		document.removeEventListener("swup:content:replace", onRouteChanged);
 	};
 });
@@ -275,19 +285,23 @@ const currentColor = $derived(
 	panelOpened ? styleColors(style, hue, dark, spec).primary : "transparent",
 );
 
-
 /** Превью пресетов в текущей теме Day/Night */
 const presetPreviews = $derived(
 	COLOR_PRESETS.map((p) => {
-		const targetStyle = p.style ?? (style === "monochrome" ? "fruitSalad" : style);
-		const colors = panelOpened ? styleColors(targetStyle, p.hue, dark, spec) : { primary: "#888", secondary: "#888", tertiary: "#888" };
-		const isActive = p.style ? style === p.style : (hue === p.hue && style !== "monochrome");
+		const targetStyle =
+			p.style ?? (style === "monochrome" ? "fruitSalad" : style);
+		const colors = panelOpened
+			? styleColors(targetStyle, p.hue, dark, spec)
+			: { primary: "#888", secondary: "#888", tertiary: "#888" };
+		const isActive = p.style
+			? style === p.style
+			: hue === p.hue && style !== "monochrome";
 		return {
 			...p,
 			colors,
 			isActive,
 		};
-	})
+	}),
 );
 
 function selectStyle(newStyle: McStyle) {
@@ -305,7 +319,9 @@ const stylePreviews = $derived(
 		return {
 			style: s,
 			label: i18n(styleKey(s)),
-			colors: panelOpened ? styleColors(s, targetHue, dark, spec) : { primary: "#888", secondary: "#888", tertiary: "#888" },
+			colors: panelOpened
+				? styleColors(s, targetHue, dark, spec)
+				: { primary: "#888", secondary: "#888", tertiary: "#888" },
 		};
 	}),
 );

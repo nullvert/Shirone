@@ -56,7 +56,14 @@ const ratingTier = $derived(getRatingTier(item));
 const cleanRank = $derived(getCleanRank(item));
 const progressPercent = $derived(getProgressPercent(item));
 
-const resolvedPageType = $derived(pageType ?? item.kind ?? "cinema");
+const resolvedPageType: "anime" | "cinema" | "games" = $derived(
+	pageType ??
+		(item.kind === "game"
+			? "games"
+			: item.kind === "anime"
+				? "anime"
+				: "cinema"),
+);
 const showTitleOnPoster = $derived(resolvedPageType === "anime");
 
 const formattedSeasonYear = $derived(getSeasonYear(item));

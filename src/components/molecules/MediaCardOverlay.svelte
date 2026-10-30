@@ -32,8 +32,7 @@ let {
 const isAnime = $derived(pageType === "anime" || item.kind === "anime");
 const isGames = $derived(pageType === "games" || item.kind === "game");
 const isMovie = $derived(
-	item.kind === "movie" ||
-	item.format?.toUpperCase() === "MOVIE"
+	item.kind === "movie" || item.format?.toUpperCase() === "MOVIE",
 );
 </script>
 

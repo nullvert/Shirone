@@ -30,17 +30,18 @@ const totalItems = $derived(
 	shelves.reduce((sum, s) => sum + s.entries.length, 0),
 );
 
-// Иконки намеренно не передаем (icon: undefined), чтобы список был чистым как на референсе
 const listItems = $derived([
 	{
 		id: "",
 		label: i18n(I18nKey.bookmarksAllSections),
+		icon: "material-symbols:folder-outline-rounded",
 		active: selectedGroup === "",
 		count: totalItems,
 	},
 	...shelves.map((s) => ({
 		id: s.key,
 		label: s.name,
+		icon: s.icon || "material-symbols:folder-outline-rounded",
 		active: selectedGroup === s.key,
 		count: s.entries.length,
 	})),

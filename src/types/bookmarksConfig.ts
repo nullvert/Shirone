@@ -4,4 +4,3 @@ export interface BookmarksConfig extends PageMeta {}
 
 /** @deprecated Use BookmarksConfig */
 export type CompassConfig = BookmarksConfig;
-

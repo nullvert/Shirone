@@ -98,64 +98,70 @@ function toggleDrawer(tab: "content" | "theme" = "content") {
 	}
 }
 
-	let currentTitle = $state(title);
+let currentTitle = $state(title);
 
-	function updateTitleFromPage() {
-		const container = document.getElementById("swup-container");
-		const page = container?.dataset.currentPage;
-		if (page === "anime" || page === "cinema" || page === "games" || page === "bookmarks" || page === "compass") {
-			currentTitle = i18n(I18nKey.mediaFilterTitle);
-		} else if (page === "post") {
-			currentTitle = i18n(I18nKey.tableOfContents);
-		} else {
-			currentTitle = i18n(I18nKey.sidebar);
-		}
+function updateTitleFromPage() {
+	const container = document.getElementById("swup-container");
+	const page = container?.dataset.currentPage;
+	if (
+		page === "anime" ||
+		page === "cinema" ||
+		page === "games" ||
+		page === "bookmarks" ||
+		page === "compass"
+	) {
+		currentTitle = i18n(I18nKey.mediaFilterTitle);
+	} else if (page === "post") {
+		currentTitle = i18n(I18nKey.tableOfContents);
+	} else {
+		currentTitle = i18n(I18nKey.sidebar);
 	}
+}
 
-	onMount(() => {
+onMount(() => {
+	updateTitleFromPage();
+	const onToggle = (e: Event) => {
+		const detail = (e as CustomEvent)?.detail;
+		toggleDrawer(detail?.tab === "theme" ? "theme" : "content");
+	};
+	const onOpen = (e: Event) => {
+		const detail = (e as CustomEvent)?.detail;
+		openDrawer(detail?.tab === "theme" ? "theme" : "content");
+	};
+	const onClose = () => closeDrawer();
+	const onKey = (e: KeyboardEvent) => {
+		if (e.key === "Escape" && open) closeDrawer();
+	};
+
+	const onSwupNavigate = () => {
+		onClose();
 		updateTitleFromPage();
-		const onToggle = (e: Event) => {
-			const detail = (e as CustomEvent)?.detail;
-			toggleDrawer(detail?.tab === "theme" ? "theme" : "content");
-		};
-		const onOpen = (e: Event) => {
-			const detail = (e as CustomEvent)?.detail;
-			openDrawer(detail?.tab === "theme" ? "theme" : "content");
-		};
-		const onClose = () => closeDrawer();
-		const onKey = (e: KeyboardEvent) => {
-			if (e.key === "Escape" && open) closeDrawer();
-		};
+	};
 
-		const onSwupNavigate = () => {
-			onClose();
-			updateTitleFromPage();
-		};
+	const mql = window.matchMedia("(min-width: 1024px)");
+	const onResize = (e: MediaQueryListEvent | MediaQueryList) => {
+		if (e.matches && open) {
+			closeDrawer();
+		}
+	};
+	mql.addEventListener("change", onResize);
 
-		const mql = window.matchMedia("(min-width: 1024px)");
-		const onResize = (e: MediaQueryListEvent | MediaQueryList) => {
-			if (e.matches && open) {
-				closeDrawer();
-			}
-		};
-		mql.addEventListener("change", onResize);
+	document.addEventListener("sidebar-drawer:toggle", onToggle);
+	document.addEventListener("sidebar-drawer:open", onOpen);
+	document.addEventListener("sidebar-drawer:close", onClose);
+	document.addEventListener("swup:content:replace", onSwupNavigate);
+	window.addEventListener("keydown", onKey);
 
-		document.addEventListener("sidebar-drawer:toggle", onToggle);
-		document.addEventListener("sidebar-drawer:open", onOpen);
-		document.addEventListener("sidebar-drawer:close", onClose);
-		document.addEventListener("swup:content:replace", onSwupNavigate);
-		window.addEventListener("keydown", onKey);
-
-		return () => {
-			document.body.style.overflow = "";
-			mql.removeEventListener("change", onResize);
-			document.removeEventListener("sidebar-drawer:toggle", onToggle);
-			document.removeEventListener("sidebar-drawer:open", onOpen);
-			document.removeEventListener("sidebar-drawer:close", onClose);
-			document.removeEventListener("swup:content:replace", onSwupNavigate);
-			window.removeEventListener("keydown", onKey);
-		};
-	});
+	return () => {
+		document.body.style.overflow = "";
+		mql.removeEventListener("change", onResize);
+		document.removeEventListener("sidebar-drawer:toggle", onToggle);
+		document.removeEventListener("sidebar-drawer:open", onOpen);
+		document.removeEventListener("sidebar-drawer:close", onClose);
+		document.removeEventListener("swup:content:replace", onSwupNavigate);
+		window.removeEventListener("keydown", onKey);
+	};
+});
 </script>
 
 <div

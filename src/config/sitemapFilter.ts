@@ -1,5 +1,4 @@
 import { aboutConfig } from "./aboutConfig.ts";
-import { supportConfig } from "./supportConfig.ts";
 import { albumsConfig } from "./albumsConfig.ts";
 import { animeConfig } from "./animeConfig.ts";
 import { bookmarksConfig } from "./bookmarksConfig.ts";
@@ -10,6 +9,7 @@ import { momentsConfig } from "./momentsConfig.ts";
 import { projectsConfig } from "./projectsConfig.ts";
 import { seriesConfig } from "./seriesConfig.ts";
 import { skillsConfig } from "./skillsConfig.ts";
+import { supportConfig } from "./supportConfig.ts";
 import { timelineConfig } from "./timelineConfig.ts";
 
 /** 获取所有被配置 enable: false 关闭的页面标识清单 */
@@ -27,7 +27,7 @@ export function getDisabledPages(): string[] {
 	if (momentsConfig.enable === false) disabled.push("moments");
 	if (albumsConfig.enable === false) disabled.push("albums");
 	if (bookmarksConfig.enable === false) disabled.push("compass");
-	if (bookmarksConfig.enable === false) disabled.push('bookmarks');
+	if (bookmarksConfig.enable === false) disabled.push("bookmarks");
 	if (seriesConfig.enable === false) disabled.push("series");
 	return disabled;
 }

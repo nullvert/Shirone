@@ -9,9 +9,10 @@
  *   - по глобальным событиям "search:open" / "search:toggle"
  *   - по шорткату Ctrl+K / Cmd+K
  */
-import Icon from "@iconify/svelte";
+
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import Icon from "@iconify/svelte";
 import { url } from "@utils/url-utils";
 import { onMount, tick } from "svelte";
 import type { SearchResult } from "@/global";
@@ -90,9 +91,12 @@ async function performSearch(keyword: string): Promise<void> {
 function openModal() {
 	open = true;
 	if (
-		typeof (window as unknown as { __loadPagefind?: () => Promise<unknown> }).__loadPagefind === "function"
+		typeof (window as unknown as { __loadPagefind?: () => Promise<unknown> })
+			.__loadPagefind === "function"
 	) {
-		void (window as unknown as { __loadPagefind: () => Promise<unknown> }).__loadPagefind();
+		void (
+			window as unknown as { __loadPagefind: () => Promise<unknown> }
+		).__loadPagefind();
 	}
 	void tick().then(() => {
 		setTimeout(() => {
@@ -210,7 +214,7 @@ $effect(() => {
 				{:else if query.trim() && result.length === 0}
 					<div class="py-14 text-center text-sm text-[var(--on-surface-variant)] flex flex-col items-center justify-center gap-2">
 						<Icon icon="material-symbols:search-off-rounded" class="text-3xl opacity-50 mb-1" />
-						<div class="font-semibold text-base text-[var(--on-surface)]">{i18n(I18nKey.noSearchResultFound)}</div>
+						<div class="font-semibold text-base text-[var(--on-surface)]">{i18n(I18nKey.compassNoResults)}</div>
 						<div class="text-xs opacity-60">{i18n(I18nKey.searchTryDifferent)}</div>
 					</div>
 				{:else if result.length > 0}

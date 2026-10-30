@@ -12,12 +12,12 @@
  */
 import Chips from "@components/atoms/action/Chips.svelte";
 import Card from "@components/atoms/display/Card.svelte";
+import Icon from "@components/atoms/display/Icon.svelte";
 import LoadingIndicator from "@components/atoms/feedback/LoadingIndicator.svelte";
 import TextField from "@components/atoms/input/TextField.svelte";
 import CompassTile from "@components/molecules/CompassTile.svelte";
 import PageHeader from "@components/molecules/PageHeader.svelte";
 import SectionTitle from "@components/molecules/SectionTitle.svelte";
-import Icon from "@components/atoms/display/Icon.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { onMount } from "svelte";

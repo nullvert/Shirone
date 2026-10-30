@@ -16,13 +16,13 @@
  */
 import IconButton from "@components/atoms/action/IconButton.svelte";
 import Icon from "@components/atoms/display/Icon.svelte";
-import { url } from "@utils/url-utils";
-import { siteConfig } from "@/config";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
-import type { SidebarPage } from "@/types/sidebarConfig";
-import { sidebarConfig } from "@/config/sidebarConfig";
 import { hasVisibleWidgetsOnPage } from "@utils/sidebar-page";
+import { url } from "@utils/url-utils";
+import { siteConfig } from "@/config";
+import { sidebarConfig } from "@/config/sidebarConfig";
+import type { SidebarPage } from "@/types/sidebarConfig";
 import LightDarkSwitch from "./LightDarkSwitch.svelte";
 
 interface Props {
@@ -34,7 +34,9 @@ const { currentPage } = Astro.props as Props;
 const isMedia =
 	currentPage === "anime" ||
 	currentPage === "cinema" ||
-	currentPage === "games" || currentPage === "bookmarks" || currentPage === "compass";
+	currentPage === "games" ||
+	currentPage === "bookmarks" ||
+	currentPage === "compass";
 const isPost = currentPage === "post";
 const hasWidgets =
 	sidebarConfig.enable &&
