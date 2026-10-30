@@ -1,19 +1,27 @@
 ---
 /**
- * M3E 博客原子 — FooterBar 页脚栏。
- * 数据驱动：copyright（名称/年份）+ 链接组 + 归属行；链接 primary 强调。
+ * M3E 博客原子 — FooterBar 页脚栏（折叠/抽屉式，匹配设计稿 скрин 2 & 3）。
+ * 默认收起显示 "© All Rights Reserved ⌵"，展开后展示版权许可、RSS/Atom/Sitemap 及 Powered By。
  */
+import Icon from "@components/atoms/display/Icon.svelte";
+
 interface FooterLink {
 	label: string;
 	href: string;
 	external?: boolean;
 }
 
+interface LicenseInfo {
+	name: string;
+	url: string;
+}
+
 interface Props {
 	/** 站点 / 作者名 */
-	name: string;
+	name?: string;
 	/** 版权年份（默认当前年） */
 	year?: number;
+	license?: LicenseInfo;
 	links?: FooterLink[];
 	poweredBy?: FooterLink[];
 	version?: string;
@@ -24,8 +32,7 @@ interface Props {
 }
 
 const {
-	name,
-	year = new Date().getFullYear(),
+	license,
 	links = [],
 	poweredBy = [],
 	version = "",
@@ -36,29 +43,30 @@ const {
 ---
 
 <footer class:list={["m3-blog-footer", className]}>
-	<div class="m3-blog-footer__divider" aria-hidden="true" />
-	<div class="m3-blog-footer__inner">
-		{customHtml && <div class="m3-blog-footer__custom" set:html={customHtml} />}
-		<p class="m3-blog-footer__text">
-			&copy; {year} {name}. All Rights Reserved.
-			{links.map((l) => (
-				<Fragment>
-					<span class="m3-blog-footer__sep" aria-hidden="true">/</span>
-					<a
-						class="m3-blog-footer__link"
-						href={l.href}
-						target={l.external ? "_blank" : undefined}
-						rel={l.external ? "noopener noreferrer" : undefined}
-					>{l.label}</a>
-				</Fragment>
-			))}
-		</p>
-		{poweredBy.length > 0 && (
-			<p class="m3-blog-footer__text">
-				Powered by{" "}
-				{poweredBy.map((l, i) => (
+	<details class="m3-blog-footer__details">
+		<summary class="m3-blog-footer__summary">
+			<span class="m3-blog-footer__summary-text">&copy; All Rights Reserved</span>
+			<span class="m3-blog-footer__arrow" aria-hidden="true">
+				<Icon icon="material-symbols:keyboard-arrow-down-rounded" class="m3-blog-footer__chevron" />
+			</span>
+		</summary>
+		<div class="m3-blog-footer__content">
+			{customHtml && <div class="m3-blog-footer__custom" set:html={customHtml} />}
+			<p class="m3-blog-footer__row">
+				{license && (
 					<Fragment>
-						{i > 0 && <span class="m3-blog-footer__sep" aria-hidden="true">&amp;</span>}
+						<a
+							class="m3-blog-footer__link"
+							href={license.url}
+							target="_blank"
+							rel="noopener noreferrer"
+						>{license.name}</a>
+						{links.length > 0 && <span class="m3-blog-footer__dot" aria-hidden="true">&middot;</span>}
+					</Fragment>
+				)}
+				{links.map((l, i) => (
+					<Fragment>
+						{i > 0 && <span class="m3-blog-footer__dot" aria-hidden="true">&middot;</span>}
 						<a
 							class="m3-blog-footer__link"
 							href={l.href}
@@ -67,74 +75,149 @@ const {
 						>{l.label}</a>
 					</Fragment>
 				))}
-				{version && (
-					<Fragment>
-						<span class="m3-blog-footer__sep" aria-hidden="true">/</span>
-						<span class="m3-blog-footer__version">
-							<span>Version</span>
-							{versionHref ? (
-								<a
-									class="m3-blog-footer__link"
-									href={versionHref}
-									target="_blank"
-									rel="noopener noreferrer"
-								>{version}</a>
-							) : version}
-						</span>
-					</Fragment>
-				)}
 			</p>
-		)}
-	</div>
+			{poweredBy.length > 0 && (
+				<p class="m3-blog-footer__row m3-blog-footer__powered">
+					<span>Powered by</span>
+					{poweredBy.map((l, i) => (
+						<Fragment>
+							{i > 0 && <span class="m3-blog-footer__amp" aria-hidden="true">&amp;</span>}
+							<a
+								class="m3-blog-footer__link"
+								href={l.href}
+								target={l.external ? "_blank" : undefined}
+								rel={l.external ? "noopener noreferrer" : undefined}
+							>{l.label}</a>
+						</Fragment>
+					))}
+					{version && (
+						<Fragment>
+							<span class="m3-blog-footer__dot" aria-hidden="true">&middot;</span>
+							<span class="m3-blog-footer__version">
+								<span>Version</span>
+								{versionHref ? (
+									<a
+										class="m3-blog-footer__link"
+										href={versionHref}
+										target="_blank"
+										rel="noopener noreferrer"
+									>{version}</a>
+								) : version}
+							</span>
+						</Fragment>
+					)}
+				</p>
+			)}
+		</div>
+	</details>
 </footer>
 
 <style>
-.m3-blog-footer__divider {
-  border-top: 1px dashed var(--outline-variant);
-  margin: 2.5rem 2rem 1.5rem;
+.m3-blog-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0 1rem;
 }
-.m3-blog-footer__inner {
+
+.m3-blog-footer__details {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.375rem;
-  margin: 0 auto 3rem;
-  padding: 0 1.5rem;
+}
+
+.m3-blog-footer__summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin: 0 auto;
+  cursor: pointer;
+  list-style: none;
+  font: var(--m3e-type-body-small);
+  color: var(--on-surface-variant);
+  user-select: none;
+  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard),
+              color var(--m3e-duration-short) var(--m3e-easing-standard);
+}
+
+.m3-blog-footer__summary::-webkit-details-marker {
+  display: none;
+}
+
+.m3-blog-footer__summary:hover {
+  opacity: 1;
+  color: var(--primary);
+}
+
+.m3-blog-footer__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--m3e-duration-medium-1) var(--m3e-easing-standard);
+}
+
+.m3-blog-footer__details[open] .m3-blog-footer__arrow {
+  transform: rotate(180deg);
+}
+
+:global(.m3-blog-footer__chevron) {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.m3-blog-footer__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding-top: 0.5rem;
   text-align: center;
 }
-.m3-blog-footer__text,
+
+.m3-blog-footer__row,
 .m3-blog-footer__custom {
   font: var(--m3e-type-body-small);
   color: var(--on-surface-variant);
-  line-height: 1.7;
+  line-height: 1.6;
+  opacity: 0.85;
 }
-.m3-blog-footer__text a,
-.m3-blog-footer__custom a {
-  font-weight: 500;
-  color: var(--primary);
-  text-decoration: none;
-  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard);
-}
-.m3-blog-footer__text a:hover,
-.m3-blog-footer__custom a:hover {
-  opacity: 0.8;
-}
+
 .m3-blog-footer__link {
   font-weight: 500;
-  color: var(--primary);
+  color: var(--on-surface-variant);
   text-decoration: none;
-  transition: opacity var(--m3e-duration-short) var(--m3e-easing-standard);
+  transition: color var(--m3e-duration-short) var(--m3e-easing-standard),
+              opacity var(--m3e-duration-short) var(--m3e-easing-standard);
 }
+
 .m3-blog-footer__link:hover {
-  opacity: 0.8;
+  color: var(--primary);
+  opacity: 1;
 }
-.m3-blog-footer__sep {
-  margin: 0 0.5rem;
-  color: var(--outline-variant);
+
+.m3-blog-footer__dot {
+  margin: 0 0.35rem;
+  opacity: 0.6;
 }
+
+.m3-blog-footer__amp {
+  margin: 0 0.15rem;
+  opacity: 0.6;
+}
+
+.m3-blog-footer__powered {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
 .m3-blog-footer__version {
   display: inline-flex;
   align-items: baseline;
-  gap: 0.375rem;
+  gap: 6px;
 }
 </style>

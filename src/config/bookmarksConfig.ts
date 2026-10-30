@@ -8,5 +8,5 @@ export const bookmarksConfig: BookmarksConfig = withUserConfig("bookmarks", {
 });
 
 /** @deprecated Use bookmarksConfig */
-export const compassConfig = bookmarksConfig;
+export const compassConfig: BookmarksConfig = bookmarksConfig;
 

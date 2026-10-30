@@ -11,10 +11,10 @@
  * data-current-page（#swup-container，Swup 同步属性）重新过滤。
  */
 import Announcement from "@components/molecules/Announcement.astro";
+import BookmarksFilter from "@components/molecules/BookmarksFilter.astro";
 import Calendar from "@components/molecules/Calendar.astro";
 import Categories from "@components/molecules/Categories.astro";
 import MediaFilter from "@components/molecules/MediaFilter.astro";
-import BookmarksFilter from "@components/molecules/BookmarksFilter.astro";
 import Series from "@components/molecules/Series.astro";
 import SidebarTOC from "@components/molecules/SidebarTOC.astro";
 import SiteStats from "@components/molecules/SiteStats.astro";
@@ -29,6 +29,7 @@ import type {
 	SidebarPage,
 	SidebarWidget,
 } from "@/types/sidebarConfig";
+import Footer from "./Footer.astro";
 import Profile from "./Profile.astro";
 
 interface Props {
@@ -148,9 +149,9 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 			id={`${id}-sticky`}
 			data-sidebar-group
 			class:list={[
-				"flex flex-col w-full gap-4 ",
+				"flex flex-col w-full gap-4",
 				isDrawer ? "" : "lg:sticky lg:top-20",
-				{ hidden: !hasVisibleSticky },
+				{ hidden: !hasVisibleSticky && (isDrawer || column !== "primary") },
 				{ "lg:min-h-0 lg:flex-1": column === "secondary" && !isDrawer },
 			]}
 		>
@@ -172,6 +173,11 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 					</div>
 				);
 			})}
+			{!isDrawer && column === "primary" && (
+				<div class="sidebar-footer pt-2 hidden lg:block">
+					<Footer />
+				</div>
+			)}
 		</div>
 	)}
 </aside>
@@ -225,7 +231,8 @@ const hasVisibleSticky = stickyWidgets.some(isVisible);
 				const hasVisible =
 					group.querySelectorAll("[data-sidebar-pages]:not(.hidden)")
 						.length > 0;
-				group.classList.toggle("hidden", !hasVisible);
+				const hasFooter = group.querySelector(".sidebar-footer") !== null;
+				group.classList.toggle("hidden", !hasVisible && !hasFooter);
 			});
 
 	}

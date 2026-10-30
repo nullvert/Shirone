@@ -24,12 +24,12 @@ let { ratingTier }: { ratingTier: MediaRatingTier } = $props();
 /* Чистая физическая рамка строго по внешнему контуру постера */
 .media-card__border {
   position: absolute;
-  inset: -1.5px;
+  inset: -2px;
   z-index: 10;
   pointer-events: none;
   box-sizing: border-box;
   border-radius: inherit;
-  border: 1.5px solid var(--electric-color, var(--media-status-color, var(--primary)));
+  border: 2px solid var(--electric-color, var(--media-status-color, var(--primary)));
   opacity: 0;
   transition: opacity var(--m3e-duration-short, 150ms) ease;
 }
@@ -37,7 +37,7 @@ let { ratingTier }: { ratingTier: MediaRatingTier } = $props();
 :global(html.dark .media-card:hover) .media-card__border,
 :global(html.dark .media-card--hovered) .media-card__border {
   opacity: 1;
-  box-shadow: 0 0 8px color-mix(in oklab, var(--electric-color, var(--media-status-color, var(--primary))) 40%, transparent);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--electric-color, var(--media-status-color, var(--primary))) 45%, transparent);
 }
 
 .media-card__border--masterpiece {
@@ -46,7 +46,7 @@ let { ratingTier }: { ratingTier: MediaRatingTier } = $props();
 
 :global(html.dark .media-card:hover) .media-card__border--masterpiece,
 :global(html.dark .media-card--hovered) .media-card__border--masterpiece {
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.55);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
 }
 
 .media-card__gold-aura {

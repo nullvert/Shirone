@@ -116,6 +116,6 @@ export const bookmarksData: BookmarkShelf[] =
 /** Backward compatibility aliases */
 export type CompassEntry = BookmarkEntry;
 export type CompassShelf = BookmarkShelf;
-export const defaultCompassData = defaultBookmarksData;
-export const compassData = bookmarksData;
+export const defaultCompassData: BookmarkShelf[] = defaultBookmarksData;
+export const compassData: BookmarkShelf[] = bookmarksData;
 
